@@ -1,0 +1,23 @@
+Aufgabe 1:
+	Welches Zeichen? Theta?
+
+Aufgabe 2:
+	Welches Zeichen? Phi? q?
+
+Aufgabe 3:
+	n = |V| <- Wo kommt das V her? Vertices?
+	Such im Feld S nach ??
+	orientation-Prädikat?
+	Eingabe mit Platz ??(n^2):
+
+Aufgabe 4:
+	
+
+Aufgabe 6:
+	Alternative version. 2nd is weird. Current + p or q j+1. Sera komisch
+
+8 + 9 same
+	8 induktion von 9. Muss schauen wie man 8 isoliert aufschreibt
+
+Aufgabe 4:
+	Graham scan. ALtklausuren nur obere Hälfte, nicht obere und untere

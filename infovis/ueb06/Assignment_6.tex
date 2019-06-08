@@ -1,0 +1,51 @@
+\documentclass[10pt,a4paper,parskip=quarter ]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+% \usepackage{fullpage}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{fancyhdr}
+
+\pagestyle{fancy}
+\rhead{Aaron Winziers - 1176638, Benedikt Lüken-Winkels - 1138844}
+
+\author{Aaron Winziers - 1176638 \\
+Benedikt Lüken-Winkels - 1138844}
+\title{Information Visualization SS 2018\\\LARGE{Assignment 6}}
+
+\begin{document}
+	\maketitle
+	\section*{Exercise 6.1}
+	
+	In reality, there is a case to be made for each category that several alternatives would be suitable for use in displaying different components of a data set. 
+	
+	\subsection*{1. Correlation between variables}
+		Interesting for displaying correlations could be fan chart maps as well as scatter plots.
+		
+		A fan chart map would work here, as the shape of the fans would (assuming there was in fact a correlation between the variables) gradually change within the map, showing the trend of the correlation.
+		
+		A scatter plot could be used as (again assuming there was in fact a correlation) the correlation would present itself as a tightly grouped points along a line or curve on the graph.
+			
+	\subsection*{2. Clusters of similar entities}
+		Parallel coordinates could be used in this case, as clusters would take the form of several overlapping lines that follow very similar paths.
+		
+		Scatter plots would again be useful in this case, as clusters would very clearly represent themselves as just that, clusters of points located on the graph.
+		
+		In both cases, the clusters can be made more apparent through different colors used to represent different clusters.
+		
+	\subsection*{3. Outliers (unusual entities)}
+		Parallel coordinates
+		Star Plots
+		
+		While they may not be ideal for every situation, scatter plots would again be useful in showing outliers, in that the outliers would be plotted visually far from all other points and be quickly identifiable.
+	\\ \\
+	
+	While we do make a case that for every category a scatter plot could be used, we recognize that for them to be truly effective, the data must be relatively simple and not include too many variables. While it would be possible to represent three variables with a three dimensional scatter plot, any more would at best be difficult to represent, and at worst lead to an unreadable graph or chart (we are aware of scatter plot matrices, however these do not contain more than two variables per plot, and as such are not true >2 variable graphs).
+\end{document}

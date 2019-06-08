@@ -1,0 +1,13 @@
+deactivate projects - stop workable, re-start as well
+
+modal forms - (dropdowns)
+    redo modals, undo kolloquium
+    done: Projects
+
+exports
+
+Redo client functionality, more automation, more concrete relationships
+
+cronjobs with database checking
+    - Backups
+    - implement errors
