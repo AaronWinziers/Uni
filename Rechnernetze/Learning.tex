@@ -1,0 +1,144 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Aaron Winziers}
+\title{Rechnernetze}
+\begin{document}
+	\maketitle
+	\tableofcontents
+\section{Einführung}
+	\subsection{Addressen}
+		4 parts: 
+			\begin{itemize}
+				\item Protokoll
+				\item Host/Host IP
+				\item Port
+				\item Resource
+			\end{itemize}
+	\subsection{Protokolle}	
+		\begin{itemize}
+			\item dns
+			\item http/https
+			\item ssh
+			\item smtp
+			\item etc...
+		\end{itemize}
+	
+	
+\section{ISO-Modell}
+	\subsection{Layers:}
+		\begin{enumerate}
+			\item Physical Layer - Definition der (elektrischen, optischen) Schnittstellen
+			\subitem PCI, SCSI, USB
+			\item Link Layer - Fehlerfreier Kanal zwischen 2 Knoten
+			\subitem Ethernet
+			\item Network Layer - Host-to-Host Protokoll
+			\subitem 2 Teile: Innerhalb eines Netzes, Zwischen Netzen
+			\subitem IPv4, IPv6
+			\item Transport Layer - Ende-zu-Ende Protokoll
+			\subitem TCP, UDP
+			\item Session Layer - Kommunikationssitzung
+			\item Presentation Layer - Umwandlung von Datenformen
+			\item Application Layer - Spezifische Anwendungsprotokolle 
+		\end{enumerate}
+	\subsection{Router/Gateway}
+		\begin{itemize}
+			\item Router - leitet nur weiter, kommt nur bis Ebene 3
+			\item Gateway - kann auch filtern, get auf Ebene 7 hoch
+		\end{itemize}
+	
+	
+\section{Topologien}
+	\subsection{Typische Topologien}
+		\begin{itemize}
+			\item Bus
+			\item Stern
+			\item Hypercube
+			\item Gatter
+			\item Torus/Donut
+			\item Butterfly(Flaches Hypercube)
+		\end{itemize}
+	\subsection{Busse}
+		Kollisionsverhinderung:
+			\begin{itemize}
+				\item FDMA - Frequency Divison Multiple Access
+				\item TDMA - Time Division Multiple Access
+				\item CDMA - Code Division Multiple Access
+				\item CSMA - Listen before Talk
+			\end{itemize}
+
+
+\section{DNS}
+	\subsection{Domain Name Service}
+		Host.Subdomain. ... .Subdomain.TLD	\\
+		TLD - Top Level Domain
+		
+\section{Ethernet??}
+
+\section{IP und ICMP}
+	\subsection{All Pairs Shortest Paths}
+		Floyd-Warshall-Algorithmus $O(n^{3})$
+		
+	\subsection{IP}
+		\begin{itemize}
+			\item Auf Ebene 3 im OSI-Modell
+			\item "3" Klassen von Netzwerken
+			\begin{itemize}
+				\item Class A : 0|netID(7)|hostID(24)
+				\item Class B : 10|netID(14)|hostID(16)
+				\item Class C : 110|netID(21)|hostID(8)
+			\end{itemize}
+			\item ARP \& RARP (Address Resolution Protocol \& Reverse Address Resolution Protocol)
+		\end{itemize}
+	\subsection{ICMP}
+		Internet Control Message Protocol - Erledigt administrative Aufgaben im Internet - Fehler-/Informationsmeldungen 
+	\subsection{Super-/Subnetting}
+		Nehme Host-Anteil und  Verwende Local-Routing um weitere Subnetze zu erzeugen
+		\begin{center}
+			10|netID(14)|subnetID(8)|hostID(8)
+		\end{center}
+		CIDR (Classless Inter-Domain Routing) - Keine Netzwerkklassen mehr	\\
+		NAT (Network Address Translation)
+		
+\section{TCP \& UDP}
+	\subsection{UDP}
+		User Datagram Protocol
+	\begin{itemize}
+		\item ACK/NACK (impliziter vs expliziter Quittungsbetrieb)
+		\item Maximierung des Speichermediums
+		\item 3-Way Handshake
+		\subitem Client -> SYN, ISN Client -> Server
+		\subitem Client <- SYN, ISN Server, ACK ISN Client <- Server
+		\subitem Client -> ACK, ISN Server -> Server
+	\end{itemize}
+		
+		
+		
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+\end{document}

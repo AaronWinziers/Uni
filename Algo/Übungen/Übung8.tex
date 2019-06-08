@@ -1,0 +1,83 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\begin{document}
+	\begin{flushright}
+		Aaron Winziers, 1176638	\\
+		Guillaume Kaufhold, 846375
+	\end{flushright}
+	\begin{center}
+		\underline{\textbf{Algorithmen und Datenstrukturen Übung 8}}
+		\\~ \\ Gruppe 1
+	\end{center}
+	\section*{Aufgabe 8.1}		
+\begin{lstlisting}
+printTree(Knoten k){
+	if (k.left != null)
+		printTree(k.left)
+	print(k.key)
+	if (k.right != null)
+		printTree(k.right)
+}
+\end{lstlisting}
+	\section*{Aufgabe 8.2}
+\begin{lstlisting}
+bintree_node lookup(x);
+	p = root;
+	while p != O do
+		if (x = p.key || p = v) then
+			break;
+		end
+		if x < p.key then
+			p = p.left
+		else
+			p = p.right
+		end
+	end
+	if p = v then
+		print("The element was not found")
+	return p;
+}
+\end{lstlisting}
+	
+	\section*{Aufgabe 8.3}
+\begin{lstlisting}
+node{
+	String key;
+	int count;
+	node left;
+	node right;
+	
+	node(String word){
+		key = word;
+		count = 1;
+		left = dummy;
+		right = dummy;
+	}
+}
+wordCount(String text){
+	BinaryTree tree;
+	node dummy;
+	while(text.length > 0){
+		word = text.nextword;
+		if top = null
+			tree.add(new node(word));
+		else{
+			node temp = tree.lookup(word);
+			if temp = dummy
+				tree.add(new node(word));
+			else
+				temp.count++;
+		}
+	}
+	tree.printTree();
+}
+\end{lstlisting}	
+
+
+\end{document}

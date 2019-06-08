@@ -1,0 +1,159 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Aaron Winziers}
+\title{Systemsoftware}
+\begin{document}
+	\section{Einführung}
+		\subsection{Hardware}
+			\begin{itemize}
+				\item 
+			\end{itemize}
+		\subsection{Software}
+			\begin{itemize}
+				\item 
+			\end{itemize}
+		\subsection{Adressraum}
+			\begin{itemize}
+				\item Aufbau
+					\begin{itemize}
+						\item Text 
+						\item Static
+						\item Heap
+						\item Stack(s)(Mehrere Threads)
+						\item wrx Rechte
+					\end{itemize}
+			\end{itemize}
+	\section{Memory}
+		\subsection{Raum-Zeit-Kontinuum}
+			\begin{itemize}
+				\item Kontrollfluss (Thread of Control)
+				\item Reference String
+				\item von Neumann Architektur
+				\item Reference Locality 
+			\end{itemize}
+		\subsection{Memory}
+			\begin{itemize}
+				\item Internal Protection
+				\item External Protection
+				\item Ideal Address Space Usage
+			\end{itemize}
+		\subsection{Pages}
+			\begin{itemize}
+				\item MMU(!)
+				\item Virtual/Physical Address(!)
+				\item Single-Step Mapping(!)
+				\item Multi-stage Mapping(!)
+				\item Translation Lookaside Buffer(!)
+				\item Page Descriptor(!)
+				\item Page Table Descriptor(!)
+			\end{itemize}
+		\subsection{Page Faults}
+			\begin{itemize}
+				\item Efficiency(50):  $t_{effective}=(1-p)*t_{Memory}+p*t_{PageFault}$
+				\item Page Fault: $t_{PageFault}= t_{Interrupt}+t_{Search}+t_{Write}+t_{Read}+t_{Instr}$
+				\item Replacement Algorithms(!)
+				\begin{itemize}
+					\item Reference Strings
+					\item Optimal Replacement by Belady
+					\item FIFO
+					\item Belady's Anomaly
+					\item Least Recently Used(LRU)
+					\item LRU with Second Chance
+					\item Clock Algorithm
+					\item 2 Hand Clock Algorithm
+					\item Vergleich zwischen Algorithmen
+					\item Other (LFU, Random,...)
+				\end{itemize}
+				\item Average Access Time and Costs (66)(!)
+				\item Multi-level caching(!)
+			\end{itemize}
+		\subsection{Working Set Theory}
+			\begin{itemize}
+				\item Working Set of a thread(70)
+				\item Thrashing(!)
+				\item Gobal/Local Replacement(!)
+			\end{itemize}
+	\section{Threads}
+		\begin{itemize}
+			\item Context Switch
+			\item Multiplexing
+			\item Bursts(!)
+			\begin{itemize}
+				\item CPU
+				\item IO
+				\item alternation
+			\end{itemize}
+		\end{itemize}
+		\subsection{State Model}
+			\paragraph{States}(!)
+				\begin{itemize}
+					\item Ready
+					\item Running
+					\item Blocked
+				\end{itemize}
+			\paragraph{Transitions}(!)
+				\begin{itemize}
+					\item Add
+					\item Assign
+					\item Block
+					\item Ready
+					\item Resign
+					\item Terminate
+				\end{itemize}
+			Dispatcher
+		\subsection{Scheduling}
+			\begin{itemize}
+				\item Short/Long-term Scheduling
+				\item Criteria
+				\begin{itemize}
+					\item CPU utilization
+					\item Throughput
+					\item Tunraround Time
+					\item Waiting Time 
+					\item Response Time
+					\item Real time 
+				\end{itemize}
+				\item Non-/Preemptive(!)
+				\item Scheduling
+				\begin{itemize}
+					\item FCFS
+					\item Priority-Based(Priority Inheritance)(!)
+					\item Round-Robin
+					\item Multi-level
+					\item Feedback
+				\end{itemize}
+			\end{itemize}
+	\section{Synchronization}
+		\begin{itemize}
+			\item Amdahl(!)
+			\item Moore(!)
+			\item Konkurrenz(!)
+			\item Kooperation(!)
+			\item Mutual Exclusion(Mutex)
+			\item IPC
+			\item Semaphore
+			\item Producer/Consumer(!)
+		\end{itemize}
+	\section{IPC}
+		\begin{itemize}
+			\item Pipes (named/unnamed)(!)
+			\item Client/Server Architecture(!)
+		\end{itemize}
+	\section{Filesystems}
+		\begin{itemize}
+			\item RAID
+		\end{itemize}
+	\section{Übungen}
+		\begin{itemize}
+			\item Internal/External Fragmentation
+			\item Buddy/ First Fit
+			\item Barrier
+			\item linux scheduler
+			\item Fork
+			\item Demand scheduling
+		\end{itemize}
+\end{document}

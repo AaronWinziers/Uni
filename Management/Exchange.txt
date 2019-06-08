@@ -1,0 +1,5 @@
+Exchange
+Im Lastenheft haben Sie eine Exportfunktionalität der zukünftigen Termine mit einem Studierenden gefordert. Aufbauend darauf möchten wir Ihnen eine vollständige Synchronisierung mit einem Exchange-Kalender anbieten.
+Ein Export bietet zwar die Möglichkeit, einen Termin in seinen Kalender zu übernehmen, ohne die Daten erneut eintragen zu müssen. Jedoch muss die generierte iCal-Datei per Hand in das System importiert werden. Dieser Schritt würde mit unserer Synchronisierung komplett entfallen. Der bestehende Exchange-Kalender, den jeder Mitarbeiter und Student vom ZIMK gestellt bekommt, würde folgendermaßen in das LMS integriert werden:
+Auf der Startseite werden im Bereich "Heutige Termine" neben den Terminen des LMS auch andere Termine angezeigt, sodass der Mitarbeiter hier eine Zusammenfassung seines heutigen Tages sehen kann
+Beim Anlegen eines neuen Termins wird dieser ohne zusätzliche Aktion des Nutzers automatisch in den Uni-Kalender übernommen (sofern man den Termin für sich selbst angelegt hat). Bei Überschneidungen mit bestehenden Terminen gibt das System eine Warnmeldung aus, sodass Terminüberschneidungen so gut wie ausgeschlossen werden können.

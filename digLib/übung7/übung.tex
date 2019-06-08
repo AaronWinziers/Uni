@@ -1,0 +1,215 @@
+\documentclass[11pt,a4paper,parskip=half ]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[fleqn]{amsmath}
+\usepackage[left=3.00cm, right=3.00cm, top=3.00cm, bottom=3.00cm]{geometry}
+
+\author{Aaron Winziers - 1176638; Michael Wolz - 1195270}
+\title{Digital Libraries WS 2018/2019\\\LARGE{Übungsblatt 7}}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	\subsection*{a)}
+	
+	\textbf{Worthäufigkeiten $d_1$:}
+	\begin{itemize}
+		\item Stadt: 1
+		\item Land: 1
+		\item Fluss: 1
+		\item Trier: 1
+		\item Mosel: 1
+		\item $\sum_{k}\#Vorkommen\ w_k = 5$
+	\end{itemize}
+	
+	\begin{align*}
+	P(Stadt) = P(Land) = P(Fluss) = P(Trier) = P(Mosel) = \frac{1}{5} = 0.2
+	\end{align*}
+	
+	\textbf{Worthäufigkeiten $d_2$:}
+	\begin{itemize}
+		\item Fluss: 2
+		\item Trier: 1
+		\item $\sum_{k}\#Vorkommen\ w_k = 3$
+	\end{itemize}
+	
+	\begin{align*}
+	P(Fluss) &= \frac{2}{3} = 0.66\\
+	P(Trier) &= \frac{1}{3} = 0.33
+	\end{align*}
+	
+	\textbf{Worthäufigkeiten $d_3$:}
+	\begin{itemize}
+		\item Stadt: 3
+		\item Fluss: 1
+		\item Trier: 2
+		\item Mosel: 1
+		\item Leben: 1
+		\item $\sum_{k}\#Vorkommen\ w_k = 8$
+	\end{itemize}
+	
+	\begin{align*}
+	P(Stadt) &= \frac{3}{8} = 0.375\\
+	P(Fluss) &= \frac{1}{8} = 0.125\\
+	P(Trier) &= \frac{2}{8} = 0.25\\
+	P(Mosel) &= \frac{1}{8} = 0.125\\
+	P(Leben) &= \frac{1}{8} = 0.125
+	\end{align*}
+	
+	
+	\subsection*{b)}
+	
+	$q = {Trier}$
+	\begin{align*}
+	P(q|d_1) &\propto log 0.2 \approx -2.3\\
+	P(q|d_2) &\propto log 0.33 \approx -1.6\\
+	P(q|d_3) &\propto log 0.25 = -2
+	\end{align*}
+	
+	$q= {Trier, Fluss}$
+	\begin{align*}
+	P(q|d_1) &\propto log 0.2 + log 0.2 \approx -3.9\\
+	P(q|d_2) &\propto log 0.33 + log 0.66 \approx -2\\
+	P(q|d_3) &\propto log 0.25 + log 0.125 \approx -4.1
+	\end{align*}
+	
+	\subsection*{c)}
+	
+	\textbf{Worthäufigkeiten}
+	\begin{itemize}
+		\item Stadt: 4
+		\item Fluss: 4
+		\item Trier: 4
+		\item Mosel: 2
+		\item Leben: 1
+		\item Gesamtlänge T der Kollektion: 16
+	\end{itemize}
+	
+	
+	\begin{align*}
+	P_c(Stadt) &= \frac{4}{8} = 0.5\\
+	P_c(Fluss) &= \frac{4}{8} = 0.5\\
+	P_c(Trier) &= \frac{4}{8} = 0.5\\
+	P_c(Mosel) &= \frac{2}{8} = 0.25\\
+	P_c(Leben) &= \frac{1}{8} = 0.125
+	\end{align*}
+	
+	\subsection*{d)}
+	
+	\begin{align*}
+	P_{LM}(Trier|d_1) &= 0.5*0.2 + 0.5*0.5  = 0.35\\
+	P_{LM}(Trier|d_2) &= 0.5*0.33 + 0.5*0.5 = 0.415\\
+	P_{LM}(Trier|d_3) &= 0.5*0.25 + 0.5*0.5 = 0.375 \\
+	P_{LM}(Fluss|d_1) &= 0.5*0 + 0.5*0.5  = 0.25\\
+	P_{LM}(Fluss|d_2) &= 0.5*0.66 + 0.5*0.5 =  0.58\\
+	P_{LM}(Fluss|d_3) &= 0.5*0.125 + 0.5*0.5 = 0.3125
+	\end{align*}
+	
+	$q = {Trier}$
+	\begin{align*}
+	P_{LM}(q|d_1) &\propto log 0.35 \approx -1.5\\
+	P_{LM}(q|d_2) &\propto log 0.415 \approx -1.27\\
+	P_{LM}(q|d_3) &\propto log 0.375 \approx -1.42
+	\end{align*}
+	
+	$q= {Trier, Fluss}$
+	\begin{align*}
+	P_{LM}(q|d_1) &\propto log 0.35 + log 0.25 \approx -3.5\\
+	P_{LM}(q|d_2) &\propto log 0.415 + log 0.58 \approx -2.1\\
+	P_{LM}(q|d_3) &\propto log 0.375 + log 0.3125 \approx -3.1
+	\end{align*}
+
+	\section*{Aufgabe 2}
+	
+	\subsection*{a)}
+	\begin{itemize}
+		\item $idf_t(Vater) = log(\frac{7}{2}) = 1.8017$
+		\item $idf_t(Mutter) = log(\frac{7}{5}) = 0.485$
+		\item $idf_t(Koenigin) = log(\frac{7}{2}) = 1.807$
+		\item $idf_t(Zwerge) = log(\frac{7}{1}) = 2.807$
+		\item $idf_t(Koenigstochter) = log(\frac{7}{2}) = 1.807$
+		\item $idf_t(Wolf) = log(\frac{7}{2}) = 1.807$
+		\item $idf_t(Gold) = log(\frac{7}{3}) = 1.222$
+		\item $idf_t(Haus) = log(\frac{7}{7}) = 0$
+	\end{itemize}
+%	\begin{center}
+%		\begin{tabular}{|l||l|l|l|l|l|l|l|}
+%			\hline
+%			\textbf{Term} & $d_1$ & $d_2$ & $d_3$ & $d_4$ & $d_5$ & $d_6$ & $d_7$ \\ \hline \hline
+%			Vater         & 0     & 5     & 0     & 0     & 0     & 1     & 0     \\ \hline
+%			Mutter        & 2     & 2     & 3     & 2     & 0     & 0     & 3     \\ \hline
+%			Königin       & 0     & 0     & 0     & 0     & 8     & 1     & 0     \\ \hline
+%			Zwerge        & 0     & 0     & 0     & 0     & 4     & 0     & 0     \\ \hline
+%			Königstochter & 0     & 0     & 0     & 0     & 1     & 1     & 0     \\ \hline
+%			Wolf          & 0     & 0     & 0     & 6     & 0     & 0     & 6     \\ \hline
+%			Gold          & 2     & 0     & 1     & 0     & 1     & 0     & 0     \\ \hline
+%			Haus          & 2     & 5     & 1     & 3     & 4     & 1     & 1     \\ \hline
+%		\end{tabular}
+%	\end{center}
+
+$\scriptsize
+idf_t = 
+\left(\begin{matrix}
+	1.802 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0.485 & 0 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 1.807 & 0 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 2.807 & 0 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1.807 & 0 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 1.807 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 1.222 & 0 \\
+	0 & 0 & 0 & 0 & 0 & 0 & 0 & 0
+\end{matrix}\right)
+tf = 
+\left(\begin{matrix}
+	0 & 5 & 0 & 0 & 0 & 1 & 0 \\
+	2 & 2 & 3 & 2 & 0 & 0 & 3 \\
+	0 & 0 & 0 & 0 & 8 & 1 & 0 \\
+	0 & 0 & 0 & 0 & 4 & 0 & 0 \\
+	0 & 0 & 0 & 0 & 1 & 1 & 0 \\
+	0 & 0 & 0 & 6 & 0 & 0 & 6 \\
+	2 & 0 & 1 & 0 & 1 & 0 & 0 \\
+	2 & 5 & 1 & 3 & 4 & 1 & 1
+\end{matrix}\right)$\\
+\begin{center}$
+	idf_t\times tf=	
+	\left(\begin{matrix}
+		0 & 9.009 & 0 & 0 & 0 & 1.802 & 0 \\
+		0.970 & 0.970 & 1.455 & 0.970 & 0 & 0 & 1.455 \\
+		0 & 0 & 0 & 0 & 14.456 & 1.807 & 0 \\
+		0 & 0 & 0 & 0 & 11.228 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 1.807 & 1.807 & 0 \\
+		0 & 0 & 0 & 10.842 & 0 & 0 & 10.842 \\
+		2.444 & 0 & 1.222 & 0 & 1.222 & 0 & 0 \\
+		0 & 0 & 0 & 0 & 0 & 0 & 0
+	\end{matrix}\right)
+$\end{center}
+
+\subsection*{b)}
+$q^T=(0,1,0,0,0,0,0,1)$	\\
+$\|q\|=\sqrt{2}$\\
+$\|d_1\|=2.629$\\
+$\|d_2\|=9.061$\\
+$\|d_3\|=1.900$\\
+$\|d_4\|=10.855$\\
+$\|d_5\|=18.434$\\
+$\|d_6\|=3.127$\\
+$\|d_7\|=10.939$\\
+
+$sim(d_1,q)=\frac{0*0+0.970*1+0*0+0*0+0*0+0*0+2.444*0+0*1}{\|q\|\|d_1\|}=0.261$\\
+$sim(d_2,q)=0.261$\\
+$sim(d_3,q)=0.391$\\
+$sim(d_4,q)=0.261$\\
+$sim(d_5,q)=0$\\
+$sim(d_6,q)=0$\\
+$sim(d_7,q)=0.391$\\
+
+	
+\end{document}

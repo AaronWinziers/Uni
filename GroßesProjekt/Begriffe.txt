@@ -1,0 +1,9 @@
+Firewall
+
+MTU (Maximum Transmission Unit) the size of the largest 
+
+mss (Maximum Segment Size) - A parameter of the options field of the TCP
+header that specifies the largest amount of data, specified in bits, that a
+computer can recieve in a single TCP segment
+
+mss-Clamp - 

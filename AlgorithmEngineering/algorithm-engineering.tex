@@ -1,0 +1,112 @@
+\documentclass[11pt,a4paper]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumerate}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\title{Algorithm Engineering\\\LARGE{Zusammenfassung Klausuraufgaben}}
+
+\definecolor{lightergray}{RGB}{240,240,240}
+
+\lstset{%
+	language=C++,
+	title= \lstname,
+	frame = single,
+	backgroundcolor=\color{lightergray},
+	numbers=left, % display line numbers on the left
+	commentstyle=\color{purple}, % comment color
+	keywordstyle=\color{blue}, % keyword color
+	stringstyle=\color{red}, % string color
+	tabsize= 4,
+	breaklines= true,	
+	literate=
+	{Ö}{{\"O}}1
+	{Ä}{{\"A}}1
+	{Ü}{{\"U}}1
+	{ß}{{\ss}}1
+	{ü}{{\"u}}1
+	{ä}{{\"a}}1
+	{ö}{{\"o}}1
+	{~}{{\textasciitilde}}1
+}
+
+\begin{document}
+\maketitle
+
+\section{Aufgabe}
+
+Geben Sie eine Spezifikation für den Datentyp \texttt{int\_stack} (Keller von ganzen Zahlen) an und schreiben Sie eine entsprechende Header-Datei \texttt{int\_stack.h} in C++. Geben Sie zwei Implementierungen für \texttt{int\_stack} in C++ an:
+	\lstinputlisting{int_stack.h}
+
+\begin{enumerate}[a)]
+	\item Eine Array-Datenstruktur
+		\lstinputlisting{stack_array.cpp}
+	\item Eine dynamische Listendatenstruktur
+		\lstinputlisting{stack_list.cpp}
+\end{enumerate}
+
+	\subsection{Alternative Aufgabe:}
+	
+	Realisieren Sie den parametrisierten Datentyp \texttt{stack<T>} (Keller von elementen vom Typ \textit{T}) durch ein Klassentemplate. Die maximale Größe des Stack soll im Konstruktor angegeben werden.
+	
+	\subsection{Aufgabe zur Antwort:}
+	
+	Verwenden Sie den \textit{Stack} aus Aufgabe X und den Graphdatentyp \texttt{graph} aus der Vorlesung zur Implementierung der \textit{Tiefensuche}(DFS). Schreiben Sie hierfür eine Funktion:
+	\begin{center}
+		\texttt{list<node> dfs(graph\& G, node s)}
+	\end{center}
+	die alle von \textit{s} erreichbaren Knoten G als Liste zurückgibt.
+	\lstinputlisting{dfs.cpp}
+	
+	\subsection{Weitere Aufgabe:(Point \& Student List)}
+	
+	Implementieren Sie generische einfach verkettete Listen durch Vererbung. Hierzu müssen zwei Basisklassen für die Listenelemente und die Liste selbst definiert werden, von denen dann jeweils die Objekte und die eigentliche Liste abgeleitet werden. Demonstrieren Sie die Verwendung am Beispiel einer Klasse \texttt{point} für Punkte in der Ebene, die in einer Liste \texttt{point\_list} abgespeichert werden sollen. 
+	\\
+	
+	Implementieren Sie generische einfach verkettete Listen durch Vererbung. Hierzu müssen zwei Basisklassen definiert werden, einmal für die Listenelemente und eine für die Liste selbst. Von diesen sollen dann jeweils die Objekte und die eigentliche Liste abgeleitet werden. Demonstrieren Sie die Verwendung am Beispiel einer Klasse \texttt{student} für Punkte in der Ebene, die in einer Liste \texttt{student\_list} abgespeichert werden sollen.
+	\lstinputlisting{list_element.cpp}
+	\textbf{{\Large  List Klasse gleiche wie stack\_list.cpp (Stack mit Listenstruktur)}}
+	\lstinputlisting{point_list.cpp}
+	
+	
+\section{Aufgabe}
+
+Spezifizieren Sie den Datentyp \texttt{int\_queue} (Schlange von ganzen Zahlen) durch eine entsprechend Header-Datei \texttt{int\_queue.h}. Geben Sie eine array-basierte Implementierung an (\texttt{int\_queue.cpp}).
+	\lstinputlisting{queue.h}
+	\lstinputlisting{queue.cpp}
+	
+	\subsection{Alternative Aufgabe:}
+	
+	Realisieren Sie den parametrisierten Datentyp \texttt{queue<T>} (Schlange von Elementen vom Typ \textit{T}) durch ein Klassentemplate. (Die maximale Länge der Queue soll im Konstruktor angegeben werden)
+	
+	\subsection{Aufgabe zur Antwort:}
+	
+	Verwenden Sie die Schlange aus Aufgabe X und den Graphdatentyp \texttt{graph} aus der Vorlesung zur Implementierung der \textit{Breitensuche}(BFS). Schreiben Sie hierfür eine Funktion:
+	\begin{center}
+		\texttt{list<node> BFS(const graph\& G, node s)}
+	\end{center}
+	die alle von \textit{s} erreichbaren Knoten G als Liste zurückgibt.
+	\lstinputlisting{bfs.cpp}
+
+\section{Aufgabe}
+
+Überlegen Sie sich eine Spezifikation für den Typ Wörterbuch (\texttt{dictionary}), also eine Header-Datei \texttt{dictionary.h} zum Speichern von Paaren aus Strings und ganzen Zahlen. Verwenden Sie den Datentyp, um das sogenannte \texttt{word count} Problem zu lösen. Dabei ist eine Folge von Strings gegeben und es soll für jeden String seine Häufigkeit in der Eingabefolge berechnet und ausgegeben werden. 
+	\lstinputlisting{dictionary.h}
+	\lstinputlisting{wordcount.cpp}
+
+\section{Aufgabe}
+
+Schreiben Sie ein Funktionstemplate \texttt{MERGE(a, b, c, d, e)}, das 5 Iteratoren als Argumente nimmt und die aufsteigend sortierten Folgen die durch die Iteratoren \textbf{a} und \textbf{b} bzw. \textbf{c} und \textbf{d} gegeben sind zu einer aufsteigenden Folge zusammen mischt und diese beginnend mit der Position, die durch den Iterator \textbf{e} definiert ist, ausgibt. Nehmen Sie hierzu an, dass der \texttt{<}-Operator, für die betreffenden Werte definiert ist.
+	\lstinputlisting{merge.cpp}
+
+
+\section{Aufgabe}
+
+Schreiben Sie ein Funktionstemplate \texttt{palindrom}, das zwei Iteratoren in einem beliebigen Container als Argumente nimmt und testet, ob die Folge der Elemente im entsprechenden intervall ein palindrom ist, d.h. vorwärts wie rückwärts gelesen gleich ist.
+	\lstinputlisting{palindrome.cpp}
+
+\end{document}

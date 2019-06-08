@@ -1,0 +1,158 @@
+\documentclass[11pt,a4paper,parskip=half ]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\author{Aaron Winziers - 1176638; Michael Wolz - 1195270}
+\title{Data and Webmining WS 2018/2019\\\LARGE{Übungsblatt 1}}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	
+	\subsection*{a)}
+	\begin{enumerate}
+		\item Verstehen der Anwendungsdomäne
+		\subitem Identifikation der verfügbaren Daten
+		\subitem Festlegung des KDD Ziels
+		
+		\item Zieldatenfestlegung (Selektion)
+		\subitem Festlegung der Datenbanken, Datensätze, Attribute die untersucht werden sollen.
+		
+		\item Vorverarbeitung und Datenbereinigung
+		\subitem Erkennung und Eliminierung von Datenfehlern (Ausreißern) und von fehlenden Einträgen
+		
+		\item Datenreduktion und Projektion (Transformation)
+		\subitem Identifikation der nützlichen Attribute für die KDD Aufgabe
+		\subitem Reduktion der Dimension (Attribute)
+		\subitem Berechnung abgeleiteter Attribute
+		\subitem Reduktion der zu bearbeitenden Daten (Sampling)
+		
+		\item Auswahl der Data Mining Aufgabenklasse
+		\subitem um welche Art von Data Mining Aufgabe handelt es sich, z.B. Klassifikation, Regression, Assoziation, Clustering
+		
+		\item Wahl des Data Mining Algorithmus
+		\subitem für den gewählt Aufgabenklasse: bestimme einen geeigneten Algorithmus
+		\subitem je nach Algorithmus: Bestimmung von Modellparametern
+		
+		\item Data Mining durchführen
+		\subitem Anwendung des Algorithmus auf den vorverarbeiteten Daten
+		
+		\item Interpretation
+		\subitem gefundene Muster werden interpretiert
+		\subitem ggf. weitere Iteration und Wiederholung der Schritte 1-7
+		
+		\item Konsolidierung des KDD Ergebnisses
+		\subitem Präsentation der Ergebnisse und Dokumentation
+	\end{enumerate}
+	
+	\subsection*{b)}
+	
+	
+	\subsection*{c)}
+	
+	
+	\section*{Aufgabe 2}
+	\subsection*{a)}
+	
+	\textbf{Klassifikation}\\
+	\begin{itemize}
+		\item Einordnung einer Beobachtung in eine von n Klassen
+		\item Klassenbeschreibung = gelernte Regeln
+		\item Regeln werden angeendet um neue Beobachtungen zu klassifizieren
+	\end{itemize}
+	
+	\textbf{Regression}\\
+	\begin{itemize}
+		\item Lernen einer Funktion zur Abbildung einer Beobachtung auf einen Zahlenwert
+		\item Approximation einer Datenmenge durch mathematische Funktion
+		\item Ziel: möglichst gute Datenerfassung, d.h. möglichst geringe Fehler machen
+		\item Durch Funktion können Vorhersagen getroffen werden
+	\end{itemize}
+	
+	\textbf{Clustering}\\
+	\begin{itemize}
+		\item Einteilung von Datensätzen in Gruppen, z.B. disjunkte Gruppen oder hierarchische Gruppierungen
+		\item Ermittlung von Klassen für unklassifizierte Datenpunkte
+		\item Objekte möglichst Homogen
+		\item Cluster untereinander möglichst heterogen
+	\end{itemize}
+	
+	\textbf{Abhängigkeitsanalyse}\\
+	\begin{itemize}
+		\item Erkennen von gesetzmäßigen Abhängigkeiten in Daten, z.B. in Form von Regeln
+	\end{itemize}
+	
+	\subsection*{b)}
+	
+	\textbf{Synthetisches Lernen}\\
+	\begin{itemize}
+		\item Bildung induktiver Schlüsse
+		\item Wahrheitsgehalt der Schlussfolgerung nicht gesichert
+		\item Neues Wissen wird geraten
+	\end{itemize}
+	
+	\textbf{Analytisches Lernen}\\
+	\begin{itemize}
+		\item Bildung deduktiver Schlüsse
+		\item wahrheitserhaltend: Schlussfolgerungen sind nachweislich korrekt
+		\item Man lernt hier eigentlich kein wirklich neues Domänenwissen
+	\end{itemize}
+	
+	\textbf{Lernen durch Analogie}\\
+	\begin{itemize}
+		\item Bildung analoger Schlüsse
+		\item Wahrheitsgehalt der Schlussfolgerung nicht gesichert
+		\item Basieren auf Ähnlichkeit
+	\end{itemize}
+		
+	\section*{Aufgabe 3}
+		\subsection*{a)}
+			\textbf{Klassifikator}
+			\begin{itemize}
+				\item Ein Klassifikator für eine Menge M ist eine Abbildung $f : M \rightarrow I$, wobei $I$ eine Menge ist, die Indexmenge genannt wird.
+				\item Wenn $I = \{0, 1\}$, dann heißt
+				\subitem $P=\{x \in M | f(x) = 1\}$ die Menge der \textit{positiven} Elemente und
+				\subitem $N=\{x \in M | f(x) = 0\}$ die Menge der \textit{negativen} Elemente
+			\end{itemize}
+		
+			\textbf{Klassifikationsbeschreibung}
+			\begin{itemize}
+				\item Unterscheide: Klassifikator und Klassifikatorbeschreibung
+				\item Verschiedene Möglichkeiten der Beschreibung:
+					\subitem Aufzählung aller Elemente (nur bei endlicher Grundmenge)
+					\subitem Angabe einer prädikatenlogischen Formel
+					\subitem Angabe eines C-Programms
+					\subitem ...
+				\item Beachte
+					\subitem Eine Klassifikatorbeschreibung bestimmt einen eindeutigen Klassifikator
+					\subitem  Ein Klassifikator kann mehrere unterschiedliche Klassifikatorbeschreibungen besitzen 
+			\end{itemize}
+		
+			\textbf{Konzeptbegriff}
+			\begin{itemize}
+				\item Konzepte sind Klassifikatorbeschreibungen
+				\item Definition: Ein Konzept ist ein einstelliges Prädikat über einer Grundmenge M.
+				\item Schreibweise:
+					\subitem Für $x\in M$,  
+					\subsubitem  K(x) : x gehört zum Konzept K (x ist ein positives Beispiel)
+					\subsubitem $\neg$K(x) : x gehört nicht zum Konzept K (x ist ein negatives Beispiel)
+			\end{itemize}
+		
+	
+	\section*{Aufgabe 4}
+	\subsection*{b)} Sie verändern sich nicht da die Precision und recall unabhängig von der Menge der True-Negatives(78) sind und die Menge der False-Positives (4) sich nicht verändert
+	
+	\subsection*{c)}
+		\begin{itemize}
+			\item[] \textbf{Recall = 1} : Kommt in diesem Fall vor wenn alle relevante Dokumente tatsächlich als relevant klassifiziert werden.
+			\item[] \textbf{Precision = 1} : Kommt in diesem Fall vor wenn alle als relevant klassifizierte Dokumente tatsächlich relevant sind.
+		\end{itemize}
+	Wenn recall = 1, ist das Konzept vollständig da die vollständige Menge der relevanten Dokumente als relevant klassifiziert werden.
+	
+	
+\end{document}

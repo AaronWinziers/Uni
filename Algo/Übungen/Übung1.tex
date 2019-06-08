@@ -1,0 +1,64 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\author{Aaron Winziers}
+\begin{document}
+	\begin{flushright}
+		Aaron Winziers	\\
+		1176638
+	\end{flushright}
+	\begin{center}
+		\underline{\textbf{Algorithmen und Datenstrukturen Übung 1}}
+	\end{center}
+	\section{Aufgabe 1.1}
+	\subsection{(a)}
+	\begin{lstlisting}
+int min = 1;
+for (int i = 2; i < n; i++)
+	if A[i] < A[min]
+		min = i;
+return min;		
+	\end{lstlisting}
+	
+	\subsection{(b)} Der Algorithmus muss im schlimmsten Fall 4n+1 Rechenschritte durchführen.
+	
+	\subsection{(c)} Der Algorithmus muss immer die gleiche Anzahl an Rechenschritte durchführen, da selbst wenn die Zahl in Index 1 die Kleinste ist müssen alle andere Zahlen überprüft werden.
+	
+	\section{Aufgabe 1.2}
+	\begin{lstlisting}
+for (int i = 1; i < n; i++){
+	min = FINDMINUMUM(A[i..n]);
+	if (i != min){
+		int temp = A[i];
+		A[i] = A[min];
+		A[min] = temp;
+	}
+}	
+	\end{lstlisting}
+	re
+	Der Algorithmus benötigt ungefähr $n(5+n) = 5n+n^{2}$ Rechenschritte um im schlimmsten Fall das Array zu sortieren
+	
+	\section{Aufgabe 1.3}
+	Übergeben werden die größte und kleinste Indizes
+	\begin{lstlisting}
+BINSEARCH(int lower, int upper, int x){
+	int mid = roundDown(upper+lower);
+	if (upper < lower){
+		return 0;
+	} else if(A[mid] == x){
+		while(A[mid-1]==x){
+			mid-1}
+		return mid;
+	} else if (A[mid] > x){
+		BINSEARCH(lower, mid-1, x);
+	} else{
+		BINSEARCH(mid+1, upper, x);
+	}
+}
+	\end{lstlisting}
+	
+\end{document}

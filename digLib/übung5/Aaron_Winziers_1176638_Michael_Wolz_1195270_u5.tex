@@ -1,0 +1,116 @@
+\documentclass[11pt,a4paper,parskip=half ]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[fleqn]{amsmath}
+
+\author{Aaron Winziers - 1176638; Michael Wolz - 1195270}
+\title{Digital Libraries WS 2018/2019\\\LARGE{Übungsblatt 4}}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	
+	\subsection*{a)}
+	\begin{enumerate}
+		\item \textbf{water ice} (water frozen in the solid state
+		\item (the frozen part of a body of water)
+		\item \textbf{sparkler} (diamonds)
+		\item \textbf{frosting, icing} (a flavored sugar topping used to coat and decorate cakes)
+		\item \textbf{methamphetamine, methamphetamine hydrochloride, Methedrine, meth, deoxyephedrine, chalk, chicken feed, crank, glass, shabu, trash (an amphetamine derivative} (trade name Methedrine) used in the form of a crystalline hydrochloride; used as a stimulant to the nervous system and as an appetite suppressant)
+		\item  \textbf{internal-combustion engine, ICE} (a heat engine in which combustion occurs inside the engine rather than in a separate furnace; heat expands a gas that either moves a piston or turns a gas turbine)
+		\item  \textbf{ice rink, ice-skating rink} (a rink with a floor of ice for ice hockey or ice skating) "the crowd applauded when she skated out onto the ice"
+	\end{enumerate}
+
+	\subsection*{b)}
+		\begin{enumerate}
+			\item 1, 2
+			\item 1
+			\item 6
+			\item Keiner der Bedeutungen
+			\item 1, 4
+		\end{enumerate}
+		
+		Ich verstehe die Aufgabenstellungen 	 einfach nicht und überlasse den Rest dir ;*
+		
+	\section*{Aufgabe 2}
+		\subsection*{a)}Die Hamming-Distanz auch Hamming-Abstand oder -Gewicht misst wie Unterschiedlich zwei zu vergleichende Strings sind. Die Distanz zwischen zwei Strings der gleichen Länge ist die Anzahl der Zeichen die ersetzt werden müssen in einem String um das andere zu erzeugen bzw. wie viele Zeichen unterschiedlich sind.
+		
+		\textit{Quelle:} https://sciencing.com/how-to-calculate-hamming-distance-12751770.html
+		
+		\subsection*{b)}
+		\paragraph{Levenshtein-Distanz} ist ein Vergleich zwischen zwei Strings der angibt wie viele Operationen auf einzelne Buchstaben benötigt werden um ein String in das andere umzuwandeln. Hierbei sind die Operationen: Einfügen, Löschen und Ersetzen.
+		
+		\paragraph{Damerau-Levenshtein-Distanz} ist im Prinzip das gleiche Algorithmus wie die Levenshtein-Distanz nur mit einer Ergänzung durch einen Tausch-Operator der zwei vertauschte Zeichen wechseln kann (Strign $\rightarrow$ String)
+		
+		\textit{Quelle:} https://www.cs.helsinki.fi/u/tpkarkka/opetus/13s/spa/lecture07.pdf
+		
+		\subsection*{c)}
+		lewenstein $\rightarrow$ levenshtein
+		\begin{itemize}
+			\item Hamming-Distanz = 6
+			\item Levenshtein-Distanz = 2
+			\item Damerau-Levenshtein-Distanz = 2
+		\end{itemize}
+		
+		trier $\rightarrow$ tire
+		\begin{itemize}
+			\item Hamming-Distanz = 3
+			\item Levenshtein-Distanz = 3
+			\item Damerau-Levenshtein-Distanz = 2
+		\end{itemize}
+		
+		10101010 $\rightarrow$ 01010101
+		\begin{itemize}
+			\item Hamming-Distanz = 8
+			\item Levenshtein-Distanz = 2
+			\item Damerau-Levenshtein-Distanz = 2
+		\end{itemize}
+	
+		\subsection*{d)}
+		\begin{itemize}
+			\item Schulz = S420
+			\item Scholz = S420
+			\item Schaeuble = S140
+			\item Chewbacca = C120
+			\item Chewie = C000
+		\end{itemize}
+		Laut dem SOUNDEX Algorithmus werden Schulz und Scholz auf Englisch gleich ausgesprochen. Chewie und Chewbacca sind im Vergleich nicht ganz so naheliegend, jedoch sind sie immer noch zu einender mehr ähnlich als Schaeuble zu allen anderen Namen.
+		
+		\section*{Aufgabe 3}
+		\subsection*{a)} Benötigte bedingte Wahrscheinlichkeiten:
+		\begin{itemize}
+			\item $P(gravity|blame)$
+			\item $P(brevity|blame)$
+			\item $P(for|gravity)$
+			\item $P(for|brevity)$
+		\end{itemize}
+	
+		\subsection*{b)}
+		\begin{itemize}
+			\item $P(gravity|blame) = \frac{18.900.000}{315.000.000} = 0,06$
+			\item $P(brevity|blame) = \frac{1.610.000}{315.000.000} = 0,005$
+			\item $P(for|gravity) = \frac{375.000.000}{1.440.000.000} = 0,26$
+			\item $P(for|brevity) = \frac{12.500.000}{12.500.000} = 1$
+		\end{itemize}
+	
+		$P(\text{blame gravity for}) = 0,0156$ 
+		
+		$P(\text{blame gravity for}) = 0,005$ 
+		
+		Das heißt dass "blame gravtiy for" das bessere der Beiden Kandidaten ist. Die Wahrscheinlichkeiten wurden mit Google berechnet obwohl ein anderer Korpus besser wäre weil an Quellen so wie der Corpus of Contemporary American English und wordandphrase.info keine Ergebnisse für die suchen "blame gravity" und "blame brevity" kamen.
+		
+		\subsection*{c)} Ein Student oder Mitarbeiter der Uni Trier könnte wissen wollen ob das Zentrum für Informations-, Medien- und Kommunikationstechnologie der Universität über den Weihnachtsferien offen ist und zur Verfügung steht. 
+		
+		Hier könnte als Problem bei einer automatischen Rechtschreibekorrektur vorkommen dass eine Suchmaschine zimk zu Zimt korrigiert und Rezepte für weihnachtliches Zimtgebäck o.Ä. aufrufen obwohl diese nicht dem ursprünglichen Information Need entsprechen.
+		
+		Bei Google wird zimk zu Zinc automatisch korrigiert. Dieser Vorschlag kommt möglicherweise vor weil Zinc und Zimk phonetisch serh ähnlich sind oder auch weil auf den meisten Tastaturen das m und das n sehr nah aneinander liegen.
+
+\end{document}

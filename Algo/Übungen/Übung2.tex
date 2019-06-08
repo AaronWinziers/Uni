@@ -1,0 +1,95 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+
+\begin{document}
+	\begin{flushright}
+		Aaron Winziers, 1176638	\\
+		Guillaume Kaufhold, 846375
+	\end{flushright}
+	\begin{center}
+		\underline{\textbf{Algorithmen und Datenstrukturen Übung 2}}
+	\end{center}
+	\section{Aufgabe 2.1}
+	\begin{lstlisting}
+BINSEARCH(int lower, int upper, int x){
+	int mid = roundDown(upper+lower);
+	if (upper < lower){
+		return 0;
+	} else if(A[mid] == x){
+		while(A[mid-1]==x){
+			mid-1}
+		return mid;
+	} else if (A[mid] > x){
+		BINSEARCH(lower, mid-1, x);
+	} else{
+		BINSEARCH(mid+1, upper, x);
+	}
+}
+	\end{lstlisting}
+	\section{Aufgabe 2.2}
+	\begin{itemize}
+		\item[a)] Ja, da $\lim\limits_{x\rightarrow\infty}\frac{2^{x}}{4^{}}=0$
+		\item[b)] Nein, da egal wie $c$ gesetzt wird, wird die Aussage $1\geq c*n$ immer ab $n>c^{-1}$ nicht mehr gelten.
+		\item[c)] Ja, bei jedem $c>\frac{1}{37}$ gilt die Aussage $|\sin(x)|\leq c*37$.
+		\item[d)] Ja, die Funktion $(n+3)^{2}$ ist stets schneller wachsend
+	\end{itemize}
+
+	\section{Aufgabe 2.3}
+	\begin{lstlisting}
+Merge(A,l,m,r){
+	int B[]
+	for (int i = l; i \leg r; i++){
+		B[i] = A[i];	
+	}
+	int j=l;
+	int k=m+l;
+	for (int i = l; i \leg r; i++){
+		if (k>r) {
+			A[i] = B[j];
+			j++;
+		} else if (j\leq m && B[j]<B[k]){
+			A[i] = B[j];
+			j++
+		}else if /j\leq m && B[j]\leqB[k]){
+			A[i] = B[k];
+			k++;
+		} else {
+			A[i] = B[k];
+			k++;
+		}
+	}
+}
+	\end{lstlisting}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+\end{document}

@@ -1,0 +1,973 @@
+\documentclass[10pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[german]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{wasysym}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{listings}
+\usepackage{fullpage}
+\author{Aaron Winziers}
+\title{Übungsmitschrift Wahrscheinlichkeitsrechnung WS2016/17}
+
+\begin{document}
+\maketitle
+\begin{center}
+	\large\color{red} Hier ist bestimmt was falsch
+\end{center}
+\tableofcontents
+
+\section{Übung 1}
+\subsection{Aufgabe 0.1}
+In der Sterbetafel 2012/2014 ist $l_{x}=\#$ der Überlebenden im Alter $x\in\{0,\dots,100\}$ getrennt für Frauen und Männer. Dort beschreibt $q_{x}$ Wahrscheinlichkeit im Alter $x$ zu sterben lässt sich berechnen durch $q_{x}=\frac{l_{x}-l_{x+1}}{l_{x}}$.
+\begin{itemize}
+	\item Im Fall männlich $l_{25}=99095, l_{50}=96012$	\\ gesuchte Wahrscheinlichkeit: $\frac{l_{25}+l_{50}}{l_{25}}=0,0311\dots$
+	\item Im Fall weiblich $l_{25}=99400, l_{50}=97715$	\\ gesuchte Wahrscheinlichkeit: $\frac{l_{25}+l_{50}}{l_{25}}=0,0169\dots$
+\end{itemize}
+
+
+\subsection{Aufgabe 1.1}
+Die fünf angeblichen Aussagen sind gar keine Aussagen. Was sollte zum Beispiel
+\begin{center}
+	$G:=$ „Genau zwei Aussagen auf dieser Liste sind Falsch“
+\end{center}
+für sich genommen bedeuten?	\\
+Man müsste für sich genommen entscheiden können. ob $G$ wahr ist oder nicht. 
+Die Aufgabe ist bewusst falsch gestellt und die Lösung bestand darin, dies zu erkennen. Wer glaubt „Eine und zwar die vierte“, wäre die richtige Antwort, der liegt falsch.	\\
+siehe Leserbrief Mattner.
+
+
+\subsection{Aufgabe 1.7}
+In der Situation von 1.5 seien $s,t\in S^{*}$.
+\paragraph*{(a)}Wir zeigen allgemein:
+\begin{itemize}
+	\item[] Sei $X$ eine Menge, $\mathcal{R}$ Menge von Äquivalenzrelation auf $X$. Dann $R:=\cap\mathcal{R}$ Äquivalenzrelationen auf $X$.	\\
+	(Beweis 1.6(a))R ist Relation	\\
+	Wenn $\mathcal{R}=\emptyset$ ist, dann ist $R=2^{X^{2}}$ und damit ist $R$ eine Äquivalenzrelation.	\\	\\
+	Für $x,y,z\in X$ gilt:
+\end{itemize}
+
+\begin{enumerate}
+	\item $(x,x)\in S$ für jeden $S\in\mathcal{R}	\\
+	\Rightarrow(x,x)\in\cap\mathcal{R}=R$
+	\item $(x,y)\in R\Rightarrow(x,y)\in S$ für jedes $S\in\mathcal{R}	\\
+	\Rightarrow(x,y)\in S$ für jedes $S\in\mathcal{R}\Rightarrow(x,y)\in R$
+	\item $\{(x,y),(y,z)\}\subseteq R\Rightarrow\{(x,y),(y,z)\}\subseteq S$ für $s\in\mathcal{R}	\\
+	\Rightarrow(x,z)\in S$ für jedes $S\in \mathcal{R}	\\
+	\Rightarrow(x,z)\in R$
+\end{enumerate}
+
+\paragraph*{(b)} Wegen 1.5(4) mit $E$ statt $\equiv$ für $E\in\mathcal{E}$.
+\begin{itemize}
+	\item[$\Rightarrow$] $(\&N\&stN\&sNt, Ns)\in E$ für jedes $E\in\mathcal{E}$
+	\item[$\Rightarrow$]$(\&N\&stN\&sNt, Ns)\in\cap\mathcal{E}=\equiv$.
+\end{itemize}
+
+\paragraph*{(c)}
+Sei $s\equiv t$. Wegen a.5(6) ist auch $(\&su, \&tu)\in E$ für jedes $E\in\mathcal{E}$
+\begin{itemize}
+	\item[$\Rightarrow$] $\&su\equiv\&tu$
+\end{itemize}
+
+\paragraph{(d)}
+Es gilt: $[s]''=[Ns]'=[NNs]=[s]$, da $NNS\equiv s$
+
+\subsection{Aufgabe 1.12}
+Sei $\mathcal{B}:=(T_{n},\wedge,\vee,',1,n)$.	\\ \\
+Wenn $n=1$ ist, dann ist $\mathcal{B}$ keine Boole-Algebra. Sei $n\geq2$ und $(p_{i})_{i\in\mathbb{N}}$ sei die aufsteigende Folge der Primzahlen, für $x\in\mathbb{N}$ sei $(\varphi_{i}(x))_{i\in\mathbb{N}}\in\mathbb{Z}^{\mathbb{N}}_{+}$, sodass $x=\prod_{i=1}^{\infty}p_{i}^{\varphi_{i}(x)}$	\\
+Dann gilt:
+\begin{align*}
+	ggT(x,y)=&\prod_{i=1}^{\infty}p_{i}^{\min\{\varphi_{i}(x),\varphi_{i}(y)\}}	\hspace{2in}\\
+	kgV(x,y)=&\prod_{i=1}^{\infty}p_{i}^{\max\{\varphi_{i}(x),\varphi_{i}(y)\}}
+\end{align*}
+für $x,y\in\mathbb{N}$ und für $x,y,z\in T_{n}$ folgt:
+\begin{itemize}
+	\item[$\centerdot$] $\underbrace{x\cap y}_{ggT}, \underbrace{x\vee y}_{kgV}, x'\in \underbrace{T_{n}}_{\text{Teiler von n}}, \wedge,\vee$ sind kommutativ, $'$ ist involutorisch
+	\item[$\centerdot$] $x\wedge n = ggT(x,n)=x, x\vee1=kgV(x,1)=x$	\\
+	$n$ ist neutrales Element bzgl. ggT, 1 ist neutrales Element bzgl. kgV
+	\item[$\centerdot$] Sei $n$ nicht quadratfrei, d.h. es existiert ein $i_{0}\in\mathbb{N}$, sodass $\varphi_{i_{0}}(n)\geq2$. Dann ist $p:=p_{i_{0}}\in T_{n}$ und $p\wedge p'=ggT(p,\frac{n}{p})=p>1$, da $p$ Primzahl. Dann wissen wir, dass $\mathcal{B}$ keine Boole-Algebra ist.
+	Sei $n$ quadratfrei, d.h. $\varphi_{i}(n)\in\{0,1\}$ für $i\in\mathbb{N}$
+	\begin{align*}
+		\Rightarrow\varphi_{i}(n)\geq&\varphi_{i}(x)\in\{0,1\}	\hspace{3in}\\
+		x\wedge x' =&ggT\left(\prod_{i=1}^{\infty}p_{i}^{\varphi_{i}(x)}, \prod_{i=1}^{\infty}p_{i}^{\varphi_{i}(n)-\varphi_{i}(x)}\right)	\\
+		=&\prod_{i=1}^{\infty}p^{\min\{\varphi_{i}(x),\varphi_{i}(n)-\varphi_{i}(x)\}}=1	\\
+		x\wedge x' =&\prod_{i=1}^{\infty}p^{\min\{\varphi_{i}(x),\varphi_{i}(n)-\varphi_{i}(x)\}}=\prod_{i=1}^{\infty}p_{i}^{\varphi_{i}(x)}=n
+	\end{align*}
+	\item[$\centerdot$] Distributivgesetz:
+	\begin{align*}
+		x\wedge(y\vee z)=&ggT(x, kgV(y,z))	\hspace{200pt}\\
+		=&\prod_{i=1}^{\infty}p_{i}^{\min\{\varphi_{i}(x),\max\{\varphi_{i}(y),\varphi_{i}(z)\}\}}	\\
+		=&\prod_{i=1}^{\infty}p_{i}^{\max\{\min\{\varphi_{i}(x),\varphi_{i}(y)\},\min\{\varphi_{i}(x),\varphi_{i}(z)\}\}}	\\
+		=& (x\wedge y)\vee(x\wedge z).
+	\end{align*}
+	Analog: $x\vee(y\wedge z)=(x\vee y)\wedge(x\vee z)$	
+\end{itemize}
+Insgesamt ist $\mathcal{B}$ genau dann eine Boole-Algebra, wenn $n\geq2$ quadratfrei ist.
+
+\section{Übung 2}
+\subsection{Aufgabe 1.15}
+Seien $A,B\in\mathcal{A}$
+\begin{align*}
+	(1)&\text{ Beh. folgt aus 1.13(3) mit }A\text{ durch }A' \text{ ersetzt }~~~~~~~~~~~~~~~	\\
+	(2)&\text{ Es gilt } A(A\vee B)=AA\vee AB=A\vee AB \\
+	&\text{ Ferner }	\\
+	&A'A(A\vee B)=0(A\vee B)=0	\\
+	&A'\vee A(A\vee B)=A'\vee A\vee AB=I\vee AB= I	\\
+	\Rightarrow&\text{ Dann folgt Behauptung nach (1) }	\\
+\end{align*}
+
+\subsection{Aufgabe 1.17}
+Mögliche Übersetzung:
+\begin{center}
+„Schwierig, Leicht, liebenswürdig, rücksichtslos bist du zugleich“
+\end{center}
+Mit der Notation aus (1.4)
+\begin{align*}
+	n,r,w,&x\in S^{\ast}/_{\equiv}	\hspace{230pt}\\
+	n=&\text{ „du bist schwierig“ }	\\
+	r=&\text{ „du bist leicht“ }	\\
+	w=&\text{ „du bist liebenswürdig“ }	\\
+	x=&\text{ „du bist rücksichtslos“ }	\\
+\end{align*}
+Zweizeiler $A=[u]\wedge[v]\wedge[w]\wedge[x]\wedge[s]'$	\\
+Wenn sicht $[u]'=[v]$ auffassen lässt, dann $[u]\wedge[v]=0$	\\
+$\Rightarrow A=0$	\\
+Wenn $[w]'\neq[v]$, dann lässt sich $A$ nicht weiter vereinfachen.
+
+
+\subsection{Aufgabe 1.18}
+Seien $A,B\in\mathcal{A}$
+\paragraph*{(a)}
+z.z. ist, dass $\leq$ eine Ordnung auf $\mathcal{A}$ ist (d.h. reflexiv, antisymmetrisch, transitive Relation)
+\begin{itemize}
+	\item[(i)] Wegen 1.19(1) $AA=A\Rightarrow A=A$
+	\item[(ii)] Seien $A\subseteq B$ und $B \leq A$	\\
+	$B=A\cap B=B\cap A=A\Rightarrow A=B$
+	\item[(iii)] $A\subseteq B$ und $B\subseteq C$, $A\wedge B=B$, $B\wedge C=C$, $A(BC)=AB=A$
+\end{itemize}
+\begin{align*}
+	\text{ Ferner }0&\leq A\text{, da }0\text{  absorbierend bezüglich  }1.~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~	\\
+	A&\leq 1\text{, da }I\text{ neutral bezüglich }1.
+\end{align*}
+
+
+\paragraph*{(b)}
+Wenn $A\subseteq B$ gilt, dann $B=B\vee BA=A\vee B$	\\
+Wenn $B=A\vee B$ gilt, $\Rightarrow A=A\wedge(A\wedge B)=AB$	\\
+\\
+$A'\equiv B'\Leftrightarrow B'\subseteq A'\Leftrightarrow A'B'=B'$	\\
+$(A'B')'B=A\vee B$
+
+\paragraph*{(c)}Seien $A_{1},A_{2},B_{1},B_{2}\in\mathcal{A}$, so dass $A_{1}\subseteq A_{2},B_{1}\subseteq B_{2}$
+\begin{align*}
+	\Rightarrow& (A_{1}B_{1})(A_{2}B_{2})=(A_{1}A_{2})(B_{1}B_{2})=A_{2}B_{1}	\\
+	\Rightarrow& A_{1}B_{1}\leq(A_{2}B_{2})	\\
+	\Rightarrow& (A_{1}A_{2})\vee(B_{1}B_{2})=(A_{1}\vee B_{1})\vee(A_{2}B_{2})=A_{2}\vee B_{2}
+\end{align*}
+
+
+\paragraph*{(d)}z.z. $\inf\{a,b\}=AB=R\in\mathcal{A}$, $\sup\{a,b\}=A\vee B=S\in\mathcal{A}$	\\
+Sei $T\in\mathcal{A}$ es gilt $R\subseteq A$ und $R\subseteq B$ wegen Idempotenz von $\wedge$. Wenn $T\leq A$ und $T\leq B$:	\\
+\begin{center}
+$T\leq R= TAB=TB=T$, d.h. $T\leq R$
+\end{center}
+
+
+
+
+\section{Übung 3}
+\subsection{Aufgabe 1.34}
+\paragraph*{(a)}
+Seien $x,y \in \mathcal{R} $,
+\begin{align*}
+	&\Rightarrow (x+y)=(x+y)(x+y)=xx+xy+yx+xx \text{ (wobei $\underbrace{xx=x}_{=x}$ und $\underbrace{yy=y}_{=y}$)}	\\
+	&\Rightarrow 0=xy+yx	\\
+	&\Rightarrow_\text{(mit x=y)} 0=x+x		\\
+	&\Rightarrow xy+yx=0=xy+xy \Rightarrow yx=xy	\\
+	& \Rightarrow \text{Kommutativität}
+\end{align*}
+
+\paragraph*{(b)}
+Es gilt $\#\mathcal{R} \geqq 2$, „$\cdot$“ ist eine assoziative, kommutative Verknüpfung und „'” involuntäre Verknüpfung. \\
+Nach (a) und $(xy)'(xy')'$, 
+\begin{align*}
+	(xy)'(xy')' & =(1+xy)\cdot(x(1+y))'	\hspace{3in}\\
+	& =(1+xy)(1+x+xy)=1+xy+x(1+xy)	\\
+	& =1+xy+x+xy=1+x=x' 	\text{(d.h. 1.6(1))}	
+\end{align*}
+\begin{align*}
+	\Rightarrow & (x'y')'=(1+(1+x))(1+y)=\underbrace{1+1}_{=0}+x+y+xy=x \cup y	\hspace{1.75in}\\
+	\Rightarrow & xx'=x+x=0, \hspace{5pt} 0'=1+0=1	\\
+	\Rightarrow & \text{Behauptung mit Satz 1.16}
+\end{align*}
+
+\paragraph*{(c)}
+Für $A,B,C \in \mathcal{A}$
+\begin{enumerate}
+	\item $\vartriangle$ ist eine kommutative Verknüpfung und es gilt:
+	\begin{align*}
+	(A\vee B)(AB)'=&\underbrace{AA}_{=0} \vee BA' \vee AB' \vee \underbrace{BB}_{=0}	\hspace{2in}\\
+	\stackrel{Def}{=} & A\vartriangle B
+	\end{align*}
+	\begin{align*}
+		\Rightarrow A \vartriangle (B \vartriangle C) =& A(B \vartriangle C)'\vee A'(B\vartriangle C)	\hspace{2.5in}\\
+		=&A((B\vee C)(BC)')'\vee A'(BC'\vee B'C)	\\
+		=&A((B\vee C)'\vee BC)\vee A'BC'\vee A'B'C	\\
+		=&AB'C'\vee ABC\vee A'BC'\vee A'B'C	\\
+		=&C\vartriangle (A\vartriangle B)=(A\vartriangle B)\vartriangle C	\\
+	\end{align*}
+	Ferner $A\vartriangle 0 = A$, $A\vartriangle A=0$
+	\item $\wedge$ ist assoziativ und $AI=I$
+	\item $\wedge$ ist idempotent nach 1.13(1)
+	\item $AB\vartriangle AC=A(BC'\vee B'C)=A(B\vartriangle C)$
+\end{enumerate}
+
+\paragraph*{(d)}
+Sei $\phi : BR \mapsto BA$ gemäß (b), $\psi : BA \mapsto BR$ gemäß (c). Dann reicht z.z.:
+$\psi \circ \phi = id_{BR}$ und $\phi \circ \psi = id_{BA}$.	\\
+Seien $R=(R,+,\cdot , id_R,0,1)\in BR$, $\boxed{\mathcal{A}}=(\mathcal{A},\wedge ,\vee ,',0,I)\in BA$
+\begin{align*}
+	\stackrel{(b),(c)}{\Rightarrow} &(\phi \circ \psi)(R)=R \hspace{15pt} \text{Klar, bis auf den 2. Eintrag}	\\
+	&(\psi \circ \phi)(\boxed{\mathcal{A}})=\boxed{\mathcal{A}} \hspace{15pt} \text{Klar, bis auf den 3., 4. Eintrag}
+\end{align*}
+Mit $x,y\in R$, $A,B\in \boxed{\mathcal{A}}$ mit $\vartriangle$ gemäß (c) bleibt z.z.
+\begin{align*}
+&x+y=x(1+y)+y\cdot (1+x)+x\cdot (1+y)\cdot y(1+x)	\\
+&I\vartriangle A=A'	\\
+&(A\vartriangle B)\vartriangle AB=AB'\vee B\stackrel{1.15(2)}{=}AB'\vee B\vee AB=A\vee B
+\end{align*}
+
+\subsection{Aufgabe 1.35}
+Seien $A,B,C \in \mathcal{A}$
+\paragraph*{(a)}
+\begin{itemize}
+	\item[$':$] $A'=A'A'=A|A$
+	\item[$\wedge:$] $AB=A''B''=A'|B'= (A|A)|(B|B)$
+	\item[$\vee :$] $A\vee B=(A'B')'=(A|B)'=(A|B)|(A|B)$
+	\item[$0:$] $0=AA'=(A|A)|A$
+	\item[$I:$] $I=0'=((A|A)|A)|((A|A)|A)$
+\end{itemize}
+
+
+\paragraph*{(b)}
+\begin{enumerate}
+	\item $(A|A)|(A|A)=A'|A'=A$
+	\item $A|(B|(B|B))=A|(B|B')=A|0=A')$
+	\item $(A|(B|C))(A|(B|C))=A\vee (B|C)=(BA')'(CA')'=((B|B)|A)|((C|C)|A)$
+	\item $(A|B)|(A|(B|C))=A\vee (B|(B|C))=A\vee BB'C'=A\vee 0=A $
+	\item missing
+	\item $(A|((B|A)|A)(A|(B|(C|A)))=(A'((B'A')A')')'(B'(A'C')')'=B$
+\end{enumerate}
+
+\paragraph*{(c)} Um (4)-(6) zu finden wurde das Computerprogramm OTTER verwendet. Huntington hatte kein Computer.
+
+\subsection{Aufgabe 1.20}
+\paragraph*{(a)}
+Seien $\boxed{\mathcal{A}},\boxed{\mathcal{B}}$ wie in Definition 1.21, $\varphi:\mathcal{A}\mapsto\mathcal{B}$	\\
+Seien $A,B\in\mathcal{A}$, gelten (a),(3)
+\begin{align*}
+	\Rightarrow\varphi(A\vee B)=&\varphi(A'\wedge B')^{*}	\hspace{2.5in}\\
+	=&(\varphi(A^{*})\sqcap \varphi(B^{*}))^{*}	\\
+	=&\varphi(A)\sqcap\varphi(B)
+\end{align*}
+Analog: (2),(3)$\Rightarrow$(1)	\\
+Ferner folgt aus (1)-(3) auch (4)-(5) denn:
+\begin{align*}
+	\varphi(0)=&\varphi(A\wedge A')	\hspace{3in}\\
+	=& \varphi(A)\sqcap\varphi(A)^{*}	\\
+	=& Z	\\	\\
+	\varphi(I)=&*\varphi(0)^{*}	\\
+	=&Z^{*}	\\
+	=& U
+\end{align*}
+
+
+\paragraph*{(b)}
+Ein Isomorphismus ist bijektiv. Sei $\varphi$ bijektiver Morphismus.	\\	\\
+$\Rightarrow$ Es existiert $\psi:=\varphi^{-1}$ $\mathcal{B}\mapsto\mathcal{A}$ mit $\psi\circ\varphi=id_{\mathcal{A}}, \varphi\circ\psi=id_{\mathcal{B}}$	\\
+
+Seien $A,B\in\mathcal{B}$.
+\begin{align*}
+	\psi(A^{*}\sqcap B)=&\psi(\varphi(\psi(A)))^{*}\cap\varphi(\psi(B))	\hspace{2in}\\
+	=&\psi(\varphi(\psi(A')\wedge\psi(B))	\\
+	=&\psi(A)'\wedge\psi(B)
+\end{align*}
+$\Rightarrow$ wegen (a) ist $\psi$ ein Morphismus und damit $\varphi$ ein Isomorphismus
+
+\paragraph*{(c)}
+Wegen Operationstreue der Urabbildung ist $\varphi$ ein Morphismus.
+Wir zeigen $\varphi$ ist bijektiv (und Isomorphismus), genau dann, wenn $f$ bijektiv.
+\begin{itemize}
+	\item[„$\Leftarrow$“:] Sei $f$ bijektiv $\Rightarrow\varphi(f[A])=A$ für $A\in2^{4}$, d.h. $\varphi$ ist surjektiv.	\\
+	Seien $A,B\in2^{x}$ mit $A\neq B$	\\
+	$\Rightarrow$ Ohne Einschränkung ei $x\in A\setminus B$	\\
+	$\Rightarrow$ $\exists y\in Y$ mit $f(x)=y$	\\
+	$\Rightarrow$ $y\in\varphi(A)\setminus\varphi(B)$ und $\varphi$ injektiv und insgesamt bijektiv	\\
+	$\Rightarrow$	Sei $f$ nicht surjektiv	\\
+	$\Rightarrow$ $\exists x\in X\setminus f[J]$ mit $\varphi(\{x\})=\emptyset=\varphi(\emptyset)$, d.h. $\varphi$ nicht injektiv	\\
+	\item[„$\Rightarrow$“:] Sei nun $f$ nicht injektiv.	\\
+	$\Rightarrow$ Es existiert$x\in X$ mit $\#\varphi(\{x\})>2$ und sei $y\in\varphi(\{x\})$. Ferner nehmen wir an, dass $\varphi$ surjektiv $\Rightarrow A\in2^{x}$ mit $\{y\}=\varphi(A) \Rightarrow x\in A, \varphi(\{x\})\subseteq\varphi(A)$\lightning
+\end{itemize}
+
+
+\section{Übung 4}
+\subsection{Aufgabe 1.27}
+Seien $\mathcal{A,B,C}$ Boolesche Algebra, $\varphi : \boxed{\mathcal{A}} \mapsto \boxed{\mathcal{B}}$, $\psi  : \boxed{\mathcal{B}} \mapsto \boxed{\mathcal{C}}$ Morphismen, $A,B\in \mathcal{A}$
+
+\paragraph*{(a)}Es gilt $id_\mathcal{A}(A'B)=A'B=id_\mathcal{A}(A)'id_\mathcal{A}(B)$\hspace{10pt}(Mit $B=I$ folgt 1.21(3) und mit $A$ statt $A'$ folgt 1.21(1)) und $id_\mathcal{A}$ ist bijektiv.	\\
+\vspace{3pt}
+Nach 1.22(b),(a) ist $id_\mathcal{A}$ ein Automorphismus	\\
+\vspace{3pt}
+Es gilt $\psi \circ \varphi : \mathcal{A}\mapsto\mathcal{C}$ Abb.\\
+\vspace{3pt}
+$\psi(\varphi(A'B))=\psi(\varphi(A))'\psi(\varphi(B))$	\\
+\vspace{3pt}
+$\Rightarrow\psi\circ\varphi$ ist ein Morphismus
+
+\paragraph*{(b)}
+Sei $A \leq B$. Dann $\varphi(A)\varphi(B)=\varphi(AB)=A$, d.h. $\varphi(A)\leq\varphi(B)$.
+
+
+\paragraph*{(c)}
+Wenn $AB=0 \Rightarrow \varphi(A)\varphi(B)=\varphi(0)=0$.	\\
+Wenn $A\vee B = I\Rightarrow \varphi(A)\vee\varphi(B)=\varphi(I)=I$.	\\
+Die Antwort auf die Zusatzfrage ist nein. Sei $B$ durch $BA$ zu $A$. Dann ist $'$ Isomormphismus von $A$ nach $B$, $I$ nicht disjunkt zu sich selber, aber $I'=0$ ist disjunkt zu sich selbst-
+
+
+\subsection{Aufgabe 1.28} Seien $f:S\mapsto T \text{ bijektiv, } g=f^{-1}:T\mapsto S$ Umkehrfunktion.
+\begin{align*}
+	\stackrel{1.25(b)}{\Longrightarrow} &\text{ Es existieren eindeutige Morphismen }\varphi:\mathcal{A}\mapsto\mathcal{B}, \psi:\mathcal{B}\mapsto\mathcal{A} \text{ mit }	\\
+	&\varphi([s])=[f(s)], \psi([t])=[g(t)] \text{ für } s\in S, t\in T.	\\
+	\stackrel{1.29}{\Longrightarrow} \hspace{5pt} &\omega:=\psi\circ\varphi\text{ Morphismus von } \mathcal{A} \text{ nach } \mathcal{A}, id_{\mathcal{A}} \text{ Automorphismus von } \mathcal{A}	\\
+	\Rightarrow \hspace{5pt} &\omega([s])=\psi([f(s)])_{\mathcal{A}}([s])\text{ für } s\in S	\\
+	\stackrel{1.25(b), Eindeutigkeit}{\Longrightarrow} &\psi\circ\varphi=id_{\mathcal{A}}	\\
+	\stackrel{analog}{\Longrightarrow} &\varphi\circ\psi=id_{\mathcal{B}}
+\end{align*}
+Damit sind $\varphi, \psi$ inverse Isomorphismen (nach 1.22(b))
+
+
+\subsection{Aufgabe 1.29} Sei $\mathcal{A} := S^\ast/_{\equiv}$, $B=\{0,I \}$ degenerierte $BA$ (1.11(a)) und $f:S\mapsto B$ beliebig. Dann gibt es genau einen Homomorphismus $\varphi([s])=f(s)$ für $s\in S$. $f$ ist an allen nicht betrachteten Stellen beliebig z.B. 0.
+\begin{enumerate}
+	\item Hier sei $f(u)=I$ für $v\in S$. Dann:
+		 \begin{align*}
+			\varphi([s]\wedge[t]\wedge[u]) &= \varphi([s])\wedge\varphi([t])\wedge\varphi([u])	\hspace{2in}\\
+			&= f(s)\wedge f(t)\wedge f(u)	\\
+			&= I\neq 0=\varphi(0)
+	 	\end{align*}
+ 	\item Sei $s\neq t$, wir wählen $f(s)=I,f(t)=0$
+ 		\begin{align*}
+ 			&\Rightarrow f(s)\wedge f(t)\neq f(s)	\hspace{2in}\\
+ 			&\Rightarrow [s]\wedge[t]\neq[s]\text{, damit }[s]\nleq [t]
+ 		\end{align*}
+ 	\item Sei $f$ gemäß (1). Dann is $f(s)\neq f(t)'\Rightarrow[s]\neq[Nt]\Rightarrow s\neq Nt$
+ 	\item Wenn $s=t$ oder $\#\{s,t,u\}$ gilt, wählen wir $f(s)=f(t)=I, f(u)=0$. Für $s\neq u$ wählen wir $f(t)=f(u)=I, f(t)=0$. Für $t=u$ wählen wir $f(t)=f(u)=I, f(s)=0$. \\
+ 	
+ 	$\Rightarrow f(s)=0\neq f(t)\wedge f(u)\Rightarrow [s]\not\equiv[stu]$
+\end{enumerate}
+
+
+
+\section{Übung 5}
+\subsection{Aufgabe 1.36}
+\paragraph*{(a)} Seien $A,B\in\mathcal{A}$
+\begin{align*}
+	(i)\Rightarrow(ii):& \text{ Gelte } (1). \text{ Dann gilt } (2). \text{ Sei } A\in\mathcal{F}, A\leq B	\\
+	&\Rightarrow  AB=A\in\mathcal{F}\stackrel{(1)}{\Rightarrow}B\in\mathcal{F}	\\
+	\\
+	(ii)\Rightarrow(iii):& \text{ Gelte } (3) \text{ und sei } A\in\mathcal{F}	\\
+	&\Rightarrow A\leq A\vee B\Rightarrow A\vee B\in\mathcal{F}	\\
+	\\
+	(iii)\Rightarrow(i):& \text{ Gelte } (2),(4)\Rightarrow "(1)\Rightarrow" \text{ aus } (2)	\\
+	& \text{Sei }  AB\in\mathcal{F}\Rightarrow A=AB\vee A\in\mathcal{F} \text{ und }B\in\mathcal{F}\text{ analog (wg. 1.15(b))}	\\
+	&\Rightarrow\text{ „}(1)\Leftarrow\text{“ }
+\end{align*}
+
+\paragraph*{(b)} Die Rückrichtung von $(5),(6)$ \checkmark
+\begin{align*}
+	\text{ zu } (5):& \text{ Sei } A\in\mathcal{F}\Rightarrow A\leq I\Rightarrow I\in\mathcal{F}\text{ (vgl.(3)) }	\\
+	\text{ zu } (6):& \text{ Sei } 0\in\mathcal{F}\Rightarrow A\in\mathcal{F} \text{ für } A\in\mathcal{A},	\text{ da } 0\leq A	\\
+	&\Rightarrow\mathcal{F}=\mathcal{A}
+\end{align*}
+
+
+\subsection{Aufgabe 1.37}
+\begin{align*}
+	(i)\Rightarrow(ii):& \text{ Es gelte } (i) \text{, sei } A\in\mathcal{A}. \text{ Dann kann nicht } A\in\mathcal{F} \text{ und } A'\in\mathcal{F}\text{ gelten,}	\\ 
+	&\text{ da sonst } 0=AA'\in\mathcal{F}. \text{ Gelte } A\notin\mathcal{F}\text{ und } A'\notin\mathcal{F}\Rightarrow A\neq 0,	\\
+	&\Rightarrow \mathcal{G}=\{C\in\mathcal{A}: \exists B\in\mathcal{F}\text{ mit }AB\leq C \}\supsetneq\mathcal{F}\text{ ist eigentlich Filter}	\\
+	&\text{ \lightning \hspace{5pt}zur Maximalität von }\mathcal{F}	\\	
+	\\
+	(ii)\Rightarrow(iii):& \text{ Es gelte } (ii). \text{ Da } \mathcal{F}\text{ Filter, gilt } I\in\mathcal{F}	\\
+	&\Rightarrow 0=I'\notin\mathcal{F} \text{ und ist damit eigentlich }	\\
+	\\
+	(iii)\Rightarrow(iv):& \text{ Es gelte } (iii), \text{ sei } \mathcal{J}\text{ eine endliche Menge } (A_{j})_{i\in\mathcal{J}}\in\mathcal{A}^{\mathcal{J}}\text{ per Definition }	\\
+	&\Rightarrow \text{ Die Rückrichtung in }(iv)\text{ folgt aus 1.3(4). Hinrichtung von (iv):}	\\
+	&\text{Sei }\underset{j\in\mathcal{J}}{\bigvee}A_{j}\in\mathcal{F}.	\text{ Wenn } A_{j}\in\mathcal{F}\text{ für }j\in\mathcal{J}\Rightarrow A_{j}\in\mathcal{F}\text{ für }j\in\mathcal{J}	\\
+	&\Rightarrow \mathcal{F}\ni(\underset{j\in\mathcal{J}}{\bigvee}A_{j})\wedge(\underset{j\in\mathcal{J}}{\bigvee}A_{j})=\underset{j\in\mathcal{J}}{\bigvee}A_{j}\wedge(\underset{j\in\mathcal{J}}{\bigvee}A_{j})'=0	\\
+	&\text{ Wenn } A_{j}, A_{k}\in\mathcal{F}\text{ für } (j,k)\in\mathcal{J}_{\mathcal{F}}^{2}.	\\
+	&\Rightarrow\mathcal{F}\ni A_{j}A_{k}=0	\text{ \lightning \hspace{5pt}zu }(iii)	\\
+	\\
+	(iv)\Rightarrow(i):& \text{ Gelte } (iv)	\\
+	&\Rightarrow 0\notin\mathcal{F}, \text{ da sonst } 0\vee0=0\in\mathcal{F}	\\
+	&\Rightarrow 0\in\mathcal{F} \text{ und } 0\notin\mathcal{F} \text{ \lightning }	\\
+	&\text{ Sei }\mathcal{G}\text{ ein Filter in }\mathcal{A}\text{ mit }\mathcal{F}\subsetneq\mathcal{G}	\\
+	&\Rightarrow A\in\mathcal{G}\setminus\mathcal{F}\Rightarrow A\vee A'=I\in\mathcal{F}	\\
+	&\Rightarrow A'\in\mathcal{F}\subseteq\mathcal{G}\Rightarrow\mathcal{G}\ni AA'=0 \text{ \lightning } \hspace{5pt} \mathcal{G} \text{ eigentlicher Filter }
+\end{align*}
+
+\subsection{Aufgabe 2.6}
+\begin{lstlisting}[language=R]
+	x<-seq(as.Date("2017/01/13"), as.Date("2417/01/13"), by="month")
+	
+	####################################
+	#Aufgabe A
+	
+	sum(weekdays(x)=="Friday")/length(x)		#Resultat: 0.1435118
+	
+	####################################
+	#Aufgabe B
+	
+	sum(weekdays(x)=="Sunday")/length(x)		#Resultat: 0.1430952
+	sum(weekdays(x)=="Monday")/length(x)		#Resultat: 0.1426786
+	sum(weekdays(x)=="Tuesday")/length(x)		#Resultat: 0.1426786
+	sum(weekdays(x)=="Wednesday")/length(x)		#Resultat: 0.1430952
+	sum(weekdays(x)=="Thursday")/length(x)		#Resultat: 0.1424703
+	sum(weekdays(x)=="Friday")/length(x)		#Resultat: 0.1435118
+	sum(weekdays(x)=="Saturday")/length(x)		#Resultat: 0.1424703
+\end{lstlisting}
+
+
+\section{Übung 6}
+\subsection{Aufgabe 2.12}
+Es entspreche $r=1$ dem Startmonat Januar 2017
+\paragraph*{2.7(a)}
+\begin{align*}
+	\text{Dann }& \text{wird die Auswahl „Alle Januare“ formalisiert durch:}~~~~~~~~~~~~~	\\
+	&s_{r}(f)=(r\in1+12\mathbb{N}_{0}) \text{ für } f\in\{0,1\}^{\{1,...,r-1\}\times A}	\\
+	\text{d.h. }\hspace{5pt}& s_{r}=1, s_{2}=0 \text{ usw. konstant}	\\
+	& \Rightarrow s_{r}=(r\in1+\mathbb{N}_{0})	\\
+\end{align*}
+
+
+\paragraph*{2.7(b)}
+Mit dem gegebenen Startdatum setzen wir $s_{1}=s_{2}=0$. Wenn $r\geq3$ ist, setzen wir $s_{r}(f):=f(r-2,\{5\})\wedge f(r-1,\{5\}$, für $f\in\{0,1\}^{\{1,...,r-1\}\times A}$
+\begin{align*}
+	\Rightarrow s_{r}=&(\varphi_{r-2}(\{5\})\in\mathcal{R})\wedge(\varphi_{r-1}(\{5\})\in\mathcal{R})	\\
+	=&(\varphi_{r-2}(\{5\})\in\mathcal{R}, \varphi_{r-1}(\{5\})\in\mathcal{R})	\\
+\end{align*}
+
+
+\subsection{Aufgabe 2.13}
+\paragraph*{(a)}
+z.B. Körper $(\mathcal{K}, +,\cdot,(-),0,1).$
+Denn z.B. $\mathbb{R}$ Körper und $\mathbb{Z}$ abgeschlossen bzgl. allen Körperoperationen in $\mathbb{R}$, d.h.:
+\begin{center}
+	$x+y,x-y,x\cdot y\in\mathbb{Z}$ für $x,y\in\mathbb{Z}\hspace{20pt}(\ast)$
+\end{center}
+aber Multiplikation ist in $\mathbb{Z}$ nicht invers.\vspace{5pt}	\\
+$\Rightarrow\mathbb{Z}$ ist mit den Eingeshränkten Verknüpfungen kein Körper. Jedoch gilt für Körper:$L\subseteq K$ ist Unterkörper, gdw. $(\ast)$ gilt und zusätzlich $xz^{-1}\in L$ für $x\in L, z\in L\setminus\{0\}$ wie z.B. bei $\mathbb{Q\subseteq\mathbb{R}}$
+
+
+\paragraph*{(b)}
+Seien $A,B\in\mathcal{A}^{2}_{\neq}, \varepsilon:=\{A,B\}$ und $\mathcal{F}:=\{AB,A'B,AB',A'B'\}$. Dann zeigen wir $\propto(\varepsilon)=\mathcal{G}:=\{\underset{v\in\varphi}{\bigcup}\varphi:\varphi\in2^{\mathcal{F}}\}$
+\begin{align*}
+	\text{ zu }\subseteq:& \text{ Da }\propto(\varepsilon)\text{ Unteralgebra mit } A,B\in\propto(\varepsilon)	\\
+	&\Rightarrow\mathcal{F}\subseteq\propto(\varepsilon)\Rightarrow\mathcal{G}\subset\propto(\varepsilon)	\\
+	\\
+	\text{ zu }\subseteq:& \text{ Da }\propto(\varepsilon) \text{ eine Unteralgebra ist mit } A,B\in\propto(\varepsilon)	\\
+	&\Rightarrow\mathcal{F}\subseteq\propto AB\vee AB'\in\mathcal{G}\text{, analog }B\in\mathcal{G}	\\
+	&\text{ Seien }\mathcal{G}_{1},\mathcal{G}_{2}\in\mathcal{G}\Rightarrow\mathcal{G}_{1}\vee\mathcal{G}_{2}\in\mathcal{G}(\text{\checkmark}), \mathcal{G}_{1}^{??}\in\mathcal{G}\text{ (Ausmultiplizieren),}	\\
+	&\text{ und } I=\underset{F\in\mathcal{F}}{\bigcup}F\in\mathcal{G}	\\
+	&\Rightarrow\mathcal{G}\text{ Unteralgebra von }\mathcal{A}\text{ wg. }(1)	\\
+	&\Rightarrow\text{ „}\subseteq\text{“}	\\
+	\Rightarrow\#&\propto(\varepsilon)\leq\#2^{\mathcal{F}}\leq16	\\
+	&\text{ Im Fall }\mathcal{A}:=2^{\{1,2,3,4\}}, \varepsilon:=\{\{1,2\}\{2,3\}\}	\\ 
+	&\Rightarrow\propto(\varepsilon)=\mathcal{A}\Rightarrow\#\propto(\varepsilon)=16	\\
+\end{align*}
+
+\paragraph*{(c)}
+$\checkmark$	\\
+wegen Morphismuseigenschaften	\\
+$A\in\mathcal{A}$	\\
+wegen Morphismus kann Schnitt reingezogen werden $\rightarrow$ Schnitt $\varphi(A), \varphi(B)$ liegt auch drin.
+
+
+\subsection{Aufgabe 2.14}
+Lasse ich raus weil die Formatierung scheiße aussieht. Code liegt hier: http://pastebin.com/XYr1iShZ
+
+
+\section{Übung 7}
+\subsection{Aufgabe 2.17}
+Wir setzen $A_{0}:=\{A\subseteq [0,1]:A\text{ ist endliche Vereinigung von Intervallen mit rationalen Endpunkten} \}$
+\begin{align*}
+	\Rightarrow& A^{0}\subseteq\mathcal{A}\text{ abzählbar. Sei }A\in\mathcal{A}	\\
+	\Rightarrow& S:=\underset{B\in A_{0}, B\subseteq A}{\sup} P(B)\leq P(A) \text{(wegen 2.4(a))}
+\end{align*}
+Sei $n\in\mathbb{N}$ und $A=\underset{k=1}{\stackrel{n}{\bigcup}}J_{k}$, wobei $J_{k}$ paarweise disjunkte Intervalle mit Endpunkten $a_{k}\leq b_{k}$ sind.	\\
+Sei $\varepsilon>0$ beliebig.
+\begin{align*}
+	\Rightarrow\text{ Es existieren }p_{k}\in& \left] a_{k}, a_{k}+\frac{\varepsilon}{2n} \right[ n\mathbb{Q},\hspace{80pt}	\\
+	q_{k}\in& \left] b_{k}-\frac{\varepsilon}{2n}, b_{k}\right[ n\mathbb{Q}	\\
+	\text{ für } k\in\{1,\dots,n\}.&
+\end{align*}
+\begin{align*}
+	\Rightarrow P(A)=\sum_{k=1,a_{k}<b_{k}}^{n}(b_{k-a_{k}}) <& \sum_{k=1,a_{k}<b_{k}}^{n}(q_{k}-p_{k}+\frac{\varepsilon}{n})	\\
+	\leq& \sum_{k=1,a_{k}<b_{k}}^{n}(q_{k}-p_{k})+\varepsilon	\\
+	=&P(\stackrel{n}{\underset{k=1,a_{k}<b_{k}}{\bigcup}})(p_{k},q_{k})+\varepsilon\leq S+\varepsilon
+\end{align*}
+Mit $\varepsilon\rightarrow0$ gilt $P(A)\leq S$, d.h. 2.16(1) gilt in unserer Situation.
+
+
+\subsection{Aufgabe 3.3}
+Es gilt:
+\paragraph*{(7)}
+\begin{align*}
+	P(A\cup B)\stackrel{(6)}{=}&P(A)+P(B)-\underbrace{P(A\cap B)}_{\geq0}	\hspace{150pt}\\
+	\leq&P(A)+P(B)
+\end{align*}
+\paragraph*{(8)}
+\begin{align*}
+	P(B)=&P(A\cup(B\setminus A))	\\
+	\text{\footnotesize(5)Additivität}=&\underbrace{P(A)+P(B\setminus A)}_{\geq0}	\hspace{150pt}\\
+	\geq&P(A) \text{ für }A\subseteq B
+\end{align*}
+\paragraph*{(12)}
+	$P(A)\stackrel{(8)}{\leq}P(\underset{i\in I}{\bigcup}A_{i})\stackrel{(11)}{\leq}\sum_{i\in I}P(A_{i})$ für $A\subseteq \underset{i\in I}{\bigcup}A_{i}$
+
+
+
+\subsection{Aufgabe 3.4}
+\paragraph{(a)}
+\begin{align*}
+	P(A\cap B)\stackrel{3.3(6)}{=}&P(A)+P(B)-\underbrace{P(A\cup B)}_{\leq1}	\hspace{200pt}\\
+	\geq&P(A)+P(B)-1	\\
+	=&0.4+0.75-1	\\
+	=&0.15
+\end{align*}
+\paragraph*{(b)}Wir wählen $\Omega P,A,B$ gemäß (c) mit $q=0.2$
+\paragraph*{(c)}
+Es gilt:
+\begin{center}
+	$P(A\cap B)\leq P(A)=0,4$
+\end{center}
+Seien $q\in[0.15,0.4]$ beliebig $\Omega:=\{1,2,3,4\}, A=\{1,2\},B=\{1,3\}$	\\ und $P$ sei definiert durch die Dichte $p$ mit
+\begin{itemize}
+	\item[] $P(1)=q,$
+	\item[] $P(2)=0.4-q,$
+	\item[] $P(3)=0.75-q,$
+	\item[] $P(4)=q-0.15$
+\end{itemize}
+\begin{align*}
+	&P(A\cap B)=P(\{1\})=P(1)=q	\hspace{200pt}\\
+	&P(A)=P(\{1\})+P(\{2\})=P(1)+P(2)=0.4	\\
+	&P(B)=P(\{1\})+P(\{3\})=P(1)+P(3)=0.75	\\
+\end{align*}
+d.h. $P(A\cap B)$ kann bei geeigneter Wahl von $(\Omega, P)$ jeden Wert im Intervall $[0.15,0.4]$ annehmen
+
+
+
+\section{Übung 8}
+\subsection{Aufgabe 3.8}
+In der Situation von Bsp. 3.7 gilt:
+\begin{align*}
+	B_{n,p}(\text{„Durch 4 teilbar“})=&B_{n,p}(4\mathbb{N}_{0}\cap\Omega)	\hspace{200pt}\\
+	=&\sum_{k\in4\mathbb{N}_{0}}b_{n,p}(k)	\\
+	=&\sum_{k\in4\mathbb{N}_{0}}\frac{1+(-)^{k}+i^{k}+(-i)^{k}}{4}b_{n,p}(k)	\\
+	=&\frac{1}{4}(1+\underbrace{(1-2p)^{n}+(1-p+ip)^{n}+(1-p-ip)^{n}}_{\rightarrow0,n\rightarrow\infty})	\\
+	\rightarrow& \frac{1}{4}, n\rightarrow\infty
+\end{align*}
+Denn: $|1-p\pm ip|=((1-p)^{2}+p^{2})^{\frac{1}{2}}<1$	\\
+(Linke Seite ist konvex in $p\in]0,1[$, Randpunkt)
+
+\subsection{Aufgabe 3.15}
+\paragraph{(a)}
+Die plausible Gleichverteilungsannahme liefert $\Omega=\{0,1\}$ und $P:=U_{\Omega}=B_{1,0.5}$
+
+\paragraph{(b)} Die empirische Verteilung von diesem $x\in\{0,1\}^{100}$ in $\Omega=\{0,1\}$ ist gegeben durch Dichte $p$ mit $p(0)=\frac{76}{100}$ und $p(1)=\frac{24}{100}$
+
+
+\subsection{Aufgabe 3.18}Wir denken uns die Karten durchnummeriert von 1-4, wobei 1,2 rote Karten sind und 3,4 schwarze Karten sind.
+Wir geben zwei Lösungen an:
+\begin{enumerate}
+	\item Mit $\Omega:=\{1,2,3,4\}^{2}_{<}$ und der Interpretation,	\\
+	$\Omega \textbf{(symbol?)}(\omega_{1},\omega_{2})\hat{=}$ „Die beiden ausgewählten Karten sind $\omega_{1}$ und $\omega_{2}$“	\\ \\
+	Das Ereignis zu gewinnen ist:
+	\begin{align*}
+		A:=&\text{ „Beide Karten haben gleiche Farbe“}	\hspace{100pt}\\
+		=&\{(1,2),(3,4)\}
+	\end{align*}
+	Unter der Gleichverteilungsannahme (d.h. $P:=U_{\Omega}$) gilt:
+	\begin{align*}
+		P(A)=\frac{\#A}{\#\Omega}=\frac{2}{\binom{4}{2}}=\frac{2}{6}=\frac{1}{3}	\hspace{120pt}
+	\end{align*}
+	
+	\item In (1) wird die Zufällige Auswahl von zwei der vier Karten ohne Berücksichtigung der Reihenfolge modelliert. Berücksichtigt man diese, wäre unser Modell die Gleichverteilung auf  $\Omega:\{1,2,3,4\}^{2}_{\neq}$ mit $A:=\{(1,2),(2,1),(3,4),(4,3)\}$	\\
+	$\Rightarrow P(A)=\frac{\#A}{\#\Omega}=\frac{4}{4^{2}-4}=\frac{4}{12}=\frac{1}{3}$
+\end{enumerate}
+
+
+\subsection{Aufgabe 3.19}
+\paragraph*{(a)} Durch googeln findet man ein Haufen Nachfolgeliteratur von Tversky/Kahneman('83). Die große Mehrheit(85\%) der Befragten sah (2) als Wahrscheinlicher an als (1) und Training in Stochastik schien dabei nicht zu helfen(s.298).
+
+\paragraph{(b)}Nimmt man an, dass Linda eine bestimmte Person ist, ist die Frage unsinnig, da nach dem Vergleich von zwei Wahrscheinlichkeiten von Weltereignissen gefragt ist, und diese haben im sinne der EWT keine.
+
+Denkt man sich das kollektiv der 31-Jährigen mit denen im Text genannten Eigenschaften so kann man unter dessen Verteilung $P$ von Wahrscheinlichkeiten von Ereignissen 
+\begin{align*}
+	A:=&\text{Bankkassierer}	\\
+	B:=&\text{Bankkassierer und aktiv in Fr. Bewegung}	\\
+\end{align*}
+Dann $A\cap B$ in dieser Modelalgebra gebildet werden.
+\begin{align*}
+	P(A)-P(A\cap B)=&P(A\setminus B)	\\
+	=&P(\text{Bankkassierer und nicht aktiv in Fr. Bewegung})
+\end{align*}
+was wohl größer 0 ist und damit (1) echt wahrscheinlicher als (2).	\\
+Erklärung: Kooperationsprinzip von Paul Grice
+
+
+
+\section{Übung 9}
+\subsection{Aufgabe 3.17}
+Durch Induktion, dabei $n=1$ trivial.\\
+Mit der 3.18(1) für $n=2$ gilt: 
+\begin{align*}
+	P(\underset{i=1}{\stackrel{n+1}{\bigvee}}A_{i})~~~~~=&P(\underset{i=1}{\stackrel{n}{\bigvee}}A_{i})+P(A_{n+1})-\underbrace{P(A_{n+1}\wedge \underset{i=1}{\stackrel{n}{\bigvee}}A_{i})}_{\geq A_{n+1}A_{n}}	\\
+	\stackrel{(IV)}{\leq}& \underset{i=1}{\stackrel{n}{\sum}}P(A_{i})-\underset{i=1}{\stackrel{n-1}{\sum}}P(A_{i}A_{i+1})+P(A_{n+1})-P(A_{n}A_{n+1})	\\
+	=&\underset{i=1}{\stackrel{n+1}{\sum}}P(A_{i})-\underset{i=1}{\stackrel{n}{\sum}}P(A_{i}A_{i+1})	\\
+\end{align*}
+
+
+\subsection{Aufgabe 4.7}
+\paragraph*{(f)}
+Wir verwenden immer 4.1 und 4.4(4). Zuerst zählen wir nach den Ziffern gleicher Häufigkeit ab, danach nach den möglichen Anordnungen. Wir können auf $\binom{10}{2}=\#\{0,...,9\}_{<}^{2}$ Weisen die Menge der doppelt vorkommenen Ziffern auswählen und dann auf $\binom{8}{1}$ Weisen dei verbleibenden Ziffern auswählen. Es gibt $\binom{5}{2}$ Möglichkeiten das erste Paar auf die 5 Stellen unserer Zahl zu verteilen und dann $\binom{3}{2}$ Möglichkeiten das zweite Paar auf die verbleibenden 3 Stellen zu verteilen. Der Platz der letzten Ziffer ist damit schon fest.\\
+$\Rightarrow \binom{10}{2}\binom{8}{1}\binom{5}{2}\binom{3}{2}=10800$ Zahlen der gennanten Art existieren.
+\paragraph*{(a)}$\binom{10}{1}$
+\paragraph*{(b)}$\binom{10}{1}\binom{9}{1}\binom{5}{4}=450$
+\paragraph*{(c)}$\binom{10}{1}\binom{9}{2}\binom{5}{3}\binom{2}{1}=7200$
+\paragraph*{(d)}$\binom{10}{1}\binom{9}{1}\binom{5}{3}=900$
+\paragraph*{(e)}$\binom{10}{1}\binom{9}{3}\binom{5}{2}\binom{3}{1}\binom{2}{1}=50400$
+\paragraph*{(g)}$\binom{10}{5}5!=30240$
+\paragraph*{Gesamt:}$(a)+(b)+(c)+(d)+(e)+(f)+(g)=100000$
+
+
+
+\subsection{Aufgabe 4.8}
+\paragraph*{(a)}
+Insgesamt sind genau $x+y$ Schritte erforderlich, $x$ nach rechts und $y$ nach oben\vspace{5pt}	\\
+$\Rightarrow$ Die Anzahl aller möglichen Wege $\binom{x+y}{x}=\binom{x+y}{y}$
+
+
+\paragraph*{(b)}
+Wir nehmen an dass das Benachbartsein Zufall ist. Dann ist folgendes Modell plausibel:	\\
+Wir nummerieren die 30 Bäume mit 1 bis 30 durch und betrachten die Gleichverteilung auf $\Omega:=\{1...30\}_{<}^{4}$ mit der Interpretation:
+\begin{center}
+	$\Omega\ni(\omega_{1},...,\omega_{4})\hspace{3pt}\widehat{=}$  „Die 4 kranke Bäume sind $\omega_{1}...\omega_{4}$“
+\end{center}
+Für das Ereigniss:
+\begin{align*}
+	A:=&\text{ „Die kranke Bäume sind nebeneinander“}~~~~~~~~~~~~~~~~	\\
+	:=&\{(1,2,3,4),(2,3,4,5),...,(27,28,29,30)\}
+\end{align*}
+gilt $P(A)=\frac{\#A}{\#\Omega}=\frac{27}{\binom{30}{4}}=\frac{1}{1015}$ \\
+Die kleine Wahrscheinlichkeit deutet auf Ansteckung oder Ähnliches hin.
+
+
+
+\section{Übung 10}
+\subsection{Aufgabe 4.12}
+Seien $n\in\mathbb{N}$ und 
+\begin{center}
+	$A_{k}:= A_{n,k}=\{x\in\{1,...,n\}|k \text{ teilt }x\}\text{ für }k\in\mathbb{N}$	\\
+\end{center}
+$\Rightarrow\#A_{k}=\lfloor\frac{n}{k}\rfloor, \underset{k\in\mathcal{K}}{\bigcap}A_{k}=A_{kgV(k)}$	\\
+Die Siebformel mit $n=3000002$ liefert
+\begin{align*}
+	\#(A_{4}\cup A_{6}\cup A_{15})=&A_{4}+A_{6}+A_{15}-\#(A_{4}A_{6})-\#(A_{4}A_{15})-\#(A_{6}A_{15})+\#(A_{4}A_{6}A_{15})	\\
+	=& \#A_{4}+\#A_{6}+\#A_{15}-\#A_{12}-\#A_{60}-\#A_{30}+\#A_{60}	\\
+	=& \frac{3*10^{6}}{4}+\frac{3*10^{6}}{6}+\frac{3*10^{6}}{15}-\frac{3*10^{6}}{12}-\frac{3*10^{6}}{30}	\\
+	=& 1000*(750+500+200-250-100)	\\
+	=&1.100.000
+\end{align*}
+
+
+
+\subsection{Aufgabe 4.13}
+Sei $\Omega:=(\{1,...,n\}^{n}_{\neq})^{2}$, wobei
+\begin{center}
+	$(\omega, \overline{\omega})\in\Omega\hspace{2pt}\hat{=}$ Person $i$ erhält Mantel $\omega_{i}$ und Hut $\overline{\omega}_{i}$	\\
+\end{center}
+Dann ist im Modell $(\Omega, U_{\Omega})$ das gesuchte Ereignis:
+\begin{align*}
+	A:=&\text{ „Mindestens ein Besucher erhält seinen Hut und seinen Mantel“}	\\
+	 :=& \stackrel{n}{\underset{i=1}{\bigcup}}A_{i},\text{ mit }A_{i}:=\{(\omega, \tilde{\omega})\in\Omega:\omega_{i}=\tilde{\omega}_{i}=i \}	\\
+	 \Rightarrow&\#\Omega=(\#(\{1,...,n \}^{n}_{\neq}))^{2}=(n!)^{2}	 \\
+\end{align*}
+
+
+Für $I\subseteq\{1,...,n \}$ mit $\#I=l$ gilt:
+\begin{align*}
+	\#(\underset{i\in I}{\bigcap}A_{i})=&(\#((\{1,...,n \}\setminus I)^{n-l}_{\neq}))^{2}	\hspace{120pt}\\
+	=& ((n-l)!)^{2}
+	\\	\\
+	\stackrel{3.16(8)}{\Rightarrow}\#A=&\stackrel{n}{\underset{l=1}{\sum}}(-)^{l-1}\underset{I\subseteq\{1,...,n \},\#I=l}{\sum}\#(\underset{i\in I}{\bigcap}A_{i})	\\
+	=& \stackrel{n}{\underset{l=1}{\sum}}(-)^{l-1}\binom{n}{l}((n-l)!)^{2}	\\
+	=& n!\stackrel{n}{\underset{l=1}{\sum}}(-)^{l-1}\frac{(n-l)!}{l!}	\\
+	\\
+	\Rightarrow U_{\Omega}(A)=&\frac{\#A}{\#\Omega}=\frac{1}{n!}\stackrel{n}{\underset{l=1}{\sum}}(-)^{l-1}\frac{(n-l)!}{l!}	\\
+	\hspace{-130pt}\binom{\text{Subadd. 0}}{\text{Bonferonni-Ungleichung}} \leq&\frac{1}{n!}\frac{(n-1)!}{1!}=\frac{1}{n}\rightarrow 0, n\rightarrow\infty
+\end{align*}
+
+
+
+\subsection{Aufgabe 4.14}
+Wir interpretieren die Aufgabenstellung zunächst so, dass Personen und Stühle ununterscheidbar sind. Es sei $a_{n,k}$ die beschriebene gesuchte Anzahl. Wenn $n=k=1$ gilt, ist $a_{n,k}=1$. Es sei $n\geq2$ und $1\leq k\leq n-1$, ansonsten ist $a_{n,k}=0$. 	\\
+
+Es werde zuerst Person $k$ auf die $n$ freien Stühle besetzt. Wir denken uns die restlichen Plätze $(n-3)$ in einer Reihe. Auf diese sollen nun $k-1$ Personen nachbarfrei verteilt werden. Dies entspricht bijektiv einer beliebigen Platzierung von $k-1$ Personen auf $(n-3)-(k-2)=n-k-1$ Stühle. Man entferne dazu den freien Stuhl rechts neben jeder Person mit Außnahme der Person ganz rechts. Folglich ist $a_{n,k}=(n-k-1)\cdot n$.	\\
+
+Wenn stattdessen dur die Person nicht unterscheidbar, ist die gesuchte Anzahl $\frac{a_{n,k}}{k!}$, da $k!=$ Anzahl der Möglichkeiten, die Personen bei Beibehalten ihrer relativen Anordnung weiterrücken zu lassen. Wenn alles unterscheidbar, ist die Anzahl $\binom{n-k-1}{k-1}=\frac{a_{n,k}}{n\cdot(k-1)!}$.	\\	\\
+Analog zu alles unterscheidbar.
+
+
+\section{Übung 11}
+\subsection{Aufgabe 5.11}
+\paragraph{(a)}
+Für $x\in \mathbb{R}$ gilt:
+\begin{align*}
+	&\sin(x)=0\Leftrightarrow x\in\Pi\mathbb{Z}	\hspace{200pt}\\ \Rightarrow&\omega\in\{\sin(X)=0\}\Leftrightarrow\omega\in\{X\in\Pi\mathbb{Z}\})	\\
+	\Rightarrow&\{\sin(X)=0\}=\{x\in\Pi\mathbb{Z}\}	\\
+	\mathbb{P}&\{\sin(X)=0\}=\mathbb{P}\{x\in\Pi\mathbb{Z} \}
+\end{align*}
+
+
+\paragraph{(b)}Für $x\in\mathbb{R}$ gilt: $(x^{2}\geq4\Leftrightarrow x\geq2\text{ oder }x\leq-2)$
+\begin{align*}
+	\{X^{2}\geq4\}=&\{X\geq2\}\cup\{X\leq-2 ß\}	\hspace{150pt}\\
+	\mathbb{P}\{X^{2}\geq4\}=&\mathbb{P}\{X\geq2\}+\underbrace{\{X\leq-2\}}_{\geq0}
+\end{align*}
+
+
+\paragraph{(c)}
+Für $x,y\in\mathbb{R}$ gilt:
+\begin{align*}
+	|x|\leq1,|y|\leq2\Rightarrow&|x+y|\leq|x|+|y|\leq3	\hspace{170pt}\\
+	\Rightarrow&\{|X|\leq1,|Y|\leq2 \}\leq\{|X+Y|\leq3\}	\\
+	\Rightarrow&\mathbb{P}\{|X|\leq1,|Y|\leq2 \}\leq\mathbb{P}\{|X+Y|\leq3\}
+\end{align*} 
+
+
+\subsection{Aufgabe 5.12}
+\paragraph{(a)}
+\begin{itemize}
+	\item[] $\{\min(X_{1},X_{2})=4 \}=\{\omega\in\{1,\dots,6 \}^{2}:\min(\omega_{1},\omega_{2})=4\}$
+	$=\{(4,4)(4,5)(4,6)(5,4)(6,4) \}$
+	\item[] $\{\min(X_{1},X_{2})=\max(X_{1},X_{2}) \}=\{X_{1}=X_{2}\}$
+	$=\{(1,1)(2,2),...,(6,6) \}$
+	\item[] $\{\max(X_{1},X_{2})\leq3 \}=\{X_{1}\leq3,X_{2}\leq3\}$
+	$=\{(1,1)(1,2)(1,3)(2,1)(2,2)(2,3)(3,1)(3,2)(3,3) \}$
+\end{itemize}
+
+
+\paragraph{(b)}
+Es gilt:
+\begin{itemize}
+	\item[] $\mathbb{P}(X_{1}-X_{2}=k)=\frac{6-|k|}{36}(k\in\{-5,-4,\dots,5\})$
+	\item[] $\mathbb{P}(\min(X_{1},X_{2})=k)=\frac{13-2k}{36}(k\in\{1,\dots,6\})$
+	\item[] $\mathbb{P}(\max(X_{1},X_{2})=k)=\frac{2k-1}{36}(k\in\{1,\dots,6 \})$
+	\item[] $\mathbb{P}((X_{1},X_{2})=(k_{1},k_{2}))=\frac{((k_{1},k_{2})\in\{1,\dots,6\}^{2})}{36}$
+	\item[] $\mathbb{P}((\min(X_{1},X_{2}),\max(X_{1},X_{2}))=(k_{1},k_{2})$
+	$=\begin{cases}
+	\frac{1}{36}\text{, wenn } 1\leq k_{1}= k_{2}\leq6	\\
+	\frac{2}{36}\text{, wenn } 1\leq k_{1}< k_{2}\leq6	\\
+	0 \text{, sonst}
+	\end{cases}$
+\end{itemize}
+
+
+
+\subsection{Aufgabe 5.13}
+\paragraph{(a)}
+Seien $\Omega:=\{0,1 \}^{2}, \mathbb{P}:=U_{\Omega}, X_{1},X_{2},Y_{1},Y_{2}:\Omega\mapsto\mathbb{R}$ mit $X_{1}(\omega)=\omega_{1},X_{2}(\omega)=\omega_{2}$ für $\omega\in\Omega$ und $Y_{1}:=Y_{2}:=X_{1}$	\\
+$\Rightarrow X_{1}\thicksim X_{2}\thicksim Y_{1}\thicksim Y_{2}\thicksim U_{\{0,1\}},$	\\
+aber $(X_{1},X_{2})\thicksim U_{\Omega}, (Y_{1},Y_{2})\thicksim U_{\{(0,0),(1,1)\}} $
+
+\paragraph{(b)}
+2 z.B. $\Omega:=\{1,2\},\mathbb{P}:=U_{\Omega}, X_{1}:=X_{2}:=Y_{1}:=id_{\Omega}, Y_{2}:=3-Y_{1}$	\\
+Leicht: $\#\Omega=1$ nicht genug.
+
+
+\subsection{Aufgabe 5.14}
+Seien $S_{n,k}$ wie Hinweis, $T_{n,k}$ die Menge in (2)
+\paragraph{(a)}
+Es ist $S_{n,k}\ni x\rightarrowtail(\underbrace{1,...1}_{x_{1}},\underbrace{2,...,2}_{x_{2}},...,\underbrace{n,...,n}_{x_{n}})\in\{1,...,n \}^{k_{\leq}}$
+ist Bijektion $\Rightarrow$(1) aus 4.4(3).	\\
+Genauso:
+$T_{n,k}\ni x\mapsto(x_{1},...,x_{n},k-\sum_{i=1}^{n}x_{i})\in S_{n+1,k}$ bijektiv.
+
+\paragraph{(b)}Nur (3),(4) analog, Rest leicht.
+Idee: Wir verwenden die Siebformel um die Mächtigkeit von $\{\sum_{i=1}^{n}x_{i}=k \}=\underset{i=1}{\stackrel{n}{\bigcap}}A_{i}=S_{n,k}\setminus(\underset{i=1}{\stackrel{n}{\bigcap}}A_{i}^{\complement})$ zu bestimmen. Dies liefert in (3) die Summe, $(-)^{j},\binom{n}{j}$	\\
+Sei $I\subseteq\{1,...,n\}, \#I=j\geq1$.
+Wenn$l_{j}>k:\binom{n+k-l_{j}-1}{n-1}=\#S_{n,k-l_{j}}=\#(\underset{i=1}{\stackrel{n}{\bigcap}}A_{i}^{\complement})$
+
+
+\section{Übung 12}
+\subsection{Aufgabe 5.16}
+\paragraph*{(a)}
+Klar mit 5.15(1).
+
+\paragraph*{(b)}
+Wenn $k\leq n, k\leq r$ und $n-k\leq b$ gilt	\\
+\begin{align*}
+	\Rightarrow h_{n,b,r}(n-k)=&\frac{\binom{b}{n-k}\binom{r}{k}}{\binom{b+r}{n}}=h_{n,r,b}(k)	\hspace{200pt}\\
+	=&\frac{r!}{k!(r-k)!}\centerdot\frac{b!}{(n-k)!(b-n+k)!}\centerdot\frac{n!(r+b-n)!}{(r+b)!}	\\
+	=&\frac{n!}{k!(n-k)!}\centerdot\frac{(r+b-n)!}{(b-n+k)!(r-k!0)}\frac{r!b!}{(r+b)!}	\\
+	=&\frac{\binom{n}{k}\binom{r+b-n}{r-k}}{\binom{r+b}{r}}	\\
+	=&h_{r,n,r+b-n}(k)
+\end{align*}
+Wenn eine der Voraussetzungen nicht erfüllt ist, gilt:
+\begin{align*}
+	h_{n,b,r}(k)=h_{n,b,r}(n-k)=h_{r,n,r+b-n}(k)=0
+\end{align*}
+Inhaltliche Begründung:
+\begin{itemize}
+	\item[Zur 1. Gleichung:] Die Wahrscheinlichkeit, dass unter der $n$ gezogenen Kugeln genau $k$ rot sind ist gleich der Wahrscheinlichkeit, das unter den $n$ gezogenen Kugeln $n-k$ nicht rot (blau) sind.
+	\item[Zur 2. Gleichung:] Im verwendeten Urnenmodell werden $N$ Kugeln aufgeteilt in $r$ rote, $N-r$ blaue, in $n$ gezogene und $N-n$ nicht gezogene Kugeln.1
+	\item[Üblich:] Man denkt sich die roten fest und die gezogene als zufällig. Sei $X$ die Anzahl der gezogenen roten Kugeln. Dann ist in dem Modell $\mathbb{P}(X=k)=h_{n,r,N-r}(k)$. Denkt man sich die geozogenen Kugeln als fest und die roten als zufällig, erhält man $\mathbb{P}(X=k)=h_{r,n,N-n}(k)$.	\\
+	Anschaulich klar, dass beide Modelle zur gleich Verteilung von $X$ führen.
+\end{itemize}
+
+\paragraph*{(c)}
+In R Lösung durch
+\begin{lstlisting}[language=R]
+	dhyper(0:10,7,25,10)
+\end{lstlisting}
+$\Rightarrow$ der wahrscheinlichster Wert ist 2 mit $\mathbb{P}(X=2)=0.352\dots$
+
+
+\subsection{Aufgabe 6.6}
+Die Gleichung (1),(3),(4),(5),(6),(8) folgen sofort aus 6.5(1) und 3.3
+\subparagraph{(2):} Sei $\mathcal{A}$ Quasipartition von $\Omega$
+\begin{align*}
+	\Rightarrow \sum_{A\in\mathcal{A}}\mathbb{P}(A|B)=&\frac{1}{\mathbb{P}}\sum_{A\in\mathcal{A}}\mathbb{P}(A\cap B)	\hspace{200pt}\\
+	=&\frac{1}{\mathbb{P}(B)}\mathbb{P}(\underbrace{\underset{A\in\mathcal{A}}{\bigcup}}_{\Omega}A\cap B)	\\
+	=&\frac{\mathbb{P}(B)}{\mathbb{P}(B)}=1
+\end{align*}
+
+\subparagraph*{(7):} Analog zu (2)
+
+\subsection{Aufgabe 6.7}
+\paragraph*{(a)} Sei $(\Omega, \mathbb{P})$ Wahrscheinlichkeitsraum, $A\in2^{\Omega}$ mit $0<\mathbb{P}(A)<1$
+\begin{align*}
+	\Rightarrow \mathbb{P}(A|A^{\complement})=0<\mathbb{P}(A)=\mathbb{P}(A|\Omega)<1=\mathbb{P}(A|A)
+\end{align*}
+aber $A,A^{\complement}\subseteq\Omega$.
+
+\paragraph*{(b)}
+Seien $\Omega:=\{1,2,3,4\}$, $A:=\{1,2\}, B=\{2,3\}$. Seien $P$ definiert durch die Zahlendichte $p$ mit	\\
+\begin{align*}
+	p(\omega):=p_{\omega}:=
+	\begin{cases}
+	\frac{4}{10}\text{, wenn }\omega=1	\\
+	0\text{, wenn }\omega=2	\\
+	\frac{1}{10}\text{, wenn }\omega=3	\\
+	\frac{5}{10}\text{, wenn }\omega=4	\\
+	\end{cases}	\hspace{120pt}
+\end{align*}
+und $Q$ definiert durch Zahlendichte $q$ mit
+\begin{align*}
+	q(\omega):=q_{\omega}:=
+	\begin{cases}
+	\frac{1}{12}\text{, wenn }\omega=1	\\
+	\frac{3}{12}\text{, wenn }\omega=2	\\
+	\frac{7}{12}\text{, wenn }\omega=3	\\
+	\frac{1}{12}\text{, wenn }\omega=4	\\
+	\end{cases}	\hspace{120pt}
+\end{align*}
+\begin{itemize}
+	\item[$\Rightarrow$]$P(A|B)=\frac{P_{2}}{P_{2}+P_{3}}=0<0.3=Q(A|B)$
+	\item[]$P(A|B^{\complement})=0.44\dots<0.5=Q(A|B^{\complement})$
+	\item[]$P(A)=0.4>0.33=Q(A)$.
+\end{itemize}
+
+
+
+\section{Übung 13}
+\subsection{Aufgabe 6.14}
+Wir denken uns Karte 1 w/w, Karte 2 r/w, Karte 3 r/r. Es seien $\Omega_{1}:=\{1,2,3\}, \Omega_{2}:=\{r,w\},$ \\
+$ \omega_{1}\in\Omega_{1}\hat{=}$ Karte $\omega_{1}$ wird gezogen	\\
+$ \omega_{2}\in\Omega_{2}\hat{=}$ Oberseite der Karte ist $\omega_{2}$ 	\\
+$P_{1}:=U_{\Omega_{1}}$ mit Dichte $p_{1}$ und $P_{2|1}\in$Mark$(\Omega_{1}, \Omega_{2})$
+def. $P_{2|1}\in$Mark$(\Omega_{1}, \Omega_{2})$ mit \\
+$P_{2|1}(\omega_{1}|\omega_{2}):= 
+\begin{cases}
+	1\text{, wenn }\omega_{1}=1,\omega_{2}=w\text{ oder }\omega_{1}=3,\omega_{2}=r	\\
+	\frac{1}{2}\text{, wenn }\omega_{1}=1,\omega_{2}\in\Omega_{2}\text{ oder }\omega_{1}=1,\omega_{2}=r	\\
+	0\text{, wenn }\omega_{1}=1,\omega_{2}=r\text{ oder }\omega_{1}=3,\omega_{2}=w	\\
+\end{cases}$
+
+$\Rightarrow$ Modell $(\Omega,P):=(\Omega_{1}x\Omega_{2}, P_{1}\bigotimes P_{2|1})$
+Mit den Ereignissen:	\\
+$A:=$ "Unterseite w" $:= \{(1,w),(2,r)\}$	\\
+$B:=$ "Oberseite w" $:= \{(1,w),(2,w)\}$	\\
+
+$\Rightarrow P(A|B) = \frac{P(A\cap B)}{P(B)}=\frac{P_{1}(1)_{2|1}(w|1)}{P_{1}(1)_{2|1}(w|1)P_{1}(2)_{2|1}(w|2)} = \frac{1}{1+\frac{1}{2}} = \frac{2}{3}$
+Kleine ps
+
+\subsection{Aufgabe 6.15}
+\paragraph{(a)}Modell ist zunächst \\
+$\Omega_{1}:=\{(j,j),(j,m),(m,j),(m,m)\}$	\\
+mit $\omega\in\Omega_{1}\hat{=}$"..." und $P_{1}:=U_{\Omega_{1}}$
+$\Rightarrow A:=$ "Beide Kinder sing j"$:=\{(j,j)\}$	\\
+$B:=$ "Mindestens ein Kind ist j" $:=\{(j,j),(j,m),(m,j)\}$
+$\Rightarrow P(A|B)=\frac{1}{3}$
+
+\paragraph{(b)}
+Wir verwenden K.modell $(\Omega,P):=(\Omega_{1}\times\Omega_{2}, P_{1}\bigotimes P_{2|1})$ mit $\Omega_{2}:=\{F,N\}^{2}$, mit $\omega_{2}\in\Omega_{2}\hat{=}$"..."	\\
+Sei $P_{2|1}$ sei definiert durch $P_{2|1}\in\text{mark}(\Omega_{1},\Omega_{2})$	\\
+
+tabelle hier	\\
+
+
+Für	\\
+$A:=$"..."$:=\{(j,j)\}\times\Omega_{2}$ 
+$B:=$"Ein Kind geht zum Fußball und ist j"$:=\{(j,j,N,F),(j,j,F,N),(j,m,F,N),(m,j,N,F)\}$	\\
+$\Rightarrow P(B)=\frac{p(n-p)}{2}+\frac{p(1-q)}{2}$	\\
+$P(A\cap B)=\frac{p(n-p)}{2}$	\\
+$\Rightarrow$ Wenn $p\in]0,1], q\in[0,1[$ gilt	\\
+$P(A|B)=\frac{1-p}{2-p-q}$	\\
+$\Rightarrow p,q$ geeignet gewählt, dann erhalten wir alles in $[0,1[$, Wenn $q=0$ erhalten wir nur noch Werte in $[0,\frac{1}{2}[$. Wenn $p=q$ erhalten wir $\frac{1}{2}$
+
+\paragraph{(c)}
+Modell wie (b), wir ersetzen $B$ durch \\
+$C:=$ "Keines der Kinder geht zum Fußball"$:=\Omega_{1}x\{(N,N)\}$
+$\Rightarrow P(C)=\frac{(1-p)^{2}(1-q)}{2}+\frac{(1-q)^{2}}{4}=\frac{(2-p-q)^{2}}{4}$	\\
+$P(A\cap C)=\frac{(1-p)^{2}}{4}$
+$\Rightarrow P(A|C)=(\frac{1-p}{2-p-q})^{2}$, wenn $p\neq1$ oder $q\neq1$.
+
+
+
+\section{Klausuraufgaben}
+\subsection{KV2}
+\paragraph{1} Falsch: $a,b,c\in X$ verschieden $S:=\{(a,b),(b,c)\}, R:=X^{2}$	\\
+$\Rightarrow R\cap S=S$ nicht transitiv
+\paragraph{2}s. A1.7
+\paragraph{3}Falsch: $R$ reflexiv $\Leftrightarrow\{(x,x):x\in X\}\in R,$ sei $(x,y)\in R S:=\{(x,y) \}$ mit $x\neq y\Rightarrow S\cap R=S$ nicht reflexiv.
+\paragraph{4}Wahr: $R$ reflexiv$\Rightarrow\{(x,x):x\in X \}\subseteq R \subseteq R\cup S=U \Rightarrow U$ reflexiv
+
+\subsection{KV4}
+\paragraph{1}R keine BA
+\paragraph{2,3}P definiert auf dem Definitionsbereich der U's,
+\paragraph{3$\Rightarrow$4}
+\paragraph{5}Wg, 2.15
+
+
+\subsection{KV13}
+$\mathbb{P}:=U_{\{(0,0),(1,1)\}}$
+\paragraph{1}$\mathbb{P}(X=0)=\mathbb{P}(\{(0,0),(0,1)\})=\frac{1}{2}=\mathbb{P}(X=1)$
+\paragraph{2}$(|X,Y|)=id_{\Omega}~\mathbb{P}$, $\mathbb{P}((|X,X|)=(0,0))=\mathbb{P}(X=0)=\frac{1}{2}=\mathbb{P}((|X,X|)=(1,1))$
+\paragraph{3}$\mathbb{P}(X-Y=0)\mathbb{P}(X=Y)=\mathbb{P}(\{(0,0),(1,1)\})=1 $
+\paragraph{4}$(|X,Y|)~U_{\{(0,0),(1,1)\}}\neq U_{\Omega}$
+
+
+\end{document}

@@ -1,0 +1,34 @@
+Funktionale Anforderungen
+
+Sichten:
+Login
+Startseite
+	letzte eigene Kontakte mit Studierenden
+	Heutige Termine
+Studierende & Partner
+	Liste alle Studierenden
+	Freitextsuche
+	Erweiterte Suche
+	Kontakthistorie
+	Nachricht senden
+	Stammdaten
+	Neuer Termin
+	Drucken
+	Zukünftige Termine exportieren
+	nur für Partner: Neu anlegen
+Arbeiten
+	Neue Arbeit anlegen
+	Freitextsuche
+	Erweiterte Suche
+	Liste aller Arbeiten
+
+Funktionen:
+Login über Mitarbeitertabelle
+Sortierung und Filterung aller Listen
+Suche in Datenbank
+Nachricht senden
+Stammdaten anzeigen
+Neuen Termin anlegen
+Historie drucken
+Export der Termine
+neue Partner/Arbeiten anlegen

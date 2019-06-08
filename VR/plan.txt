@@ -1,0 +1,17 @@
+Konkret
+	Object Manipulation
+		- Eine Hand greifen und drehen
+		- Ecken/Kanten/Flächen Ziehen/Verformen
+		- 2 Hände Ziehen Skalieren
+		- Raster für Ecken und Objekt Interaktion
+
+	Welt
+		- Nutzer Skalieren um Granularität zu bestimmen 
+
+Überlegungen
+	Object Manipulation
+		- Textures
+		- Kreise/Bälle?
+
+	Welt
+		- 

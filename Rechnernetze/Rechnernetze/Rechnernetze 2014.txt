@@ -1,0 +1,68 @@
+Rechnernetze 2014
+
+Die Klausur war 120 Minuten lang, es gab 100 Punkte, 50 benötigte man zum Bestehen.
+
+Aufgabe 1
+a) 
+FDMA, TDMA, CDMA beschreiben. (6P)
+b)
+Welche Persistenzen gibt es bei CSMA? Kurz beschreiben. (3P)
+
+
+Aufgabe 2
+Arten von Netzen unterschieden nach ihrer Ausdehnung. Nicht Class A, Class B. (~5P)
+
+
+Aufgabe 3
+a)
+OSI-Modell hinschreiben + jede Schicht beschreiben. (14P)
+b)
+Zu Ebene 3,4 und 7 je mindestens 1 Protokoll nennen (3P)
+
+
+Aufgabe 4
+4 verschiedene Netzwerktopologien beschreiben. (4P)
+
+
+Aufgabe 5
+a)
+DNS erklären (1P)
+b)
+In welcher Schicht befindet sich DNS? (1P)
+
+
+Aufgabe 6
+Fragmentierung eines Pakets von 7000 Byte erklären, wenn die MTU 1500 Byte beträgt. Wie viele Pakete werden insgesamt verschickt?(8P)
+
+
+Aufgabe 7
+a)
+Unterschiede/Gemeinsamkeiten TCP/UDP (6P)
+b)
+Sliding window erklären (~8P)
+
+
+Aufgabe 8
+a)
+ICMP Definition. (~5P)
+b) 
+Fehlercode 11, TIME EXCEEDED Benutzung. (~3P)
+
+
+Aufgabe 9
+a)
+Traceroute erklären (~4P)
+b)
+Welche Probleme können dabei auftreten? (~3P)
+
+
+Aufgabe 10
+Gegegben war ein Graph, darauf den Link-State-Algorithmus anwenden. (8P)
+
+
+Aufgabe 11
+a)
+Gegeben war ein Graph. Darauf sollte man den Distanzvektoralgorythmus anwenden, bis sich die Tabellen nicht mehr verändern. (8P)
+b)
+Anfangspunkt sind die Tabellen, die in a) entstanden sind. Wende den Distanzvektoralgorythmus darauf an, bis die Tabellen stabil sind,
+nachdem man eine Kante im Graphen weggestrichen hat. (10P)

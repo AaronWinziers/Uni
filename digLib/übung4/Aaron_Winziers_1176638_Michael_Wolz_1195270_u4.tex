@@ -1,0 +1,77 @@
+\documentclass[11pt,a4paper,parskip=half ]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage[fleqn]{amsmath}
+
+\author{Aaron Winziers - 1176638; Michael Wolz - 1195270}
+\title{Digital Libraries WS 2018/2019\\\LARGE{Übungsblatt 4}}
+
+\begin{document}
+	\maketitle
+	
+	\section*{Aufgabe 1}
+	
+	\subsection*{a)}
+	\begin{table}[H]
+		\begin{tabular}{l|l|l|l|l}
+			Term & $D_{1}$ & $D_{2}$ & $D_{3}$ & $D_{4}$\\ \hline
+			Weihnachten		& 1 & 1 & 1 & 1     \\
+			Schnee			& 1 & 0 & 1 & 0     \\
+			Skifahren		& 0 & 1 & 0 & 0     \\
+			Apfelstrudel	& 0 & 0 & 0 & 1     \\
+			Eislaufen		& 1 & 0 & 0 & 0     \\
+			Seilbahn		& 0 & 1 & 0 & 0     \\
+			Langlauf		& 0 & 0 & 1 & 0     \\
+			Zimt			& 0 & 0 & 0 & 1     \\
+			Glühwein		& 1 & 1 & 0 & 0     \\
+			Eis				& 0 & 0 & 1 & 1     \\
+			Punsch			& 0 & 1 & 0 & 0     \\
+		\end{tabular}
+	\end{table}
+
+	\subsection*{b)}
+	\begin{table}[H]
+		\begin{tabular}{lll}
+			\textbf{Term} & & \textbf{Dokumente}	\\
+			Weihnachten		& $\Rightarrow$ & 1,2,3,4 \\
+			Schnee			& $\Rightarrow$ & 1,3 \\
+			Skifahren		& $\Rightarrow$ & 2 \\
+			Apfelstrudel	& $\Rightarrow$ & 4 \\
+			Eislaufen		& $\Rightarrow$ & 1 \\
+			Seilbahn		& $\Rightarrow$ & 2 \\
+			Langlauf		& $\Rightarrow$ & 3 \\
+			Zimt			& $\Rightarrow$ & 4 \\
+			Glühwein		& $\Rightarrow$ & 1,2 \\
+			Eis				& $\Rightarrow$ & 3,4 \\
+			Punsch			& $\Rightarrow$ & 2 \\
+		\end{tabular}
+	\end{table}
+
+	\subsection*{c)}
+		\textit{Weihnachten}	= \{1,2,3,4\} 	\\
+		\textit{Eis}	= \{3,4\}	\\
+		\textit{Punsch}	= \{2\}	\\	~\\
+		\textit{Eis \textbf{OR} Punsch}	= \{3,4\} $\cup$ \{2\} = \{2,3,4\}	\\
+		\textit{Weihnachten \textbf{AND} (Eis \textbf{OR} Punsch)}	= \{1,2,3,4\} $\cap$ \{2,3,4\} = \{2,3,4\}	\\
+		
+	\subsection*{d)} Es werden Weihnachtliche Eis- oder Punsch-Rezepte gesucht. $D_{2},D_{3},D_{4}$ sind die Dokumente die zurückgegeben werden, jedoch ist $D_{4}$ das einzige relevante Dokument. $D_{2}$ ist nicht relevant da es vermutlich Informationen über z.B. ein Skigebiet beinhaltet wo es Stände oder Hütten gibt wo Glühwein angeboten wird und $D_{3}$ weil das Eis-Term nicht auf Speiseeis bezogen ist. Daher:
+	
+	Precision = $\frac{|\{D_{4}\}|}{|\{D_{4}\}\cup\{D_{2},D_{3}\}|} = \frac{1}{3}$
+	
+	Recall = $\frac{|\{D_{4}\}|}{|\{D_{4}\}|} = 1$
+	
+	Da $D_{2}$ und $D_{3}$ aus den oben genannten Gründen nicht relevant sind zum Informationsbedürfniss aber trotzden als relevant geliefert werden, ist Recall nicht gleich 1
+	
+	\subsection*{e)} Angenommen die angegebene Dokumente umfassen alle die zu durchsuchen sind, ist der Term "Weihnachten" in allen suchen nicht relevant. In jeder möglichen Suche wird die Inklusion des Terms dazu führen dass entweder alle oder durch das Einsetzen von einem \textbf{\textit{NICHT}} keine Dokumente zurückgegeben. Sollten es andere Dokumente geben, wird der Term sicher stellen dass Dokumente 1 bis 4 immer oder nie mitgelifert werden in einer Suche.
+
+	
+	
+	
+\end{document}

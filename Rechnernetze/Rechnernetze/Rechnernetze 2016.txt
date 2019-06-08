@@ -1,0 +1,39 @@
+Aufgabe 1)
+TDMA, FDMA, CDMA, unterschied CSMA und CSMA/CD
+
+Aufgabe 2) Supernetting und
+ Subnetting erläutern
+
+Aufgabe 3)
+OSI/ISO Modell komplett mit je 1 Beispiel
+
+Aufgabe 4) Unterschied zw Router und Gateway bezogen auf OSI-Modell
+
+Aufgabe 5) balancierter Baum und Hypercube Durchmesser und Konnektivität bestimmen
+
+Aufgabe 6)
+ARP und RARP kurz erläutern
+
+Aufgabe 7)
+TCP und UDP
+Unterschiede
+
+Aufgabe 8)
+TCP Handshake Client und Server zuordnen
+(Socket (), bind(), listen(), connect(), accept())
+B) welche sind auch bei UDP vorhanden
+
+Aufgabe 9)
+ICMP Funktion und vorgehensweise
+
+Traceroute in Kombination dazu
+
+Aufgabe 10)
+Sliding Window komplett
+
+Aufgabe 11)
+DHCP erklären
+
+Aufgabe 12) Distanzvektorallgorithmus
+
+Meine waren 13 Aufgaben an die letzte erinner ich mich nicht mehr

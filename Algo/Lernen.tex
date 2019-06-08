@@ -1,0 +1,293 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{lipsum}
+\usepackage{algorithmic}
+\usepackage{listings}
+\usepackage{color}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{ %
+	backgroundcolor=\color{white},   % choose the background color; you must add \usepackage{color} or \usepackage{xcolor}; should come as last argument
+	basicstyle=\footnotesize,        % the size of the fonts that are used for the code
+	breakatwhitespace=false,         % sets if automatic breaks should only happen at whitespace
+	breaklines=true,                 % sets automatic line breaking
+	captionpos=b,                    % sets the caption-position to bottom
+	commentstyle=\color{mygreen},    % comment style
+	deletekeywords={...},            % if you want to delete keywords from the given language
+	escapeinside={(*}{*)},          % if you want to add LaTeX within your code
+	extendedchars=true,              % lets you use non-ASCII characters; for 8-bits encodings only, does not work with UTF-8
+	frame=single,	                   % adds a frame around the code
+	keepspaces=true,                 % keeps spaces in text, useful for keeping indentation of code (possibly needs columns=flexible)
+	keywordstyle=\color{blue},       % keyword style
+	language=Java,                 % the language of the code
+	morekeywords={*,...},            % if you want to add more keywords to the set
+	numbers=left,                    % where to put the line-numbers; possible values are (none, left, right)
+	numbersep=5pt,                   % how far the line-numbers are from the code
+	numberstyle=\tiny\color{mygray}, % the style that is used for the line-numbers
+	rulecolor=\color{black},         % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. comments (green here))
+	showspaces=false,                % show spaces everywhere adding particular underscores; it overrides 'showstringspaces'
+	showstringspaces=false,          % underline spaces within strings only
+	showtabs=false,                  % show tabs within strings adding particular underscores
+	stepnumber=2,                    % the step between two line-numbers. If it's 1, each line will be numbered
+	stringstyle=\color{mymauve},     % string literal style
+	tabsize=2,	                   % sets default tabsize to 2 spaces
+	title=\lstname                   % show the filename of files included with \lstinputlisting; also try caption instead of title
+}
+
+
+
+\author{Aaron Winziers}
+\title{Algo Lernen}
+\begin{document}
+	{\huge\textbf{Look up runtimes}}
+	\begin{itemize}
+		\item Sorts:
+		\begin{itemize}
+			\item sort in $O(n+k)$ time (Feld)(Counting sort)
+			\item sort in $O(n)$ (List)
+			\subitem sort alphabetical (bucketsort lexicograpical sort)
+		\end{itemize}
+		\item Graphen:
+		\begin{itemize}
+			\item reversen Graph (j,i to i,j)
+			\item Komplement des Graph (Adjazenzmatrix 1 to 0, 0 to 1)
+			\item 2014.5
+			\item Baum-, Rückwärts-, Vorwärts-, oder Querkante
+		\end{itemize}
+	\end{itemize}
+
+\section{Sorts}
+	\subsection{Heapsort}
+		\subsubsection{Aufbauphase}
+			\begin{lstlisting}
+for i=(*$\lfloor\frac{n}{2}\rfloor$*)downto 1
+	Sink(i,n)
+			\end{lstlisting}
+		\subsubsection{Heapify}
+			\begin{lstlisting}
+Sink(i,r){
+	x = A[i];
+	j = 2*i;
+	while (j(*$\leq$*) r){
+		if (j+1 (*$\leq$*) r){
+			if (A[j+1]>A[j]){
+				j = j+1;
+			}
+		}
+		if (x(*$\geq$*) A[j]){
+			break;
+		}
+		A[i] = A[j];
+		i = j;
+		j = 2*i;
+	}
+	A[i] = x;
+}			
+			\end{lstlisting}
+		\subsubsection{Selektionsphase}
+			\begin{lstlisting}
+r = n
+while (r > 1){
+	A[1] <=> A[r];
+	r = r-1;
+	Heapify(1,r)
+}
+			\end{lstlisting}
+	\subsection{Quicksort}
+		\begin{lstlisting}
+Quicksort(l,r){
+	if (L(*$\geq$*)r)
+		return;
+	x = A[l]		pivot
+	i = l+1
+	j = r
+	repeat
+		while i(*$\leq$*)r && A[i]<x
+			i++0
+		while j(*$\geq$*)l+1 && A[j](*$\geq$*)x
+			j--
+		if i<j
+			A[i]<=>A[j]
+	until i>j
+	A[l]<=>A[j]
+	Quicksort(l,j-1)
+	Quicksort(j+1,r)
+}
+		\end{lstlisting}
+			
+\section{Bäume}
+	\subsection{Aufbau}
+		\begin{lstlisting}
+BaueBaum(A,l,r){
+	if (l>r)
+		return 0;
+	m = (*$\lfloor\frac{l+r}{2}\rfloor$*);
+	p = new bintree_node();
+	p.key = A[m];
+	p.left = BaueBaum(l,m-1);
+	p.right = BaueBaum(m+1,r);
+	return p;
+}
+		\end{lstlisting}
+	
+	\subsection{Lookup}
+		\begin{lstlisting}
+Lookup(x)
+	if (p = null)
+		return null;
+	while (p ist kein Blatt)
+		if x
+		\end{lstlisting}
+	\subsection{Insert}
+		\begin{lstlisting}
+Insert(Node root, int key, int value){
+	if (root = null) 
+		root = new Node(key, value);
+	else if (key < root.key)
+		root.left = insert(root.left, key, value);
+	else  // key >= root.key
+		root.right = insert(root.right, key, value);
+	return root;
+}
+		\end{lstlisting}
+		
+	\subsection{Delete}
+		\begin{lstlisting}
+Delete(x){
+	v = lookup(x);
+	(Sei p vater von v)
+	Fall 1: (v ist Blatt){
+		if (v = p.left)
+			p.left = null;
+		else
+			p.right = null;
+	}
+	Fall 2: (v hat ein Kind w){
+		if (v = p.left)
+			p.left = w;
+		else
+			p.right = w;
+	}
+	Fall 3: (v hat 2 Kinder)
+		u = v.left;
+		while (u.right!=null)
+			u = u.right;
+		v.key = u.key;
+}
+		\end{lstlisting}
+	
+	\subsection{Print}
+		\begin{lstlisting}
+Print(node n){
+	if node.left != null
+		print(node.left)
+	schreibe(node.key)
+	if node.right != null
+		print(node.right)
+}
+		\end{lstlisting}
+	\subsection{Max/Min Key}
+		\begin{lstlisting}
+Max(){
+	u = rootNode
+	while u.right != null
+		u = u.right
+	return u;
+}
+
+
+Min(){
+	u = rootNode
+	while u.left != null
+		u = u.left
+	return u;
+}
+		\end{lstlisting}
+	\subsection{Rotate}
+		\subsubsection{Single} %https://stackoverflow.com/questions/4597650/code-with-explanation-for-binary-tree-rotation-left-or-right
+			\begin{lstlisting} 
+RotateRight(node u){
+	w = u.parent
+	v = u.right
+	b = v.left
+	v.parent = w
+	if w = null
+		v = root
+	else if u = w.left 
+		w.left = v
+	else
+		w.right = v
+	u.parent = v
+	v.left = u
+	u.right = b
+	if b!=null
+		b.parent = u
+}
+			\end{lstlisting}
+		\subsubsection{Double}
+			\begin{lstlisting}
+DoubleRR(node u){
+	v = u.left
+	rotateLeft(v)
+	rotateRight(u)
+}
+
+DoubleRL(node u){
+v = u.right
+rotateRight(v)
+rotateLeft(u)
+}
+			\end{lstlisting}
+		\subsection{Depth-First Search}
+			\begin{lstlisting}
+DFS(G, v){
+	v als beschriften
+	for all adjacent nodes w to v do
+		if node  is not labeled discovered 
+			DFS(G,w)
+}
+			\end{lstlisting}
+		\subsection{Breadth-First Search}
+			\begin{lstlisting}
+BFS(G,v){
+	Q:= queue initialized with root
+	while Q.notEmpty()
+		current = Q.dequeue()
+		if current = goal
+			return current
+		for each node n that is adjacent to current
+			if n is not discovered
+				label n as discovered
+				n.parent = current
+				Q.enqueue(n)
+}
+			\end{lstlisting}
+
+
+\section{Graphen}
+
+
+\section{Definitionen}
+	\subsection{Topologische Sortierung}
+		Eine Abbildung $ord:V\rightarrow\{1,...,n\}$	\\
+		Es gilt zudem:
+		\begin{itemize}
+			\item $ord$ ist injektiv
+			\item $\forall(v,w)\in E:ord(v)<ord(w)$
+		\end{itemize}
+		
+
+
+
+
+
+
+\end{document}

@@ -1,0 +1,1375 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{fullpage}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{xcolor}
+
+\author{AW}
+
+\renewcommand{\contentsname}{AFS und Buk}
+
+\title{AFS Definitionen}
+\begin{document}
+	\tableofcontents
+	
+	Lernen macht Spaß und diese Definitionen zu lernen macht um so viel mehr Spaß
+	\section{Vorlesungen}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=40e88e3511cc7c014f92d59d4240f758&file_name=VL1.pdf}{1. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=83576c7d025a4dd2a914bf0f42ef01c6&file_name=VL2.pdf}{2. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=7254db8a14e104a42bcc136f907c13f7&file_name=VL3.pdf}{3. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=d7f5ccaa04f252429182d99cf9ca34ef&file_name=VL4.pdf}{4. Vorlesung} \\
+		\hline
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=7158e0b195c347b16d09cd8414db6d81&file_name=VL5.pdf}{5. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=b274884a7f73e12a58ed308a11755d37&file_name=VL6.pdf}{6. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=891c1354eaec06674b1618aa9ab2c1bb&file_name=VL7.pdf}{7. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=d3f57f928801381977f6140ff3fe188b&file_name=VL8.pdf}{8. Vorlesung} \\
+		\hline
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=e02ed989059a577fa312092bb26e281b&file_name=VL9.pdf}{9. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=f842291bc02d44a2b7f867438fc8925c&file_name=VL10.pdf}{10. Vorlesung} &
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=34c4a9522c6b2cd5541e842f806e168c&file_name=VL11.pdf}{11. Vorlesung} &
+		\href{}{12. Vorlesung} \\
+		\hline
+		\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=84849fa5daf3b28b9a645f29ed890e00&file_name=VL13.pdf}{13. Vorlesung} &
+		Have & fun & studying!!\\
+		\hline
+	\end{tabular}
+	
+	\section{Einführung}
+	\begin{itemize}
+		\item Eine Menge $\Sigma$ heißt \textbf{Alphabet}, falls $\Sigma$ eine endliche, nicht-leere Menge ist, i.Z.: $|\Sigma|<\infty$ und $\Sigma\neq\emptyset$
+		
+		\item Die Elemente eines Alphabets heißen \textbf{Buchstaben} oder \textbf{Zeichen}
+		
+		\item Eine \textbf{Sprache} $L$ (über $\Sigma$) ist eine Teilmenge des von der Menge $\Sigma$ frei erzeugten Monoids, i.Z.:$L\subseteq\Sigma^{*}$
+		
+		\item Die Elemente einer Sprache heißen auch \textbf{Wörter}
+		
+		\item Das \textbf{kartesische Produkt} - $X\times Y=\{(x,y)|x\in X\wedge y\in Y\}$
+		
+		\item \textbf{Lemma}: Gilt $|X|,|Y|<\infty$, so gilt $|X\times Y|=|X|\cdot|Y|$
+		
+		\item Eine \textbf{Abbildung} $f:X\rightarrow Y$ ist eine Vorschrift, die jedem Element aus $X$ höchstens ein Element aus $Y$ zuordnet.
+		
+		\item \textbf{Lemma}: Gilt $|X|,|Y|<\infty$, so gilt $|Y^{X}|=|Y|^{|X|}$
+		
+		\item Ein Element aus $X^{n}$ heißt auch \textbf{Folge der Länge $n$ über $X$} (\textbf{Wort} falls $X$ ein Alphabet ist)
+		
+		\item \textbf{\textbf{$X^{+}$}}$:= \bigcup_{n\geq1}X^{n}$
+		
+		\item \textbf{Halbgruppe} - eine Struktur $(H,\circ)$ wobei $\circ$ eine assoziative Verknüpfung auf $H$ ist
+		
+		\item \textbf{($X^{+},\cdot$)} - die frei erzeugte Halbgruppe \textbf{KEIN MONOID, leeres Wort fehlt}
+		
+		\item \textbf{Satz} - $(X^{+},\cdot)$ ist eine Halbgruppe
+		
+		\item \textbf{Lemma} - Es sei $X$ ein Alphabet mit $|X|>1$.
+		\begin{enumerate}
+			\item Die Konkatenation auf $x^{+}$ ist (im Allgemeinen) \textbf{nicht} kommutativ
+			\item Die Konkatenation ist (im Allgemeinen) \textbf{nicht} idempotent
+		\end{enumerate}
+		
+		\item \textbf{Monoid} - eine Struktur $(M,\circ,e)$ mit einer Halbgruppe $(H,\circ)$ und ein neutrales Element $e$
+		
+		\item $(X^{*}, \cdot, \lambda)$ ist ein Monoid, das so gennante \textbf{frei erzeugte Monoid (über X)}
+		
+		\item \textbf{Satz} - Für jede Menge $X$ sind $(2^{X},\cup,\emptyset)$ und $(2^{X},\cap,X)$ Monoide
+		
+		\item \textbf{(Homo-)Morphismus} - eine strukturhaltende Abbildung
+		
+		\item \textbf{(Halbgruppen-)Morphismus} - eine Abbildung $h:H\rightarrow G$ mit Halbgruppen $(H,\circ), (G,\square)$ so dass $\forall x,y\in H:h(x\circ y) = h(x)\square h(y)$
+		
+		\item \textbf{Satz} - Sind $(H,\circ)$ und $(G,\Box)$ Halbgruppen und $h:H\rightarrow G$ ein Morphismus, so ist $(\{h(x)|x\in H\},\Box)$ eine Halbgruppe. Besitzt $(H,\circ)$ darüber hinaus ein neutrales Element $e\in H$, so ist $h(e)$ neutrales Element von $(\{h(x)|x\in H\},\Box)$.
+		
+		\item \textbf{Satz} - Sind $(H,\circ,e)$ und $(G,\Box,1)$ Monoide und $h:H\rightarrow G$ ein Morphismus, so ist $(\{h(x)|x\in H\},\Box, 1)$ ein Monoid.
+		
+		\item \textbf{Satz} - Die Komposition von zwei Morphismen liefert ein Morphismus.
+		
+		\item Ist $G$ eine Gruppe, dann heißt eine Teilmenge $E\subseteq G$ ein \textbf{Erzeugendensystem} von $G$, wenn sich jedes Element $g\in G$ als endliches Produkt von Elementen aus $E$ und deren Inversen darstellen lässt
+		
+		\item Eine Sprache $L\subseteq\Sigma^{*}$ heißt \textbf{regulär} gdw. es ein endliches Monoid $(M,\circ,e)$ einen Monoidhomomorphismus $h:(\Sigma^{*},\cdot,\lambda)\rightarrow(M,\circ,e)$ sowie eine endliche Menge $F\subseteq M$ gibt mit $L=\{w\in\Sigma^{*}|h(w)\in F\}$
+		
+		\item \textbf{Sprachfamilie} - Menge von Sprachen
+		
+	\end{itemize}
+	
+	\section{Endliche Automaten und reguläre Sprachen}
+	\subsection{Deterministische endliche Automaten}
+	\begin{itemize}
+		\item Eine Sprache $L\subseteq\Sigma^{*}$ heißt \textbf{regulär} gdw. es ein endliches Momoid $(M,\circ,e)$, einen Monoidmorphismus $h:(\Sigma^{*},\cdot,\lambda)\rightarrow(M,\circ,e)$ sowie eine endliche Menge $F\subseteq M$ gibt mit $L=\{w\in\Sigma^{*}|h(w)\in F\}$
+		
+		\item \textbf{deterministischer endlicher Automat(DEA)} - wird beschrieben durch ein Quintupel
+		\begin{center}
+			$A=(Q,\Sigma,\delta,q_{0},F)$
+		\end{center}
+		\begin{itemize}
+			\item[Q:] endliche Menge von \textbf{Zuständen}
+			\item[$\Sigma$:] endliche Menge von \textbf{Eingabezeichen}
+			\item[$\delta$:] $Q\times\Sigma\rightarrow Q$: (totale) \textbf{Überführungsfunktion}
+			\item[$q_{0}$:] $\in Q$ \textbf{Anfangszustand}
+			\item[F:] $\subseteq Q$ \textbf{Endzustände}
+		\end{itemize}
+		
+		\item \textbf{Überführungstafel} - eine Art um ein endlichen Automat vollständig zu beschreiben, z.B.:
+		\begin{center}
+			\begin{tabular}{c||c c c}
+				$\delta$ & a & b & c \\
+				\hline \hline
+				$\rightarrow$q & r & r & s \\
+				r$\rightarrow$ & s & s & r \\
+				s & r & s & s \\
+			\end{tabular}
+		\end{center}
+		
+		\item \textbf{L(A)} bezeichnet die von $A$ akzeptierte Sprache
+		
+		\item \textbf{Relationenpotenzen} - induktiv Definiert: $R^{0}:=\Delta_{X}$ und $R^{n}:=R^{n-1}\circ R$ für $n>1$
+		
+		\item Ist $M$ eine Menge und $R\subseteq M\times M$ eine zweistellige Relation auf $M$, dann heißt $R$ \textbf{transitiv}, wenn gilt: $\forall x,y,z\in M:xRy \wedge yRz\Rightarrow xRz$
+		
+		\item Die \textbf{transitive Hülle} $R^{+}:=\bigcup_{n\geq1}R^{n}$ ist die kleinste R umfassende transitive Relation auf X für gegebenes $R\subseteq X\times X$
+		
+		\item Die \textbf{reflexiv-transitive Hülle} $R^{*}:=\bigcup_{n\geq0}R^{n}$ ist die kleinste umfassende reflexive und transitive Relation (auch bekannt als Quasiordnung) auf X für gegebenes $R\subseteq X\times X$
+		
+		\item Ein Element aus $C=Q\times\Sigma^{*}$ heißt \textbf{Konfiguration} von $A$
+		
+		\item Definiere eine Binärrelation $\vdash_{A}$ auf $C$ durch $(q,w)\vdash_{A}(q',w')$ gdw. $\exists a\in\Sigma:w=aw'$ und $q'=\delta(q,a)$
+		
+		\item \textbf{$\vdash_{A}$} beschreibt den Konfigurationsübergang in einem Schritt (\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=83576c7d025a4dd2a914bf0f42ef01c6&file_name=VL2.pdf}{Vorlesung 2, Folie 12})
+		
+		\item Entsprechend beschreibt $\vdash_{A}^{n}$ "$n$ Schritte non $A$"
+		
+		\item Die von einem DEA A akzeptierte Sprache kann man formal wie folgt beschreiben (\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=83576c7d025a4dd2a914bf0f42ef01c6&file_name=VL2.pdf}{Vorlesung 2, Folie 12}):
+		\begin{center}
+			$L(A)=\{w\in\Sigma^{*}|\exists q\in F:(q_{0},w)\vdash^{*}_{A}(q,\lambda)\}$
+		\end{center}
+		
+		\item $\widehat{\delta}:Q\times\Sigma^{*}\rightarrow Q, (q,w)\mapsto
+		\begin{cases}
+		q, & w=\lambda \\
+		\widehat{\delta}(\delta(q,a),w'), & w=aw', a\in\Sigma 
+		\end{cases}$
+		
+		\item \textbf{Lemma} - Es sei $A=(Q,\Sigma,\delta,,q_{0},F)$ ein DEA. Seien $p,q\in Q$ und $w\in\Sigma^{*}$ beliebig. Dann gilt: $(p,w)\vdash^{*}_{A}(q,\lambda)\Leftrightarrow\widehat{\delta}(p,w)=q$.
+		
+		\item \textbf{Alternative Definition(en) DEA} - (\href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=83576c7d025a4dd2a914bf0f42ef01c6&file_name=VL2.pdf}{Vorlesung 2, Folie 15-16})
+		
+		\item \textbf{Schlingenlemma} - Es sei $A=(Q,\Sigma,\delta,q_{0},F)$ ein DEA. Es sei $q\in Q$ und sei $X=\{a\in\Sigma:(q,a)\vdash_{A}(q,\lambda)\}$. Dann gilt: $X^{*}\subseteq\{w\in\Sigma^{*}|(q,w)\vdash^{*}_{A}(q,\lambda)\}$.
+		
+		\item \textbf{Lemma} - $L(A)=A$ mit $L:=\{a^{n}b^{m}|n\geq0,m\geq1\}$
+		
+		\item \textbf{Satz} - Wird $L\subseteq\Sigma^{*}$ von einem DEA erkannt, so ist L regulär
+		
+		\item \textbf{Satz} - Ist $L\subseteq\Sigma^{*}$ regulär, so wird L von einem DEA erkannt
+		
+	\end{itemize}
+	\subsection{Nichtdeterministische endliche Automaten}
+	\begin{itemize}
+		
+		\item Vereinigung, Durchschnitt, Kompliment,... von Sprachen liefern wieder Sprachen, sind also \textbf{Operationen auf Sprachen}
+		
+		Ist $f$ eine $k$-stellige Operation auf Sprachen und ist $L$ eine Sprachfamilie, so heißt $L$ \textbf{abgeschlossen gegen $f$} gdw. für alle für alle $L_{1},...,L_{k}\in L$ gilt $f(L_{1},...,L_{k})\in L$
+		
+		\item \textbf{Satz} - \textbf{DEA}-Sprachen sind komplementabgeschlossen
+		
+		\item \textbf{Sprachkomplement} entspricht Endzustandsmengenkomplement ($w\in L(A)\rightarrow w\notin L(A')$)
+		
+		\item \textbf{nichtdeterministischer endlicher Automat(NEA)} - wird beschrieben durch ein Quintupel
+		\begin{center}
+			$A=(Q,\Sigma,\delta,q_{0},F)$
+		\end{center}
+		\begin{itemize}
+			\item[Q:] endliche Menge von \textbf{Zuständen}
+			\item[$\Sigma$:] endliche Menge von \textbf{Eingabezeichen}
+			\item[$\delta$:] $Q\times\Sigma\times Q$: \textbf{Überführungs\underline{relation}}
+			\item[$q_{0}$:] $\in Q$ \textbf{Anfangszustände}
+			\item[F:] $\subseteq Q$ \textbf{Endzustände}
+			\item Sprachfamilie: \textbf{NEA}
+		\end{itemize}
+		
+		\item \textbf{Überführungstafel} - eine Art um ein endlichen Automat vollständig zu beschreiben, z.B.:
+		\begin{center}
+			\begin{tabular}{c||c c }
+				$\delta$ & a & b \\
+				\hline \hline
+				$\rightarrow$q & q & r \\
+				r$\rightarrow$ & q & s \\
+				s & s & s \\
+				$\rightarrow$q' & r' & q' \\
+				r'$\rightarrow$ & s' & q' \\
+				s' & s' & s' \\
+			\end{tabular}
+		\end{center}
+		
+		\item \textbf{Satz} - Jede endliche Sprache ist \textbf{NEA}-Sprache
+		
+		\item \textbf{Skelettautomaten} - Beispiel auf: \href{https://studip.uni-trier.de/sendfile.php?type=0&file_id=7254db8a14e104a42bcc136f907c13f7&file_name=VL3.pdf}{Vorlesung 3, Folie 16}
+		
+		\item \textbf{Unterschiede DEA/NEA Spezifikation} anhand der Überführungstafel; wie DEA, ABER
+		\begin{itemize}
+			\item Einträge dürfen leer sein, d.h. der Automat ist \textbf{unvollstandig}
+			\item Es gibt mehr als ein Eintrag(Nichtdeterminismus)
+			\item Es gibt eine Anfangszustandsmenge(Nichtdeterminismus)
+			\item Manchmal werden neben Buchstaben auch Wörter als Spaltenüberschrift zugelassen, insbesondere das leere Wort: \textbf{NEA mit $\lambda$-Übergängen}
+			
+		\end{itemize} 
+		
+		\item \textbf{Satz} - \textbf{NEA} ist unter Vereinigung abgeschlossen
+		
+		\item \textbf{Satz} - NEAs kennzeichnen die regulären Sprachen
+		
+		\item \textbf{Lemma} - $L_{k}=\{x\in\{0,1\}^{*}|l(x)\geq k, \text{das k-letzte Zeichen von x ist 0}\}$ \\ 
+		$L_{k}$ kann durch einen NEA mit $k+1$ Zuständen erkannt werden, aber durch keinen DEA mit weniger als $2^{k}$ Zuständen
+		
+		\item \textbf{Satz} - Zu jedem $\lambda$-NEA gibt es einen äquivalenten NEA
+		
+		\item \textbf{Lemma} - Zu jedem NEA (mit $\lambda$-Übergang) gibt es einem äquivalenten NEA mit $\lambda$-Übergängen, der nur einen Anfangs- und nur einen Endzustand besitzt; der Anfangszustand hat nur ausgehende Kanten und der Endzustand nur eingehende Kanten.
+		
+	\end{itemize}
+	\subsection{Reguläre Ausdrücke}
+	\begin{itemize}
+		\item \textbf{Satz} - REG ist gegen Komplementbildung abgeschlossen
+		
+		\item Es seien $(M,\circ,e)$ und $(N,\Box,1)$ Monoide. Dann kann man die Menge $M\times N$ zu einem Monoid machen durch \textit{komponentenweises Anwenden} der Operationen; definiere daher: $(m,n)[\circ,\Box](m',n'):=(m\circ m',n\Box n')$
+		
+		\subitem \textbf{Satz} - $(\mathcal{M}\times\mathcal{N}, [\circ,\square ],(e,1))$ ist ein Monoid, das Produktmonoid.(siehe DS)
+		
+		\subitem \textbf{Satz} - Sind $h_{M}:(X,\Delta,I)\rightarrow(M,\circ,e)$ und $h_{N}:(X,\Delta,I)\rightarrow(N,\square,1)$ Monoidmorphismen, so auch der Produktmorphismus $h_{M}\times h_{N}:X\rightarrow M\times N, x\rightarrowtail(h_{M}(x),h_{N}(x))$
+		
+		\item \textbf{Satz} - Ist $f$ eine $k$-stellige Mengenoperation, so ist REG gegen $f$ abgeschlossen
+		
+		\item Ist $(M,\circ, e)$ ein Monoid, so kann die Menge $2^{M}$ durch das \textbf{Komplexprodukt} zu einem Monoid gemacht werden. Dazu definieren wir: $A\circ B:=\{a\circ b|a\in A \wedge b\in B\}$ Das zugehörige neutrale Element in $\{e\}$
+		
+		\item \textbf{Satz} - REG ist gegen Konkatenation abgeschlossen
+		
+		\item \textbf{Definition} - $A^{+}=\bigcup_{n\geq1}A^{n}$
+		
+		\item \textbf{Definition} - (Kleene-Stern) $A^{*}=\bigcup_{n\geq0}A^{n}$
+		
+		\item \textbf{Satz} - Satz $L^{+}(L^{*})$ ist die (das) durch $L$ bezüglich der Konkatenation erzeugte Halbgruppe (Monoid)
+		
+		\item \textbf{Satz} - REG ist gegen Kleene-Stern abgeschlossen
+		
+		\item \textbf{Reguläre Ausdrücke} über festem aber beliebigem Alphabet $\Sigma$ -
+		Definition durch strukturelle Induktion:
+		\begin{itemize}
+			\item $\emptyset$ und $\mathsf{a}$ sind RA (über $\Sigma$) für edes $a\in\Sigma$
+			\item Ist $R$ ein RA (über $\Sigma$), so auch $(R)*$
+			\item Sind $R_{1}$ und $R_{2}$ RAs (über $\Sigma$) so auch $R_{1}R_{2}$ und $(R_{1}\cup R_{2})$
+			\item \textbf{Beispiel}: $\mathsf{((b\cup a))*aaa(bb)*}$
+		\end{itemize}
+		
+		\item \textbf{Durch einen RA beschriebene Sprache} - induktiv gegeben:
+		\begin{itemize}
+			\item $L(\emptyset)=\emptyset;L(\mathsf{a})=\{a\}$
+			\item Ist $R$ ein RA, setze $L((R)*)=(L(R))*$
+			\item Sind $R_{1}$ und $R_{2}$ RA, setze $L(R_{1}R_{2})=L(R_{1})\cdot L(R_{2})$ und $L((R_{1}\cup R_{2}))=L(R_{1})\cup L(R_{2})$
+		\end{itemize}
+		Ein RA über $\Sigma$ beschreibt also eine Sprache über $\Sigma$
+		
+		\item \textbf{Satz} - Jede RA-Sprache ist regulär
+		
+		\item \textbf{Satz} - Jede reguläre Sprache ist durch einen RA beschreibbar
+		
+		\item \textbf{dynamisches Programmieren} Vorlesung 4 Folie 20,23,25
+		
+	\end{itemize}
+	\subsection{Nichtreguläre Sprachen}
+	\begin{itemize}
+		\item \textbf{Pumping Lemma} - Zu jeder regulären Sprache $L$ gibt es eine Zahl $n>0$, so dass jedes Wort $w\in L$ mit $l(w)\geq n$ als Konkatenation $w = xyz$ dargetellt werden kann mit geeigneten $x,y,z$ mit folgenden Eigenschaften:
+		\begin{enumerate}
+			\item $l(y)>0$;
+			\item $l(xy)<n$;
+			\item $\forall i\geq0:xy^{i}z\in L$
+		\end{enumerate}
+		
+		\item \textbf{Anwendung des Pumping Lemma}
+		\begin{enumerate}
+			\item Wir vermuten, eine vorgegebene Sprache $L$ ist nicht regulär
+			
+			\item Im Widerspruch zu unserer Annahme nehmen wir an, $L$ wäre doch regulär. Dann gibt es die im Pumping-Lemma genannte \textbf{Pumping-Konstante} $n$
+			
+			\item Wir wählen ein geeignetes, hinreichend langes Word $w\in L$ (d.h., $l(w)\geq n$). Dies ist der Schritt, wo man leicht "gut" oder "schlecht" wählt! Bemerkung: Da wir ja vermuten, $L$ ist nicht regulär, ist $L$ insbesondere unendlich, d.h., zu jedem $n$ finden wir ein $w\in L$ mit $l(w)\geq n$
+			
+			\item Wir diskutieren \underline{alle möglichen Zerlegungen} $w=xyz$ mit $l(y)>0$ und $l(xy)\leq n$ und zeigen für jede solche Zerlegung, dass es ein $i\geq0$ gibt, sodass $xy^{i}z\notin L$ gilt.
+		\end{enumerate}
+		
+		\item \textbf{Spiegeloperation} - Informell: $w^{R} = w$ Rückwärtsgelesen. Induktiv: $\lambda^{R}=\lambda$; für $w=va$ mit $v\in\Sigma^{*}, a\in\Sigma$ definiere: $w^{R}:=a(v^{R})$
+		
+		\item \textbf{Satz} - Die regulären Sprachen sind unter Spiegelung abgeschlossen
+		
+		\item \textbf{Palindrom} - $L=\{w\in\{a,b\}^{*}|w=w^{R}\}$
+		
+		\item Folien 10-12 angucken
+		
+		\item \textbf{Äquivalenzrelation} - Eine Relation $R\subseteq X\times X$ mit:
+		\begin{enumerate}
+			\item $R^{0}=\Delta_{X}\subseteq R$ (Reflexivität)
+			\item $R^{2}=R\circ R\subseteq R$ (Transitivität)
+			\item Mit $R^{-1}=\{(y,x)|(x,y)\in R\}$ gilt $R^{-1}\subseteq R$ (Symmetrie)
+		\end{enumerate}
+		Eine ÄR auf $X$ induziert eine Partition von X in \textbf{Äquivalenzklassen} $[x]_{R}=\{y\in X|xRy\}$
+		
+		\item Definiere $x\equiv_{h} y$ gdw. $h(x)=h(y)$, mit $h:(\Sigma^{*},\cdot,\lambda)\rightarrow(M,\circ,e)$ ein Monoidmorphismus
+		\subitem \textbf{Satz} - $x\equiv_{h} y$ ist eine Äquivalenzrelation auf $\Sigma^{*}$
+		\subitem \textbf{Erinnerung} - Der Kern eines Homomorphismus ist (sogar) eine Kongruenzrelation, also eine Äquivalenzrelation, die mit den Monoid-Operationen verträglich ist
+		
+		\item Sei $A=(Q,\Sigma,\delta,q_{0},F)$ ein vollständiger DEA. Definiere $u\equiv_{A}v$ gdw. $\exists q\in Q:((q_{0}u)\vdash^{*}_{A}(q,\lambda))\wedge((q_{0}v)\vdash^{*}_{A}(q,\lambda))$
+		\subitem \textbf{Satz} - $u\equiv_{A}v$ ist eine Äquivalenzrelation auf $\Sigma^{*}$
+		
+		
+		\item \textbf{Definition} - L \textbf{trennt} zwei Wörter $x,y\in\Sigma^{*}$ gdw. $|\{x,y\}\cap L|=1$
+		
+		\item \textbf{Definition} - Zwei Wörter $u$ und $v$ heißen \textbf{kongruent modulo L}(i.Z.:$u\equiv_{L}v$), wenn für jedes beliebige Wort $w$ aus $\Sigma^{*}$ die Sprache $L$ diw Wörter $uw$ un $vw$ nicht trennt, d.h. wenn gilt: $(\forall w\in\Sigma^{*})(uw\in L\Leftrightarrow vw\in L)$
+		
+		\item \textbf{Satz} - Für jede Sprache $L\subseteq\Sigma^{*})$ ist $\equiv_{L}$ eine Äquivalenzrelation
+		
+		\item \textbf{Definition} - $\equiv_{L}$ heißt auch Myhill-Nerode Äquivalenz
+		
+		\item \textbf{Beobachtung} - Gilt $u\in L$ und $v\equiv_{L}u$, so auch $v\in L$
+		
+		\item \textbf{Lemma} - $\equiv_{L}$ ist sogar eine \textbf{Rechtskongruenz}, d.h., aus $u\equiv_{L}v$ folgt für bel. Wörter $x\in\Sigma^{*}:ux\equiv_{L}vx$.
+		
+		\subitem Zu zeigen bliebe dazu: $(\forall w\in\Sigma^{*})(uw\in L\Leftrightarrow vw\in L)$ impliziert: $(\forall x,w'\in\Sigma^{*})(uxw'\in L\Leftrightarrow vxw'\in L)$
+		
+		\item \textbf{Lemma} - Es sei $L\subseteq\Sigma^{*}$ regulär, d.h. $L$ ist durch ein endliches Monoid $M,\circ,e)$, ein Monoidmorphismus $h:\Sigma^{*}\rightarrow M$ und eine endliche Menge $F\subseteq M$ beschrieben. Dann gilt: Falls $u\equiv_{h}v$ so $u\equiv_{L}v$
+		
+		\item \textbf{Folgerung} - Ist $L$ regulär, so hat $\equiv_{L}$ nur endlich viele Äquivalenzklassen
+		
+		\item \textbf{Folgerung} aus dem letzten Beweis (VL5F20) - Betrachte reguläre Sprache $L\subseteq\Sigma^{*}$ und sie beschreibende Homomorphismen $h$ bzw. Automaten $A$:
+		
+		\subitem Ist $\mathcal{L}:=\{L_{1},\dots,L_{n}\}$ die durch $\equiv_{L}$ induzierte Zerlegung von $\Sigma^{*}$, so gilt für die durch $\equiv_{h}$ induzierte Zerlegung $\mathcal{H}:=\{H_{1},\dots,H_{n}\}$ von $\Sigma^{*}$(bzw. für die durch $\equiv_{A}$ induzierte Zerlegung $\mathcal{A}:=\{A_{1},\dots,A_{n}\}$ von $\Sigma^{*}$):
+		
+		\subitem Für jedes $H_{i}$(bzw. $A_{i}$) gibt es ein $L_{j}$ mit $H_{i}\subseteq L_{j}$(bzw. $A_{i}\subseteq L_{j}$)
+		
+		\subitem Daher heißen $\mathcal{H}$ und $\mathcal{A}$ auch \textbf{Verfeinerung}en von $\mathcal{L}$
+		
+		\item \textbf{Satz}[Myhill und Nerode] - Eine Sprache $L\subseteq\Sigma^{*}$ ist genau dann regulär, wenn es nur endlich viele Äquivalenzklassen bezüglich $\equiv_{L}$ gibt.
+		
+		\item Definiere de \textbf{Minimalautomaten} $A_{min}(L)=(Q,\Sigma,\delta,s_{0},F)$ durch 
+		\subitem $Q=\{[x_{1}],...,[x_{k}]\}$
+		\subitem $q_{0}:=[\lambda]$
+		\subitem $F$ bestehe aus allen Äquivalenzklassen $[x_{i}]$ mit $x_{i}\in L$
+		\subitem $\delta([x],a):=[xa]$
+		\subitem \underline{Wichtig}: Mit $[x]=[y]$ ist $xaw\in L\Leftrightarrow yaw\in L$, also auch
+		\begin{center}
+			$[xa]=[ya], \rightsquigarrow \delta([x],a) = [xa] = [ya] = \delta([y],a)$
+		\end{center} 
+		
+		\item \textbf{Lemma} - Ist $L$ regulär, so ist $A_{min}(L)$ der $L$ akzeptierende DEA mit der kleinsten Anzahl von Zuständen.
+		
+		\item \textbf{Definition} - Es seien $A_{1}=(Q_{1},\Sigma,\delta_{1},q_{01},F_{1})$ und $A_{2}=(Q_{2},\Sigma,\delta_{2},q_{02},F_{2})$ DEAs.
+		\subitem Eine Funktion $f:Q_{1}\rightarrow Q_{2}$ heißt \textbf{Automaten(homo)morphismus} von $A_{1}$ nach $A_{2}$ gdw.:
+		\begin{itemize}
+			\item Für alle $a\in\Sigma$ und für alle $q\in Q_{1}$ gilt $f(\delta_{1}(q,a))=\delta_{2}(f(q),a)$
+			\item $f(q_{01})=q_{02}$
+			\item Für alle $q\in Q_{1}$ gilt: $q\in F_{1}\Leftrightarrow f(q)\in F_{2}$
+		\end{itemize}
+		\subitem Ist $f$ bijektiv, ist $f$ ein \textbf{Automatenisomorphismus}
+		
+		\item \textbf{Satz} - Es seien $A_{1}=(Q_{1},\Sigma,\delta_{1},q_{01},F_{1})$ und $A_{2}=(Q_{2},\Sigma,\delta_{2},q_{02},F_{2})$ DEAs und $f(Q_{01})=Q_{02}$ ein Automatenmorphismus. Dann gilt: $L(A_{1})=L(A_{2})$
+		
+		\item \textbf{Lemma} - Der Minimalautomat ist "Bis auf Isomorphie" (also bis auf Umbenennen der Zustände) eindeutig bestimmt
+		
+		\item \textbf{Folgerung}[Aus dem Satz von Myhill und Nerode] - Hat $\equiv_{L}$ unendlich viele Äquivalenzklassen, so ist $L$ nicht regulär
+		
+		\item \textbf{Definition} - $\equiv^{synt}_{L}$ auf VL5 F29
+		
+		\item \textbf{Definition} - Es sei $L\subseteq\Sigma^{*}$. $u,v\in\Sigma^{*}$ heißen \textbf{syntaktisch kongruent modulo L}, i.Z. $u\equiv^{synt}_{L}v$ gdw. $\forall x,y\in\Sigma^{*}:(xvy\in L\Leftrightarrow xvy\in L)$
+		
+		\item \textbf{Satz} -  Für jede Sprache $L$ ist $u\equiv^{synt}_{L}v$ eine Kongruenzrelation
+		
+		\subitem Auf der Menge der Kongruenzklassen ist die "Konkatenation" $[u]\cdot[v]:=[uv]$ wohldefiniert und macht diese zu einem Monoid, dem \textbf{syntaktischen Monoid} von L
+		
+		\item \textbf{Folgerung} - Eine Sprache ist regulär gdw. sie besitzt ein endliches syntaktisches Monoid.
+		
+		\item \textbf{Satz} - Ist $L$ regulär, so ist das syntaktische Monoid non $L$ isomorph zum Transformationsmonoid des Minimalautomaten $A_{min}(L)$ von $L$
+		
+		\item \textbf{Folgerung} - Ist $L\subseteq\Sigma^{*}$ regulär und $(M,\circ,e)$ das Transformationsmonoid von $A_{min}(L)$ mit zugehörigem Morphismus $h:\Sigma^{*}\rightarrow M$, so ist $\equiv_{h}$ die syntaktische Kongruenz von $L$
+		
+	\end{itemize}
+	\subsection{Logik und endliche Automaten}
+	\begin{itemize}
+		\item \textbf{Grunüberlegungen zu formalen Logik}
+		
+		\subitem Wir gehen davon aus, es gäbe eine Menge $\mathfrak{A}$ von \textbf{atomaren Formeln}
+		
+		\subitem Über ein Teil $\mathfrak{D\subseteq A}$ dieser Formeln "wissen wir Bescheid", d.h., wir können eine Abbildung $\beta:\mathfrak{D}\rightarrow\{0,1\}$ angeben mit der Bedeutung:
+		
+		\begin{itemize}
+			\item $\beta(a)=0$. falls $a$ falsch ist;
+			\item $\beta(a)=1$. falls $a$ wahr ist.
+		\end{itemize}
+		
+		\subitem $\mathfrak{D}$ ist also eine Menge definierter Aussagen, und $\beta$ ist eine \textbf{Belegungsfunktion}. $\mathfrak{A\setminus D}$: \textbf{logische Variablen} oder \textbf{Unbestimmte}
+		
+		\subitem Wir wollen dann zusammengesetzte Aussagen untersuchen
+		
+		\subitem Wir beschreiben nun, was das formal bedeutet
+		
+		\item \textbf{()Aussagenlogische) Formeln} werden durch einen induktiven Prozess definiert:
+		\begin{itemize}
+			\item Jede atomare Formel ist eine Formel
+			\item Ist $F$ eine Formel, so auch $\neg F$ \textbf{Negation von F}
+			\item Sind $F$ und $G$ Formeln, so auch $(F\wedge G)$ \textbf{Konjunktion von F und G}
+		\end{itemize}
+		
+		\subitem Eine Formel, die als Teil einer Formel in $F$ auftritt, heißt \textbf{Teilformel} von $F$. $\mathfrak{F}$ bezeichne die Gesamtheit aller aussagenlogischen Formeln (bzgl. $\mathfrak{A}$).
+		
+		\item \textbf{Übliche Abkürzungen}
+		\begin{itemize}
+			\item $(F\vee G)$ steht für $\neg(\neg F \wedge\neg G)$ \textbf{Disjunktion von F und G}
+			\item $(F\rightarrow G)$ steht für $(\neg F\vee G)$ \textbf{Implikation}
+			\item $(F\leftrightarrow G)$ steht für $((F\rightarrow G) \wedge(G\rightarrow F))$ \textbf{Äquivalenz}
+		\end{itemize}
+		
+		\subitem Die Objekte $\neg,\wedge,\vee,\rightarrow,\leftrightarrow$ heißen auch \textbf{Junktoren}
+		
+		\item Ist $F$ eine Formel, so bezeichne $\mathfrak{A}(F)$ die in $F$ vorkommenden atomaren Formeln
+		
+		\subitem Mit $\mathfrak{D\subseteq A}$ heißt $\beta:\mathfrak{D}\rightarrow\{0,1\}$ \textbf{passend} zu $F$, falls $\mathfrak{A}(F)\subseteq D$.
+		
+		\subitem Ist $\beta$ eine zu $F$ passende Belegungsfunktion, so heißt $\beta$ ein \textbf{Modell} für $F$, falls $\beta(F)=1$. Man schreibt dann auch: $\beta\vDash F$.
+		
+		\subitem Zwei Formeln $F$ und $G$ heißen \textbf{(semantisch) äquivalent} gdw. für jede Belegungsfunktion $\beta$, die sowohl für $F$ als auch für $G$ passend ist, gilt: $\beta(F)=\beta(G)$.
+		
+		\subitem Man schreibt dafür auch: $F\equiv G$.
+		
+		\item \textbf{Satz} - (\textbf{Idempotenz}) Für jede Formel $F$ gilt: $F\equiv(F\wedge F)$
+		
+		\item \textbf{Lemma} - \textbf{(Absorption)} $F\equiv(F\wedge(F\vee G))$
+	\end{itemize}
+	
+	\subsubsection{Syntax von Büchis Logik erster Stufe über Alphabet $\Sigma$}
+	\textbf{Atomare Formeln}: \textit{wahr}, $x\leq y$ und $R_{a}x$, wobei $x$ und $y$ (Positions-)Variablen sind und $a\in\Sigma$. Daraus induktiv \textbf{Formeln erster Stufe}:
+	\begin{itemize}
+		\item Atomare Formeln sind Formeln erster Stufe.
+		\item Sind $\phi$ und $\psi$ Formeln erster Stufe, so auch $(\neg\phi),(\phi\wedge\psi),(\phi\vee\psi)$
+		\item Ist $\phi$ eine Formel erster Stufe und ist $x$ eine Variable, so sind auch $(\exists x\phi)$ und $(\forall x\phi)$ Formeln erster Stufe
+	\end{itemize}
+	
+	Wieder Begriffe wie gebundene Variablen(vorkommen), freie Variablen, Aussagenform usf.
+	Die Menge der freien Variablen FV($\phi$) von Formel $\phi$ könnte man auch einfach induktiv definieren:
+	\begin{itemize}
+		\item $FV(x\leq y) = \{x,y\}, FV(R_{a}x)={x}$
+		\item Sind $\phi$ und $\psi$ Formeln erster Stufe, so gilt: 
+			\subitem $FV(\neq\phi)=FV(\phi)$ 
+			\subitem $FV(\phi\wedge\psi)= FV(\phi\vee\psi) = FV(\phi)\cup FV(\psi)$
+		\item Ist eine Formel erster Stufe und x eine Variable, so ist $FV(\exists x\phi)=FV(\forall x\phi)=FV(\phi)\setminus\{x\}$
+	\end{itemize}
+	
+	\begin{itemize}
+		
+		\item Erinnere: Elemente aus $\Sigma^{*}$ sind Wörter über $\Sigma$ oder auch Abbildungen $[n]\rightarrow\Sigma$. Speziell:$\lambda:[0]\rightarrow\Sigma$ mit $[0]=\emptyset$.
+			\subitem Formeln sollen Mengen von Wörtern über $\Sigma$ beschreiben (als Modelle).
+			\subitem "Mögliche Welten" sind im engeren Sinne $\{[n]|n\in\mathbb{N}\}$ mit Halbordnung $\leq$.
+			\subitem $Dom(u)$ gibt dann den Definitionsbereich von $u\in\Sigma^{*}$ an.
+			\subitem $R_{a}$ a soll die Menge der Positionen von Vorkommen von Zeichen $a$ angeben.
+			\subitem Bsp.: $ \Sigma=\{a, b\}, u=abbaab, Dom(u)=[6], R_{a}=\{0,3,4\}, R_{b}=\{1,2,5\}$.
+		
+		\item \textbf{Belegungen} sind Abbildungen $V\rightarrow Dom(u)$ für Variablenmenge $V$ und $u\in\Sigma^{*}$
+			\subitem $(u,v)$ ist Modell für Formel $\phi$, kurz $(u,v)\vDash\phi$, falls folgende induktive Definition für $u$ mit Belegung $v$ zutrifft. Hierbei ist $V=FV(\phi)$.
+			\subitem $(u,v)\vDash(x\leq y)$ gdw. $v(x)\leq v(y)$ sowie $(u,v)\vDash R_{a}x$ gdw. $x\in R_{a}$;
+			\subitem Sind $\phi$ und $\psi$ Formeln erster Stufe, so gilt:
+			\begin{itemize}
+				\item $(u,v)\vDash\neg\phi$ gdw. $(u,v)$ ist kein Modell für $\phi$;
+				\item $(u,v)\vDash(\phi\wedge\psi)$ gdw. $(u,v)\vDash\phi$ und $(u,v)\vDash\psi$
+				\item $(u,v)\vDash(\phi\vee\psi)$ gdw. $(u,v)\vDash\phi$ oder auch $(u,v)\vDash\psi$
+			\end{itemize}
+			
+			\subitem Ist $\phi$ eine Formel erster Stufe und x eine Variable, so ist:
+			\begin{itemize}
+				\item $(u,v)\vDash(\exists x\phi)$ gdw. es gibt $d\in Dom(u)$, sodass$ (u,v[x\mapsto d])\vDash\phi$
+				\item $(u,v)\vDash(\forall x\phi)$ gdw. für alle $d\in Dom(u)$ gilt$ (u,v[x\mapsto d])\vDash\phi$
+			\end{itemize}
+			\subitem Ist $FV(\phi)\vDash\emptyset$, so sagen wir auch: \textbf{u erfüllt $\phi$}, falls $(u,\emptyset)\vDash\phi$.
+			
+		\item Ist eine Formel über $\Sigma$ ohne freie Variablen, so ist $L(\phi)=\{u\in\Sigma^{*}|u\text{ erfüllt }\phi\}$
+			\subitem Dann gilt für beliebige Alphabete $\Sigma$ mit $a\in\Sigma$: $L(\phi)=\{a\}\Sigma^{*}$ und $L(\psi)=L(\phi)\cup\{\lambda\}.$
+			\subitem Beispiele auf Vorlesung 6, Folie 19 evtl relevant
+		
+		\item \textbf{Logik zweiter Stufe} erweiter Syntax um Automare Formeln $(Xx)$ sowie Formeln der Bauart $(\exists X\phi)$ und $(\forall X\phi)$;
+		\begin{itemize}
+			\item erweitert Semantik so, dass $X$ als Mengen von Positionen interpretiert werden;
+			\item entsprechend wird $v$ (induktiv) erweitert; 
+			\item $v$ ordnet Mengenvariablen Mengen zu.
+			\item $(u,v)\vDash (Xx)$ gdw. $v(x)\in v(X)$;
+			\item $(u,v)\vDash (\exists X\phi)$ gdw. es gibt $D\subseteq Dom(u)$, sodass $(u,v[X\mapsto D]) \vDash $;
+			\item $(u,v)\vDash (\forall X\phi)$ gdw. für alle $D\subseteq Dom(u)$ gilt $(u,v[X\mapsto D]) \vDash$.
+			\item Damit kann dann schließlich wieder $L(\phi)$ definiert werden.
+		\end{itemize}
+		
+		\item \textbf{Satz von Kleene/Büchi I}: Jede reguläre Sprache ist MSO-definierbar.
+			\subitem Idee: $L\subseteq\Sigma^{*}$ wird durch DEA beschrieben.
+			\subitem Für jedes $w\in\Sigma^{*}$ induziert Durchlauf der Zustandsmenge $Q$ Partition von $Dom(w)$ in $\leq|Q|$ Klassen. Wird die leere Menge als Klasse zugelassen, so sind es o.E. $|Q|$ viele Klassen; sei $Q = [n]$.
+			\subitem Formel für L soll also beschreiben:
+			\begin{itemize}
+				\item $X_{0},...,X_{n-1}$ ist Klasseneinteilung;
+				\item die Zustandsübergänge werden befolgt;
+				\item Anfangs- und Endzustände werden beachtet.
+			\end{itemize}
+		
+		\item Klasseneinteilung: $(\underset{q\neq p}{\bigwedge}\neg\exists x(X_{q}x\wedge X_{p}x))\wedge(\forall x\underset{q}{\bigvee}X_{q}x)$
+		
+		\item Zustandsübergänge (bis auf Wortende): $\forall x\forall y(S(x,y))\mapsto\underset{q\in Q}{\bigvee}\underset{a\in\Sigma}{\bigvee}(X_{q}x\wedge R_{a}y\wedge X_{\delta(q,a)}y)$
+		
+		\item Zusammen Formel für L: $\exists X_{0}...\exists X_{n-1} (\text{Klasseneinteilung}\wedge\text{Zustandsübergänge}\wedge\text{Randbedingungen})$
+		
+		\item Satz: REG ist abgeschlossen gegenüber Homomorphismen.
+			\subitem Das meint: Ist $h:\Sigma^{*}\mapsto\Gamma^{*}$ ein Homomorphismus und ist $L\subseteq\Sigma^{*}$ regulär, so ist $h(L)\subseteq\Gamma^{*}$ regulär.
+			\subitem Idee: Arbeite induktiv mit RA-Definition.
+		
+		\item $(p, q)$\textbf{-erweiterte Alphabete} $\Sigma_{(p,q)}=\Sigma^{*}\times\{0,1\}^{p}\times \{0,1\}^{q}$.
+			\subitem Beachte natürliche Bijektion $f:\Sigma^{n}_{(p,q)}\mapsto\Sigma^{n}\times(\{0,1\}^{n})^{p+q}$ für alle n.
+			\subitem $h:\{0,1\}^{*}\mapsto\{0,1\}^{*}$ sei Morphismus, gegeben durch $h(1) = 1$ und $h(0)=\lambda$.
+			\subitem $\pi_{i}:$ Projektion auf Komponente $i$. Hier: $\pi_{0},\pi_{1},...,\pi_{p+q}$ sinnvoll.
+			\subitem $K_{p,q}=\{\lambda\}\cup\{w\in\Sigma^{+}_{(p,q)}|\forall i=1,...,p:\ell(h(\pi_{i} (f(w)))) = 1\}$
+			\subitem Wegen Durchschnitts- und Homomorphismen-Abgeschlossenheit von REG folgt: $K_{(p,q)}\in$ REG.
+		
+		\item Zusammenhang Logik zweiter Stufe und erweiterte Alphabete
+			\subitem Betrachte $(u_{0},u_{1},...,u_{p},u_{p+1},...,u_{p+q})\Sigma^{n}\times(\{0, 1\}^{n})^{p+q}$ .
+			\subitem Deute $R_{a}$ als $\{i\in Dom(u_{0})|u_{0}(i)=a\}$;
+			\subitem Variable $x_{i}$ belegt durch die eindeutig bestimmte Position $j$, für die $u_{i}(j)= 1$ gilt.
+			\subitem Variable $X_{i}$ meint Menge der Positionen $j$, für die $u_{p+i}(j)=1$ gilt.
+			\subitem So können wir davon sprechen, dass $u\in K_{(p,q)}$ eine Formel $\phi(x_{1},...,x_{p},X_{1},...,X_{q})$ erfüllt und umgekehrt $\phi$ die Sprache $L_{p,q}(\phi)\subseteq K_{p,q}$ zuordnen.
+		
+		\item Hilfsalphabete:
+			\subitem $C_{i}=\{w\in\Sigma_{(p,q)}|\pi_{i}(w)=1\}$
+			\subitem $C_{i,a}=\{w\in C_{i}|\pi_{0}(w)=a\}$
+		
+		\item \textbf{Satz von Kleene/Büchi II}
+		Idee: Beschreibe für jede Formel die Sprache $L_{p,q}(\phi)\subseteq K_{p,q}$ induktiv.
+		\begin{itemize}
+			\item $L_{p,q}(R_{a}x_{i})=K_{p,q}\cap\Sigma^{*}_{(p,q)}C_{i,a}\Sigma^{*}_{(p,q)}$;
+			\item $L_{p,q}(x_{i}\leq x_{j} )=K_{p,q}\cap\Sigma^{*}_{(p,q)}(C_{i}\Sigma^{*}_{(p,q)}C_{j}\cup(C_{i}\cap C_{j}))\Sigma^{*}_{(p,q)};$
+			\item $L_{p,q}(X_{j}x_{i})=K_{p,q}\cap\Sigma^{*}_{(p,q)}(C_{i}\cap C_{j+p})\Sigma^{*}_{(p,q)};$
+			\item $L_{p,q}(\phi\vee\psi)=L_{p,q}(\phi)\cup L_{p,q}(\psi);$
+			\item $L_{p,q}(\phi\wedge\psi) = L_{p,q}(\phi)\cup L_{p,q}(\psi);$
+			\item $L_{p,q}(\neg ) = K_{p,q}\setminus L_{p,q}(\phi);$
+			\item $l_{i}(w):$ Löschen der i-ten Komponente von $w\in\Sigma^{+}_{(p,q)}$, interpretiert als $f(w)$.
+		\end{itemize}
+		
+		\subitem Beachte: $l_{i}: \Sigma^{*}_{(p,q)}\mapsto\Sigma^{*}_{(p-1,q)}$ falls $1\leq i\leq p$ und $l_{i}:\Sigma^{*}_{(p,q)}\mapsto\Sigma^{*}_{(p,q-1)}$ , falls $i>p$, sind auffassbar als Morphismen.
+		\subitem Nach de Morgan genügt nun die Interpretation der Existenzquantoren:
+		$L_{p-1,q}(\exists x_{i}\phi)=l_{i}(L_{p,q}(\phi))$ und $L_{p,q-1}(\exists X_{i})=l_{i+p}(L_{p,q}(\phi)).$
+		Enthält schließlich $\phi$ keine freien Variablen mehr, so gilt: $L(\phi)=L_{0,0}(\phi)$ ist
+		regulär wegen der bekannten Abschlusseigenschaften der regulären Sprachen.
+		
+	\end{itemize}
+	\subsection{Algorithmen mit/für endliche Automaten}
+	\begin{itemize}
+		
+		\item \textbf{Wann ist ein DEA $A$ nicht minimal?}
+		\subitem Wenn es nicht erreichbare Zustände gibt, d.h. es gibt $q$ mit $(q_{0},y)\vdash^{*}_{A}(q,\lambda)$ für kein Wort $y\in\Sigma^{*}$
+		\subitem Wenn es Zustände $q\neq q'$ gibt mit $\forall w\exists p,p'\in Q:|\{p,p'\}\cap F|\neq1\Rightarrow((q,w)\vdash^{*}_{A}(p,\lambda)\Leftrightarrow(q',w)\vdash^{*}_{A}(p',\lambda))$ d.h. $q$ und $q'$ sind nicht \textbf{trennbar}, sondern \textbf{äquivalent}
+		
+		\item Es bezeichne $[q]$ die Menge aller Zustände, die zu $q$ äquivalent sind
+		
+		\item \textbf{Lemma} - "Nicht-Trennbarkeit" ist tatsächlich eine Äquivalenzrelation uf $Q$
+		
+		\item \textbf{Eigenschaften äquivalenter Zustände}
+		\begin{enumerate}
+			\item Sind $q$ und $q'$ äquivalent, dann auch $\delta(q,a)$ $\delta(q',a)$
+			\item Sind $q$ und $q'$ äquivalent, dann gilt $q\in F\Leftrightarrow q'\in F$
+		\end{enumerate}
+		
+		
+		\subsubsection{Konstruktion des Minimalautomaten}
+		
+		\item Definiere zu $A=(Q,\Sigma,\delta,q_{0},F)$ neuen Automaten $A_{[]}=(Q_{[]},\Sigma_{[]},\delta_{[]},[q_{0}],F_{[]})$ mit:
+			\begin{itemize}
+				\item Anfangszustand $[q_{0}]$
+				\item Endzuständen $F_{[]}:=\{[q]|q\in F\}$
+				\item Übergangsfunktion $\delta_{[]}([q],a):=[\delta(q,a)]$
+		\end{itemize}
+			\subitem Mit $A$ hat auch $A_{[]}$ keine nicht-erreichbare Zustände
+			
+		\item Betrachte $f:Q\mapsto Q_{[]}$ mit $f(q):=[q]$. Aus den aufgeführten Eigenschaften folgt:
+		\subitem \textbf{Satz}: $f$ ist Automatenmorphismus; und damit gilt $L(A)=L(A_{[]})$.
+		
+		\item \textbf{Satz} - $A_{[]}$ isomorph zum Minimalautomaten von $A$, also zu $A_{min}(L(A))$
+		
+		\item \textbf{Schritte zur Minimierung}:	\\	
+		Gegeben sei DEA $A=(Q,\Sigma,\delta,q_{0},F)$
+		\begin{enumerate}
+			\item Bestimme die Menge der von $q_{}$ erreichbaren Zustände $E$! 
+			\subitem Bezeichne $E_{i}$ die Menge der in $\leq i$ Schritten erreichbaren Zustände
+			
+			\begin{itemize}
+				\item Setze $E_{0}:=\{q_{0}\}$
+				\item Wiederhole $E_{i+1}:=E_{i}\cup\{\delta(q,a)|q\in E_{i},a\in\Sigma\}$ bis erstmals $E_{i}=E_{i}$ gilt
+				
+				\item Dann ist $E=E_{i}$
+				
+				\item Entferne die Zustände $Q\setminus E$ aus dem Automaten
+				
+				\item Genauer/Alternative: Definiere zu DEA $A=(Q,\Sigma,\delta,q_{0},F)$ die \textbf{1-Schritt-Zustandserreichbarkeitsrelation} $R_{A}=\{(p,q)\in Q\times Q|\exists a\in\Sigma:\delta(p,a)=q\}$\\
+				
+				Ist $R^{*}_{A}$ die reflexiv-transitive Hülle von $R_{A}$, so ist $\{q\in Q|(q_{0},q)\in R^{*}_{A}\}$ die Menge der erreichbaren Zustände
+			\end{itemize}
+		
+			\item Bestimme die Äquivalenzrelation $\equiv_{A}$ im nach (1) verkleinerten Automaten wie folgt mit folgenden \textbf{Markierungsalgorithmus}:
+			\begin{itemize}
+				\item Verwende eine Tabelle aller ungeordneten Zustandspaare $\{q,q'\}$ mit $q\neq q'$
+				
+				\item Markiere alle Paare $\{q,q'\}$ als nicht-äquivalent, bei denen $|\{q,q'\}\cap F|=1$
+				
+				\item Wiederhole, solange noch Änderungen in der Tabelle entstehen:\\
+				\subitem Für jedes nicht markierte Paar $\{q,q'\}$ und jedes$a\in\Sigma$ Teste, ob $\{\delta(q,a),\delta(q',a)\}$ bereits markiert ist. Wenn ja $\rightarrow$ markiere $\{q,q'\}$.
+				
+				\item Alle am Ende nicht-markierten Paare sind äquivalent!
+				
+				
+			\end{itemize}
+			\subitem \textbf{Gesamtaufwand} (mit geeigneten Datenstrukturen und $k=|\Sigma|$ und $n=|Q|$): $O(k\cdot n^{2})$
+			
+			\item Beispiel VL6F11-12
+		
+		\end{enumerate}
+		\item Weitere Fragen an vorgegebenen DEA $A$:
+		\begin{itemize}
+			\item \textbf{Leerheitsproblem} Ist $L(A)=\emptyset$? - Die vom Automaten beschriebene Sprache ist leer gdw. $E$ keine Endzustände enthält.
+			\begin{itemize}
+				\item Alternativ: Betrachte zu DEA $A=(Q,\Sigma,\delta,q_{0},F)$ die erweiterte \textbf{1-Schritt-Zustandserreichbarkeitsrelation}
+				
+				\begin{center}
+					$R_{A,ext} = {(p,q)\in Q\times Q|\exists a\in\Sigma:\delta(p,a)=q}\cup F\times{q_{f}}$,
+				\end{center}
+				
+				\item wobei $q_{f}\notin Q$ und mit $Q'=Q\cup\{q_{f}\}$ gilt $R_{A,ext}\subset Q'\times Q'$.
+				
+				\item $L(A) =\emptyset$ gdw. $(q_{0},q_{f})\in R^{*}_{A,ext}$ .
+				
+				\item Die Existenz einer Punkt-zu-Punkt-Verbindung kann sogar in Linearzeit $O(|Q|)$
+				berechnet werden. (z.B.: Dijkstras Algorithmus)
+			\end{itemize}	
+				
+			
+			\item \textbf{Äquivalenzproblem} Ist $L(A)=L(A')$? und \textbf{Teilmengenproblem} Ist $L(A)\subseteq L(A')$? 
+			\begin{itemize}
+				\item Beobachte: $L(A)\subseteq L(A')$ gdw. $L(A)\setminus L(A')=\emptyset$
+				\item Daher:
+					\begin{enumerate}
+						\item Aus gegebenen DEAs $A$ und $A'$ berechne DEA $A''$ mit $L(A'')=L(A)\setminus L(A')$.
+						\subitem {\small Dies geht direkt mit Produktautomatenkonstruktion, wie auf Monoidebene erläutert}
+						\item Entscheide on $L(A'')=\emptyset$ mit vorher skizziertem Verfahren
+					\end{enumerate}
+				\item Wegen $L(A)=L(A')$ gdw. $L(A)\subseteq L(A')$ und $L(A')\subseteq L(A)$ folgt damit die Entscheidbarkeit des Äquivalenzproblems
+			\end{itemize}
+			
+			\item \textbf{Endlichkeitsproblem} Ist $L(A)$ endlich? 
+			\begin{itemize}
+				\item Wie im Beweis zum Pumping-Lemma sieht man:
+				\item Ist $L(A)$ unendlich, so gibt es einen Zustand $q$, einen (evtl. leeren) Weg vom
+				Anfangszustand $q 0$ nach $q$, einen nicht-leeren Weg von $q$ nach $q$ und einen
+				(evtl. leeren) Weg von $q$ zu einem Endzustand.
+				\item Die Umkehrung gilt sogar trivialerweise!
+				\item Bezeichnet $R_{A}$ die 1-Schritt-Zustandserreichbarkeitsrelation, so berechne $E'$: die Menge der Zustände, die sowohl erreichbar als auch co-erreichbar sind
+				\item (d.h., für alle $q\in E'$ gilt: $(q_{0},q)\in R^{*}_{A}$ und $\exists q_{f}\in F:(q,q_{f})\in R^{*}_{A})$.
+				Dann gilt: $L(A)$ ist unendlich gdw. $\exists q \in E':(q,q)\in R^{+}_{A}$ .
+			\end{itemize}
+		\end{itemize}
+		
+		\item \textbf{Endlicher Automat zu Mustersuche}
+		\begin{itemize}
+			\item \textbf{Beispiel}: Finde Vorkommen des Musters (Pattern)
+			$p = ababac$
+			in einem Text $t\in\{a, b, c\}^{*}$.
+			
+			\item Wir haben schon früher gesehen:
+			\subitem NEAs sind nützlich für diese Aufgabe.
+			
+			\item In RA-artiger Notation beobachten wir:
+			\subitem \textbf{Lemma}: $t\in\Sigma^{*}$ enthält das Muster $p$ gdw. $t\in\Sigma^{*}\{p\}\Sigma^{*}$.
+		\end{itemize}
+	
+		\item \textbf{Einige Hilfsbegriffe}
+		\begin{itemize}
+			\item $u$ heißt \textbf{Teilwort} von $x\in\Sigma^{*}$ gdw. $x\in\Sigma^{*}\{u\}\Sigma^{*}$ .
+				\subitem {\small Mustersuche ist also die Suche nach Teilwörtern}.
+			\item $u$ heißt \textbf{Präfix} oder \textbf{Anfangswort} von $x\in\Sigma^{*}$ gdw. $x\in\{u\}\Sigma^{*}$ .
+			\item $u$ heißt \textbf{Suffix} oder \textbf{Endwort} von $x\in\Sigma^{*}$ gdw. $x\in\Sigma^{*}\{u\}$.
+			\item Ein Teilwort / Präfix / Suffix $u$ von x heißt \textbf{echt} gdw. $\ell(u) < \ell(x)$.
+			\item Ein echtes Teilwort $u$ von $x$, das sowohl Präfix als auch Suffix von $x$ ist, heißt \textbf{Rand (der Breite $\ell(u)$)} von x.
+		\end{itemize}
+	
+		\item Am besten Beispiel auf Vorlesung 7, Folien 20-28 anschauen. Hier abzutippen ist nicht sinnvoll.
+		
+		
+		\item \textbf{Lemma} - Seien $r,s$ Ränder eines Wortes $x$ mit $l(r)<l(s)$. Dann ist $r$ ein Rand von $s$.
+	\end{itemize}
+	
+	\section{Kontextfreie Grammatiken und kontextfreie Sprachen}
+	\subsection{Kontextfreie Grammatiken und Baumautomaten}
+	\begin{itemize}
+		
+		\item Eine \textbf{kontextfreie Grammatik} ist ein Quadrupel $G=(\Sigma,N,R,S)$ mit:
+			\begin{itemize}
+				\item $\Sigma$ ist das \textbf{Terminalalphabet}
+				\item $N$ ist das \textbf{Nonterminalalphabet} (die \textbf{Variablenmenge}, mit $N\cap\Sigma=\emptyset$)
+				\item $R\subset N\times(\Sigma\cup N)^{*}$ ist das Alphabet der \textbf{Regeln} oder \textbf{Produktionen}; übliche Schreibweise:$A\rightarrow v$ anstelle von $(A,v)\in R$, wobei $A\in N$ und $v\in(\Sigma\cup N)^{*}$ auch \textbf{linke Seite} bzw. \textbf{rechte Seite} der Regel heißen
+				\item $S\in N$ ist das \textbf{Startsymbole} oder \textbf{Anfangszeichen}
+			\end{itemize}
+			\subitem Ein Wort über dem \textbf{Gesamtalphabet} $(\Sigma\cup N)$ heißt auch \textbf{Satzform}
+	
+		\item Der \textbf{Ableitungsmechanismus} einer Kontextfreien Grammatik:
+			
+			\subitem\textbf{1-Schritt-Ableitungsrelation} $\Rightarrow_{G}$ zwischen zwei Satzformen $u,v$ einer kfG $G: u\Rightarrow_{G} v$ (manchmal kurz $u\Rightarrow v$) gdw. es gibt Regel $A\rightarrow y$ sodass $u$ und $v$ wie folgt zerlegt werden können: $u=xAz$ und $v=xyz$; hierbei sind $x$ und $z$ wiederum Satzformen
+			
+			\subitem Etwas  formaler, ggb. $G=(\Sigma,N,R,S)$:
+			\begin{center}
+				$\forall u,v\in(\Sigma\cup N)^{*}:u\Rightarrow_{G}v\Leftrightarrow$\\$
+				(\exists x,z\in(\Sigma\cup N)^{*}\exists(A\rightarrow y)\in R:u=xAz\wedge v=xyz)$
+			\end{center}
+		
+		\item $\Rightarrow^{n}:$ \textbf{n-Schritt-Ableitungsrelation}
+		\item $\stackrel{*}{\Rightarrow}:$ \textbf{Ableitung mit beliebig vielen Schritten}
+		
+		\item Die von einer kfG $G$ \textbf{erzeugte} oder \textbf{abgeleitete} Sprache ist gegeben durch:
+			\begin{center} $L(G):=\{w\in\Sigma^{*}|S\stackrel{*}{\Rightarrow}w\}$ \end{center}
+			
+		\item Bequeme Schreibweise einer \textbf{Ableitung(sfolge)}:
+			\begin{center} $u_{0}\Rightarrow u_{1}\Rightarrow u_{2}\Rightarrow u_{3}$ \end{center}
+		
+		\item Gilt $u\stackrel{*}{\Rightarrow}v$, so gilt für ein $k:u\Rightarrow^{k}v$, bezeugt durch die Ableitungsfolge $U=U_{0}\Rightarrow u_{1}\Rightarrow\dots\Rightarrow u_{k-1}\Rightarrow u_{k}=v$. Dieses $k$ heißt auch \textbf{Länge der Ableitung}
+		
+		\item \textbf{KF}: Familie der \textbf{kontextfreien Sprachen}
+		
+		\item $G = (\{a,b\},\{S\},R,S)$ mit den Regeln $r_{1}=S\mapsto aSb$ und $r_{2}=S\mapsto\lambda$
+			\subitem\textbf{Lemma}: $L(G)=\{a^{n}b^{n}|n\geq0\}$
+		
+		\item Eine kfG heißt \textbf{rechtslinear} gdw. alle rechten Regelseiten haben die Form $zA$ oder $z$, wobei $z$ ein Terminalwort ist und $A$ ein Nichtterminalzeichen.
+		
+		\item \textbf{Satz}: $L$ ist regulär gdw. $L$ ist durch rechtslineare kfG erzeugbar
+		
+		\item \textbf{Folgerung}: \textbf{REG}$\subset$\textbf{KF}
+		
+		\item \textbf{Beschreibung arithmetischer Ausdrücke}
+			\subitem $\Sigma=\{v,-,+,\ast,/,(,)\},N=\{E\}$
+			\subitem \begin{tabular}{ll}
+				Die Regeln seien die folgenden:	&	Beispielableitung:	\\
+				$E\rightarrow (E)$	&	\\
+				$E\rightarrow -(E)$	&	$E\Rightarrow -(E)$	\\
+				$E\rightarrow (E + E)$	&	$\Rightarrow -((E + E))$	\\
+				$E\rightarrow (E - E)$	&	$\Rightarrow -(((E\ast E) + E))$	\\
+				$E\rightarrow (E\ast E)$	&	$\Rightarrow -(((-(E)\ast E) + E))$	\\
+				$E\rightarrow (E/E)$	&	$\Rightarrow -(((-(E)\ast E) + (E - E)))$	\\
+				$E\rightarrow v$	&	$\Rightarrow -(((-(v)\ast v) + (v - v)))$	\\
+			\end{tabular}
+		
+		\item \underline{Hinweis:} Der \textbf{Scanner}, ein endlicher Automat, produziert idealerweise als Ausgabe die Eingabe für den \textbf{Parser} zwecks \textbf{syntaktischer Analyse} eines Programmtextes.
+			\subitem "Nebensächlichkeiten" wie Zahlen oder Zahlenvariablen werden in einen Statthalter $v$ übersetzt
+		
+		\item \textbf{Beispiele Ableitungen}: Vorlesung 7, Folie 12 
+		
+		\item Eine \textbf{Syntaxbaum}(oder \textbf{Ableitungsbaum}) für (Formel) $\rightarrow$ VL7 F13
+			\subitem \textbf{Linksableitung}: Tiefensuche mit Linksabstieg durch Syntaxbaum
+			\subitem \textbf{Rechtsableitung}: Tiefensuche mit Rechtsabstieg durch Syntaxbaum
+		
+		\item Unter dem \textbf{Typ einer algebraischen Struktur} versteht mein ein Paar $(F,\sigma)$. Hierbei ist:
+			\subitem $F$ die Menge der \textbf{Funktionensymbole}
+			\subitem $\sigma:F\rightarrow\mathcal{N}$ liefert die \textbf{Stelligkeit} zu dem betreffenden Symbol
+			\subitem Der Typ einer Struktur ist ein rein syntaktisches Objekt. (\textbf{syntaktische Ebene})
+			\subitem Wenn es auf die Namen der Symbole nicht ankommt, erwähnt man oft auch nur den Stelligkeitstyp.
+			\subitem Informatisch gesprochen beschreibt ein Typ das Interface zwischen Strukturen.
+		
+		\item \textbf{Strukturen und Algebren}
+			\begin{itemize}
+				\item Es sei $A\neq\emptyset$ eine Menge und $n\in N$.
+				
+				\item Eine Abbildung $A^{n}\rightarrow A$ heißt \textbf{n-stellige Operation auf A}.
+					\subitem (Hier ist $A^{n}=A\times...\times A$ das (n-1)-fache kartesische Produkt.)
+				
+				\item Nullstellige Operationen heißen auch \textbf{Konstanten}.
+				
+				\item  $Op_{n}(A)$ sei die Menge der n-stelligen Operationen auf A, d.h., $Op_{n}(A) = A^{A^{n}}$.
+				
+				\item $Op(A) = \bigcup_{n=0}^{\infty}Op_{n}(A)$.
+				
+				\item Eine algebraische Struktur vom Typ $(F,\sigma)$ ist ein Paar $\mathbb{A}=(A,F),A\neq\emptyset$,	mit $F=\{f_{\mathbb{A}}|f\in F\}$,
+				wobei jedem $f\in F$ genau eine Operation $f_{\mathbb{A}}\in Op_{\sigma(f)}(A)$ zugeordnet ist.
+			\end{itemize}
+			\subitem Algebraische Strukturen liefern die \textbf{semantische Ebene}.
+		
+		
+		\item Es sei $\mathbb{A}=(A,F)$ eine Algebra vom Typ $(F,\sigma)$. 
+			\subitem Dann sind \textbf{Terme über $\mathbb{A}$} induktiv wie folgt definiert:
+			\begin{enumerate}
+				\item  Jedes $a\in A$ ist ein Term
+				
+				\item Sind $t_{1},\dots,t_{n}$ Terme über $\mathbb{A}$ und ist $f\in F$ mit $\sigma(f)=n$, so ist $f(t_{1},\dots,t_{n})$ ein Term über $\mathbb{A}$
+				
+				\item Nichts anderes sind Terme über $\mathbb{A}$
+			\end{enumerate}
+			\subitem Wir sammeln aller Terme über $\mathbb{A}$ in der Menge $Term(\mathbb{A})$
+		
+		
+		\item \textbf{Zur Auswertung von Bäumen}
+		\begin{itemize}
+			\item \textbf{Definition} - Es sei $\mathbb{A}=(A,F)$ eine Algebra vom Typ $(F,\sigma)$. Wir definieren die \textbf{Auswertefunktion} $eval:Term(\mathbb{A})\rightarrow A$ induktiv wie folgt:
+			\begin{enumerate}
+				\item Für $a\in A$ sei $eval(a):=a$
+				\item Sind $t_{1},\dots,t_{n}$ Terme über $\mathbb{A}$ und ist $f\in F$ mit $\sigma(f)=n$, so ist
+				\begin{center}
+					$eval(f(t_{1},\dots,t_{n})):=f_{\mathbb{A}}(eval(t_{1}),\dots,eval(t_{n}))$
+				\end{center}
+			\end{enumerate}
+			\item Unser Beispiel
+			\begin{align*}\hspace{-.75in}
+			eval(max(min(0, 6), max(2, min(3, 4)) &=\underset{\mathbb{N}}{max}(eval(min(0, 6)), eval(max(2, min(3, 4))))	\\
+			&= \underset{\mathbb{N}}{max}(\underset{\mathbb{N}}{min}(eval(0), eval(6)),\underset{\mathbb{N}}{max}(eval(2), eval(min(3, 4))))	\\
+			&=\underset{\mathbb{N}}{max}(\underset{\mathbb{N}}{min}(0,6),\underset{\mathbb{N}}{max}(2,\underset{\mathbb{N}}{min}(eval(3), eval(4))))	\\
+			&=\underset{\mathbb{N}}{max}(0,\underset{\mathbb{N}}{max}(2,\underset{\mathbb{N}}{min}(3, 4)))	\\
+			&=\underset{\mathbb{N}}{max}(0,\underset{\mathbb{N}}{max}(2, 3))	\\
+			&=\underset{\mathbb{N}}{max}(0, 3)	\\
+			&=3
+			\end{align*}
+		\end{itemize}
+		
+		\item Es sei $(F,\sigma)$ der Typ einer algebraischen Struktur.
+			\subitem Einnerung: nullstellige Operatoren sind Konstanten und damit die Beschriftung von Blättern der Termbäume.
+			\subitem Wir interpretieren diese im Folgenden als Teil des Zustandsalphabets.
+			\subitem Es sei Q ein endliches Zustandsalphabet mit Endzustandsmenge $Q_{f}\subseteq Q$.
+			\subitem Zustandsübergangsmenge $\Delta$ mit Elementen der Bauart:
+			$(f,q_{1},...,q_{n},q)$ mit $f\in F; \sigma(f)=n; q_{1},...,q_{n}, q\in Q.$
+			
+			\subitem Ein \textbf{endlicher Baumautomat} kann spezifiziert werden durch das Quadrupel 
+			\begin{center} $A=(Q,(F,\sigma),Q_{f},\Delta)$ \end{center}
+			\begin{itemize}
+				\item $Q$ ist ein endliches Zustandsalphabet
+				\item $(F,\sigma)$ ist der Typ einer algebraischen Struktur
+				\item $Q_{f}\subseteq Q$ die Endzustandsmenge
+				\item $\Delta$ die Zustandsübergangsmenge 
+			\end{itemize}
+		
+		\item Ein \textbf{Baum} über $(F,\sigma)$ (als rein syntaktisches Objekt) ist gegeben durch:
+		\begin{enumerate}
+			\item Jedes $a\in\{f\in F|\sigma(f)=0\}$ ist ein Baum
+			\item Sind $t_{1},\dots,t_{n}$ Bäume über $(F,\sigma)$ und ist $f\in F$ mit $\sigma(f)=n$, so ist	$f(t_{1},\dots,t_{n})$ ein Baum über $(F,\sigma)$
+			\item Nichts anderes sind Terme über $(F,\sigma)$
+		\end{enumerate} 
+	
+		\item \textbf{Arbeitsweise endlicher Automaten}
+			\subitem Interpretiere $A = (Q, (F ,\sigma),Q_{f},\Delta)$ als Algebra $\mathbb{A}_{A} = (2^{Q},F)$ durch:
+			\begin{center}
+				$f(Q_{1},...,Q_{n}):=\{q\in Q|\exists q_{1}\in Q_{1},...,\exists q_{n}\in Q_{n}:(f,q_{1},...,q_{n},q)\in\Delta\}$
+			\end{center}			
+			\subitem für $f\in F$ mit $\sigma(f)=n$.
+			\subitem Beachte, dass wir nullstellige Operatoren (Blattbeschriftungen) als Zustände und weiter als einelementige Zustandsmengen interpretieren.
+			\subitem Daher sind Bäume über $(F,\sigma)$ auch Terme über $\mathbb{A}$.
+			\subitem $A$ akzeptiert die Baumsprache $B(A):=\{b\in\mathbb{B}(F,\sigma)|eval_{\mathbb{A}_{A}}(b)\cap Q_{f}\neq\emptyset\}$.
+			\subitem Eine Baumsprache $B$ (Menge von Bäumen) ist \textbf{regulär} gdw. es gibt einen endlichen Baumautomaten, der $B$ akzeptiert.
+			
+		\item \textbf{Wort-Algebra: Eine weitere Algebra für $(F,\sigma)$}
+			\subitem Nullstellige Operationssymbole werden als Buchstaben interpretiert
+			\subitem$\rightsquigarrow$ Alphabet $\Sigma\rightsquigarrow$ Grundmenge $\Sigma^{+}$ für die Algebra $\mathbb{A}_{\Sigma}$
+			\subitem Jedes einstellige Operationssymbol wird als Identität gedeutet.
+			\subitem Jedes mehrstellige Operationssymbol wird als Konkatenation der Argumentwörter gelesen.
+			\subitem Die Terme dieser Algebra sind gerade die Bäume von $(F,\sigma)$.
+			\subitem Für das Ergebnis der Auswertung eines Baumes $b$ in dieser Algebra schreiben wir auch:
+			\begin{center}
+				$yield:\mathbb{B}(F,\sigma)\rightarrow\Sigma^{+}, yield(b) := eval_{A_{\Sigma}}(b)$
+			\end{center}
+		
+		\item \textbf{Der Satz von Doner, Thatcher und Wright}
+			\subitem \textbf{Satz}: Es sei $L\subseteq\Sigma^{*}$ eine Sprache.
+			\subitem $L$ ist kontextfrei gdw. $L=yield(B(A))$ für einen endlichen Baumautomaten $A$.
+			\begin{itemize}
+				\item[Idee 1]: Eine Regel $(f,q_{1},...,q_{n},q)$ des Baumautomaten wird zur Grammatikregel $(f,q)\rightarrow(f_{1},q_{1})...(f_{n},q_{n})$ für geeignet geratene Symbole $f_{1},...,f_{n}$.
+				\item[Idee 2]: Eine kontextfreie Regel $A\rightarrow B_{1}...B_{n}$ wird zur Regel $(X_{n},B_{1},...,B_{n},A)$ des Baumautomaten; hierbei gibt es genau ein Symbol $X_{n}$ der Stelligkeit $n$.
+			\end{itemize}
+		
+		
+		\item \textbf{Weitere Kommentare}
+			\begin{itemize}
+				\item Die Idee 2 führt unmittelbar zu einer Formalisierung des Ableitungsbaumbegriffs; hierbei werden lediglich die “Dummy-Symbole” $X_{n}$ nicht hingeschrieben, dafür allerdings die Nichtterminale (also die Zustände des Baumautomaten).
+				\item Die Hintereinanderschaltung beider Ideen führt dazu, dass es zu jeder kontextfreien Grammatik eine äquivalente G gibt, bei der wir jedem Nichtterminalzeichen $A$ eine Stelligkeit $\sigma(A)$ zuordnen können, sodass falls $A\rightarrow w$ eine Regel von $G$ ist, so gilt $\sigma(A)=\ell(w)$.
+				\item In der Literatur wird zumeist zwischen “Blattbeschriftungen” und Zuständen getrennt. Dann braucht man jedoch weitere Regeln der Form $(a,q)\in\Delta$ für $a\in\{f\in F|\sigma(f)=0\}$ und $q\in Q$
+			\end{itemize}
+		
+		\item \textbf{Lemma} - Zu der kfG $G$ gibt es eine kfG $G'$ mit $L(G)=L(G')$, bei der Regeln, die
+		Terminalzeichen enthalten, alleinig von der Form $A\rightarrow a$ sind mit $a\in\Sigma$
+		
+		\item \textbf{$\lambda$-Regeln} sind Regeln der Form $A\rightarrow\lambda$
+		
+		\item \textbf{Lemma} - Zu jeder kfG $G$ gibt es eine kfG $G'$ ohne $\lambda$-Regeln mit $L(G)\setminus\{\lambda\}=L(G')$
+		
+		\item \textbf{Wie erhält man $G'$ aus $G$ algorithmisch?}
+			\subitem \textbf{Problem:} Berechne $N^{\lambda}=\{A\in N|A\overset{\ast}{\Rightarrow}_{G}\lambda\}$
+			\subitem Induktive/rekursive Konstruktion:
+			\begin{enumerate}
+				\item $N^{\lambda}_{0}:=\{A\in N|A\rightarrow_{G}\lambda \}$
+				\item $N^{\lambda}_{k}:=\{A\in N|A\rightarrow_{G}X\wedge X\in(N^{\lambda}_{k-1}*)\text{ für }k>0 \}$
+			\end{enumerate}
+			\subitem Beachte Monotonieeigenschaft: $N^{\lambda}_{0}\subseteq N^{\lambda}_{1}\subseteq N^{\lambda}_{2}...$
+			
+		\item \textbf{Lemma}: $A\in N^{\lambda}$ gdw. $A\in\bigcup^{\infty}_{k=0}N^{\lambda}_{k}=:N^{\lambda}_{*}$ gdw. $A\in N^{\lambda}_{|N|}$
+		
+		\item \textbf{Kettenregeln} sind Regeln der Form $A\rightarrow B$, $B\in N$
+		
+		\item \textbf{Lemma} - Zu jeder kfG $G$ gibt es eine kfG $G'$ ohne Kettenregeln mit $L(G)=L(G')$.
+		
+	\end{itemize}
+
+	\subsection{Normalformen}
+	\begin{itemize}
+		
+		\item Eine \textbf{kontextfreie Grammatik in Chomsky-Normalform} ist ein Quadrupel $G=(\Sigma,N,R,S)$ mit:
+		\begin{itemize}
+			\item $\Sigma$ ist das \textbf{Terminalalphabet}
+			\item $N$ ist das \textbf{Nonterminalalphabet} (die \textbf{Variablenmenge})
+			
+			\item $R\subset (N\times N^{2})\cup(N\times\Sigma)$ ist das Alphabet der \textbf{Regeln} oder \textbf{Produktionen}
+			\item $S\in N$ ist das \textbf{Startsymbole} oder \textbf{Anfangszeichen}
+		\end{itemize}
+	
+		\item \textbf{Lemma} - Zu jeder kfG $G$ gibt es eine kfG $G'$ in Chomsky-Normalform mit $L(G)\setminus\{\lambda\}=L(G')$
+		
+		\item \textbf{Algorithmus zur Vermeidung zu langer rechter Regelseiten}
+			\subitem \underline{Grundidee}: Einfügen von “Zwischenzuständen” beim “Buchstabieren”
+			\subitem Eingabe: Regelmenge R (die im Folgenden modifiziert wird)
+			\subitem WHILE $(\exists A\rightarrow w\in R : \ell(w) > 2)$ DO:
+			\begin{enumerate}
+				\item Stelle $w = Bu$ dar.
+				\item Erzeuge neues Nichtterminalzeichen $X$.
+				\item Ersetze $A\rightarrow w$ durch $A\rightarrow BX$ und $X\rightarrow u$ in $R$.
+			\end{enumerate}
+			\subitem Korrektheit ist klar.
+			
+		\item \textbf{Satz}: Es gibt einen Algorithmus, der zu jeder vorgelegten kfG $G=(\Sigma,N,R,S)$	und jedem $w\in\Sigma^{*}$ entscheidet, ob $w\in L(G)$ gilt.
+			\subitem Cocke, Younger und Kasami haben gezeigt, wie man die Komplexität des beschriebenen Verfahrens durch \textbf{dynamisches Programmieren} erheblich vermindern kann.
+		
+		\item \textbf{Satz}: Ist eine kfG $G$ in Chomsky-Normalform fixiert, so lässt sich die Frage "$w\in L(G) ?$ in einer Zeit beantworten, die sich durch ein kubisches Polynom in $\ell(w)$ abschätzen lässt:
+		
+		\item Das Verfahren von Cocke, Younger und Kasami(\textbf{CYK-Algorithmus})
+		\begin{center}
+			$T[i,i]=\{A\in N|A\rightarrow a_{i}\in R \}$	\\
+			$T[i,k]=\{A\in N|A\rightarrow BC\in R\wedge\exists i\leq j<k:B\in T[i,j],C\in T[j+1,k]\}$
+		\end{center}
+	
+		\item \textbf{Satz} - \textbf{KF} ist unter Vereinigung abgeschlossen
+		
+		\item \textbf{Satz} - \textbf{KF} ist unter Konkatenation abgeschlossen
+		
+		\item \textbf{Satz} - \textbf{KF} ist unter Kleene Stern abgeschlossen
+		
+		\item \textbf{Satz} - \textbf{KF} ist unter Durchschnitt mit regulären Sprachen abgeschlossen
+		
+		\item Ein \textbf{binärer Wurzelbaum} ist gegeben durch ein Tripel $B=(V,\phi,r)$ mit ausgezeichneter \textbf{Wurzel} $r\in V$ und einer \textbf{Vater-Abbildung} $\phi:V\setminus\{r\}\rightarrow V$ mit der
+		Eigenschaft 
+		\begin{center}
+			$\forall v\in V:\#\underset{k(v):=}{\underbrace{\{u\in V|\phi(u)=v\}}}\leq2$
+		\end{center}
+			\subitem $k(v)$ liefert also die \textbf{Kinder} von $v$.
+			\subitem Knoten $v$ mit $k(v)=\emptyset$ heißen \textbf{Blätter}.
+		
+		\item \textbf{Lemma} - Der Ableitungsbaum eines jeden von einer kontextfreien Grammatik in Chomsky-Normalform akzeptierten Wortes kann als binärer Wurzelbaum aufgefasst werden.
+		
+		\item Die Höhe eines binären Wurzelbaumes $B=(V,\phi,r)$ ist gegeben durch
+		\begin{center}
+			$h(B) = \underset{v\in V\setminus\{r\}}{max}\{k\in N|\phi^{k}(v)=r\}$
+		\end{center}
+			\subitem {\small Sonderfall $h(B)=0$ bedeutet: $B=(\{r\},\phi,r)$ mit trivialem $phi$.}
+			
+		\item \textbf{Lemma} - Hat ein binärer Wurzelbaum B mehr als $2^{h}$ Blätter, so gilt $h(B)>h$.
+		
+		\item \textbf{Lemma} - Ist $G = (\Sigma, N, R, S)$ eine kfG in Chomsky-Normalform und ist $w\in L(G)$ mit $\ell(w)>2^{\#N}$ , so gilt für jeden Ableitungsbaum von $w$ bzgl. $G$, dass es einen Weg von $S$ zu einem Blatt gibt, auf dem mehr als $\#N$ viele Nichtterminalzeichen ersetzt werden
+		
+		\item \textbf{Folgerung} - Auf besagtem Weg von der Wurzel zum Blatt im Ableitungsbaum von $w$ finden wir also nach dem Schubfachprinzip zwei Regelanwendungen $A\rightarrow v$ und $A\rightarrow u$ mit gleicher linker Seite.
+		
+		\item \textbf{Satz} - Jede $L \in KF$ lässt sich beschreiben durch eine kfG $G=(\Sigma,N,R,S)$ mit Regeln der Form $N\times((NN)\cup(\Sigma))$; zusätzlich darf eine Regel $S\rightarrow\lambda$ existieren, wobei dann gefordert ist, dass $S$ in keiner rechten Regelseite vorkommt.
+		
+		\item \textbf{Ein Pumping-Lemma für KF}
+			\subitem \textbf{Satz} - Zu jeder kfS $L$ gibt es eine Konstante $n>0$, sodass jedes Wort $w\in L$ mit $\ell(w)\geq n$ als Konkatenation $w = uvxyz$ dargestellt werden kann mit geeigneten $u, v, x, y, z$ mit folgenden Eigenschaften:
+			\begin{enumerate}
+				\item $\ell(v)>0$ oder $\ell(y)>0$;
+				\item $\ell(vxy)\leq n$;
+				\item $\forall i\geq0:uv^{i}xy^{i}z\in L$
+			\end{enumerate}
+		
+		\item \textbf{Das Pumping-Lemma kennzeichnet nicht Kontextfreiheit}
+			\subitem Betrachte
+			\begin{center}
+				$L = {a^{k}d^{r}a^{k}d^{s}a^{k}|k,r,s\in\mathbb{N}}$
+			\end{center}
+			\subitem Mit der gleichen Intuition wie vorher ist die Sprache nicht kontextfrei.
+			\subitem $L$ erfüllt aber das Pumping-Lemma:
+			\subitem Ein Wort der Form $w=a^{k}d^{r}a^{k}d^{s}a^{k}$ mit $r>0$ lässt sich zerlegen in: $w=uvxyz$
+			mit (z.B.) $u=a^{k}$ , $v=d$ und $y=\lambda$.
+			\subitem Dann gilt $uv^{i}xy^{i}z\in L$ für alle $i\in\mathbb{N}$.
+			\subitem Der Fall $r = 0$ aber $s>0$ geht analog.
+			\subitem Gilt $r = s = 0$, so gilt für $w = a^{3k}$ , und die Wahl $v = a^{3}$ , $y = \lambda$ führt wiederum auf $uv^{i}xy^{i}z\in L$ für alle $i\in\mathbb{N}$
+			
+		\item \textbf{Pumping-Lemma Beispiele VL9 F 25-29}
+		
+		\item \textbf{Satz} - \textbf{KF} ist nicht unter Durchschnitt abgeschlossen
+		
+		\item \textbf{Satz} - \textbf{KF} ist nicht unter Komplementbildung abgeschlossen
+		
+		\item \textbf{Satz} - Das Leerheitsproblem ist für kfG entscheidbar
+		
+		\item \textbf{Endlichkeitsproblem}: Gegeben Sprachbeschreibung $G$ für $L$, ist $L$ endlich?
+		
+		\item \textbf{Satz} - Das Endlichkeitsproblem ist für kfG entscheidbar
+		
+		\item \textbf{Lemma} - Zu jeder Sprache $L\in KF$ gibt es eine Konstante $n>0$, sodass gilt: $L$ ist unendlich gdw. es gibt ein Wort $t\in L$ mit $n\leq\ell(t)<2n$
+		
+	\end{itemize}
+	
+	
+	\subsection{Automaten mit unendlichem Speicher}
+	
+	\subsection{Nichtkontextfreie Sprachen}
+	\subsection{Algorithmen für kontextfreie Grammatiken}
+	
+	\section{Chomsky-Hierarchie}
+	\begin{itemize}
+		\item Eine \textbf{(Phasenstruktur-)Grammatik} ist ein Quadrupel $G=(\Sigma,N,R,S)$ mit:
+		\begin{itemize}
+			\item $\Sigma$ ist das \textbf{Terminalalphabet}
+			\item $N$ ist das \textbf{Nonterminalalphabet} (die \textbf{Variablenmenge}
+			\item $R\subset (\Sigma\cup N)^{*}N(\Sigma\cup N)^{*}\times(\Sigma\cup N)^{*}$ ist das Alphabet der \textbf{Regeln} oder \textbf{Produktionen}; übliche Schreibweise:$xAy\rightarrow v$ anstelle von $(xAy,v)\in R$, wobei $A\in N$ und $x,y,v\in(\Sigma\cup N)^{*}$ auch \textbf{linke Seite} bzw. \textbf{rechte Seite} der Regel heißen
+			\item $S\in N$ ist das \textbf{Startsymbole} oder \textbf{Anfangszeichen}
+		\end{itemize}
+		\subitem Ein Wort über dem \textbf{Gesamtalphabet} $(\Sigma\cup N)$ heißt auch \textbf{Satzform}
+		
+		\subsubsection{\textbf{MON} und \textbf{KS}}
+			\item Eine Grammatik heißt \textbf{monoton} oder \textbf{nichtverkürzend} gdw. für alle Regeln gilt, dass die rechte Regelseite nicht kürzer als die linke ist.
+			
+			\item Eine monotone Grammatik heißt \textbf{kontextsensitiv}, wenn alle Regeln von der Form $\zeta A\eta\rightarrow\zeta w\eta$ sind für irgendein $A\in N$.
+			
+			\item {\small Hinweis: Bei kontextfreien Regeln gilt $\zeta=\eta=\lambda$.}
+			
+			\item Sonderfall $\lambda$-Regeln: Um die Ableitung des leeren Wortes zu ermöglichen, kann eine nichtmonotone Regel $S\rightarrow\lambda$ für das Startzeichen S bei \textbf{MON} und bei \textbf{KS} zugelassen werden. Dann darf aber $S$ auf keiner rechten Regelseite vorkommen.
+			
+		\subsubsection{Wie beweisen wir Sprachgleichheit?}
+		
+		\item Standard, getrennte Induktionen für $L(G)\subseteq L$ und $L\subseteq L(G)$.
+		
+		\item Alternativ / Hilfsmittel: Kennzeichnung der ableitbaren Satzformen.
+			\subitem\textbf{Lemma}: Für $L_{k}:= \{w |a^{k}Y_{a}b^{k}c^{k}\Rightarrow^{k+2} w\}$ gilt: $L_{k}= \{a^{k+1}b^{k+1}Y_{a}c^{k+1}, a^{k+1}b^{k+1}c^{k+1}\}$ für jedes $k\geq 1$.
+			
+		\item Einfacher sogar kann man per Induktion nachweisen:
+			\subitem \textbf{Lemma} - Aus $a^{k}b^{k}Y_{a}c^{k}$ ergibt sich nach $k$ Ableitungsschritten $a^{k}Y_{a}b^{k}c^{k}$(und keine andere Satzform).
+		
+		\item Ein nochmaliges Nachvollziehen der Beweise beider Lemmata liefert:
+			\subitem \textbf{Lemma} - Die einzigen in den beiden Lemmata beobachteten Satzformen, die nur
+		aus Terminalzeichen bestehen, sind explizit im ersten Lemma angegeben.
+		
+		\subsubsection{Eine Normalform für monotone Grammatiken} (ähnlich bei Typ-0)
+			\item \textbf{Satz} - Zu jeder monotonen Grammatik gibt es eine äquivalente, bei der alle Re
+			geln mit Terminalzeichen a von der Form $A\rightarrow a$ sind.
+			
+			\item \textbf{Satz} \textbf{KS=MON}
+			
+			\item \textbf{Satz}\textbf{KF $\subsetneq$ KS}
+
+		\subsubsection{Abschlusseigenschaften bei Typ-0/-1 Sprachen}
+		
+		\item \textbf{Vereinigung / Konkatenation} - “Standardkonstruktion” wie Typ-2
+			\subitem Achtung: Disjunkte Pseudoterminalalphabete bei Konkatenation
+		
+		\item \textbf{Durchschnitt} - NF-Grammatiken $G_{1}$ und $G_{2}$ werden simuliert auf “Produktalphabet” $N_{1}\times N_{2}$ . Nur für Paare $(X_{a},X_{a})$ gibt es terminierende Regeln $(X_{a},X_{a})\rightarrow a$.
+		
+		\item \textbf{Komplement} - Typ-1 Sprachen sind abgeschlossen; die entsprechende Technik des induktiven Zählens ist Gegenstand der Komplexitätstheorie.
+			\subitem Typ-0 Sprachen sind nicht abgeschlossen (Satz von Post in der nächsten Theorie-Vorlesung)
+			
+		\subsubsection{Die Chomsky-Hierarchy in Grammatik-Form}
+		\begin{itemize}
+			\item[Typ-0]: Phrasenstrukturgrammatiken, also RA. (RE: recursively enumerable)
+			\item[Typ-1]: kontextsensitive Grammatiken, also KS. (CS: context-sensitive)
+			\item[Typ-2]: kontextfreie Grammatiken, also KF. (CF: context-free)
+			\item[Typ-3]: rechtslineare Grammatiken, also REG.
+		\end{itemize}
+	
+		\item \textbf{Satz} - REG $\subsetneq$ KF $\subsetneq$ KS $\subsetneq$ RA
+				
+	\end{itemize}
+
+	\section{Turingmaschinen}
+	\begin{itemize}
+		\item Eine \textbf{Turingmaschine (TM)} ist durch ein 7-Tupel beschrieben:
+		\begin{center}
+			$TM = (S, E, A, \delta, s_{0}, \Box, F)$
+		\end{center}
+		
+		\subitem Dabei bedeuten
+		\begin{itemize}
+			\item $S = \{s_{0},s_{1},...,s_{n}\}$ die Menge der \textbf{Zustände},
+			
+			\item $E = \{e_{0},e_{1},...,e_{r}\}$ das endliche \textbf{Eingabealphabet},
+			
+			\item $A = \{a_{0},a_{1},...,a_{m}\}$ das endliche \textbf{Arbeitsalphabet} (auch Bandalphabet genannt), es sei dabei $E \subset A$,
+			
+			\item $s_{0}$ der Startzustand,
+			
+			\item $a_{0}=\Box$ das \textbf{Blank-Symbol}, das zwar dem Arbeitsalphabet, aber nicht dem Eingabealphabet angehört,
+			
+			\item $F\subseteq S$ die Menge der \textbf{Endzustände},
+			
+			\item $\delta$ sei die Überführungsfunktion/-relation mit (im deterministischen Fall)
+			\begin{center}
+				$\delta: (S\setminus F) \times A\rightarrow S\times A\times \{L, R, N\}$
+			\end{center}
+			\subitem bzw. (im nichtdeterministischen Fall) $\delta\subseteq ((S\setminus F)\times A)\times (S\times A\times \{L, R, N\})$
+		\end{itemize}
+		\subitem Hier bedeutet: L= links, R = rechts, N= neutral
+		
+		\item $\delta(s, a) = (s', b, x)$ bzw. $((s, a), (s', b, x)) \in \delta$ (mit $x \in\{L, R, N\}$) haben folgende Bedeutung:
+			\subitem Wenn sich der Automat im Zustand $s$ befindet und unter dem Kopf das Zeichen $a$ steht, so schreibt der Automat $b$ und geht ein Feld nach rechts $(R)$, bzw. links $(L)$, bzw. bewegt sich nicht $(N)$ und geht in den Zustand $s'$ über.
+			
+		\item Eine \textbf{Konfiguration} einer Turingmaschine $TM = (S, E, A, \delta, s_{0}, \Box, F)$ ist ein Tripel $(u, s, v)$ aus $A^{*}\times S\times A^{+}$:
+		\begin{itemize}
+			\item $uv$ ist aktuelle Bandinschrift
+			\item $s$ ist der aktuelle Zustand.
+			\item Schreib-Lesekopf über erstem Zeichen von $v$, daher $v\neq\varepsilon$.
+			\item Start der Maschine: $v\in E^{*\cup\{\Box\}}$ (Eingabe), $s = s_{0} , u = \varepsilon$.
+			\item O.B.d.A. $S \cap E = \emptyset$, daher Schreibweise usv statt $(u, s, v)$
+		\end{itemize}
+	
+		\item \textbf{Anfangskonfiguration} beim Start der Turingmaschine mit Eingabe $w \in E^{*}$ ist
+		$s_{0}w$ ( bzw. $s_{0}\Box$, falls $w = \varepsilon$).
+		
+		\item \textbf{Endkonfigurationen} sind alle Konfigurationen $us_{f}v$ mit $s_{f}\in F$. Hier kann die Berechnung nicht mehr fortgesetzt werden.
+		
+		\item Weiter ist
+		\begin{center}
+			$L(TM) := \{w \in E^{*}| s_{0}w\vdash^{*}us_{f}v, s_{f}\in F, u, v \in A^{*}\}$
+		\end{center}
+		die \textbf{von der Turingmaschine akzeptierte Sprache L}
+		
+		\item Simulation endlicher Automat durch Turingmaschine z.B. wie folgt:
+		\begin{itemize}
+			\item Schreib-Lesekopf hat ausschließlich lesende Funktion
+			\item Lesekopf zeichenweise lesend nach rechts
+			\item Zustandsübergänge des endlichen Automaten übernommen
+			\item Akzeptieren bei Erreichen von $\Box$ (d.h. Ende der Eingabe) im 'Automaten-
+			Endzustand'
+		\end{itemize} 
+		
+		\item \textbf{Typ-0 Sprachen lassen sich durch TM-Akzeptanz kennzeichnen}
+			\subitem Eine Phrasenstrukturgrammatik, die eine TM simulieren soll, arbeitet wie folgt:
+			\begin{enumerate}
+				\item Es wird die Sprache "$s 0 w\$w$" generiert für beliebige Eingabewörter $w$ der Turingmaschine.
+				\item Die Arbeitsweise der Turingmaschine (Konfigurationsübergänge) wird nun
+				auf dem ersten Wortteil simuliert.
+				\item Wird eine Finalkonfiguration erreicht, so besteht die Möglichkeit, den ersten
+				Wortteil und den Trenner \$ zu löschen und so $w$ zu generieren
+			\end{enumerate}
+		
+		\item Eine TM heißt \textbf{linear beschränkter Automat (LBA)}, wenn sie keine Blankzeichen
+		überschreiben darf.
+			\subitem \textbf{Satz} - $L$ ist Typ-1 gdw. $L$ wird von LBA akzeptiert.
+		
+		\item Automaten mit unendlicher Speicherstruktur
+		\begin{itemize}
+			\item besitzen endliche Kontrolleinheit wie Turingmaschinen;
+			\item anzugeben: Zugriff auf Speicherstruktur:
+			\begin{itemize}
+				\item Lesen (des aktuellen Speicherelements);
+				\item Schreiben;
+				\item Bewegung des Schreib-Lese-Kopfes (evtl. implizit);
+				\item evtl. weitere Abfragen / Tests
+			\end{itemize}
+		\end{itemize} 
+		
+		\item Ein Kellerautomat, engl. Pushdown automaton, ist ein Sextupel $A = (Q, \Sigma, \Gamma, q_{0}, \Delta, F)$:
+		\begin{itemize}
+			\item $Q$ ist das \textbf{Zustandsalphabet},
+			\item $\Sigma$ ist das \textbf{Eingabealphabet},
+			\item $\Gamma$ ist das \textbf{Kelleralphabet},
+			\item $q_{0}\in Q$ ist der Startzustand (Anfangszustand),
+			\item $\Delta\subset (Q\times(\Sigma\cup\{\lambda\})\times\Gamma^{*})\times(Q \times\Gamma^{*})$ ist die (endliche) \textbf{Übergangsrelation},
+			\item $F \subseteq Q$ ist die \textbf{Endzustandsmenge}.
+		\end{itemize}
+	
+		\item Vorlesung 10, Folien 38-45 gute Beispiele
+		
+		
+	\end{itemize}
+		
+	\subsection{Algorithmen für kontextfreie Grammatiken}
+	
+	Compiler(auf)bau: Eine Übersicht der Phasen
+	\begin{enumerate}
+		\item Scanner: lexikalische Analyse (endliche Automaten mit Ausgabe)
+		\item Parser: syntaktische Analyse (kontextfreie Sprachen)
+		\item semantische Analyse
+		\item Codegenerierung
+		\item Optimierung
+	\end{enumerate}
+
+	\begin{itemize}
+		\subsubsection{Parsing}
+		\item Linksableitung: Tiefensuche mit Linksabstieg durch Syntaxbaum
+		
+		\item Rechtsableitung: Tiefensuche mit Rechtsabstieg durch Syntaxbaum
+		
+		\item Ein \textbf{Linksparser} für Grammatik $G = (\Sigma,Q,R,s)$ liefert zu einem Wort $w\in L(G)$ eine Linksableitung von $w$, beschrieben durch ein Wort über $R$, und NEIN, falls $w\notin L(G)$.
+		
+		\item Analog: \textbf{Rechtsparser} liefert Rechtsableitung.
+		
+		\subitem {\small Hinweis: Es gibt \textbf{mehrdeutige} kfG, d.h., kfG, bei denen (manche) Wörter mehr als eine Linksableitung besitzen; dann liefert ein Linksparser irgendeine solche Linksableitung.}
+		
+		\item \textbf{Prädikative (Links-)Parser}
+			\subitem Erinnerung: KfG $\rightarrow$ Kellerautomat Konstruktion
+			\subitem Sei $G = (\Sigma, N, R, S)$ eine kfG. Betrachte folgende Transitionen:
+			\begin{itemize}
+				\item $((s, \lambda, \lambda), (f, S))$,
+				\item für jede Regel $C\rightarrow w: ((f, \lambda, C), (f, w))$,
+				\item für jedes Terminalzeichen $a: ((f, a, a), (f, \lambda))$.
+			\end{itemize}
+			\subitem $f$ ist der einzige Endzustand und $s$ der Startzustand
+			
+		\item Hieraus \textbf{Linksparser}
+			\subitem Der Linksparser simuliert im Wesentlichen den beschriebenen Kellerautomaten
+		(und ist daher im Allgemeinen nichtdeterministisch):
+			\subitem \textbf{Simuliert der Kellerautomat} die kfG, so gibt der Parser die entsprechende Regel aus (\textbf{Produktionsschritt}).
+			\subitem Schritte der Form $((f, a, a), (f, \lambda))$ heißen \textbf{Leseschritte (Shifts)} und führen zu keiner Ausgabe.
+			\subitem Im Wesentlichen kann der Linksparser die Zustandsinformation des Kellerautomaten ignorieren (Kellerautomaten-Normalformen !)
+			
+		\item \textbf{Konflikte bei Linksparsern}
+			\subitem ein Terminalzeichen auf dem Keller liegt, muss ein Linksparser einen Leseschritt durchführen (stimmt das oberste Kellerzeichen nicht mit dem aktuellen Eingabezeichen überein, so NEIN).
+			\subitem Bei den Produktionsschritten kann es jedoch zu \textbf{Konflikten} kommen: Welche Produktion (Regel) ist anzuwenden (zu simulieren) und damit auszugeben ?
+		
+		\item \textbf{Greibach-Normalform}
+			\subitem Eine kfG $G = (\Sigma,Q,R,s)$ ist in Greibach-Normalform gdw.
+			\begin{center}
+				$R \subseteq (N \times \Sigma(N\setminus \{S\})^{*} ) \cup (S \times \{\lambda\})$.
+			\end{center}
+			{\small Hinweis: Umformung Kellerautomat $\rightarrow$ kfG lieferte “fast” Greibach-NF.}
+			\subitem \textbf{Satz}: Jede kontextfreie Sprache besitzt eine sie erzeugende kfG in Greibach-NF.(ohne Beweis)
+			\subitem Eine kfG $G = (\Sigma, N, R, S)$ mit $R \subseteq (N\times\Sigma(N\cup\Sigma)^{*} )$ heißt \textbf{simpel} oder \textbf{$s$-Grammatik} gdw. $\forall A \in N\forall a \in \Sigma : |\{\beta \in (N \cup \Sigma)^{*} | A \rightarrow a\beta \in R\}| \leq 1$.
+			\subitem \textbf{Einfach anzugeben}: eine äquivalente kfG in Greibach-NF zu einer s-Grammatik.
+			Überlegen Sie sich die Details dazu! Hinweis: Unser Weg zur Chomsky-NF.
+			\subitem \textbf{Lemma}: Linksparser für s-Grammatiken arbeiten deterministisch.
+			
+		\item Linksparser heißen auch \textbf{Top-Down-Parser}
+			\subitem {\small Der Ableitungsbaum wird von oben nach unten durchforstet.}
+			\subitem \textbf{Problem}: Regelanwendungskonflikte.
+			\subitem \textbf{Mögliche Lösung}: Verzeichne zu jeder Regel $A\rightarrow w$ die Menge der Eingabezeichen aus $\Sigma$ (oder allgemein Wörter über $\Sigma$ einer vorgegebenen Maximallänge $k$), die als Präfix der Länge $k$ für ein aus $w$ ableitbares Terminalwort vorkommen können, als \textbf{Vorschau (Lookahead)}.
+			\subitem Tatsächlich wird die Bestimmung einer Vorschau-Menge noch verkompliziert durch mögliche $\lambda$-Regeln; das betrachten wir hier nicht im Einzelnen.
+			\subitem Auf dieser Idee fußend werden \textbf{LL(k)-Grammatiken} definiert
+			
+		\item \textbf{Parsen mit rekursivem Abstieg (für LL(1))}
+			\begin{itemize}
+			
+			\item Für jedes oberste Kellerzeichen $X$ gibt es Extra-Prozedur $P_{X}(au, K)$, wobei $au$ die restliche Eingabe ist (mit $a$ als aktuelles Eingabezeichen) und $K$ der Keller (ohne oberstes Kellerzeichen $X$).
+			
+			\item $P_{b}(au, K)$ für Terminalzeichen b:
+			\begin{enumerate}
+				\item liefert Fehlermeldung, falls $b\neq a$;
+				\item falls $b = a$, wird das oberste Kellerzeichen entfernt; gilt nun
+				\begin{enumerate}
+					\item $a = \$$ und $u = K = \lambda$, so akzeptiere; andernfalls ist
+					\item $K = \lambda$ ein Fehlerfall, da kein neues oberstes Kellerzeichen vhd.; für
+					\item $K\neq \lambda$ sei $K = X'K'$ und rekursiv rufe $P_{X'}(u, K')$ auf.
+				\end{enumerate}
+			\end{enumerate}
+			
+			\item In $P_{X} (au, K)$ wird für ein Nichtterminalzeichen $X$ nach verschiedenen Möglichkeiten für $a$ rekursiv verzweigt.
+			\subitem (Hier könnte man auch noch tiefer in der Ausgabe vorausschauen, wenn LL(k) gefordert.)
+			\subitem Das heißt, die betreffende Regel $X \rightarrow w$ wird ausgeführt und der neue Keller erfüllt $X'K' = wK$ für ein Zeichen $X'$;
+			rekursiv wird nun $P_{X'}(au,K')$ aufgerufen.
+			
+			\item \textbf{Beobachte} den Rekursionskeller!
+			\item \textbf{Gefahr} durch Linksrekursion in der Grammatik, d.h.: $X\overset{*}{\Rightarrow}X\alpha$
+			\end{itemize}
+		
+		\item \textbf{Rechtsparser}: bottom-up Simulation von Ableitungsbäumen
+			\subitem Sei $G = (\Sigma, N, R, S)$ eine kfG.
+			\subitem Betrachte folgende Transitionen (Kellerautomat hat nur einen Zustand):
+			\begin{itemize}
+				\item für jede Regel $C\rightarrow w: ((f, \lambda, w), (f, C))$ (Reduktionsschritt),
+				\item für jedes Terminalzeichen $a: ((f, a, \lambda), (f, a))$ (Leseschritt).
+			\end{itemize}
+		
+			\subitem\textbf{Der Kellerautomat akzeptiert bei leerer Eingabe und nur S auf dem Keller}.
+			\subitem Es ist hier einfacher, beim Keller das oberste Zeichen “rechts” anzunehmen.
+			
+		\item \textbf{Konflikte bei Rechtsparsern}
+			\subitem Es gibt zwei Arten von \textbf{Konflikten}:
+			\subitem Welche Produktion (Regel) unter mehreren ist anzuwenden (reduzierend zu simulieren) und damit auszugeben ? Reduktionsschritt oder (weiterer) Leseschritt ?
+			\subitem \textbf{Idee} wiederum: Möglicherweise hilft die Resteingabe weiter. . .
+	\end{itemize}
+
+	\subsection{Schnelle Zusammenfassung Typen}
+		\subsubsection{Effektive Charakterisierungen: Typ 3}
+		\begin{itemize}
+			\item Eine Sprache L ist \textbf{regulär} (“Monoid-Kennzeichnung”) $\Leftrightarrow$
+			\item L wird von einem DEA akzeptiert $\Leftrightarrow$
+			\item L besitzt endlich viele Nerode-Äquivalenzklassen (endlicher Index) $\Leftrightarrow$
+			\item L wird von einem NEA akzeptiert $\Leftrightarrow$
+			\item L wird von einem NEA mit $\lambda$-Übergängen akzeptiert $\Leftrightarrow$
+			\item L wird durch einen regulären Ausdruck beschrieben $\Leftrightarrow$
+			\item L wird durch eine rechtslineare Grammatik erzeugt
+		\end{itemize}
+	
+		\subsubsection{Effektive Charakterisierungen: Typ 2}
+		\begin{itemize}
+			\item Eine Sprache L ist \textbf{kontextfrei} $\Leftrightarrow$
+			\item L wird von einem Kellerautomaten akzeptiert $\Leftrightarrow$
+			\item L wird von einem Kellerautomaten mit Leerkellerakzeptanz erkannt $\Leftrightarrow$
+			\item L wird von einem Kellerautomaten mit Endzustandsakzeptanz erkannt $\Leftrightarrow$
+			\item L wird von einer kontextfreien Grammatik erzeugt $\Leftrightarrow$
+			\item L wird von einer kontextfreien Grammatik mit Linksableitung erzeugt $\Leftrightarrow$
+			\item L wird von einer kontextfreien Grammatik in erweiterter Chomsky-Normalform erzeugt
+		\end{itemize}
+	
+		\subsubsection{Effektive Charakterisierungen: Typ 1}
+		\begin{itemize}
+			\item Eine Sprache L ist vom \textbf{Typ 1} $\Leftrightarrow$
+			\item L wird von einem linear beschränkten Automaten akzeptiert $\Leftrightarrow$
+			\item L wird von einer monotonen Grammatik erzeugt $\Leftrightarrow$
+			\item L wird von einer kontextsensitiven Grammatik erzeugt
+		\end{itemize}
+		
+		\subsubsection{Effektive Charakterisierungen: Typ 0}
+		\begin{itemize}
+			\item Eine Sprache L ist vom \textbf{Typ 0} oder rekursiv aufzählbar $\Leftrightarrow$
+			\item L wird von einer Turingmaschine akzeptiert $\Leftrightarrow$
+			\item L wird von einer Phrasenstrukturgrammatik erzeugt
+		\end{itemize}
+		
+		\subsubsection{Abschlusseigenschaften} (mit konstruktiven Beweisen, falls “ja” !)\\
+		\begin{center}
+			\begin{tabular}{l||l|l|l|l}
+									& Typ-0 & Typ-1 & Typ-2 & Typ-3  \\
+				\hline
+				\hline
+				Durchschnitt		& ja 	& ja 	& nein 	& ja \\
+				Kompliment			& nein 	& ja 	& nein 	& ja \\
+				Vereinigung			& ja 	& ja 	& ja 	& ja \\
+				Konkatenation		& ja 	& ja 	& ja 	& ja \\
+				Kleene $\ast$		& ja 	& ja 	& ja 	& ja \\
+				Morphismen			& ja 	& nein 	& ja 	& ja \\
+				$\cap$ mit Typ-3 	& ja 	& ja 	& ja 	& ja \\
+			\end{tabular}
+		\end{center}
+	
+		\subsubsection{Entscheidbarkeitsfragen}
+		Gibt es einen Algorithmus zum Lösen folgender Fragen:
+		Leerheit, Endlichkeit, (uniformes) Wortproblem
+		\begin{center}
+			\begin{tabular}{l||l|l|l|l}
+				& Typ-0 & Typ-1 & Typ-2 & Typ-3  \\
+				\hline
+				\hline
+				Leerheit				& nein 	& nein 	& ja 	& ja \\
+				Endlichkeit				& nein 	& nein 	& ja 	& ja \\
+				(uniformes) Wortproblem	& nein 	& ja 	& ja 	& ja \\
+			\end{tabular}
+		\end{center}
+		Jedes “Ja” ist durch einen Algorithmus begründet !
+		Die “Neins” bei Typ-0 werden erst in der nächsten Grundlagenvorlesung klar !
+		Warum ist das Leerheitsproblem für Typ-1 nicht “einfacher” als für Typ-0 ?
+		Ersetze löschende Regeln $\zeta A\eta\rightarrow\lambda$ durch $\zeta A\eta\rightarrow a^{\ell(\zeta A\eta)}$ für irgendein Terminalzeichen $a$.
+	
+
+	
+\end{document}
