@@ -1,0 +1,14 @@
+40 Punkte, 20 Punkte zum Bestehen
+
+1. Phasen des Information-Seeking Mantra nennen. (2)
+2. Sparkline-Visualisierung mithilfe eines Beispiels erklären. (2)
+3. Isotypen-Visualisierung mithilfe eines Beispiels erklären. (2)
+4. Gestalt Gesetz der Stetigkeit erkennen und erklären. (3)
+5. Gegebene Treemap in Adjazenzmatrix umwandeln. (2)
+6. Unterschiede zwischen geometrischem und semantischem Zoom herausstellen. (2)
+7. Edge Splatting erläutern. (2)
+8. Definition Softwarevisualisierung (3 Aspekte). (3)
+9. 4 ästhetische Kriterien bei der Graphenvisualisierung nennen. (2)
+10. Gegebene Daten in Tabelle in gestapeltes Balkendiagramm und parallele Koordinaten zeichnen. (4) 
+11. Daten von Sportlern (gelaufene Distanz, durchschnittliche Herzfrequenz, Höhenmeter, ...) gegeben. Wie geeignet darstellen? (8)
+12. Grafiken von Radar Plot und Line Chart. Vor- und Nachteile vergleichen und Anwendungsfelder nennen. (8)

@@ -1,0 +1,17 @@
+Informationsvisualisierung SS16
+
+Punkeangaben sind nur Richtlinien. Hab mich irgendwo um 2P vertan.
+
+
+1) Informationen Seeking Mantra aufschreiben und die einzelnen Schritte erklären (4P)
+2) Was ist Isotyp-Visualisierung? (Skizze) (2P)
+3) Vergessen (2P)
+4) Graph in Icicle Plot, Idented Outline Plot, Treemap überführen. Inner Knoten ungefähr gleich groß zeichnen. Vorgehen erklären (6P)
+5) Vergleich Node-Link/Adjazenz-Matrix. Vor-Nachteile vergleichen/erklären. (5P).
+6) 4 Gestalungsrichtlinien für Graphen nennen (4P)
+7) Experiment: Erkläre abhängige/unabhängige Variablen(2P)
+8) Class Blueprint Erklären (Skizze) (3P)
+9) Aus vorgegebener Tabelle Paralleles Koordinatensystem und Starplot zeichnen (4P)
+10) Vergessen (3P)
+11) Für 10 aufeinanderfolgende Releases eines Software-Systems werden für die 6 wichtigsten Packages des Systems jeweils 5 Software-Metriken erhoben (z.B. Anzahl der Klassen, Größe in Codezeilen, Anzahl der Änderungen,durchschnittliche Komplexität, Anzahl der gefixten Bugs). Entwickeln Sie ein Visualisierungskonzept zur Darstellung dieser Daten und begründen Sie Ihre Design-Entscheidungen.
+(7 Punkte)

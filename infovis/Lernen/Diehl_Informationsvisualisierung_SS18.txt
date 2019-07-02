@@ -1,0 +1,21 @@
+Klausur Informationsvisualisierung SS 18 
+[die Nachklausur war exakt die gleiche]
+
+insgesamt 40 Punkte - 12 Fragen
+
+jeweils 2-3 Punkte:
+- Spark lines beschreiben
+- 4 Aspekte von ästhetischer Darstellung von Graphen nennen (-> Kantenkreuzung minimieren, ... )
+- Was ist Softwarevisualisierung (3 aspekte + beschreiben)
+- Treemap in Adjazenzmatrix umschreiben
+- Tabelle mit Werten -> in gestapeltes Histogramm und parallele Koordinaten überführen
+- Aspekte der Seeking Mantra nennen
+- Edge Splitting beschreiben
+- Piktogramme beschreiben + Beispiel
+- Gesetz der Stetigkeit beschreiben + Bsp zeichnen
+- Wagon Wheel Problem beschreiben
+
+
+Transfer (jeweils 8 Punkte):
+- Daten von Läufern (Name, Strecke, ... ) -> Visualisierung überlegen + beschreiben 
+- Radar Plot, Line Graphs -> Vor-/Nachteile aufschreiben + Daten nennen, welche dafür geeignet sind
