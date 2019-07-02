@@ -1,0 +1,633 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{fullpage}
+
+\setlength{\parindent}{0cm}
+
+\title{Digital Libraries Zusammenfassung}
+\begin{document}
+\maketitle
+\section*{Kapitel 1 - Einführung}
+	\paragraph{Bibliothek} eine Einrichtung, die unter archivarischen, ökonomischen und synoptischen Gesichtspunkten publizierte Information für die Benutzer sammelt, ordnet und verfügbar macht
+	\paragraph{Organisationsprinzipien in Bibliotheken}
+		\begin{itemize}
+			\item Sortierung der Bücher nach Signatur (eindeutiger Schlüssel, der Fachgebiet codiert)
+			\item Inhaltliche Erschließung der vorhandenen Dokumente
+			\begin{itemize}
+				\item \textbf{Formalerschließung}: Autor, Titel, Verlag, etc.
+				\item \textbf{Sacherschließung}: inhaltliche Beschreibung, z.B. Schlagwörter, Zusammenfassung oder Klassifikation
+			\end{itemize}
+			\item Einfaches Auffinden durch Suche in Index nach vordefinierten Schlagwörtern
+		\end{itemize}
+	\paragraph{Mögliche Dienste einer DL}
+		\begin{itemize}
+			\item Suche einer bestimmten Publikation
+			\item Suche nach "passenden" Publikationen auf Basis von
+			\item Exakten oder inexakten Metadaten
+			\item Inhaltlichen Beschreibungen
+			\item Suche nach ähnlichen Publikationen
+			\item Suche nach "guten" Publikationen zu einem Thema
+			\item Suche nach "passenden" Publikationen zu einem Benutzer
+			\item Alles im lokalen Bestand oder bibliotheksübergreifend
+			\item Erweiterte Metadaten (z.B. eingehende und ausgehende Zitate, Lesefrequenz)
+			\item Automatische Zusammenfassung und Aufbereitung von Information aus
+			Publikationen
+			\begin{itemize}
+				\item Beschreibung einer Publikation/einer Reihe mit Schlagwörtern oder als textuelle
+				Zusammenfassung
+				\item Beantwortung einer konkreten Frage
+				\item Zusammenstellung von Argumente für und gegen eine These
+			\end{itemize}
+		\end{itemize}
+	\paragraph{Mögliche weitere Aufgaben einer DL}
+		\begin{itemize}
+			\item \textbf{Erschließung }von Dokumentbeständen
+			\item \textbf{Digitalisierung} bestehender Dokumentbestände
+			(aber auch von anderen Artefakten, insbesondere in
+			den Geisteswissenschaften)
+			\item \textbf{Langzeitarchivierung} von Dokumentbeständen
+		\end{itemize}
+	\paragraph{Unterschiede der DL}
+	\begin{itemize}
+		\item \textbf{Abdeckung} der Publikationen
+		\begin{itemize}
+			\item Fokus auf einen Verlag
+			\item Fokus auf ?wichtige? Publikationen
+			\item Fokus auf online verfügbare
+		\end{itemize}
+		\item \textbf{Zugriffsrechte}
+		\item \textbf{Volltext} vs. \textbf{Verweis} zur Online-Publikation
+		\item Mächtigkeit des \textbf{Suchinterfaces}
+		\item \textbf{Aufbereitung} der Metadaten, Mehrwertdienste
+		\begin{itemize}
+			\item Keyphrases
+			\item Zitate ein- und ausgehend
+			\item bibliometrische Maße
+			\item Einfluss von/auf Autoren und Publikationen
+		\end{itemize}
+	\end{itemize}
+	
+\section*{Kapitel 2 - Wissenschaftliches Publizieren}
+\textbf{\LARGE Ich lasse hier ein gutes Stück der VL weg weil es scheiße langweilig ist}
+	\paragraph{Publikationshierarchie in der Informatik}
+		\begin{itemize}
+			\item Workshops:
+			\begin{itemize}
+				\item Publikation erster Ideen und Ergebnisse, ~6 Seiten, informell
+				\item Oft zu Themen, die gerade aktuell werden
+				\item Oft Schwerpunkt bei Diskussion statt Präsentation
+			\end{itemize}
+			
+			\item Konferenzen:
+			\begin{itemize}
+				\item Publikation aktueller Forschungsergebnisse, ~12 Seiten
+				\item Strenge Anforderungen an Neuheit und Qualität
+				\item Oft thematisch relativ breit, viele Teilnehmer
+				\item Zusätzlich Demos, Poster, Panels, Tutorials, ...
+				\item Pausen zur Interaktion, ?community-building?
+			\end{itemize}
+
+			\item Zeitschriften:
+			\begin{itemize}
+				\item Oft archivierender Charakter
+				\item Publikation erweiterter Fassungen von Konferenzbeiträgen, Surveys, ... ~10-40 Seiten
+				\item Möglichkeit zur Revision auf Basis von Gutachten
+			\end{itemize}
+		\end{itemize}
+	\paragraph{Qualitätssicherung: Peer Review}
+	
+		Fachkompetente \textbf{Gutachter} erstellen \textbf{Gutachten} über Einreichungen
+		\begin{itemize}
+			\item Auswahl der Gutachter durch Editor, unabhängig von Autoren
+			\item Empfehlung zu Annahme, Überarbeitung oder Ablehnung
+			\item Idealerweise aussagekräftige inhaltliche Kommentare, Wünsche, Anregungen
+			\item Typisch Gutachter anonym gegenüber Autoren
+			\item Oft auch Autoren anonym gegenüber Gutachtern (double blind)
+			\item Normalerweise 2-3 Gutachten pro Beitrag
+			\item Begutachtungszeiten:
+			\begin{itemize}
+				\item Konferenzen: typisch 6-16 Papiere à 12 Seiten in 4 Wochen
+				\item Zeitschriften: typisch 4-6 Wochen pro Beitrag à 30 Seiten
+			\end{itemize}
+			\item Begutachtung in der Regel kostenlos (hoffentlich nicht umsonst)
+		\end{itemize}
+	
+	\paragraph{Typischer Ablauf für Konferenzen}
+		\begin{enumerate}
+			\item Call for Papers durch Organisatoren
+			\item Einreichung von fertig formatierten Beiträgen durch Autoren
+			\item Begutachtung durch Wissenschaftler, gesteuert durch Organisatoren
+			\item Zusammenstellung des Tagungsbands durch Organisatoren
+			\item Veröffentlichung:
+			\begin{itemize}
+				\item Selbstverlag, online, etc.
+				\item Durch Fachgesellschaften (ACM, IEEE, VLDB, GI, etc.)*
+				\item Durch wissenschaftliche Verlage*
+			\end{itemize}
+			
+			*Zugriff oft nur gegen \$\$\$
+			\item Zusammenstellung des Programms durch Organisatoren
+			\item Registrierung für Konferenz durch Autoren (\$\$\$)
+			\item Vortrag etc. bei Konferenz durch Autoren
+		\end{enumerate}
+		(Ablauf für Workshops analog, für Zeitschriften bis Schritt 5)
+		
+	\paragraph{Wichtige Verlage?} To learn or not to learn, that is the question.
+	
+	\paragraph{Probleme des traditionellen Systems:}~\\
+		Anzahl der wissenschaftlichen Arbeiten wächst exponentiell, je nach Gebiet verdoppelt sich die Anzahl der Publikationen alle 10-15 Jahre
+		
+		Gründe:
+		\begin{itemize}
+			\item Weltweit mehr Forscher (Asien, Afrika) und mehr Projektmittel (DFG, BMBF, EU, NSF,  DARPA, ...)
+			\item Beurteilung hängt praktisch immer von Publikationen ab (Einstellung, Verdauerung, Beförderung, Projekte)
+			\item Oft zählt Anzahl, nicht Qualität
+		\end{itemize}
+	
+	\paragraph{Elektronische Zeitschriften ? Lösung?}
+		\begin{itemize}
+			\item Billiger, da kein Druck und keine Lieferung
+			\item Keine Begrenzung der Seitenzahl
+			\item Schnelle Verbreitung
+			\item Aber: Begutachtung bleibt Engpass
+		\end{itemize}
+	
+	\paragraph{Identifiers}
+		\begin{itemize}
+			\item Digital Object Identifiers
+			\item Personen-Identifier
+		\end{itemize}
+	
+	\paragraph{Mögliche Features zur Autordisambiguierung}~\\
+	Ähnlichkeit von zwei (Mengen von) Publikationen mit ähnlichen Autornamenkann abhängen von
+		\begin{itemize}
+			\item Ähnlichkeit der \textbf{Autornamen}: Wei Wang vs. Wang Wei vs. W. Wang vs. Wei X. Wang
+			\item Ähnlichkeit der A\textbf{utor-IDs}, wenn vorhanden
+			\item Ähnlichkeit der \textbf{Publikationstitel}: Issues with author disambiguation? vs. ?Methods for author disambiguation? vs. ?Methods for Virus Recognition?
+			\item Ähnlichkeit der \textbf{Publikationsorte}: gleiches Journal, thematisch ähnliche Venues (aber wie bestimmt man das?)
+			\item Ähnlichkeit der \textbf{Publikationszeiten}: Publikationen nur von 1990-2000 vs. Publikation im Jahr 2016
+			\item Ähnlichkeit der \textbf{Affiliations}: MPI Informatik vs. Max-Planck-Institute for Computer Science
+			\item Ähnlichkeit der \textbf{Co-Autoren}: Annahme: Dieselbe Menge von Co-Autoren publiziert immer mit dem gleichen Autor eines Namens (aber: Co-Autoren können selbst nicht eindeutig sein)
+		\end{itemize}
+	
+	\paragraph{Bewertung von Autoren}
+		\begin{itemize}
+			\item Anzahl von Publikationen
+			\item Anzahl von Zitaten
+			\item \textbf{Hirsch-Index (h-index)}: größte Zahl h, so dass mindestens h Publikationen des Autors mindestens h mal zitiert wurden
+			\item \textbf{Hirsch-Index mit Zeitconstraint}, z.B. h5: wie Hirsch-Index, aber zeitliche Beschränkung der betrachteten Publikationen (z.B. bei h5 auf die letzten 5 Jahre)
+			\item Werte hängen stark von Datenbasis ab, z.B. für Ralf Schenkel:
+				\begin{itemize}
+					\item Google Scholar: h-index=32
+					\item CiteSeer: h-index=13
+				\end{itemize}
+			\item Hirsch-Index analog für Journals definierbar
+			\item i10-Index: Publikationen, die mindestens 10mal zitiert wurden
+			\item Weitere Varianten, um potentielle Probleme des h-Index zu umgehen: g-index, e-index, c-index, s-index, Normalisierung der Coautor-Zahl, ...
+		\end{itemize}
+
+\section*{Kapitel 3 - Einführung in Information Retrieval}
+	\paragraph{Information Retrieval}~\\
+	Information Retrieval beschäftigt sich mit der Repräsentation, Speicherung und Organisation von Informationen und dem Zugriff auf Informationen. Im Regelfall bestehen die gespeicherten Informationen aus Texten
+	
+	\paragraph{Herausforderungen an IR-Systeme}
+		\begin{itemize}
+			\item Speicherung und effizienter Zugriff auf riesige Datenmengen
+			\item effiziente und effektive Suche
+			\item komplexe Suchanfragen (Queries)
+			\item Bewertung und Vergleich von Anfragen und Suchergebnissen
+			\item (visuelle) Aufbereitung von Suchergebnissen, Navigation,
+			Benutzerführung
+			\item einfaches Textverstehen
+			\item automatische Textsynthese
+		\end{itemize}
+	
+	\paragraph{Begriffsbildung}~\\
+	Suche in Dokumentkollektionen kann auf verschiedenen Abstraktionsstufen stattfinden Vergleiche hierzu die Ebenen der Semiotik:
+		\begin{itemize}
+			\item \textbf{Syntax} - Ein Dokument wird als Folge von Symbolen betrachtet. Beispiele:
+			\begin{itemize}
+				\item Zeichenkette in Texten
+				\item Histogramm oder Kontur in Bildern
+			\end{itemize}
+			\item \textbf{Semantik} - Ein Dokument wird auf der Ebene seiner Bedeutung betrachtet.
+			Semantik hat immer etwas mit Interpretation zu tun.
+			\item \textbf{Pragmatik} - Ein Dokument wird hinsichtlich seines Verwendungszusammenhangs betrachtet. Beispiele:
+			\begin{itemize}
+				\item Enthält ein Dokument eine Lösung meines Problems?
+				\item Was ist die Absicht des Autors des Textes?
+			\end{itemize}
+		\end{itemize}
+	
+	\paragraph{Daten, Information, Wissen}
+		\begin{itemize}
+			\item Daten -> syntaktische Ebene
+			\item Informationen -> semantische Ebene
+			\item Wissen -> pragmatische Ebene
+		\end{itemize}
+	
+	\paragraph{Relevanz} ist abhängig
+		\begin{itemize}
+			\item vom aktuellen Wissen des Benutzers
+			\item vom aktuellen Problem des Benutzers
+			\item von der subjektiven Erwartung des Benutzers
+		\end{itemize}
+	
+	\paragraph{Precison}
+		\begin{itemize}
+			\item erfordert nur die Analyse des Retrieval-Resultats
+			\item kann vom Endbenutzer eingeschätzt werden
+			\item ist ein subjektives Maß
+		\end{itemize}
+	
+	\paragraph{Recall}
+		\begin{itemize}
+			\item erfordert die Analyse der gesamten Dokumentenbasis
+			\item ist dem Endbenutzer nicht zugänglich
+			\item ist ein subjektives Maß
+		\end{itemize}
+	
+	\paragraph{Systemorientierte Prozess-Sicht}
+		\begin{itemize}
+			\item Crawl - strategies for crawl schedule and
+			priority queue for crawl frontier
+			\item Extract \& clean - handle dynamic pages, detect duplicates, detect spam
+			\item Index - build and analyze web graph, index all tokens or word stems
+			\item Match - fast top-k queries, query logging, auto-completion
+			\item Rank - scoring function over many data and context criteria
+			\item Present - GUI, user guidance, personalization
+		\end{itemize}
+
+	\paragraph{Methoden und Techniken des IR}
+		\begin{itemize}
+			\item Modellierung von Dokumenten und Text - DL+IR
+			\item (approximatives) String-Matching - IIR
+			\item Textvorverarbeitung und Indexing - DL+IR IIR
+			\item Benutzerinteraktion und Visualisierung - DL+IR
+			\item Benutzermodellierung und Personalisierung - DL+IR
+			\item Relevanzanalyse - DL+IR
+			\item verteilte und Peer-to-Peer Softwaretechnik - IIR
+			\item Kategorisierung, Klassifikation - Data Mining
+			\item Natural Lange Processing (NLP) - (Computer-) Linguistik DL+IR
+			\item Web-Technologie - DL+IR
+			\item Datenstrukturen, effiziente Symbolverarbeitung - IIR
+		\end{itemize}
+
+\section*{Kapitel 4 - Boolesches Retrieval}
+\subsection*{Anfragen und einfache Datenstrukturen}
+	\paragraph{Dokumente} sind die Einheiten des Datenbestandes bezeichnet, die durch das jeweilige Information Retrieval System bearbeitet werden
+	
+	\paragraph{Dokumentkollektion oder Korpus} - Die Grundmenge an Dokumenten, für die Information
+	Retrieval durchgeführt wird
+	
+	\paragraph{Terme oder Index-Terme} - Im Information Retrieval diejenigen Einheiten der Dokumente, die Gegenstand der logischen Repräsentation sind
+	
+	\paragraph{Informationsbedarf und Ad-hoc-Anfragen}~\\
+		Die Formulierung und Beantwortung von \textbf{Ad-Hoc-Anfragen} ist eine Standardaufgabe des Information Retrieval:
+			\begin{itemize}
+				\item Gesucht: Dokumente aus der Dokumentkollektion, die für eine Anfrage relevant? im Hinblick auf den jeweiligen Informationsbedarf sind. Relevanz durch denjenigen definiert, der Anfrage gestellt hat.
+				\item Algorithmen zur Anfragebeantwortung sollen effizient (d.h. schnell ihre Ergebnisse liefern) und effektiv (d.h. möglichst genau die Menge der ?relevanten? Dokumente auffinden) sein.
+			\end{itemize}
+		\textbf{Informationsbedarf:}
+			\begin{itemize}
+				\item Sachverhalt, über den ein Nutzer etwas in Erfahrung bringen möchte.
+				\item Nicht exakt definiert
+				\item unterscheidet sich von einer Anfrage (die Benutzer an das Retrieval-System richtet, um Informationsbedarf zu formulieren).
+				\item Oft Folge von Anfragen notwendig, um Informationsbedarf zu erfüllen
+			\end{itemize}
+	
+	\paragraph{Boolesches Retrieval-Modell} - ein Information-Retrieval-Modell der folgenden Art:
+		\begin{itemize}
+			\item Die logische Repräsentation betrachtet die Dokumente als Menge von Wörtern.
+			\item Anfragen werden aus Index-Termen zusammen mit den Booleschen Operatoren AND, OR und NOT gebildet.
+		\end{itemize}
+	Obwohl ein linearer Scan (grepping) bei kleineren Datenvolumina sehr effizient durchführbar ist, gibt es Gründe, nach weiterführenden Methoden zu suchen:
+		\begin{enumerate}
+			\item Sehr große Datenbestände, z.B. das Web;
+			\item  Komplexe Suchbedingungen, z.B. ?Brutus? und ?Caesar?, aber nicht ?Calpurnia?
+			\item  Flexibleres Matching, z.B. Ähnlichkeit zu Suchbegriffen oder Nachbarschaft von Wörtern als Kriterium;
+			\item  Ranking der Antwortmenge, um die beste oderrelevanteste Antwort zu erhalten
+		\end{enumerate}
+	
+	\paragraph{Term-Dokument Inzidenzmatrix} - enthält eine Zeile für jeden betrachteten Term $t$ und eine Spalte für jedes im Grundbestand vorkommende Dokument $d$ \\
+	
+	Tritt $t$ in dem Dokument $d$ auf, so enthält das Matrixelement $(t,d)$ eine 1, sonst eine 0:
+	\begin{center}
+		$ M(t,d) =  \begin{cases}
+		1,& \text{Falls $t$ in $d$ vorkommt} \\
+		0,& \text{sonst}
+		\end{cases}$
+	\end{center}
+	
+	Die Inzidenzmatrix erlaubt verschiedene Sichtweisen:
+	\begin{itemize}
+		\item Jede Zeile $(t,\cdot)$ stellt einen Vektor dar, der angibt, in welchen Dokumenten der Term $t$ vorkommt.
+		\item Jede Spalte $(\cdot,d)$ bildet einen Vektor, der angibt, welche Terme in dem Dokument $d$ auftreten.
+	\end{itemize}
+	
+	Hoher Speicherbedarf: siehe 4-12
+	
+	\paragraph{Invertierter Index} - besteht aus einem Vokabular (Dictionary) und
+	den Positionen (Postings). Das Vokabular enthält alle Index-Terme zu Dokumentenkollektion D. Die Positionen-Tabelle enthält zu jedem Term aus dem Vokabular alle Dokument-IDs und ggf. weitere Informationen, z.B. Positionen innerhalb von Dokumenten, an denen er auftritt. Die Positionsliste eines Terms heißt auch invertierte Liste des Terms.	\\
+	
+	Es gelten folgende weitere Vereinbarungen:
+	\begin{itemize}
+		\item Jedes Dokument $d\in D$ besitzt einen (auf D) eindeutigen Identifikator DocId, beispielsweise eine eindeutige Dokumentnummer oder seine URI im Web.
+		\item Jedem Index-Term t wird seine Dokumenthäufigkeit oder Document Frequency zugeordnet, die angibt, in wie vielen Dokumenten $t$ vorkommt. Im betrachteten Fall ist die Dokumenthäufigkeit eines Terms t gleich der Länge seines Positionsvektors.
+		\item Die Positionen jedes Terms werden nach DocId sortiert.
+	\end{itemize}
+	
+	\paragraph{Anfrage Operationen}
+		\begin{itemize}
+			\item Konjunktion (AND)
+			\item Disjunktion (OR)
+			\item Negation (NOT)
+		\end{itemize}
+	
+\subsection*{Vorverarbeitung von Dokumenten und Indexierung}
+	
+	\paragraph{Indexierung}
+		Die klassischen Dokumentmodelle abstrahieren ein Dokument auf eine Menge von sogenannten Indextermen oder Deskriptoren.
+		Idealerweise sollten Indexterme so gewählt sein, dass sie
+		\begin{enumerate}
+			\item den Inhalt der einzelnen Dokumente adäquat repräsentieren,
+			\item eine möglichst klare Abgrenzung der einzelnen Dokumente gewährleisten,
+			\item die Verknüpfung von thematisch ähnlichen Dokumenten ermöglichen.
+		\end{enumerate}
+	
+	
+	
+	\paragraph{Token} - die Instanz einer begrenzten Zeichenreihe (Character-String), die in dem gegebenen Dokument auftritt und zu einer für die Weiterverarbeitung semantisch sinnvollen Einheit gruppiert ist. Ein Token kann in einem Dokument mehrfach auftreten.
+		
+	\paragraph{Typ} - die Klasse aller Token, die dieselbe Zeichenreihe enthalten
+	
+	\paragraph{Term} - ein (ggf. ?normalisierter?) Typ, der in das Vokabular aufgenommen werden kann. Die Normalisierung kann z.B. hinsichtlich Groß-/ Kleinschreibung, Morphologie (Wortart, Flexionsform etc.), Rechtschreibung erfolgen.
+		
+	\paragraph{Problembereiche des Tokenisierung}
+		\begin{itemize}
+			\item Satzzeichen
+			\item Binde- bzw. Trennstriche
+			\item Groß-/Kleinschreibung
+			\item Ziffern/Zahlen
+			\item Wortlänge
+			\item zusammengesetzte Wörter
+			\item Umlaute etc.
+			\item Schreibfehler
+			\item Sprache
+		\end{itemize}
+	
+\subsection*{Vorverarbeitung}
+	\paragraph{Normalisierung} - der Prozess der Kanonisierung von Token, damit irrelevante Abweichungen nicht ins Gewicht fallen. Terme sind also die ?Normalformen? von Token.- Es muss gelten: \textit{Die Normalisierung muss für Dokumente und Anfragen auf die gleiche Weise erfolgen und zu den gleichen Normalformen führen.}
+	
+	\paragraph{Reduktion auf Wortstämme und Lemmatisierung}~\\
+	Durch die Reduktion von Wörtern auf eine Grundform oder auf einen Wortstamm können Äquivalenzklassen gebildet werden. Dadurch lässt sich die Größe von Indexen und die Komplexität von Anfragen stark reduzieren.	 \\
+	Im Wesentlichen gibt es zwei Ansätze
+		\begin{itemize}
+			\item \textbf{Lemmatisierung:}
+			\begin{itemize}
+				\item \textbf{Lemma} - Die Grundform eines Wortes, wie man sie beispielsweise in Lexika findet
+				\item \textbf{Lemmatisierung} - dieReduktion von Wörtern auf ihre Grundform nach linguistisch gültigen Regeln
+			\end{itemize}
+			\item \textbf{Stemming} - eine heuristische Methode zur Reduktion von Wörtern auf einen Wortstamm
+		\end{itemize}
+	Im Gegensatz zu Lemmatisierung wird Stemming von Linguisten nicht als gültiges Verfahren akzeptiert
+	\begin{itemize}
+		\item Die zugrunde liegende Methode folgt keinen linguistisch abgesicherten Regeln, sondern ist rein heuristisch begründet.
+		\item Stemming ist sprachabhängig.
+		\item Stemming mischt beugungs- und ableitungs-induzierte Reduktion
+	\end{itemize}
+\textbf{\huge TODO: 4-46 to 4-70}
+
+\subsection*{Weitere wichtige Retrievaloperatoren}
+	
+	\paragraph{Phrasenanfragen oder Phrase Queries} suchen nach Auftreten von Phrasen in Dokumenten. Separatoren und Stoppwörter werden dabei (oft) nicht betrachtet
+	
+	\paragraph{Wortpaarindexe} indexieren jedes aufeinanderfolgende Paar
+	von Termen in einem Dokument als Phrase
+	
+	\paragraph{Probleme mit Wortpaarindexen}
+		\begin{itemize}
+			\item Falsch-positiv                                                             e Ergebnisse, die eine Filterung der Ergebnisse erforderlich machen
+			\item Index kann sehr groß werden, da das Vokabular sehr groß werden kann
+		\end{itemize}
+	
+	\paragraph{Positionsindex} - besteht wie ein invertierter Index aus einem Vokabular und einer Positionsliste. Er speichert dabei zusätzlich für jeden Term t aus dem Vokabular seine Positionen für jedes Dokument, in dem er auftritt
+	
+	\paragraph{Proximity-Queries (Nachbarschaftsanfragen)} - stellen eine verallgemeinerte Form der Phrase Queries dar. Bei Proximity Queries wird nicht die genaue Wortsequenz gesucht, sondern Textstellen, in denen die angegebenen Einzelwörter einen bestimmten Maximalabstand nicht überschreiten
+	
+\subsubsection*{Methodische Ansätze der Rechtschreibkorrektur}
+	
+	\paragraph{Korrektur isolierter Terme}
+		\begin{itemize}
+			\item Jeder einzelne Anfrageterm wird separat behandelt.
+			\item Diese Methode kann keine fehlerhafte Anfrage, die aus korrekten
+			Termen besteht, erkennen
+			\item Grundannahmen
+			\begin{itemize}
+				\item Es existiert eine Liste der korrekten Wörter bzw. Terme
+				\item Es gibt eine Methode zur Berechnung der Distanz zwischen einem korrekten und einem fehlerhaften Wort (\textbf{Edit-Distanz})
+			\end{itemize}
+		\end{itemize}
+	
+	\paragraph{Kontext-sensitive Korrektur}~\\
+		Arten:
+		\begin{itemize}
+			\item \textbf{Hit-basierte} - untersucht mögliche Ersetzungen für die einzelnen Anfrageterme durch Terme mit geringer Edit-Distanz und zählt die Anzahl der mit der so modifizierten Anfrage gefundenen Dokumente (\textbf{sehr ineffizient})
+			\item \textbf{Spelling Correction mit Wortsequenzen} - Wir generieren wie bei der hitbasierten Methode alle Kombinationen von Alternativen für die Terme der Anfrage und wählen die Sequenz mit der höchsten geschätzten Wahrscheinlichkeit
+			\item \textbf{Phonetische Korrektur} - die Korrektur von Fehlern, die aufgrund des
+			gleichen Klangs zweier Schreibweisen entstehen
+				
+		\end{itemize}
+	
+	\paragraph{SOUNDEX-Algorithmen} - Korrekturalgorithmen, die auf dem sog. Phonetic Hashing basieren
+	
+	\paragraph{Schwachpunkte des Booleschen IR-Modells}
+		\begin{itemize}
+			\item Boolesche Anfragen werden schnell recht komplex.
+			\item Die Retrieval-Strategie basiert auf einer binären Entscheidung, lässt also kein Ranking zu
+		\end{itemize}
+	
+	\textbf{\huge Stemmer}
+	
+\section*{Kapitel 5 - Retrievalmodelle}
+\subsection*{Das Vektorraum-Modell}
+	\paragraph{Sichten auf ein Dokument}
+		\begin{itemize}
+			\item \textbf{Layout-Sicht} - Darstellung eines Dokuments auf einem zweidimensionalen Medium.
+			\item \textbf{Strukturelle bzw. logische Sicht} -  Definiert den Aufbau bzw. die logische Struktur eines Dokuments(\LaTeX)
+			\item \textbf{Semantische Sicht} - Betrifft die Aussage eines Dokuments und ermöglicht dessen Interpretation.
+		\end{itemize}
+	\paragraph{Modelle} -
+		Sei $D$ eine Menge von Dokumenten und $Q$ eine Menge von Anfragen. Ein \textbf{Dokument-Modell} für $D,Q$ ist ein Tupel $(D,Q,\rho_{\mathcal{R}})$, dessen Elemente wie folgt definiert sind:
+		\begin{itemize}
+			\item $D$ ist die Menge der Repräsentationen der Dokumente $d\in D$. In $d\in D$ können Layout-, logische und semantische Sicht codiert sein.
+			\item $Q$ ist die Menge der formalisierten Anfragen.
+			\item $\mathcal{R}$ ist ein Retrieval-Modell und formalisiert ein Prinzip, ein Paradigma
+			oder eine linguistische Theorie.
+		\end{itemize}
+	\paragraph{Klassische Retrieval-Modelle}~\\
+		Die klassischen Retrieval-Modelle abstrahieren ein Dokument $d\in D$ zu einer unstrukturierten Menge von Indextermen, die sich quasi unmittelbar und automatisch aus $d$ gewinnen lassen.
+		
+		Die Dokumentrepräsentation $d$ eines Dokumentes $d$ besteht aus gewichteten Indextermen, die aus d stammen.
+		Unterscheidung der klassischen Retrieval-Modelle:
+		\begin{itemize}
+			\item Art und Weise, wie sich Gewichte $w_i$ für die Indexterme $t_i$ berechnen.
+			\item Art und Weise, wie formalisierte Anfragen $q$ konstruierbar sind.
+			\item Art und Weise, wie sich die Retrieval-Funktion $\rho_\mathcal{R}(q,d)$ berechnet.
+			\item Art und Weise, wie die Menge relevanter Dokumente $R(q)$ konstruiert wird.
+		\end{itemize}
+	\paragraph{Boolesches Modell}~\\
+		\textbf{Vorteile:}
+		\begin{itemize}
+			\item Mächtigkeit: Prinzipiell kann mit einer Bool?schen Anfrage jede
+			beliebige Teilmenge von Dokumenten aus einer Kollektion selektiert
+			werden.
+			\item einfache und genaue Implementierbarkeit
+		\end{itemize}
+		\textbf{Nachteile}
+		\begin{itemize}
+			\item die Schwarz-Weiß-Aufteilung in die Menge $R$ (bzw. $D\backslash R$) der als relevant (bzw. nicht-relevant) geschätzten Dokumente ist zu streng
+			\item keine Ordnung auf der Antwortmenge $R$ hinsichtlich der geschätzten Relevanz
+			\item die Größe der Antwortmenge ist schwierig zu kontrollieren
+			\item keine Möglichkeit zur Gewichtung von Fragetermen
+			\item umständliche Formulierung von Anfragen
+			\item schlechte Retrieval-Qualität
+		\end{itemize}
+	\textbf{\huge mehr zum Vektorraummodell}
+	
+	\paragraph{Termhäufigkeit} - die Anzahl der Auftreten eines Terms in einem Dokument, ist für die Relevanz eines Dokuments bzgl. einer Anfrage wichtig. 
+	
+	Die Termverteilung und -häufigkeit sollten deshalb bei der Indizierung aufgezeichnet werden.
+	
+	\paragraph{Termgewichte}
+		\begin{enumerate}
+			\item Die Term-Dokument-Inzidenzmatrix (vgl. Kapitel 2) des Booleschen Retrieval-Modells enthält für jeden Term t und jedes Dokument d einen Eintrag $m(t,d)$. Sein Wert ist 1, falls $t$ in $d$ auftritt und 0 sonst.
+			\item Wir ersetzen nun die binäre Angabe, ob ein Term in dem Dokument auftritt oder nicht, durch ein Gewicht $w(t,d)$, das im Zusammenhang mit der Anzahl der Auftreten des Terms in dem jeweiligen Dokument steht.
+			\item Term Frequency oder Term-Häufigkeit bezeichnet das Gewichtungsschema, in dem direkt die Anzahl $tf_{t,d}$ der Auftreten des Terms $t$ in Dokument $d$ als Gewicht verwendet wird.
+		\end{enumerate}
+	
+	\paragraph{Term-Dokument Häufigkeitsmatrix} - enthält eine Zeile für jeden Term $t\in V$ aus dem Vokabular $V$ und eine Spalte für jedes in der Dokumentkollektion $D$ vorkommende Dokument $d\in D$. Es sei:
+	\begin{center}
+		$ M(t,d) =  \begin{cases}
+		k,& \text{Falls $t$ in $d$ an $k$ Stellen vorkommt} \\
+		0,& \text{sonst}
+		\end{cases}$
+	\end{center}
+		
+	\paragraph{Bag-of-Words-Modell}- Repräsentiert man Dokumente durch Term-Häufigkeitsvektoren, so wird die Wortordnung innerhalb eines Dokuments nicht berücksichtigt.
+	
+	\paragraph{Absolute Termhäufigkeit}~\\
+		Ziel:
+		\begin{itemize}
+			\item Einsatz der Termhäufigkeit $tf_{t,d}$ zur Bestimmung von Scores für das Retrieval.
+			\item Die absolute Anzahl von Auftreten eines Terms $t$ in dem Dokument $d$ ist als Maß nicht geeignet.
+			\item Ein Dokument $d_1$, in dem $t$ 10-mal auftritt, ist nicht unbedingt 10-mal so relevant, wie ein Dokument $d_2$, in dem t nur einmal auftritt.
+			\item In bestimmten Kontexten sind ?typische? und deshalb häufig vorkommende Termini wie Stoppwörter zu behandeln.
+		\end{itemize}
+	Eine Möglichkeit, den Einfluss der absoluten Termhäufigkeit etwas abzumildern, ist der Einsatz eines logarithmischen Häufigkeitsmaßes als Termgewicht im Dokumentvektor
+	
+	\paragraph{Dokumenthäufigkeit} - $df_t$ die Anzahl der Dokumente $d\in D$, in denen $t$ auftritt.\\
+	
+	Bei der Gewichtung mehrerer Terme in einer Anfrage spielt es eine Rolle, wie häufig jeder Term in der Dokumentkollektion vorkommt:
+		\begin{itemize}
+			\item "Seltene" Terme werden als signifikanter, genauer: trennschärfer, angesehen als "häufige".
+			\subitem Ein Dokument, das einen seltenen Term enthält, ist für diesen Term mit großer Wahrscheinlichkeit relevant. Seltene Terme sollten also ein hohes Termgewicht erhalten.
+			\item Ein Dokument, das einen häufigen Term enthält, ist sicherlich relevanter für diesen Term als ein Dokument, das den Term nicht enthält.
+			\subitem Andererseits ist der häufige Term weniger trennscharf. Häufige Terme sollten daher berücksichtigt werden, aber ein geringeres Termgewicht bekommen als seltene Terme.
+		\end{itemize}
+	
+	\paragraph{Inverse Dokumenthäufigkeit} - Für einen Term $t$ des Vokabulars ist die inverse Dokumenthäufigkeit (inverse document frequency) $idf_t$ von $t$ in der Kollektion $D$ definiert durch 
+		\begin{center}
+			$idf_t:=\log\frac{N}{df_t}$
+		\end{center}
+	Da $df_t\leq N$ gilt, ist $0\leq idf_t$
+		\begin{itemize}
+			\item Hohe inverse Dokumenthäufigkeit $idf_t$ bedeutet hohe Trennschärfe von $t$.
+			\item Geringe inverse Dokumenthäufigkeit $idf_t$ bedeutet geringe Trennschärfe von $t$.
+			\item Der Einfluss der Dokumenthäufigkeit wird durch das logarithmische Maß gedämpft.
+		\end{itemize}
+
+	\paragraph{Kollektionshäufigkeit}(collection frequency) - Anzahl der Auftreten von t in der gesamten Dokumentkollektion.
+	
+	\paragraph{tf?idf-Gewichtung} - ordnet einem Term $t$ des Vokabulars das wie folgt definierte Gewicht $tf\cdot idf_{t,d}$ in dem Dokument $d\in D$ der Dokumentkollektion zu:
+		\begin{center}
+			$w_{t,d}:=tf\cdot idf_{td}:=tf_{t,d}\cdot idf_{t}:=tf_{t,d}\cdot\log\frac{N}{df_{t}}$
+		\end{center}
+	Falls $t$ in $d$ vorkommt, ist das Termgewicht $w_{t,d}$ also
+		\begin{itemize}
+			\item \textbf{am höchsten}, wenn $t$ häufig in $d$, aber insgesamt in einer geringen Zahl von Dokumenten der Kollektion auftritt;
+			\item \textbf{geringer}, wenn $t$ seltener in $d$ oder insgesamt in einer größeren Zahl von Dokumenten der Kollektion auftritt;
+			\item \textbf{am geringsten}, wenn $t$ in praktisch allen Dokumenten auftritt.
+		\end{itemize}
+
+	\paragraph{Cosinus-Ähnlichkeit von Dokumenten}(cosine similarity) -  $sim(d,d')$ zweier (Dokument-)Vektoren $d$ und $d'$ ist definiert durch
+		\begin{center}
+			$sim(d,d'):=\frac{d^{T}d'}{||d||||d'||}$
+		\end{center}
+	
+	\paragraph{Ähnlichkeit von Anfrage und Dokument}~\\
+	Der Score eines Dokuments $d$ für die Anfrage $q$ wird als Cosinus-Ähnlichkeit $sim(d,q)$ der entsprechenden Vektoren berechnet:
+		\begin{center}
+			$sim(d,q):=\frac{d^{T}q}{||d||||q||}$
+		\end{center}
+	
+\subsection*{Probabilistische Modelle}
+	\paragraph{Wahrscheinlichkeiten im IR?}
+		Die grundlegende Idee ist es, Dokumente nach absteigender Relevanzwahrscheinlichkeit zu ordnen.
+		
+	\paragraph{Probability Ranking Principle}
+		Sei d ein Dokument aus der Kollektion. Die binäre Zufallsvariable $R$ beschreibe die Relevanz eines Dokuments: $R = 1$ bedeutet also relevant, $R = 0$ bedeutet nicht relevant.
+		
+		
+\section*{Fragen für lernen}
+\subsection*{Welche Probleme gibt es bei der Digitalisierung traditioneller Bibliotheken?}
+	\begin{itemize}
+		\item Scanqualität
+		\begin{itemize}
+			\item Auflösung
+			\item Format
+		\end{itemize}
+		\item Schrifterkennung
+		\begin{itemize}
+			\item Buchstabenerkennung (Schwierig bei "exotische Schriftarten")
+			\item Worterkennung ()Schwer bei seltene Sprachen/ Spezialvokabular
+		\end{itemize}
+	\end{itemize}
+
+\subsection*{Welche Publikationsmöglichkeiten gibt es? (Ablauf)}
+	\begin{itemize}
+		\item Workshop
+		\item Konferenzen
+		\item Zeitschriften
+	\end{itemize}
+
+\subsection*{Nennen sie ein paar mögliche Retrieval-Szenarien}
+	\begin{itemize}
+		\item Empfehlungen
+		\item Bildersuche
+		\item Question answering
+		\item Desktop-Suche
+		\item Ortsabhängige Suche
+		\item Adhoc-Suche
+	\end{itemize}
+	
+\subsection*{Erklären Sie Proximity-Queries}
+
+\subsection*{Welche Ansätze gibt es zur Rechtschreibkorrektur?}
+	\begin{itemize}
+		\item Korrektur isolierter Terme
+		\item Kontext-sensitive Korrektur
+		\item Phonetische Korrektur
+	\end{itemize}
+
+\subsection*{Wozu werden Sprachmodelle verwendet?}
+	Ein Sprachmodell modelliert die in einer Sprache auftretenden Sätze statistisch. Es erlaubt, die Wahrscheinlichkeit zu bestimmen, mit der eine vorgegebene Wortfolge vorkommt
+
+\subsection*{Erklären sie das Probability Ranking Principle}
+	
+						
+\end{document}
