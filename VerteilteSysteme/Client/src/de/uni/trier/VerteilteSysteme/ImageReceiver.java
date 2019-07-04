@@ -12,9 +12,9 @@ public class ImageReceiver {
 
     BufferedInputStream reader;
 
-    public ImageReceiver(String IP, String Port) throws Exception {
+    public ImageReceiver(InetAddress ip, int port) throws Exception {
 
-        clientSocket = new Socket(InetAddress.getByName(IP), Integer.parseInt(Port));
+        clientSocket = new Socket(ip, port);
 
         reader = new BufferedInputStream(clientSocket.getInputStream());
     }

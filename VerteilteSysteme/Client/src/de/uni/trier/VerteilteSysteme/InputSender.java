@@ -8,12 +8,12 @@ public class InputSender {
     private InetAddress address;
     private int port;
 
-    public InputSender(String IP, String port) throws Exception {
+    public InputSender(InetAddress ip, int port) throws Exception {
         this.socket = new DatagramSocket();
 
-        this.address = InetAddress.getByName(IP);
+        this.address = ip;
 
-        this.port = Integer.parseInt(port);
+        this.port = port;
     }
 
     public void sendInput(String input) throws Exception {
