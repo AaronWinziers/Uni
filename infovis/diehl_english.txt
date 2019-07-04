@@ -2,11 +2,14 @@
 Corrections
 -----------
 	"You have somehow" -> For example
-	Long a's - Elaaborate Collaapse etc. (accent?)
+	Long a's - Elaaborate Collaapse etc.
 	Often - not a baking implement
 	Register - Regíster
-	Parameter - para - meters
-	Recipients - not re"see"pients
+	Parameter - para - meters (unit)
+	Recipients - re"see"pients
+	Represents - reepresents
+	Tarantula - Ta-rahn-tulla
+	Motif - motiff
 ------
 Slides
 ------
