@@ -10,6 +10,8 @@ Corrections
 	Represents - reepresents
 	Tarantula - Ta-rahn-tulla
 	Motif - motiff
+	Column - cullum
+	Species - speesyus
 ------
 Slides
 ------
