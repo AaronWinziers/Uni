@@ -331,8 +331,8 @@
 			\item There is also a lack of domain-specific results.
 		\end{itemize}
 	
-\section{Lecture}
-	Visualization of Graphs: \textbf{Graph drawing}
+\section{Visualization of Graphs}
+	\paragraph{Graph Drawing} - The art of drawing a diagram of a graph to facilitate understanding of relations between objects
 	\paragraph{Application}
 	\begin{itemize}
 		\item Map-drawing: indicate multiple data sets in one map (London Underground)
@@ -358,82 +358,271 @@
 	\end{itemize}
 	
 	\subsection{Layouting algorithms}
-	Radial Layout
-	\begin{itemize}
-		\item fair node weight, every node's representation is equal
-		\item lots of edge crossings
-		\item applicable, if there is no further info about the data
-	\end{itemize}
-	Force-Directed Layout
-	\begin{itemize}
-		\item force edges to a certain length
-		\item reorder nodes
-		\item try to find equilibrium, where the forces cancel out each other
-	\end{itemize}
-	Hierarchical Layout
-	\begin{itemize}
-		\item for cyclic structures: flip the edges that close the cycle while drawing the graph
-		\item depth first search provides a topological ordering of the nodes
-		\item sort nodes on the lower layer until the bottom is reached, then go back to start
-		\item to have a clean layout, put in dummy nodes as a spacer
-	\end{itemize}
-	Orthogonal Layout
-	\begin{itemize}
-		\item edges follow grid (orthogonal paths)
-		\item shape metrics
+		Radial Layout
 		\begin{itemize}
-			\item describe the path the edges take by turns
-			\item evaluate the paths 
+			\item fair node weight, every node's representation is equal
+			\item lots of edge crossings
+			\item applicable, if there is no further info about the data
+		\end{itemize}
+		Force-Directed Layout
+		\begin{itemize}
+			\item force edges to a certain length
+			\item reorder nodes
+			\item try to find equilibrium, where the forces cancel out each other
+		\end{itemize}
+		Hierarchical Layout
+		\begin{itemize}
+			\item for cyclic structures: flip the edges that close the cycle while drawing the graph
+			\item depth first search provides a topological ordering of the nodes
+			\item sort nodes on the lower layer until the bottom is reached, then go back to start
+			\item to have a clean layout, put in dummy nodes as a spacer
+		\end{itemize}
+		Orthogonal Layout
+		\begin{itemize}
+			\item edges follow grid (orthogonal paths)
+			\item shape metrics
+			\begin{itemize}
+				\item describe the path the edges take by turns
+				\item evaluate the paths 
+			\end{itemize}
+		\end{itemize}
+		Edge Bundling
+		\begin{itemize}
+			\item structured radial layout
+			\item bundle edges with the same direction
+		\end{itemize}
+
+	\subsection{Matrix visualization of Graphs}
+		Adjacency Matrix
+		\begin{itemize}
+			\item indicate an edge in a matrix
+			\item uncovering clusters is hard
+		\end{itemize}
+	
+	\subsubsection*{Layouting}
+		Compound graphs
+
+	\subsection{Visualization of dynamic graphs}
+		Dynamic graph: sequence of graph states
+		
+		\subsection{Approaches to dynamic graphs}
+		
+		\paragraph{Animation} Animation of the sequence of graphs
+		\begin{itemize}
+			\item \textbf{Local goal} - Optimal graph layout
+			\item \textbf{Preserving the mental map}
+		\end{itemize}
+		
+		\paragraph{Time Line} - Visualization of the sequence of graphs as a series of
+		static images along a time line. Examples:
+		
+		\begin{itemize} 
+			\item TimeSpiderTrees, cirular layout, each ring is one graph
+			\item TimeRadarTrees, cicular layout, outer circles are a representation of the inner. The inner circle shows incoming edges, the outer shows outgoing
+		\end{itemize}
+		
+\section{Multivariate data and time series}
+	\paragraph{Multivariate Data}
+		\begin{itemize}
+			\item Several variables/dimensions per
+			object/observation
+			\item Types of variables - numeric, categorial
+			\item Easy to represent in a table
+		\end{itemize}
+	
+	\paragraph{Descriptive Statistics}
+	\begin{itemize}
+		\item Mean
+		\item Median
+		\item Quartile
+		\item Mode
+		\item Standard Deviation
+		\item Standard Error
+	\end{itemize}
+
+	\subsection{Graph types}
+		
+		\paragraph{Boxplots} box showing 50 percent of data, outer borders not standardized
+		\paragraph{Fan Chart} wide part shows the mean (similar to the box plot) 
+		\paragraph{Histogram} Frequency distribution shown as bar chart (value range split into intervals)
+		
+		\paragraph{Extended table} - With color coding, bars and icons
+		\paragraph{Sparklines in tables}
+		
+		\paragraph{Scatterplot}
+		\paragraph{Scatterplot matrix} - creating multiple 2-dimensional scatterplots in a matrix
+		
+		\paragraph{Parallel Coordinates}
+		\paragraph{Star Plots} - radial variant of parallel coordinates
+
+\section{Software Visualization: Code}
+
+	\paragraph{Software visualization} - Visualization of artifacts related to software and its development process
+	\begin{itemize}
+		\item Structure
+		\begin{itemize}
+			\item Software architecture
+			\item Dependencies between software artifacts
+			\item Data structures
+		\end{itemize}
+		\item Behavior
+		\begin{itemize}
+			\item Execution of an algorithm
+			\item Runtime behavior
+			\item Program state 
+		\end{itemize}
+		\item Evolution
+		\begin{itemize}
+			\item Development history of a software system
+			\item (Sequences of) source code changes
+			\item Team buildung and development
 		\end{itemize}
 	\end{itemize}
-	Edge Bundling
-	\begin{itemize}
-		\item structured radial layout
-		\item bundle edges with the same direction
-	\end{itemize}
-	
-	\subsection{Matrix visualization of Graphs}
-	Adjacency Matrix
-	\begin{itemize}
-		\item indicate an edge in a matrix
-		\item uncovering clusters is hard
-	\end{itemize}
-	\subsubsection*{Layouting}
-	Compound graphs
 
-\section{Lecture}
-	\subsection{Visualization of dynamic graphs}
-	Dynamic graph: sequence of graph states
-	\paragraph{Animation} see difference between layout and data changes to preserve the mental map of the graph. Examples:
+	\paragraph{Pretty Printing}
 	\begin{itemize}
-		\item TimeLine, horizontal development of the graph, vertical orientation of the graph  
-		\item TimeSpiderTrees, cirular layout, each ring is one graph
-		\item TimeRadarTrees, cicular layout, outer circles are a representation of the inner. The inner circle shows incoming edges, the outer shows outgoing
+		\item Line breaks to discern statements
+		\item Indentation to make the structure more explicit
 	\end{itemize}
-	
-	\subsection{Multivariate data and time series}
-	\paragraph{Boxplots} box showing 50 percent of data, outer borders not standardized
-	\paragraph{Fan Chart} wide part shows the mean (similar to the box plot) 
-	\paragraph{Histogram} bar represents a range of values (value ragne split into intervals)
 
-\section{Lecture}
-	\subsection{Software Visualization: Architecture}
-	\paragraph{Pipes and Filters} Input stream providing data, putting it into a pipe of filters
-	\paragraph{Layered Systems} Layers provide functionality of upper layers (radial or stacked). Radial: small core, Pyramid: neutral representation 
-	\paragraph{Blackboard-driven} Different processes share info on one blackboard
-	\subsubsection{Reverse Engineering}
-	Create higher level of abstraction for a given system and automatically create architecture visualization. The detection of design patterns is non-trivial. To detect, the program is run and traced. 
-	\subsubsection{Enriched Node-Link Diagrams} 
+	\paragraph{Syntax Highlighting}
+
+\section{Interaction}
+	\paragraph{Shneiderman’s Taxonomy of Information Visualization Tasks}
+	\begin{itemize}
+		\item \textbf{Overview}: see overall patterns, trends
+		\item \textbf{Zoom}: see a smaller subset of the data
+		\item \textbf{Filter}: see a subset based on values, etc.
+		\item \textbf{Details} on demand: see values of objects when interactively selected
+		\item \textbf{Relate}: see relationships, compare values
+		\item \textbf{History}: keep track of actions and insights
+		\item \textbf{Extract}: mark and capture data
+	\end{itemize}
+
+	\paragraph{Categories of Interaction Techniques}
+	\begin{itemize}
+		\item \textbf{Select} - Mark something as interesting
+		\item \textbf{Explore} - Show me something else
+		\item \textbf{Encode} - Show me a different visual representation
+		\item \textbf{Reconfigure} - Change the spatial arrangement
+		\item \textbf{Abstract/Elaborate} - Show me more or less detail
+		\item \textbf{Filter} - Show me something conditionally
+		\item \textbf{Connect} - Show me related items
+	\end{itemize}
+
+	\paragraph{Standard vs. Semantic Zoom}
+	\begin{itemize}
+		\item \textbf{Geometric Zooming (Standard)} - View depends on the physical properties of the presented object
+		\item \textbf{Semantic Zooming} - A different visual representation is chosen depending on what meaning of the presented object should be preserved.
+	\end{itemize}
+
+
+\section{Software Visualization: Architecture}
+	\paragraph{Software Architecture} - Architecture is the fundamental organization of a system embodied in its components, their relationships to each other and to the environment and the principles guiding its design and evolution
+	
+	\subsection{Common Architectures}
+		
+		\paragraph{Pipes and Filters} Input stream providing data, putting it into a pipe of filters
+		
+		\paragraph{Layered Systems} Layers provide functionality of upper layers (radial or stacked). Radial: small core, Pyramid: neutral representation 
+		
+		\paragraph{Blackboard-driven} Different processes share info on one blackboard
+		
+		\paragraph{UML}
+		
+	\subsection{Reverse Engineering}
+	Reverse engineering is the process of analyzing a subject system to create representations of the system at a higher level of abstraction. $\rightarrow$ used for automatically creating architecture visualizations
+	
+	\subsection{Enriched Node-Link Diagrams} 
 	Visuialize/Encode software metrics. Aggregation of information to simplify.
+	
+	\paragraph{Software Metrics} A software metric is a measure of some property of a
+	piece of software or its specifications.
+	\begin{itemize}
+		\item software metrics provide additional information
+		\begin{itemize}
+			\item automatic computation
+			\item usually: multivariate data
+		\end{itemize}
+		\item may increase understanding, help to find problems
+	\end{itemize}
+	
 	\paragraph{Class Blueprint}
-	Categorize methods by name and access attributes (public/protected/private...)
+	Categorize methods by name and access attributes into:
+	\begin{itemize}
+		\item \textbf{Initialization} - methods with substring "init" or "initialize", constructors
+		\item \textbf{Interface} - public or protected methods, only invoked by init layer within the same class 
+		\item \textbf{Implementation} - private methods invoked by other methods in the same class
+		\item \textbf{Accessor} - methods to get and set the values of attributes (getter/setter)
+		\item \textbf{Attributes} - all attributes of the class
+	\end{itemize}
+	
 	\paragraph{Depenecies Viewer}
 	Visualize package graph and dependencies between packages and methods
+	
 	\paragraph{Dependency Structure Matrix DSM}
 	Detect cycles and indirect cycles with highlighting
+
 	\paragraph{Software Citites and Maps}
 	2D plane represents system. Hierarchy shown with trees/dimesions. 3rd dimension can be used to show other metrics, like evolution/age/dependencies
+	
 	\paragraph{Summary}
 	Ad-hoc diagrams hard to understand without explanation. With reverse engineering automatic creation for specific techniques are possible 
+	
+\section{Lecture}
+	\subsection{Dynamic Program Visualization}
+	
+	\paragraph{Dynamic Data Acquisition} invasive mehtod, monitoring the behaviour of a program before/after each instruction. Might alter the program execution. 
+	NACHLESEN
+	
+	\section{Lecture}
+	\subsection{Visula Debugging}
+	Slices are parts/slices of the huge dependency graph in a program 
+	\paragraph{Static Slice} How is a variable changed by other code points. Slice is a samll part
+	\paragraph{Dynamic Slice} 
+	\paragraph{Execution Slices} Sequence of program points.
+	
+	\paragraph{Dice} Difference of two Slices.
+	
+	\paragraph{X-Slice} (Heuristic) Compare a run with failing and compiling input. Only the failing program points are highlighted. Color coding coverage data by failure propability and evidence for failure.
+	
+	\paragraph{Test Blueprint} Highlight non-executed program points in the Class Blueprint. 
+	
+	
+	\subsection{Software Evolution}
+	aka Software Development Process $ \Rightarrow $ Software changes in its lifetime.
+	
+	\paragraph{Software Archive} version control/collection of the history of a program of any kind. 
+	
+	\paragraph{Color-coding}
+	\begin{itemize}
+		\item Line Representation: indentation/different metrices
+		\item Code Age: when was a file/line changed
+		\item Pixel Representation
+		\item Version-specific Code: highlight eg platform specific code
+		\item Depth of nested blocks
+		\item CVSScan: different versions for a file with LOC as bar height.
+	\end{itemize}
+	
+	\paragraph{Evolution Matrix} Classes are represented as boxes. Box height and width encode a certain metric. $ \Rightarrow $ No insight on program structure
+	
+	\paragraph{Call Graph} Which function calls wich function (low level info). Encode program structure. Edge splatting (the more often an edge is drawn the more intense it color gets) shows call clusters.
+	
+	\subsubsection{Visual Data Mining in Software Architecture}
+	\paragraph{Data Mining Process}
+	Startgin with a version control program (git)
+	\begin{enumerate}
+		\item Analysis
+		\item Extraction
+		\item Data Mining
+		\item Visual Data Mining
+	\end{enumerate} 
+	
+	
+	\paragraph{Coupling}
+	\begin{itemize}
+		\item Evolutionary Coupling artifact are related, when they are changed together.
+		\item Logical Coupling artifacts are related, when they are programmatically calling each other.
+	\end{itemize}
 		
 \end{document}
