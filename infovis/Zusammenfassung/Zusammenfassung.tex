@@ -5,22 +5,16 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{fullpage}
 \author{Aaron Winziers \& Benedikt Lüken-Winkels}
 \title{Informations Visualisierung \\ SoSe 19}
 \begin{document}
-	
-	\maketitle
-	\tableofcontents
-	\newpage
-	
-	\section{1. Lecture}
-	\subsection{Orga}
-	\begin{itemize}
-		\item Website: st.uni-trier.de/lectures/S19/IV/
-		\item Tutorial: TBD (beginning: 22.-26.04.)
-		\item Final exam: Do, 11.07. (elfths of July) 12-14 (H12)
-	\end{itemize}
-	
+
+\maketitle
+\tableofcontents
+\newpage
+
+\section{Introduction}
 	\subsection{Visualisation-Basics}
 	\paragraph*{Definition: Visualisation} 
 	the use of computers or techniques for comprehending data or to extract knowledge from the results of simulations, computations, or measurements (not manually by humans)
@@ -57,7 +51,7 @@
 		\item interaction to create and manipulate the visualisation (\textbf{Visual steering})
 	\end{itemize}
 	
-	\section{2. Lecture}
+\section{Infographics}
 	
 	\subsection{Diagrams}
 	\paragraph{Simple Diagrams}
@@ -66,7 +60,7 @@
 		\item Bar Charts
 		\item Pie Charts
 	\end{itemize}
-
+	
 	\paragraph{Pie charts}
 	\begin{itemize}
 		\item applicable to part-whole relation
@@ -76,7 +70,7 @@
 			\item difficult to compare differences between pie charts
 		\end{itemize}
 	\end{itemize}
-
+	
 	\paragraph{Other Diagrams}
 	\begin{itemize}
 		\item \textbf{Timelines} align temporal information along an axis
@@ -101,7 +95,7 @@
 		\item Self-explanatory
 		\item Should tell a \textbf{story} $ \Rightarrow $ express an opinion
 	\end{itemize}
-
+	
 	\paragraph{Elements of an Infographic}
 	\begin{itemize}
 		\item Story
@@ -120,26 +114,53 @@
 		\end{itemize}
 	\end{itemize}
 
+	\paragraph{Infographics vs Information Visualization}
+	\begin{itemize}
+		\item Infographics 
+		\begin{itemize}
+			\item Manually created
+			\item Specially designed for a particular data set
+			\item Self-explanatory
+		\end{itemize}
+		\item Information Visualisation
+		\begin{itemize}
+			\item Automatically computed
+			\item Suitable for a variety of data sets
+			\item Not necessarily self explanatory
+		\end{itemize}
+	\end{itemize}
 	
-	\section{3. Lecture}
+
+\section{Visual Perception}
+	75\% of information is perceived visually
 	\subsection{Visual Memory}
-	\begin{itemize}
-		\item The brain fills empty gaps
-		\item Distraction by environment (contrast/structure)
-		\item $ \Rightarrow $ visual perception is selective
-	\end{itemize}
+		\begin{itemize}
+			\item The brain fills empty gaps
+			\item Distraction by environment (contrast/structure)
+			\item $ \Rightarrow $ visual perception is selective (change blindness)
+		\end{itemize}
 	\subsection{Visual Information Processing}
-	3 Phases of processing
-	\begin{enumerate}
-		\item Simple patterns and colors are recognized
-		\item Action system: reflexes
-		\item Visual working memory/visual query
-	\end{enumerate}
+		3 Phases of processing
+		\begin{enumerate}
+			\item Simple patterns and colors are recognized
+			\item Action system: reflexes
+			\item Visual working memory/visual query
+		\end{enumerate}
 	\subsection*{Human Eye}
-	Usage of the properties of visual perception (Anticipation, pattern recognition)
-	\begin{itemize}
-		\item Eye Tracking (works by measuring the reflection form the eye's curvature)
-	\end{itemize}
+		Usage of the properties of visual perception (Anticipation, pattern recognition)
+		\begin{itemize}
+			\item Eye Tracking (works by measuring the reflection form the eye's curvature)
+		\end{itemize}
+	\paragraph{Peripheral Acuity}
+		Center of vision:
+		\begin{itemize}
+			\item In focus
+			\item Color and brightness
+		\end{itemize}
+		\begin{itemize}
+			\item Blurry
+			\item Only brightness
+		\end{itemize}
 	
 	\subsection{Color Perception}
 	3-Color-Theory
@@ -175,12 +196,11 @@
 	
 	\subsection{Pattern Recognition}
 	\begin{itemize}
-		\item Edge detection
+		\item Edge detection - Differences in brightness, color, texture or motion
 		\item Simple patterns (detect small distortions)
 		\item Complex patterns
 		\item Object recognition (compare observation with learned patterns to recognise an object)
 	\end{itemize}
-	
 	
 	\subsection{Motion recognition}
 	Different elements perform similar motions
@@ -191,9 +211,127 @@
 		\item $ \Rightarrow $ Indicate a relation with a synchronous animation 
 		\item Motion can induce causality
 	\end{itemize}
+
+	\subsection{Gestalt Psychology}
+	\begin{itemize}
+		\item \textbf{Proximity} - Elements which are placed close to each other are perceived as a group.
+		\item \textbf{Similarity} - Similar elements (form, color) are perceived as a group.
+		\item \textbf{Connectedness} - Connected elements are perceived as one object
+		\item \textbf{Continuity} - For humans it is easier to group continuous elements than elements with abrupt changes of direction.
+	\end{itemize}
+
+	\subsection{Three-Dimensional Perception}
+		\paragraph{Reconstruction of depth information}
+		\begin{itemize}
+			\item Stereoscopic vision (in particular at close range)
+			\item Occlusion of objects
+			\item More depth cues: depth of field, perspective, shadow, scale, contrast, motion parallax (how near and far objects will move across the retina of an eye as we move along in the world)
+			\item Prior knowledge
+		\end{itemize}
 	
+\section{Visualizations of Hierarchies}
+	Hierarchy = Tree
+	\subsection{Node-Link}
+		\paragraph{Types}
+		\begin{itemize}
+			\item Phylogenetic Tree
+			\item Radial Tree
+			\item Cone Trees
+		\end{itemize}
+		\paragraph{Advantages}
+		\begin{itemize}
+			\item Intuitive
+			\item Hierarchy immediately recognizable
+			\item Very flexible layout
+		\end{itemize}
+		\paragraph{Disadvantages}
+		\begin{itemize}
+			\item Edges require space
+			\item Difficult to add labels
+			\item Degenerated trees are difficult to represent
+		\end{itemize}
 	
-	\section{Lecture}
+	\subsection{Indented Outline Plots}
+		\paragraph{Examples/Types}
+		\begin{itemize}
+			\item Windows explorer
+			\item XML File 
+		\end{itemize}
+		\paragraph{Advantages}
+		\begin{itemize}
+			\item Very readable
+			\item Easy to add labels
+			\item Familiar; used daily by many people (file explorer)
+			\item Degenerated trees can be represented
+			\item Hierarchy is well recognizable
+		\end{itemize}
+		\paragraph{Disadvantages}
+		\begin{itemize}
+			\item Inner nodes require space
+			\item Somewhat inflexible layout
+		\end{itemize}
+	
+	\subsection{Icicle Plots}
+	\paragraph{Examples/Types}
+	\begin{itemize}
+		\item InfoVis Toolkit
+		\item Sunburst
+		\item Hierarchical Edge Bundles
+	\end{itemize}
+	\paragraph{Advantages}
+	\begin{itemize}
+		\item easy to add labels
+		\item hierarchy is well	recognisable
+		\item flexible layout
+		\item uses screen space efficiently
+	\end{itemize}
+	\paragraph{Disadvantages}
+	\begin{itemize}
+		\item somewhat less intuitive
+		\item available width for children restricted by the width of of their parents.
+	\end{itemize}
+
+	\subsection{Treemap}
+	\paragraph{Examples/Types}
+	\begin{itemize}
+		\item Treemap
+		\item Information Pyramids
+		\item CodeCity
+	\end{itemize}
+	\paragraph{Advantages}
+	\begin{itemize}
+		\item area of leaf nodes can be used
+		\item can fill arbitrary shapes e.g. Voronoi treemaps)
+		\item inner nodes require less space
+		\item edges require (almost) no space
+	\end{itemize}
+	\paragraph{Disadvantages}
+	\begin{itemize}
+		\item less intuitive
+		\item hierarchical structure difficult to recognise
+		\item difficult to add labels
+	\end{itemize}
+
+	\subsection{Empirical Study of Efficacy}
+		\paragraph{Recommended}
+		\begin{itemize}
+			\item Node-Link Diagrams
+			\item Icicle Plots
+			\item (Indented Outline)
+		\end{itemize}
+		\paragraph{Questionable}
+		\begin{itemize}
+			\item Treemap
+			\item radial layouts
+		\end{itemize}
+		\paragraph{Conclusion}
+		\begin{itemize}
+			\item Empirical evaluation is just beginning
+			\item More research is needed to make well-founded design recommendations
+			\item There is also a lack of domain-specific results.
+		\end{itemize}
+	
+\section{Lecture}
 	Visualization of Graphs: \textbf{Graph drawing}
 	\paragraph{Application}
 	\begin{itemize}
@@ -262,8 +400,8 @@
 	\end{itemize}
 	\subsubsection*{Layouting}
 	Compound graphs
-	
-	\section{Lecture}
+
+\section{Lecture}
 	\subsection{Visualization of dynamic graphs}
 	Dynamic graph: sequence of graph states
 	\paragraph{Animation} see difference between layout and data changes to preserve the mental map of the graph. Examples:
@@ -277,8 +415,8 @@
 	\paragraph{Boxplots} box showing 50 percent of data, outer borders not standardized
 	\paragraph{Fan Chart} wide part shows the mean (similar to the box plot) 
 	\paragraph{Histogram} bar represents a range of values (value ragne split into intervals)
-	
-	\section{Lecture}
+
+\section{Lecture}
 	\subsection{Software Visualization: Architecture}
 	\paragraph{Pipes and Filters} Input stream providing data, putting it into a pipe of filters
 	\paragraph{Layered Systems} Layers provide functionality of upper layers (radial or stacked). Radial: small core, Pyramid: neutral representation 
@@ -297,5 +435,5 @@
 	2D plane represents system. Hierarchy shown with trees/dimesions. 3rd dimension can be used to show other metrics, like evolution/age/dependencies
 	\paragraph{Summary}
 	Ad-hoc diagrams hard to understand without explanation. With reverse engineering automatic creation for specific techniques are possible 
-	
+		
 \end{document}
