@@ -344,9 +344,9 @@
 		\item Thickness, color of edges
 		\item Color of nodes
 	\end{itemize}
-	
-	\paragraph{Asthetic Criteria}
-	Readability does not induce asthetic
+	part
+	\paragraph{Aesthetic Criteria}
+	Readability does not induce aesthetic
 	\begin{itemize}
 		\item min edge crossings
 		\item min drawing
@@ -563,7 +563,7 @@
 	\paragraph{Dependency Structure Matrix DSM}
 	Detect cycles and indirect cycles with highlighting
 
-	\paragraph{Software Citites and Maps}
+	\paragraph{Software Cities and Maps}
 	2D plane represents system. Hierarchy shown with trees/dimesions. 3rd dimension can be used to show other metrics, like evolution/age/dependencies
 	
 	\paragraph{Summary}
@@ -571,58 +571,124 @@
 	
 \section{Lecture}
 	\subsection{Dynamic Program Visualization}
+		
+		\paragraph{Dynamic Data Acquisition} invasive method, monitoring the behavior of a program before/after each instruction. Might alter the program execution.
+		\begin{itemize}
+			\item Instrumentation
+			\begin{itemize}
+				\item before/after each instruction
+				\item at certain program points
+				\begin{itemize}
+					\item before/after loops
+					\item before/after method calls
+					\item defined by user ($\rightarrow$ interesting events)
+				\end{itemize}
+				\item data structures
+				\begin{itemize}
+					\item Whenever data is changed (daemon, observer)
+				\end{itemize}
+			\end{itemize}
+			\item Parallel thread, which reads memory
+			\item Capture messages (for distributed programs)
+			\item Virtual Machine/Interpreter
+			\item Special Purpose Hardware ($\rightarrow$ embedded systems)
+		\end{itemize}
 	
-	\paragraph{Dynamic Data Acquisition} invasive mehtod, monitoring the behaviour of a program before/after each instruction. Might alter the program execution. 
-	NACHLESEN
+		\paragraph{What data is to be captured?}
+		\begin{itemize}
+			\item Program position (PC, called method, line number in source
+			code)
+			\begin{itemize}
+				\item Problem for compiled programs: mapping machine instructions to line numbers in the source code
+			\end{itemize}
+			\item Values of program variables
+			\item Heap contents of the program
+			\item For messages:
+			\begin{itemize}
+				\item Point in time (enables temporal ordering of messages, which have been captured at different computers, Problem: local vs. global time)
+			\end{itemize}
+		\end{itemize}
 	
-	\section{Lecture}
-	\subsection{Visula Debugging}
-	Slices are parts/slices of the huge dependency graph in a program 
-	\paragraph{Static Slice} How is a variable changed by other code points. Slice is a samll part
-	\paragraph{Dynamic Slice} 
-	\paragraph{Execution Slices} Sequence of program points.
-	
-	\paragraph{Dice} Difference of two Slices.
-	
-	\paragraph{X-Slice} (Heuristic) Compare a run with failing and compiling input. Only the failing program points are highlighted. Color coding coverage data by failure propability and evidence for failure.
-	
-	\paragraph{Test Blueprint} Highlight non-executed program points in the Class Blueprint. 
-	
+		\paragraph{Architectures for Algorithm Animation}
+		\begin{itemize}
+			\item Ad Hoc Visualization and Libraries
+			\begin{itemize}
+				\item  Don‘t use a tool at all. Implement everything from scratch.
+				\item Use libraries with graphical abstractions, control-elements, etc.
+			\end{itemize}
+			\item Special data types
+			\begin{itemize}
+				\item Program the algorithm with datatypes which have built-in visualizations
+			\end{itemize}
+			\item Post-Mortem Visualisierung
+			\begin{itemize}
+				\item Record an event log or animation script during the execution of the algorithm.
+				\item Animation after the execution of the algorithm.
+			\end{itemize}
+			\item Interesting Events
+			\begin{itemize}
+				\item Annotate interesting program points
+				\item Send events to concurrently executed animation (view)
+			\end{itemize}
+			\item Declarative
+			\begin{itemize}
+				\item Separation of annotation and algorithm
+				\item Demon monitors state changes and visualizes the state
+			\end{itemize}
+			\item Semantics-Directed
+			\begin{itemize}
+				\item automatic visualization by visual interpreter or debugger for the programming language
+			\end{itemize}
+		\end{itemize}
+		
+		
+	\subsection{Visual Debugging}
+		Slices are parts/slices of the huge dependency graph in a program 
+		\paragraph{Static Slice} How is a variable changed by other code points. Slice is a small part
+		\paragraph{Dynamic Slice} 
+		\paragraph{Execution Slices} Sequence of program points.
+		
+		\paragraph{Dice} Difference of two Slices.
+		
+		\paragraph{X-Slice} (Heuristic) Compare a run with failing and compiling input. Only the failing program points are highlighted. Color coding coverage data by failure propability and evidence for failure.
+		
+		\paragraph{Test Blueprint} Highlight non-executed program points in the Class Blueprint. 
+		
 	
 	\subsection{Software Evolution}
-	aka Software Development Process $ \Rightarrow $ Software changes in its lifetime.
-	
-	\paragraph{Software Archive} version control/collection of the history of a program of any kind. 
-	
-	\paragraph{Color-coding}
-	\begin{itemize}
-		\item Line Representation: indentation/different metrices
-		\item Code Age: when was a file/line changed
-		\item Pixel Representation
-		\item Version-specific Code: highlight eg platform specific code
-		\item Depth of nested blocks
-		\item CVSScan: different versions for a file with LOC as bar height.
-	\end{itemize}
-	
-	\paragraph{Evolution Matrix} Classes are represented as boxes. Box height and width encode a certain metric. $ \Rightarrow $ No insight on program structure
-	
-	\paragraph{Call Graph} Which function calls wich function (low level info). Encode program structure. Edge splatting (the more often an edge is drawn the more intense it color gets) shows call clusters.
-	
-	\subsubsection{Visual Data Mining in Software Architecture}
-	\paragraph{Data Mining Process}
-	Startgin with a version control program (git)
-	\begin{enumerate}
-		\item Analysis
-		\item Extraction
-		\item Data Mining
-		\item Visual Data Mining
-	\end{enumerate} 
-	
-	
-	\paragraph{Coupling}
-	\begin{itemize}
-		\item Evolutionary Coupling artifact are related, when they are changed together.
-		\item Logical Coupling artifacts are related, when they are programmatically calling each other.
-	\end{itemize}
+		aka Software Development Process $ \Rightarrow $ Software changes in its lifetime.
 		
+		\paragraph{Software Archive} version control/collection of the history of a program of any kind. 
+		
+		\paragraph{Color-coding}
+		\begin{itemize}
+			\item Line Representation: indentation/different metrices
+			\item Code Age: when was a file/line changed
+			\item Pixel Representation
+			\item Version-specific Code: highlight eg platform specific code
+			\item Depth of nested blocks
+			\item CVSScan: different versions for a file with LOC as bar height.
+		\end{itemize}
+		
+		\paragraph{Evolution Matrix} Classes are represented as boxes. Box height and width encode a certain metric. $ \Rightarrow $ No insight on program structure
+		
+		\paragraph{Call Graph} Which function calls wich function (low level info). Encode program structure. Edge splatting (the more often an edge is drawn the more intense it color gets) shows call clusters.
+		
+	\subsubsection{Visual Data Mining in Software Architecture}
+		\paragraph{Data Mining Process}
+		Starting with a version control program (git)
+		\begin{enumerate}
+			\item Analysis
+			\item Extraction
+			\item Data Mining
+			\item Visual Data Mining
+		\end{enumerate} 
+		
+		
+		\paragraph{Coupling}
+		\begin{itemize}
+			\item Evolutionary Coupling artifact are related, when they are changed together.
+			\item Logical Coupling artifacts are related, when they are programmatically calling each other.
+		\end{itemize}
+			
 \end{document}
