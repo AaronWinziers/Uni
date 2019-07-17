@@ -38,14 +38,14 @@
 			\item Several drawbacks (alternative: tree view)
 		\end{itemize}
 	\end{itemize}
-	\paragraph{Abstract Data}
+	\paragraph{Ways to display Abstract Data}
 	\begin{itemize}
 		\item Text and Tables
 		\item Hierarchies and Graphs
 		\item Composed data (Multivariate data): Example Napoleon (Slide 1)
 		\item Time series: multivariate data with time as a dimension
 	\end{itemize}
-	\paragraph*{Visualisation process} 
+	\paragraph*{Visualization process} 
 	\begin{itemize}
 		\item graphical user interface
 		\item interaction to create and manipulate the visualisation (\textbf{Visual steering})
@@ -182,7 +182,7 @@
 		\item Coding of categories: max 6 to 12 different colors
 		\item Color scales should vary in color and brighntess 
 		\item Color perception depends on culture
-		\item Motion to grap attention/indicate a relation
+		\item Motion to grab attention/indicate a relation
 		\item Strong colors/contrast can cause interta (ghost images)
 	\end{itemize}
 	
@@ -224,9 +224,13 @@
 		\paragraph{Reconstruction of depth information}
 		\begin{itemize}
 			\item Stereoscopic vision (in particular at close range)
-			\item Occlusion of objects
 			\item More depth cues: depth of field, perspective, shadow, scale, contrast, motion parallax (how near and far objects will move across the retina of an eye as we move along in the world)
 			\item Prior knowledge
+		\end{itemize}
+		\paragraph{Main Issues}
+		\begin{itemize}
+			\item Navigation is difficult
+			\item Occlusion
 		\end{itemize}
 	
 \section{Visualizations of Hierarchies}
@@ -348,13 +352,13 @@
 	\paragraph{Aesthetic Criteria}
 	Readability does not induce aesthetic
 	\begin{itemize}
-		\item min edge crossings
-		\item min drawing
-		\item min edge length
-		\item min number of bends
-		\item max symmetry
-		\item uncover clusters
-		\item max continuity amongst paths
+		\item Minimize edge crossings
+		\item Minimize drawing area
+		\item Minimize edge length
+		\item Minimize number of bends
+		\item Maximize symmetry
+		\item Uncover clusters
+		\item Maximize continuity amongst paths
 	\end{itemize}
 	
 	\subsection{Layouting algorithms}
@@ -553,7 +557,7 @@
 	Categorize methods by name and access attributes into:
 	\begin{itemize}
 		\item \textbf{Initialization} - methods with substring "init" or "initialize", constructors
-		\item \textbf{Interface} - public or protected methods, only invoked by init layer within the same class 
+		\item \textbf{Interface} - public or protected methods only invoked by init layer within the same class 
 		\item \textbf{Implementation} - private methods invoked by other methods in the same class
 		\item \textbf{Accessor} - methods to get and set the values of attributes (getter/setter)
 		\item \textbf{Attributes} - all attributes of the class
@@ -646,8 +650,8 @@
 		
 	\subsection{Visual Debugging}
 		Slices are parts/slices of the huge dependency graph in a program 
-		\paragraph{Static Slice} How is a variable changed by other code points. Slice is a small part
-		\paragraph{Dynamic Slice} 
+		\paragraph{Static Slice} How \textbf{can} a variable changed by other code points. Slice is a small part
+		\paragraph{Dynamic Slice} How \textbf{is} a variable changed by other code points. Slice is a small part
 		\paragraph{Execution Slices} Sequence of program points.
 		
 		\paragraph{Dice} Difference of two Slices.
@@ -669,12 +673,12 @@
 			\item Pixel Representation
 			\item Version-specific Code: highlight eg platform specific code
 			\item Depth of nested blocks
-			\item CVSScan: different versions for a file with LOC as bar height.
+			\item CVS Scan: different versions for a file with LOC as bar height.
 		\end{itemize}
 		
 		\paragraph{Evolution Matrix} Classes are represented as boxes. Box height and width encode a certain metric. $ \Rightarrow $ No insight on program structure
 		
-		\paragraph{Call Graph} Which function calls wich function (low level info). Encode program structure. Edge splatting (the more often an edge is drawn the more intense it color gets) shows call clusters.
+		\paragraph{Call Graph} Which function calls which function (low level info). Encode program structure. \textbf{Edge splatting} (the more often an edge is drawn the more intense it color gets) shows call clusters.
 		
 	\subsubsection{Visual Data Mining in Software Architecture}
 		\paragraph{Data Mining Process}
