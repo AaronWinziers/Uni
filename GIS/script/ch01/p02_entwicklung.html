@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Anwendungsentwicklung - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Grundlagen der Systementwicklung", url: "#_top", children: [
+              {title: "Der Entwurf", url: "#der-entwurf" },
+              {title: "Die Umsetzung", url: "#die-umsetzung" },
+              {title: "Tests", url: "#tests" },
+              {title: "Ver\u00f6ffentlichung", url: "#veroffentlichung" },
+          ]},
+          {title: "Entwicklung unter Python", url: "#entwicklung-unter-python", children: [
+              {title: "Python und der Entwurf", url: "#python-und-der-entwurf" },
+              {title: "Python und die Umsetzung", url: "#python-und-die-umsetzung" },
+              {title: "Python und Tests", url: "#python-und-tests" },
+              {title: "Ver\u00f6ffentlichung von Python-Projekten", url: "#veroffentlichung-von-python-projekten" },
+              {title: "Fazit", url: "#fazit" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="grundlagen-der-systementwicklung">Grundlagen der Systementwicklung</h1>
+<p>Im Grunde ist die Systementwicklung ein Spezialfall für das Projektmanagement. Allerdings wurden in der Informatik Modelle und Methoden sowie spezielle Werkzeuge entwickelt, die bei der Durchführung von Softwareprojekten zum Einsatz kommen.</p>
+<p>Wir haben es beim Projektmanagement mit einem Prozess zu tun, in dessen Verlauf mehrere Phasen durchlaufen werden. Ein bekanntes Modell zum Ablauf einer Softwareentwicklung ist das Wasserfallmodell:</p>
+<pre><code class="text">-&gt; Idee/Inital
+    -&gt; Entwurf
+        -&gt; Umsetzung
+            -&gt; Test
+                -&gt; Veröffentlichung
+</code></pre>
+
+<ul>
+<li>Beginn: die Idee oder Aufgabenstellung. Projektinitialisierung.</li>
+<li>Phase des Entwurf: Planung, Konkretiserung und detaillierte Beschreibung.</li>
+<li>Phase der Umsetzung: auf Grundlage des Entwurfs, Realisierung und Programmierung. </li>
+<li>Phase des Testens: Überprüfung der Software auf Fehler </li>
+<li>letzte Phase: Veröffentlichung: Software wird Anwendern zur Verfügung gestellt</li>
+</ul>
+<p>Andere Modelle gehen mehr in Zyklen vor oder stellen das Prototyping in den Vordergrund, beides sinnvolle Erweiterungen des starren Wasserfallmodells.</p>
+<h2 id="der-entwurf">Der Entwurf</h2>
+<ul>
+<li>Wie gut ist ein Entwurf?</li>
+<li>Darf man den Entwurf verändern?</li>
+<li>Was macht man, wenn neue Rahmenbedinghungen auftreten?</li>
+<li>Beispiel: Flughafen BER <a href="https://www.welt.de/politik/deutschland/article162757705/Bauruine-BER-ein-Lexikon-des-Wahnsinns.html">Lexikon des Wahnsinns</a></li>
+</ul>
+<h2 id="die-umsetzung">Die Umsetzung</h2>
+<ul>
+<li>Welche Tools werden eingesetzt?</li>
+<li>Wie wird Code geschrieben und dokumentiert?</li>
+<li>Beherrscht das Team alle notwendigen Tools?</li>
+<li>Welche Tests sind während der Entwicklung angedacht?</li>
+<li>Gibt es einen festen Ablauf?</li>
+<li>Wie sieht die <em>tool chain</em> aus, welche Code-Verwaltung wird verwendet?</li>
+</ul>
+<h2 id="tests">Tests</h2>
+<ul>
+<li>Tests dienen der Gewährleistung von Stabilität, der Vermeidung von Fehlern!</li>
+<li>Welche Möglichkeitendes Debugging sind möglich? Problematisch sind Web-Projekte, Plugins oder Benutzeroberflächen...</li>
+<li>Welche Tests werden durchgeführt? Praktikabel ist das sog. unit testing (Modultest), also das Testen möglichst aller Systemelemente unter denkbaren fehlerhaften Bedingungen.</li>
+</ul>
+<h2 id="veroffentlichung">Veröffentlichung</h2>
+<ul>
+<li>Release: eine geprüfte und getestete Version einer Software</li>
+<li>Wie und wo wird veröfentlicht? z.B. auf einer Homepage, in einem Repository</li>
+<li>Was hat sich zum letzten Realease geändert? Versionsnummer, change log</li>
+<li>Wie wird die Software dokumentiert und begleitet? Dokumentation, Support</li>
+</ul>
+<h1 id="entwicklung-unter-python">Entwicklung unter Python</h1>
+<p>Grundbegriffe:</p>
+<ul>
+<li><em>Package</em> - A folder/directory that contains <code>__init__.py</code> file.</li>
+<li><em>Module</em> - A valid python file with .py extension.</li>
+<li><em>Distribution</em> - How one package relates to other packages and modules.</li>
+<li><em>Application</em> - Has a fuzzy meaning:<ul>
+<li>simple: an executable software, </li>
+<li>more specific: an software executable (Windows: .exe)</li>
+<li>user oriented: a software with a user interface</li>
+</ul>
+</li>
+</ul>
+<h2 id="python-und-der-entwurf">Python und der Entwurf</h2>
+<ul>
+<li>Objektorientierung: Klassenstruktur anlegen mit Eigenschaften und Methoden, Frühe Hinterfragung aus Sicht der Umsetzung</li>
+<li>Benutzeroberfächen: Prototyping, um mit Nutzern den Entwurf diskutieren zu können</li>
+<li>Pflichtenheft: Anforderungsdefinition und Plan zur Umsetzung, Start einer Dokumentation</li>
+</ul>
+<p>Beispiel: </p>
+<p>Eine Entwicklung von meinProjekt als Python-Package:</p>
+<ul>
+<li>Erstellen eines Ordners <code>meinProjekt</code>, darin:</li>
+<li>Anlegen der Datei <code>__init__.py</code></li>
+<li>Anlegen des Moduls <code>meinModul.py</code> </li>
+</ul>
+<h2 id="python-und-die-umsetzung">Python und die Umsetzung</h2>
+<h3 id="werkzeuge">Werkzeuge</h3>
+<ul>
+<li>Editoren, IDE's</li>
+<li>Debugger, Logger</li>
+<li>Tests -&gt; unittest, assert</li>
+</ul>
+<h3 id="code">Code</h3>
+<ul>
+<li>
+<p>Regeln: Python Enhancement Proposals: PEP, vor allem PEP8: Style Guide for Python Code
+"code is read much more often than it is written"
+PEP8 ist sehr vollständig, aber es kann auch übertrieben werden...</p>
+</li>
+<li>
+<p>Kommentare, die erläutern, was im Code passiert, auch documentation strings ("docstrings")</p>
+</li>
+<li>Benennung von Modulen, Klassen, Funktionen, Variablen, etc.</li>
+</ul>
+<p>Beispiele für Namen:</p>
+<table>
+<thead>
+<tr>
+<th>Beispiel</th>
+<th>Erläuterung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>b</td>
+<td>single lowercase letter</td>
+</tr>
+<tr>
+<td>B</td>
+<td>single uppercase letter</td>
+</tr>
+<tr>
+<td>lowercase</td>
+<td></td>
+</tr>
+<tr>
+<td>lower_case_with_underscores</td>
+<td></td>
+</tr>
+<tr>
+<td>UPPERCASE</td>
+<td></td>
+</tr>
+<tr>
+<td>UPPER_CASE_WITH_UNDERSCORES</td>
+<td></td>
+</tr>
+<tr>
+<td>CapitalizedWords</td>
+<td>CapWords, or CamelCase</td>
+</tr>
+<tr>
+<td>acronyms</td>
+<td>capitalize: HTTPServerError better than HttpServerError</td>
+</tr>
+<tr>
+<td>mixedCase</td>
+<td>Capitalized_Words_With_Underscores</td>
+</tr>
+</tbody>
+</table>
+<p>Wichtig: Konsistenz in der Verwendung!</p>
+<ul>
+<li>Werkzeug: pylint -&gt; python modul, überwacht pep8, in IDE's integriert oder standalone, <a href="https://www.pylint.org/">pylint Homepage</a> </li>
+<li>Aufbau einer Ordnerstruktur innerhalb des Projekts für hierarchischen Aufbau von Modulen, nach Abhängigkeiten</li>
+</ul>
+<h3 id="kollaboration-und-versionsverwaltung">Kollaboration und Versionsverwaltung</h3>
+<p>Codeverwaltung, gemeinsames Arbeiten an Code, Versionsverwaltung
+Beispiel: git</p>
+<p><em>git</em>, ein "distributed revision control system" (System zur verteilten Versionsverwaltung). Bekannt geworden durch die github-Platform, läuft aber vor allem auch lokal. </p>
+<p><img alt="This is git." src="https://imgs.xkcd.com/comics/git.png" /></p>
+<p>Wir müssen uns dafür vorstellen, dass wir eine Entwicklung so durchführen, dass jede Änderung an einem Projekt als Version gespeichert und kommentiert wird. Es gibt immer einen aktuellen Stand des Projekts, aber alle zuvor bearbeiteten Versionen bleiben erhalten. </p>
+<ul>
+<li>Git arbeitet zunächst auf der Ebene von Ordnern, der Hauptordner ist dann das <code>Repository</code> (git Befehl <code>init</code>). Bearbeitet und dokumentiert werden hauptsächlich Textdateien (also z.B. die Phython-Module in eine Package, html-Dateien einer website etc.), wobei jede zu überwachende Datei mit <code>add</code> zu einem git-Repository hinzugefügt wird.</li>
+<li>Um erfolgreich mit git zu arbeiten, müssen die Beteiligten die eigene Arbeitsweise ändern, sie gewinnen aber dafür eine gewisse Sicherheit, Fehler nachvollziehbar zurückzuverfolgen. </li>
+<li>Jeder Arbeitsschritt wird von den Beteiligten über git kommentiert, in git heißt dies <code>commit</code>. Dadurch entsteht in git eine Kette von dokumentierten Änderungen, der letzte Stand ist der <code>head</code>. </li>
+<li>Mit <code>status</code> lässt sich u.a. prüfen, ob noch Änderungen mit <code>commit</code> eingepflegt werden müssen.</li>
+</ul>
+<p>Ein wesentlicher Vorteil ist es jedoch, den Code auch <em>in der Cloud</em> zu speichern, um ihn zwischen Personen teilen zu können. Hierfür sieht git den <code>remote</code> vor, ein z.B. auf github gespeichertes Repository. Um diesen Remote zu bearbeiten, verwendet git die Befehle </p>
+<ul>
+<li><code>pull</code>, um den entfernten Code herunterzuladen, </li>
+<li><code>push</code>, um den eigenen lokalen Stand auf github abzulegen. </li>
+<li>Damit die Änderung nicht unkontrolliert übernommen wird, muss ein <code>merge</code> ausgeführt werden. Ein Merge ist so etwas wie ein Vorschlag zur Übernahme, d.h. er kann von anderen eingesehen, diskutiert und bewertet werden, bevor die Änderungen dann schließlich zum aktuellen <code>head</code> werden.</li>
+</ul>
+<p>Eine <a href="https://medium.freecodecamp.org/how-not-to-be-afraid-of-git-anymore-fe1da7415286">lockere Einführung in git</a> bietet <em>Neil Kakkar</em> auf medium oder die <a href="https://danielmiessler.com/study/git/">Einführung von Daniel Miessler</a>.</p>
+<p>Um git zu installieren, können wir die <a href="https://git-scm.com/download/win">letzte Version</a> von git-scm beziehen. Für eine portable Nutzung schlage ich die Version <a href="https://github.com/git-for-windows/git/releases/download/v2.21.0.windows.1/PortableGit-2.21.0-32-bit.7z.exe">32-bit Git for Windows Portable</a> vor. Git for Windows baut auf der bekannten Unix-Shell für windows msys auf, die, neben git, viele Unix-Shell-Befehle mit bringt.</p>
+<h4 id="beispiel">Beispiel</h4>
+<p>Um PortableGit nutzen zu können, staren wir zunächst die Kommandozeile mit <code>git-cmd.exe</code>. Wir wechseln dann in einen Ordner, indem wir ein git-Repository erstellen möchten:</p>
+<pre><code class="shell">&gt; c:
+&gt; cd c:\temp
+
+&gt; mkdir gittest
+&gt; cd gittest
+</code></pre>
+
+<p>Jetzt gehts erst richtig los. Wir erstellen ein git-Repository und fügen eine Datei hinzu:</p>
+<pre><code class="shell">&gt; git init
+Initialized empty Git repository in c:/temp/gittest/.git/
+&gt; echo print(&quot;Hello GIT!&quot;) &gt; hello.py
+&gt; git add hello.py
+</code></pre>
+
+<p>Schauen wir mal nach, was hier passiert ist. Wir öffnen hierzu den Windows-Explorer und wechseln in den Pfad unseres Repositories. Evtl. ändern wir die Windows <em>Ordner- und Suchoptionen</em>, sodass wir auch versteckte Dateien und Ordner angezeigt bekommen:</p>
+<pre><code class="text">- .git      Dateiordner
+- hello.py  Python File
+</code></pre>
+
+<p>Zusätzlich können wir in der git-Shell mit <code>status</code> eben diesen abfragen:</p>
+<pre><code class="shell">&gt; git status
+On branch master
+
+No commits yet
+
+Changes to be committed:
+  (use &quot;git rm --cached &lt;file&gt;...&quot; to unstage)
+
+        new file:   hello.py
+
+</code></pre>
+
+<p>Der Aufforderung unsere Aktion zu kommentieren kommen wir gerne nach:</p>
+<pre><code class="shell">git commit
+</code></pre>
+
+<p>dies öffnet den Unix-Editor vi. Die Bedienung ist sehr speziell! </p>
+<ul>
+<li>Wir gehen mit den Pfeiltasten in die letzte angzeigte Zeile und tippen ein <code>o</code>, um eine neue Zeile einzufügen. </li>
+<li>Dachnach dürfen wir die Pfeiltasten nicht meher verwenden, wir sind nun im Schreibmodus! </li>
+<li>Wir schreiben: <code>First Module added</code> und drücken die Taste <code>&lt;Esc&gt;</code>. Wir haben den Schreibmodus verlassen. </li>
+<li>Im vi wechseln wir mit <code>:</code> in den Kommandomodus und tippen <code>wq</code> für <em>write and quit</em>. Vi speichert den commit und wir kehren zum Prompt zurück:</li>
+</ul>
+<pre><code class="shell">&gt; git status
+On branch master
+nothing to commit, working tree clean
+</code></pre>
+
+<p>Alternativ gibt es auch eine GUI-Version: git-gui.exe, mit der die meisten Dinge auch erlidigt werden können!</p>
+<pre><code class="shell">&gt; git-gui
+
+</code></pre>
+
+<figure><img alt="Git-Gui Benutzeroberfläche" src="img/GitGui.png" /><figcaption>
+<p>Git-Gui Benutzeroberfläche</p>
+</figcaption>
+</figure>
+<p>Da dies nur einen kleinen Einblick geben soll, beenden wir unsere Experimente mit git!</p>
+<p>Die nächsten Schritte wären:</p>
+<ul>
+<li>die Dokumentaion zu git lesen</li>
+<li>einen git-cloud Dienst verwenden (z.B. durch eine Anlmeldung bei github)</li>
+<li>die Benutzerdaten in git hinterlegen</li>
+<li>einen push ausführen, um das Repository hochzuladen</li>
+</ul>
+<h3 id="3rd-party-module">3rd party Module</h3>
+<p>Anstelle von Standardmodulen sinnvoll, wenn Funktionalität fehlt, aber:</p>
+<ul>
+<li>Python-Entwicklung mit Modulen, die ihrerseits beim Kunden installiert werden müssen</li>
+<li>Manche Module haben Abhängigkeiten zu DLL's, die aus C/C++-Entwicklung stammen, müssen in der jeweilgen Version auch beim Kunden installiert sein oder sie werden bei der Installation zusätzlich übersetzt (pip macht das, setzt aber bspw. Compiler auf dem Rechner voraus): z.B.: Fiona für GDAL/OGR</li>
+<li>virtual environments: eine von einer Hauptinstallation abgeleitete "virtuelle" Pythoninstallation. Im Wesentlichen, um Module zu testen/benutzen, ohne dass diese die Hauptinstallation verändern. VirtualEnv kann als python module installiert werden. Achtung: IDE's unterstützen nicht alle virtual environments! Unter OSGEO4W hängen viele Module von anderen Installationen ab und bedürfen einer speziellen Umgebung (environment variables). <a href="https://www.dabapps.com/blog/introduction-to-pip-and-virtualenv-python/">A non-magical introduction ...</a></li>
+</ul>
+<p>Um virtualenv unter OSGEO4W zu nutzen, gehen wir wie folgt vor:</p>
+<p>Wir starten eine OSGEO4W-Kommandofenster und installieren virtualenv mit pip</p>
+<pre><code class="shell">&gt; py3_env
+&gt; pip install virtualenv
+Collecting virtualenv
+  Downloading https://files.pythonhosted.org/packages/33/5d/314c760d4204f64e4a96
+8275182b7751bd5c3249094757b39ba987dcfb5a/virtualenv-16.4.3-py2.py3-none-any.whl
+(2.0MB)
+    100% |--------------------------------| 2.0MB 4.3MB/s
+Installing collected packages: virtualenv
+Successfully installed virtualenv-16.4.3
+You are using pip version 18.1, however version 19.0.3 is available.
+You should consider upgrading via the 'python -m pip install --upgrade pip' comm
+and.
+
+</code></pre>
+
+<p>Dann wechseln wir in einen Ordner, in dem wir die virtuelle Umgebung einrichten möchten:</p>
+<pre><code class="shell">&gt; c:
+&gt; cd c:\temp
+&gt; mkdir vpytest
+&gt; python -m venv
+</code></pre>
+
+<p>Folgendes wird im Windows-Explorer angezeigt:</p>
+<pre><code class="text">+ vpy
+    + Include
+    + Lib
+    + Scripts
+    - pyenv.cfg
+</code></pre>
+
+<p>Im Unterordner Scripts finden wir u.a. activate.bat und deactivate.bat, mit denen wir die virtuelle Umgebung starten und wieder schließen können:</p>
+<pre><code class="shell">&gt; vpy\Scripts\activate.bat
+(vpy) c:\temp\vpytest&gt;
+&gt; vpy\Scripts\deactivate.bat
+</code></pre>
+
+<p>Der veränderte Prompt <code>(vpy) c:\temp\vpytest&gt;</code> zeigt an, dass die virtuelle Umgebung gestartet wurde.</p>
+<p>Um in diesem Ordner die OSGEO4W-Shell zusammen mit <em>vpy</em> verwenden zu können, nutze ich eine kleine Batch-Datei <code>shell.bat</code> im Verzeichnis <code>c:\temp\vpytest</code>, die auch über den Explorer ausgeführt werden kann:</p>
+<pre><code class="cmd">set pyhome=g:\gp190225\osgeo4w
+
+call %pyhome%\bin\o4w_env.bat
+call %pyhome%\bin\py3_env.bat
+
+call %~dp0\vpy\scripts\activate.bat
+cls
+cmd.exe /k
+</code></pre>
+
+<p>Sie müssen pyhome so setzen, das der dort angegebene Pfad auf ihren GIS-Stick verweist!</p>
+<p>Das Problem mit virtualenv ist, dass es nicht <em>portable</em> ist. Ändert sich der Laufwerksbuchstabe des GIS-Sticks, so müssten wir an verschiedenen Stellen Veränderungen vornehmen. Nur zum Überblick:</p>
+<ul>
+<li>shell.bat: Verwendet Laufwerksbuchstaben. Lösung: Virtuelle Umgebung auf dem Stick anlegen, und anstelle der Laufwerksangabe <code>g:</code> den Parameter <code>%~d0</code> verwenden, sodass es heißt <code>set pyhome=%~d0\gp190225\osgeo4w</code></li>
+<li>orig_prefix: Datei: vpy\Lib\orig_prefix.txt enthält eine absolute Pfadangabe und muss geändert werden. Befindet sich die virtuelle Umgebung auf dem Stick, so dann die Laufwerksangabe weggelassen werden.</li>
+<li>Scripts: Exe-Dateien in vpy\Scripts enthalten einen absoluten Pfad zu python.exe imselben Verzeichnis. Kann zu !python.exe verkürzt werden. Im Falle von pip sollte ohne Anpassung der Befehl <code>python -m pip</code> verwendet werden.</li>
+</ul>
+<p>Nun können wir innerhalb der virtuellen Umgebung Module installieren und testen, ohne dass die übergeordnete Python-Installation dadurch verändert wird.</p>
+<p>Fiona ist ein Modul, dass über pip "nachinstalliert" werden kann. Fiona vereinfacht den Umgang mit den Funktionen aus der gdal-Vektor-Bibliothek ogr und gilt als <em>more pythonic</em> als die OSGEO python-Schnittstelle. Hier eine kurze Anleitung zur Installation: </p>
+<ul>
+<li>Zunächst ist Fiona von der installierten GDAL-Version abhängig, unter Windows z.B. die aktuelle in OSGEO4W</li>
+<li>neben dem offiziellen Repositorium für pip existiert eine Sammlung von Python-Modulen für Windows <a href="https://www.lfd.uci.edu/~gohlke/pythonlibs/">Christoph Grohlke</a>, hier finden wir etvtl. die passende Version.</li>
+</ul>
+<pre><code class="shell">&gt; gdalinfo --version
+GDAL 2.4.1, released 2019/03/15
+
+</code></pre>
+
+<p>Abfrage der GDAL-Version in unserer <em>Virtuellen Umgebung</em>.</p>
+<p>Auf der Webseite von Herrn Grohlke suchen wir nach Fiona und finden Fiona-1.8.6-cp37-cp37m-win32.whl. Leider erfahren wir nicht, welche GDAL-Version hier benutzt wurde... Wir laden die Datei herunter, speichern sie im vpytest-Ordner um sie mit pip zu installieren:</p>
+<pre><code class="shell">&gt; python -m pip install Fiona-1.8.6-cp37-cp37m-win32.whl
+</code></pre>
+
+<p>Die Prozedur erzeugt eine Menge von Meldungen, installiert aber Fiona unter vpy\Lib\site-packages</p>
+<p>Wir testen, ob fiona mit python importiert werden kann:</p>
+<pre><code class="shell">python -c &quot;import fiona&quot;
+</code></pre>
+
+<p>Wenn dort keine Fehler gemeldet werden, haben wir fiona erfolgreich installiert! Um das Modul evtl. wieder zu entfernen, können wir pip mit dem Parameter uninstall aufrufen: <code>python -m pip uninstall fiona</code></p>
+<p>Wollen wir bspw. PyScripter als IDE in der virtuellen Umgebung nutzen, müssen wir auch hier eine Batchdatei verwenden:</p>
+<pre><code class="cmd">@echo off
+
+set mystick=J:\gp190225
+set pyhome=%mystick%\osgeo4w
+set scripter=%mystick%\Pyscripter
+
+call %pyhome%\bin\o4w_env.bat
+call %pyhome%\bin\py3_env.bat
+
+call %~dp0\vpy\scripts\activate.bat
+
+set PYTHONPATH=%VIRTUAL_ENV%\Lib\site-packages
+
+pushd %scripter%
+
+start &quot;PyScripter&quot; PyScripter.exe --PYTHON37 --pythondllpath=%pyhome%\apps\python37
+popd
+
+call %~dp0\vpy\scripts\deactivate.bat
+</code></pre>
+
+<h3 id="tool-chain">Tool chain</h3>
+<ul>
+<li>Python scripte benötigen selten eine <em>tool chain</em></li>
+<li>Umfangreiche Projekte hingegen schon</li>
+<li>In der IDE integrierte Tools: z.B.: wird in mehreren Dateien editiert, so müssen diese beim Start des main scripts auch in der aktuelle Version import werden.</li>
+<li>auch eine Codeverwaltung wie git ist Teil einer <em>tool chain</em></li>
+</ul>
+<p>Beispiel: make -&gt; in msys package from osgeo4w
+Abarbeitung eines makefiles (kommt von unix, C-Compiler): 
+- alle Schritte/Befehle die zur Erstellung der Software nötig sind
+- definiert Regeln, z.B. Abhängigkeiten, die gegeben sein müssen, bestimmte Aufgaben, die durchgeführt werden sollen (make test, make install, make clean, etc.)
+<a href="https://krzysztofzuraw.com/blog/2016/makefiles-in-python-projects.html">Makefiles in python projects</a></p>
+<p>ähnlich: setup.py
+wird für python packages benutzt, die von einem Entwickler/Nutzer in die eigene Python-Installation integriert werden soll. Innerhalb des setup scripts können Anforderungen überprüft und die Installation des <em>packages</em> ausgeführt werden. -&gt; passt auch zu "Veröffentlichung", vgl. auch "pip"
+<a href="https://stackoverflow.com/questions/1471994/what-is-setup-py">stackoverflow: What is setup.py?</a></p>
+<h2 id="python-und-tests">Python und Tests</h2>
+<p>Einfache Module, die nicht ausführbar sind, also nur zum import bestimmt sind, können innerhalb des Moduls Tests vorsehen, indem sie die Abfrage <code>if __name__ == '__main__':</code> den Tests voranstellen.</p>
+<p>Beispiel:</p>
+<p>Für unser Projekt benutzen wir das Package mit den Unterordnern und Modulen</p>
+<pre><code class="text">meinProjekt
+   - `__init__.py`
+   - `meinModul.py`
+</code></pre>
+
+<p><code>__init__.py</code></p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+from .meinModul import MeineClass
+</code></pre>
+
+<p><code>meinModul.py</code></p>
+<pre><code class="python">class MeineClass(object):
+
+    def beispiel(self, string=&quot;&quot;):
+        print(string)
+        return True
+
+print (__name__)
+
+if __name__ == &quot;__main__&quot;:
+    m = MeineClass()
+    m.beispiel(&quot;u see&quot;)
+</code></pre>
+
+<ul>
+<li>Somit kann jede Funktion der Klasse getestet werden. Der Code-Block unterhalb des <em>if statements</em> wird nur ausgeführt, wenn wir das zugehörige Modul ausführen (Run in IDE, phython meinModul.py in der <em>shell</em>), nicht wenn es importiert wird (<code>__name__</code> ist der Modulename, er wird im Falle einer Ausführung in <code>__main__</code> geändert).</li>
+</ul>
+<p>Test eines Imports aus einem Package, wir legen eine neue Datei an:</p>
+<pre><code class="text">useMeinProjekt.py
+meinProjekt
+   - `__init__.py`
+   - `meinModul.py`
+</code></pre>
+
+<p><code>useMeinProjekt.py:</code></p>
+<pre><code># -*- coding: utf-8 -*-
+from meinProjekt.meinModul import MeineClass
+
+m = MeineClass()
+m.beispiel(&quot;Tada!&quot;)
+</code></pre>
+
+<h3 id="testing-beispiel">Testing Beispiel</h3>
+<p>Ein für Python vorgesehener Weg ist die Verwendnung von <em>unit tests</em>: "Beim Schreiben von Unit-Tests mit Hilfe des unittest-Pakets wird zu jedem Modul modulname.py ein entsprechendes Test-Modul test_modulname.py, mit dessen Hilfe die im Hauptmodul enthaltenen Funktionen getestet werden können. Alle diese so genannten Unit Tests sollten voneinander unabhängig sein." <a href="https://www.grund-wissen.de/informatik/python/debugging-logging-testing.html">debugging, logging, testing</a></p>
+<ul>
+<li>Sinnvoll ist zudem die Arbeit mit der assert-Anweisung, welche einen Ausdruck testet, indem sie ihn mit einem erwarteten Ergebnis vergleicht.</li>
+</ul>
+<p>Beispiel:</p>
+<p>Für unser Projekt erweitern wir das Package mit diesen zusätzlichen Ordnern und Modulen</p>
+<pre><code class="text">meinProjekt
+   - `__init__.py`
+   - `meinModul.py`
+   + tests
+       - `__init__.py`
+       - test_init.py
+       - test_meinModul.py
+</code></pre>
+
+<p>Innerhalb des Unterordners test werden nun die Überprüfungen eingerichtet:</p>
+<p>In unserem Fall werden wir verschiedene Techniken einsetzen:</p>
+<ul>
+<li>Python-Modul <em>logging</em>, um Meldungen in einer Txtdatei zu speichern</li>
+<li>Python-Anweisung <em>assert</em>, um die Rückgabe von Methoden zu testen/benutzen</li>
+<li>Python-Modul <em>unittest</em>, um den Testablauf zu automatisieren</li>
+</ul>
+<p>Natürlich ist der Einsatz dieser Tools kein <em>Muss</em>, sondern soll aufzeigen, welche Testmöglichkeiten, und es sind längst nicht alle, dem Python-Entwickler zur Verfügung stehen.</p>
+<p><code>test/__init__.py</code></p>
+<pre><code># ich bleibe leer
+</code></pre>
+
+<p><code>test/test_meinModul.py</code></p>
+<pre><code class="python">import unittest
+import logging
+
+# Basis-Einstellungen festlegen:
+logging.basicConfig(filename='meintest_log.txt',
+                    format='%(levelname)s: %(message)s',
+                    level=logging.INFO)
+LOG = logging.getLogger(&quot;mein_test&quot;)
+
+from meinProjekt import MeineClass
+
+class MeineClassTest(unittest.TestCase):
+
+    def setUp(self):
+        &quot;&quot;&quot;runs before each test&quot;&quot;&quot;
+        # create an object
+        self.theClass = MeineClass()
+
+    def test_beispiel(self):
+        try:
+            assert self.theClass.beispiel() == True
+        except AssertionError as e:
+            LOG.error(&quot;test_beispiel scheiterte: %s&quot;%str(e))
+        else:
+            LOG.info(&quot;test_beispiel bestanden!&quot;)
+
+    def tearDown(self):
+        &quot;&quot;&quot;runs after each test&quot;&quot;&quot;
+        self.theClass = None
+
+if __name__ == '__main__':
+    unittest.main()
+</code></pre>
+
+<p>Unser Test startet mit <code>unittest.main()</code> und erzeugt eine Log-Datei <code>test/meintest_log.txt</code>. Bevor unser einziger Test startet, wird <code>setUp()</code> ausgeführt, nach dem Test noch <code>tearDown()</code>. Meldungen werden nicht mit print ausgegeben, sondern immer in die log-Datei geschrieben. Nur die Meldungen des Unittest-Moduls erscheinen auf der Konsole.</p>
+<ul>
+<li>Getestet wird mit die Methode beispiel in test_beispiel,</li>
+<li>assert prüft, ob die Methode True oder False zurückgibt und erzeugt einen Fehler, falls das Ergebnis False ist</li>
+<li>wir verwenden try...except, um diesen Fehler abzufangen</li>
+</ul>
+<h2 id="veroffentlichung-von-python-projekten">Veröffentlichung von Python-Projekten</h2>
+<p>Ziel einer Entwicklung mit Python wäre eine Veröffentlichung als Python-Package, so dass </p>
+<ul>
+<li>es über ein setup.py installiert werden kann</li>
+<li>es in einem <em>package format</em> vorliegt, z.B. als whl-Datei (eine Art ZIP-Datei) für die Installation mit pip, genutzt werden kann</li>
+<li>es auf einer Plattform, wie github oder dem Python Package Index (PyPI) gespeichert wird und von wo es herutergeladen und installiert werden kann.</li>
+</ul>
+<p>Anzumerken sei, dass es auch möglich ist auch ausführbare Programme aus Python-Modulen oder -Packages zu bekommen. Hierfür stehen verschiedene Optionen zur Verfügung, bekannte Möglichkeiten sind:</p>
+<ul>
+<li>Verwendung von <code>__main__.py</code> in einem Package, so dass bei der Ausführung mit python -m packagename <code>__main__</code> als Startpunkt ausgewählt wird. <em>Idle</em> kann z.B. auf diese Weise gestartet werden.</li>
+<li>Erstellung einer ausführbaren Datei, unter Windows als .exe, so dass das Programm auch ohne installiertes Python auf einem Rechner ausgeführt werden kann. Dies leistet etwa <a href="http://www.pyinstaller.org/">pyinstaller</a>.</li>
+</ul>
+<h2 id="fazit">Fazit</h2>
+<p>Schließlich können die dargestellten Phasen auch auf die Entwicklung mit Python und QGIS übertragen werden. Die GIS-spezifischen Anforderungen werden wir im Laufe der Lehrveranstaltung kennenlernen.</p>
+<pre><code class="text"># QGIS-Entwicklung
+
+## debugging
+
+## processing scripts
+
+## plugins
+
+### plugin builder
+
+### plugin reloader
+
+## standalone applications
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Python-Rezepte - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Python-Rezepte", url: "#_top", children: [
+              {title: "Rekursion", url: "#rekursion" },
+              {title: "Dictionaries f\u00fcr komplexe Daten", url: "#dictionaries-fur-komplexe-daten" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="python-rezepte">Python-Rezepte</h1>
+<h2 id="rekursion">Rekursion</h2>
+<ul>
+<li>Funktionen, die sich selbst aufrufen</li>
+<li>Anwendungen: Schleifen, deren Anzahl an Durchläufen unbestimmt, aber nicht groß ist</li>
+<li>Funktionen werden auf einem Stack ausgeführt, dessen Kapazität ist begrenzt.</li>
+</ul>
+<h3 id="standardbeispiel-fakultat">Standardbeispiel "Fakultät"</h3>
+<p>Berechnung von 4!</p>
+<ul>
+<li>4! = 4 * 3!</li>
+<li>3! = 3 * 2!</li>
+<li>2! = 2 * 1!</li>
+<li>(1! = 1)</li>
+</ul>
+<pre><code class="python">def factorial(n):
+    if n == 1:
+        return 1
+    else:
+        return n * factorial(n-1)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="rekursiv-durch-den-pfad">Rekursiv durch den Pfad</h3>
+<p>Eine rekursive Funktion zum Durchlaufen einer Verzeichnisstruktur. Die Tiefe des Pfades wird per count angegeben, alle Dateien werden mit print ausgegeben</p>
+<p>Path-Funktionen aus dem os-Modul:</p>
+<ul>
+<li>os.path.realpath() gibt den korrekten Pfadnamen zurück</li>
+<li>os.listdir(): alle Dateien und Ordner als Liste</li>
+<li>os.path.join(): Verzeichnis und Dateinamen korrekt verknüpfen</li>
+</ul>
+<pre><code class="python">import os
+def pathfind(dir, count):
+    count += 1
+    for f in os.listdir(dir):
+        f =  os.path.join(dir,f)
+        if os.path.isdir(f):
+            pathfind(f, count)
+        else:
+            print count, f
+    return
+
+var = os.environ['OSGEO4W_ROOT'] + &quot;/var&quot;
+
+c = 0
+pathfind(os.path.realpath(var), c)
+</code></pre>
+
+<h3 id="tiefe-eines-tuples">Tiefe eines Tuples</h3>
+<p>Wir berechnen die Verschachtelungstiefe eines Tuples:</p>
+<ul>
+<li>Tupel mit Tiefe 1: (1,2,3)</li>
+<li>Tupel mit Tiefe 2: ((1,2,3),(3,2,1))</li>
+</ul>
+<pre><code class="python">def getDeepness(aList, dim=0):
+    if isinstance(aList, (list, tuple)):
+        if not aList:
+            return dim
+        dim = dim + 1
+        dim = getDeepness(aList[0], dim)
+        return dim
+    else:
+        if dim == 0:
+            return -1
+        else:
+            return dim
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="jede-rekursion-ist-auch-mit-einer-schleife-darstellbar">Jede Rekursion ist auch mit einer Schleife darstellbar</h3>
+<p>Pfad durchsuchen ohne Rekursion:</p>
+<pre><code class="python">def pathfindseriell(dir):
+    end = False
+    entries = []
+    entries = map(lambda p: os.path.join(dir, p), os.listdir(dir))
+
+    while (entries):
+        f = entries[0]
+
+        if os.path.isdir(f):
+            entries.remove(f)
+            entries = map(lambda p: os.path.join(f, p), os.listdir(f)) + entries
+        else:
+            print f
+            entries.remove(f)
+</code></pre>
+
+<h2 id="dictionaries-fur-komplexe-daten">Dictionaries für komplexe Daten</h2>
+<h3 id="schlussel-als-zeiger">Schlüssel als Zeiger</h3>
+<p>Eine Menge von Linien, die auf einer separaten Menge von Punkten aufbauen.</p>
+<p>Topologische Struktur: </p>
+<ul>
+<li>Jeder Punkt wird nur einmal gespeichert, </li>
+<li>Anfangs- und Endpunkte der Linien sind die Knoten eines Netzwerks</li>
+<li>ein Punkt ist ein Element eines Dictionary mit einer ID als Schlüssel und dem zugrordneten Koordinatenpaar als Tuple</li>
+<li>eine Linie besteht aus Dictionary-Element mit einer ID und einem Tuple der Punkt-ID's</li>
+</ul>
+<pre><code class="python">points = {1:(1,3), 2:(3,1), 3:(3,2), 4:(5,2), 5:(7,3), 6:(9,2), 7:(8,6), \
+          8:(3,8), 9:(2,8), 10:(4,5), 11:(1,7), 12:(6,6)}
+
+lines = {'a':(1,3), 'b':(2,3), 'c':(3,4,5), 'd':(5,6), 'e':(1,10), \
+         'f':(5,7), 'h':(8,9), 'j':(9,11,10), 'k':(8,10), 'l':(5,12,7)}
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="funktionen-fur-das-netzwerk">Funktionen für das Netzwerk</h4>
+<p>Eine Funktion zur Darstellung der Linien mit ihren Koordinaten:</p>
+<pre><code class="python">points = {1:(1,3), 2:(3,1), 3:(3,2), 4:(5,2), 5:(7,3), 6:(9,2), 7:(8,6), \
+          8:(3,8), 9:(2,8), 10:(4,5), 11:(1,7), 12:(6,6)}
+
+lines = {'a':(1,3), 'b':(2,3), 'c':(3,4,5), 'd':(5,6), 'e':(1,10), \
+         'f':(5,7), 'h':(8,9), 'j':(9,11,10), 'k':(8,10), 'l':(5,12,7)}
+
+def make_line(key):
+    line_str = []
+    if lines.has_key(key):
+        for pid in lines[key]:
+            if points.has_key(pid):
+                line_str.append(points[pid])
+    return line_str
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Eine Funktion zur Ermittlung der Knoten aller Linien:</p>
+<pre><code class="python">def find_nodes():
+    nodes = {}
+    for key in lines:
+        lin = lines[key]
+        for nd in (lin[0], lin[-1]):
+            if not nodes.has_key(nd):
+                nodes[nd] = [key]
+            else:
+                nodes[nd].append(key)
+
+    return nodes
+</code></pre>
+
+<p>Ein Graph der Knoten für Routingzwecke</p>
+<pre><code class="python">def build_graph(nodes):
+    graph = {}
+    for key in nodes:
+        graph[key] = []
+        for lid in nodes[key]:
+            for nid in (lines[lid][0], lines[lid][-1]):
+                if nid != key:
+                    graph[key].append(nid)
+
+    return graph
+</code></pre>
+
+<p>Pfadsuche zwischen zwei Knoten: Anwendung einer Rekursion!
+<a href="http://www.python-course.eu/graphs_python.php">gefunden bei python-course.eu</a></p>
+<pre><code class="python">def find_path(start_vertex, end_vertex, graph, path=None):
+        &quot;&quot;&quot; find a path from start_vertex to end_vertex
+            in graph &quot;&quot;&quot;
+        if path == None:
+            path = []
+
+        path = path + [start_vertex]
+        if start_vertex == end_vertex:
+            return path
+        if start_vertex not in graph:
+            return None
+        for vertex in graph[start_vertex]:
+            if vertex not in path:
+                extended_path = find_path(vertex,
+                                          end_vertex,
+                                          graph,
+                                          path)
+                if extended_path:
+                    return extended_path
+        return None
+</code></pre>
+
+<p>diese Funktion findet nur einen Pfad, der nicht der günstigste sein muss. Der Pfad ist eine Liste der id's seiner Knoten (s.u.).</p>
+<p>Um zu den Knoten die entsprechenden Linien mit ihren Koordinaten zu finden, greifen wir auf die Struktur der nodes zurück.</p>
+<pre><code class="python">def lin_path(path, nodes):
+    if not path or len(path) &lt; 2:
+        return None
+
+    linpath = []
+
+    for i in range(len(path)-1):
+        l1 = nodes[path[i]]
+        l2 = nodes[path[i+1]] #, network[path[i+2]]
+        lfound = None
+        for l in l1:
+            if l in l2:
+                lfound = l
+        linpath.append(lfound)
+    return linpath
+</code></pre>
+
+<p>die Funktion erzeugt eine Liste mit den Id's der Linen eines Pfades.</p>
+<pre><code class="python">## insert date and pathes here
+nodes = find_nodes()
+graph = build_graph(nodes)
+path = find_path(3, 8, graph)
+
+print &quot;PATH:&quot;, lin_path(path, nodes)
+</code></pre>
+
+<p>hier eine Variante für alle möglichen Pfade:</p>
+<pre><code class="python">def find_all_paths(start_vertex, end_vertex, graph, path=[]):
+        &quot;&quot;&quot; find all paths from start_vertex to
+            end_vertex in graph &quot;&quot;&quot;
+
+        path = path + [start_vertex]
+        if start_vertex == end_vertex:
+            return [path]
+        if start_vertex not in graph:
+            return []
+        paths = []
+        for vertex in graph[start_vertex]:
+            if vertex not in path:
+                extended_paths = find_all_paths(vertex,
+                                                end_vertex,
+                                                graph,
+                                                path)
+                for p in extended_paths:
+                    paths.append(p)
+        return paths
+</code></pre>
+
+<p>anschließend können die Pfade ausgewertet werden, z.B. um die kürzeste Strecke zu ermitteln.</p>
+<h4 id="darstellung-des-netzwerks">Darstellung des Netzwerks</h4>
+<p>Rückgriff auf draw_map aus dem ersten Teil:</p>
+<pre><code class="python">import draw_map
+
+# function definitions...
+
+# main
+nodes = find_nodes()
+graph = build_graph(nodes)
+
+pathes = find_all_paths(3,8,graph)
+import draw_map
+
+map = draw_map.create()
+for l in lines:
+    lin = make_line(l)
+    draw_map.draw_line(map, lin)
+
+draw_map.draw_point(map, points[3])
+draw_map.draw_point(map, points[8], &quot;r^&quot;)
+
+for p in pathes:
+    lp = lin_path(p, nodes)
+    for l in lp:
+        draw_map.draw_line(map, make_line(l),&quot;y--&quot;)
+
+
+draw_map.show_map(map, ((0,0),(10,10)))
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

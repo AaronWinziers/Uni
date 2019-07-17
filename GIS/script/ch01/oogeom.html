@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>OO-Pythonmodule für eine Kartenanwendung - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "OO-Pythonmodule f\u00fcr eine Kartenanwendung", url: "#_top", children: [
+              {title: "Aufbau", url: "#aufbau" },
+              {title: "Implementierung des Moduls geomet", url: "#implementierung-des-moduls-geomet" },
+              {title: "Ring", url: "#ring" },
+              {title: "Tests zum Modul geomet", url: "#tests-zum-modul-geomet" },
+              {title: "Python Package f\u00fcr das geomet-Modul", url: "#python-package-fur-das-geomet-modul" },
+              {title: "weitere Klassen f\u00fcr geomet", url: "#weitere-klassen-fur-geomet" },
+              {title: "Gro\u00dfer Test", url: "#groer-test" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="oo-pythonmodule-fur-eine-kartenanwendung">OO-Pythonmodule für eine Kartenanwendung</h1>
+<h2 id="aufbau">Aufbau</h2>
+<p>Zwei Module als Grundlage. Zum einen ein Modul für die Geometrie, zum anderen ein Modul für Kartendarstellung (auf Basis der Matplotlib)</p>
+<figure><img alt="DrawMap and Geometry" src="../img/chap1_DrawMap.png" /><figcaption>
+<p>Schema zu DrawMap und Geometry</p>
+</figcaption>
+</figure>
+<h3 id="modul-geomet">Modul <em>geomet</em></h3>
+<ul>
+<li>
+<p>class Geometry: allgemeine Geometriedefinition</p>
+<ul>
+<li>
+<p>class Point</p>
+</li>
+<li>
+<p>class LineString</p>
+</li>
+<li>
+<p>class Polygon</p>
+</li>
+<li>
+<p>...</p>
+<ul>
+<li>.getGeom(): wird gerufen, um Tuple für Geometrie zu bekommen</li>
+<li>.extent.getPoints(): wird gerufen, um den Extent eines Layers/der Karte zu bestimmen</li>
+<li>.getDim():    wird gerufen, um die Tiefe eines Tuples zu bestimmen</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>class Extent: Klasse für umgebende Rechtecke</p>
+</li>
+</ul>
+<p>Rückblick: Was ist ein Polygon?</p>
+<p>Geometry als </p>
+<ul>
+<li>Point: (x,y)</li>
+<li>LineString: ((x1,y1), (x2,y3), ..., (xn,yn))</li>
+<li>Ring: ((x1,y1), (x2,y3), ..., (xn,yn), (x1,y1))</li>
+<li>Polygon: ((ring1), (ring2), ... (ringn))</li>
+</ul>
+<p>Regeln für Polygone:</p>
+<ul>
+<li>Der erste Ring ist ein <em>outer ring</em>, Drehrichtung "counter clockwise", Flächeninhalt &lt; 0</li>
+<li>Folgende Ringe sind <em>inner rings</em>, Drehrichtung "clockwise", Flächeninhalt &gt; 0</li>
+</ul>
+<figure><img alt="Polygon" src="../img/chap1_polygon.png" /><figcaption>
+<p>Beispiele</p>
+</figcaption>
+</figure>
+<ul>
+<li>id=1 single-part without interior ring</li>
+<li>id=2 single-part with interior ring </li>
+<li>id=3 multi-part without interior rings </li>
+<li>id=4 multi-part with interior rings</li>
+</ul>
+<p>Ausserdem gilt:</p>
+<ul>
+<li>
+<p><em>MultiGeometrien</em> haben <em>parts</em></p>
+</li>
+<li>
+<p>Ein MultiPolygon besteht aus mehreren Polygonen</p>
+</li>
+<li>
+<p>Ein MultiLine besteht aus mehreren LineStrings</p>
+</li>
+</ul>
+<h3 id="modul-drawmap">Modul <em>DrawMap</em></h3>
+<ul>
+<li>
+<p>class Style: allgemeine Styledefinition, daraus abgeleitet:</p>
+<ul>
+<li>
+<p>class PointStyle</p>
+</li>
+<li>
+<p>class LineStyle</p>
+</li>
+<li>
+<p>class PolyStyle</p>
+<ul>
+<li>findSymByName(...): -&gt; matplotlib: Symboldefinition besorgen</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>class MapLayer: Menge von Geometrien eines Typs, werden in DrawMap benutzt</p>
+<ul>
+<li>
+<p>draw(): alle Geometrien eines Layers zeichnen</p>
+</li>
+<li>
+<p>addClass(geometries, style): eine Klasse mit Geometrien, welche dieselben Zeichenmerkmalen aufweisen, hinzufügen</p>
+</li>
+</ul>
+</li>
+<li>
+<p>class DrawMap: Karte mit mehreren Layern</p>
+<ul>
+<li>addLayer(layer_object): MapLayer-Objekt hinzufügen, Zeichnungsreihenfolge fifo</li>
+<li>drawAll(): alle Layer zeichnen, ruft layer.draw()</li>
+<li>show(): das Kartenfenster (matplotlib) anzeigen</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="MapDrawGeometry" src="../img/chap1_DrawMapGeo.png" /><figcaption>
+<p>Abhängigkeiten zwischen DrawMap und Geometry</p>
+</figcaption>
+</figure>
+<figure><img alt="MapDrawStyle" src="../img/chap1_DrawMapStyle.png" /><figcaption>
+<p>Abhängigkeiten zwischen DrawMap und Style</p>
+</figcaption>
+</figure>
+<h2 id="implementierung-des-moduls-geomet">Implementierung des Moduls geomet</h2>
+<p>In diesem Modul sollen die aufgezeigten Klassen/Funktionen für die Geometrie implementiert werden.</p>
+<ul>
+<li>Jede Geometrie wird aus Tupeln aufgebaut,</li>
+<li>und auf Gültigkeit getestet</li>
+<li>Punkt-Objekte werden nicht in anderen Geometrien verwendet</li>
+</ul>
+<p>Hilfsfunktionen:</p>
+<ul>
+<li>
+<p>test_dim(): Tiefe eines Tuples, die Funktion liefert für </p>
+<ul>
+<li>Punkt-Koordinaten: (x,y), Tiefe 1</li>
+<li>Linestring-Koordinaten: ((x1,y1),(x2,y2),...(xn,yn)), Tiefe: 2</li>
+<li>Ring-Koordinaten: wie Linestring, aber geschlossen, Tiefe: 2</li>
+<li>Polygon-Koordinaten: (((x11,y11),(x12,y12),...(x1n,y1n),(x11,y11)),((x21,y21),(x22,y22),...(x2n,y2n),(x21,y21))), Tiefe: 3</li>
+<li>Multi-Linestring: Tuple mit mehreren Linestrings, Tiefe: 3</li>
+<li>Multi-Polygons: Tuple mit mehreren Polygons, Tiefe: 4</li>
+</ul>
+</li>
+<li>
+<p>signed_area(): testet einen Ring auf Drehrichtung und gibt Flächeninhalt zurück</p>
+</li>
+<li>
+<p>reverseLineString(): dreht die Reihenfolge der Punkte in einem Linestring oder Ring um</p>
+</li>
+</ul>
+<dl>
+<dt><pre><code class="python">def test_dim(testlist, dim=0):
+    &quot;&quot;&quot;tests if testlist is a list and how many dimensions it has.
+Returns -1 if it is no list at all, 0 if list is empty
+and otherwise the dimensions of it&quot;&quot;&quot;
+    if isinstance(testlist, (list, tuple)):
+      if not testlist:
+          return dim
+      dim = dim + 1
+      dim = test_dim(testlist[0], dim)
+      return dim
+    else:
+      if dim == 0:
+          return -1
+      else:
+          return dim
+
+def reverseLineString(linestring):
+    &quot;&quot;&quot;helper-function to turn the direction of line strings ((x1,y1),...(xn, yn)),
+returns the reversed linestring&quot;&quot;&quot;
+    temp = list(linestring)
+    temp.reverse()
+    return tuple(temp)
+
+def signed_area(coords):
+    &quot;&quot;&quot;Return the signed area enclosed by a ring using the linear time
+algorithm at http://www.cgafaq.info/wiki/Polygon_Area. A value &gt;= 0
+indicates a counter-clockwise oriented ring.
+Gibt 0 zurueck, wenn Polygon nicht geschlossen ist!&quot;&quot;&quot;
+    xs, ys = map(list, zip(*coords))
+    xs.append(xs[1])
+    ys.append(ys[1])
+    return sum(xs[i]*(ys[i+1]-ys[i-1]) for i in range(1, len(coords)))/2.0
+</code></pre></dt>
+<dd>
+<p>Allgemeine Hilfsfunktionen</p>
+</dd>
+</dl>
+<p>Die grundlegenden Klassen des Moduls:</p>
+<h3 id="geometry">Geometry</h3>
+<p>Die Klasse Geometry ist die Basis-Klasse und definiert alle gemeinsamen Eigenschaften und Methoden.</p>
+<p><em>Eigenschaften</em></p>
+<ul>
+<li>Koordinatenwerte werden als <code>_coords</code> gespeichert</li>
+<li>Umgebendes Rechteck ist <code>extent</code> mit eigener Klasse, s.u.</li>
+<li>Dimension oder Tiefe der Koordinatenwerte wird als <code>dim</code> gespeichert </li>
+</ul>
+<p><em>Methoden</em></p>
+<ul>
+<li><code>setGeom()</code>: speichert die Koordinatenwerte</li>
+<li><code>getGeom()</code>: gibt die gespeicherten Koordinatenwerte zurück</li>
+<li><code>_test()</code>: testet, ob Koordinatenwerte gültig sind</li>
+</ul>
+<pre><code class="python">class Geometry(object):
+    &quot;&quot;&quot;abstract class for all geometry classes. Coordinate data is stored as a tuple.
+    For points use (x,y),
+    for linestrings use a tuple of points (point1, point2, )
+    and so on&quot;&quot;&quot;
+
+    def __init__(self):
+        # coordinate data
+        self._coords = ()
+        # depth (dimension of tuple)
+        self.dim = 0
+        # Minimal rectangular extent of geom
+        self.extent = None
+
+    def getGeom(self):
+        &quot;&quot;&quot;get coordinate data: returns the geometry as a tuple&quot;&quot;&quot;
+        return self._coords
+
+    # should be overloaded
+    def setGeom(self, coords):
+        &quot;&quot;&quot;store the coordinate data: needs a tuple&quot;&quot;&quot;
+        self._test(coords)
+        if self.dim &gt; 0:
+            self._coords = coords
+            self.extent = Extent(coords)
+
+    def _test(self, coords):
+        &quot;&quot;&quot;get depth of coordinate data&quot;&quot;&quot;
+        self.dim = test_dim(coords)
+</code></pre>
+
+<h3 id="extent">Extent</h3>
+<p>Die Klasse Extent berechnet ein umgebendes Rechteck aus einem Linestring oder Ring</p>
+<p>Eigenschaften:</p>
+<ul>
+<li>left: kleinster x-Wert</li>
+<li>right: größter x-Wert</li>
+<li>bottom: kleinster y-Wert</li>
+<li>top: größter y-Wert</li>
+<li>width: Breite</li>
+<li>height: Höhe</li>
+</ul>
+<p>Methoden:</p>
+<ul>
+<li>getPoints(): Rechteck-Tuple als Linestring</li>
+<li>_calcExtent(): Berechnung des Rechtecks</li>
+</ul>
+<pre><code class="python">class Extent(object):
+    def __init__(self, coords=None):
+        # self-Variablen vorbelegen
+        self.left = 0
+        self.right = 0
+        self.bottom = 0
+        self.top = 0
+        self.width = 0
+        self.height = 0
+
+        # only linesstring or ring is accepted
+        if test_dim(coords) == 2:
+            self._calcExtent(coords)
+
+    def _calcExtent(self, coords):
+        if not coords:
+            return
+
+        x,y = zip(*coords)
+        self.left= min(x)
+        self.right= max(x)
+        self.bottom = min(y)
+        self.top = max(y)
+        self.width = self.right - self.left
+        self.height = self.top - self.bottom
+        return (self.left, self.bottom, self.right, self.top)
+
+
+    def getPoints(self):
+        return ((self.left,self.bottom), (self.left, self.top),
+                (self.right, self.top), (self.right, self.bottom))
+</code></pre>
+
+<p>Anmerkung: Die Klasse hätte auch aus der Klasse <em>Geometry</em> abgeleitet werden können!</p>
+<h3 id="points">Points</h3>
+<p>Erbt Methoden und Eigenschaften der Klasse <em>Geometry</em>, Änderungen gegenüber Geometry:</p>
+<ul>
+<li><code>__init__()</code>: akzeptiert Tupel als Argument</li>
+<li><code>setGeom()</code>: überladen, um auf punktspezifische Dinge zu testen. Erzeugt ValueError bei falschem Tuple</li>
+<li><code>setXY()</code>: zusätzliche Methode, um Punkt über x- und y-Wert zu erzeugen</li>
+</ul>
+<pre><code class="python">class Point(Geometry):
+    def __init__(self, point=()):
+        Geometry.__init__(self)
+        if point:
+            self.setGeom(point)
+
+    # overloaded
+    def setGeom(self, point):
+        &quot;&quot;&quot;store the coordinate data: needs a point tuple (x,y)&quot;&quot;&quot;
+        # test is tuple contains point coordinates
+        self._test(point)
+        if self.dim == 1:
+            self._coords = point
+            # get a valid extent
+            self.extent = Extent((point, point))
+        else:
+            raise ValueError(&quot;ERR: Could not set coordinate data: not a Point: %s&quot;%point)
+
+    def setXY(self, x, y):
+        self.setGeom((x, y))
+</code></pre>
+
+<h3 id="linestring">LineString</h3>
+<p>Zunächst verallgemeinern wir in der Klasse <em>Geometry</em> den Fehler-String, da er in unseren Klassen immer in der derselben Form benutzt werden wird.</p>
+<pre><code class="python">class Geometry(object):
+    #...
+    def __init__(self):
+    #...
+    # errorstring for coord test %s and %s will be class name and coord data
+    self._errstring = &quot;ERR: Could not set coordinate data: not a %s: %s&quot;
+</code></pre>
+
+<p>LineString erbt Methoden und Eigenschaften der Klasse <em>Geometry</em>, Aufbau folgt dem von <em>Point</em>, ValueError benutzt dann den allgemeinen Error-String</p>
+<pre><code class="python">class LineString(Geometry):
+    def __init__(self, coords=()):
+        Geometry.__init__(self)
+
+        if coords:
+            self.setGeom(coords)
+
+    def setGeom(self, coords):
+        &quot;&quot;&quot;store the coordinate data: needs a linestring tuple ((x1,y1), (x2,y2), ..., (xn,yn) )&quot;&quot;&quot;
+        self._test(coords)
+        if self.dim == 2:
+            self._coords = coords
+            # extent berechnen
+            self.extent = Extent(coords)
+        else:
+            raise ValueError(self._errstring%(self.__class__.__name__,coords))
+</code></pre>
+
+<p>Die Fehlermeldung benutzt den Ausdruck <code>self.__class__.__name__</code>, dies entspricht dem Namen der Klasse (Point, LineString etc.), diese Änderung des Error-String übernehmen wir auch für die Klasse <em>Point</em>:</p>
+<pre><code class="python">class Point(Geometry):
+    # ...
+
+    def setGeom(self, point):
+        # ...
+        else:
+            raise ValueError(self._errstring%(self.__class__.__name__,point))
+</code></pre>
+
+<h2 id="ring">Ring</h2>
+<p>Der Ring erbt nicht von Geometry, sondern wegen der großen Ähnlichkeit, von der Klasse LineString. Hierbei können wir uns die bereits programmierte Überprüfung der Koordinaten zunutze machen:</p>
+<pre><code class="python">
+class Ring(LineString):
+    def __init__(self, coords=()):
+        LineString.__init__(self, coords)
+
+    def setGeom(self, coords):
+        # check like in LineString
+        LineString.setGeom(self, coords)
+        # plus: check if ring is closed:
+        if self._coords[0] != self._coords[-1]:
+            print(&quot;WARNING: Ring is not closed!&quot;)
+
+</code></pre>
+
+<ul>
+<li>Der Ausdruck LineString.setGeom ruft die Funktion der übergeordneten Klasse auf. Hier muss, analog zu <code>__init__</code>, auch self mit übergeben werden! </li>
+<li>Statt eines "warnings" am Ende der Methode setGeom() könnte auch hier ein Fehler aufgerufen werden! Aber manche weitere Algorithmen und Funktionen können auch mit nicht geschlossenen Ringen umgehen...</li>
+<li>oder wir setzen die Hilfsfunktion closeRing() ein, um den Fehler zu korrigieren.</li>
+</ul>
+<h2 id="tests-zum-modul-geomet">Tests zum Modul geomet</h2>
+<p>Testen Sie die Klassen mit verschiedenen Geometrien.</p>
+<pre><code class="python"># Punkt
+coords = (238.968,-248.829)
+# teste test_dim, Extent, Geometry, Point
+
+# LineString 
+coords = ((186.86734599332530138,-330.01102525246926689),(281.02152260430347042,-334.20601331929503885),(380.16725392010351925,-233.1784919062212964))
+# teste wie oben, aber mit LineString anstelle von Point
+# funktioniert auch mit Ring? Teste mit und ohne closeRing()
+
+</code></pre>
+
+<p>An dieser Stelle beenden wir die Arbeit an dem Modul als <em>Ein-Dateien-Modul</em>, da der Code zur Bearbeitung sonst zu lang und übersichtlich wird. Wir schauen uns zur weiteren Vorgehenswese den Aufbau eines Packages an, also eine Aufteilung in kleinen Modulen, die in einem Ordner organisert sind.</p>
+<h2 id="python-package-fur-das-geomet-modul">Python Package für das geomet-Modul</h2>
+<p>Wir erstellen einen Ordner geomet und darin eine Datei <code>__init__.py</code>. Die vorhandenen Klassen und Hilfsfunktionen speichern wir in gesonderten Dateien ab, z.B.:</p>
+<ul>
+<li>helper.py für die Hilfsfunktionen</li>
+<li>extent.py für die Klasse Extent</li>
+<li>geometry.py für die Klasse Geometry</li>
+<li>die anderen Klassen ebenso ...</li>
+</ul>
+<h3 id="imports-innerhalb-des-packages">imports innerhalb des Packages</h3>
+<p>Über die imports müssen wir nun die Abhängkeiten zwischen den Modulen herstellen, was im <em>Ein-Datei-Modul</em> nicht nötig war.</p>
+<ul>
+<li>Die Hilfsfunktionen <em>helper</em> haben keine Abhänkeiten</li>
+<li>Extent nutzt <em>helper</em>, muss dort importiert werden</li>
+<li>Geometrie nutzt <em>helper</em> und <em>Extent</em></li>
+<li>usw.</li>
+</ul>
+<p>Der Import dieser <em>Submodule</em> erfolgt relativ, d.h. immer mit dem Bezug zum Package.
+Hier am Beispiel der Klasse Extent in extent.py:</p>
+<pre><code class="python"># extent.py
+from geomet.helper import *
+</code></pre>
+
+<h3 id="import-des-packages">import des Packages</h3>
+<p>Um nun das Package in einem externen Modul zu testen, müssen wir es dort importieren. Dies können wir erleichtern, wenn wir auf der Ebene des <code>geomet/__init__.py</code> bereits die Untermodule importieren:</p>
+<pre><code class="python">from geomet.helper import *
+from geomet.extent import Extent
+from geomet.geometry import Geometry
+from geomet.point import Point
+from geomet.linestring import LineString
+from geomet.ring import Ring
+</code></pre>
+
+<p>Dann benötigen wir bei einem import von geomet und seinen Untermodulen nur noch zu schreiben:</p>
+<pre><code class="python"># Klassen stehen im Namensraum direkt zur Verfügung
+from geomet import *
+# Beispiel:
+# p = Point()
+# oder: import geomet
+# Klassen und funktionn bleiben im Namensraum von geomet:
+# p = geomet.Point()
+</code></pre>
+
+<h2 id="weitere-klassen-fur-geomet">weitere Klassen für geomet</h2>
+<ul>
+<li>Polygon</li>
+<li>MultiLine</li>
+<li>MultiPolygon</li>
+</ul>
+<p>Hinweise zur Implementierung </p>
+<ul>
+<li><code>getGeom()</code> soll immer die Koordinaten-Daten in Tuple-Darstellung zurückgeben!</li>
+<li>Vermeiden Sie möglichst doppelten Code!</li>
+</ul>
+<h3 id="polygon">Polygon</h3>
+<ul>
+<li>erbt von Geometry</li>
+<li>bekommt eigene Methode <code>addRing()</code>, die von setGeom() genutzt wird</li>
+<li>addRing() testet jeden Ring auf korrekte Drehrichtung, nutzt ggf. reverseLineString zur Korrektur</li>
+</ul>
+<h3 id="multiline">MultiLine</h3>
+<ul>
+<li>erbt von Geometry</li>
+<li>erhält eine Methode <code>addPart()</code>, die von setGeom() genutzt wird</li>
+<li>überlegen Sie, ob eine MultiLine mehrere LineString-Objekte als <em>parts</em> speichert oder bei der Speicherung lediglich die Darstellung als Tuple beibehält. Im ersteren Fall ändert sich der Abruf der Geometrie in getGeom. </li>
+</ul>
+<h3 id="multipolygon">MultiPolygon</h3>
+<ul>
+<li>erbt von Geometry</li>
+<li>erhält ebenso addPart(), um eine Sammlung von Polygonen als parts zu bekommen. Auch hier stellt sich die Frage, in wie weit die Klasse <code>Polygon</code> hier eingesetzt werden kann.</li>
+</ul>
+<h2 id="groer-test">Großer Test</h2>
+<figure><img alt="DrawMapTest" src="../img/chap1_DrawMapTest.png" /><figcaption>
+<p>Darstellung der Testdaten mit dem drawmap-Modul</p>
+</figcaption>
+</figure>
+<p>Hier finden Sie die Tuple-Darstellungen der Geometrien. Die Klassen benutzen in den Methoden immer die Übergabe von Tupeln und nicht von LineString-, Ring-, oder Polygon-Objekten</p>
+<pre><code class="python">def test():
+
+    # construction: a single Polygon (one ring)
+    ring = tuple([(302.26527684595293977, -145.75348499567942895),(372.61030054263540023, -137.42315324212492555),
+    (382.32902092178233033, -172.13286888193533741),(496.78734703239143755, -172.08424826858774281),
+    (499.4164616800761678, -130.01841390563203049),(558.6543763720193283, -133.72078357387846381),
+    (568.83589295969704835, -248.03144708098747628),(564.67072708291971139, -285.0551437634519516),
+    (542.45650907344111147, -298.47623381084531502),(495.25129580329894452, -291.53429068288323833),
+    (412.87357068481549049, -246.643058455395078),(350.85887874168747658, -199.43784518525288263),
+    (302.26527684595293977, -145.75348499567942895)])
+    # add the ring to a tuple
+    poly2 = tuple([ring])
+    poly2 = Polygon(poly2)
+    # nested tuple with simple polygon, two rings: outer ring and two inner rings (hole)
+    poly3 = (((178,-199),(294,-152),(372,-236),(278,-325),(187,-326),(178,-199)),
+             ((252.74608253315653883,-243.40348499567934937),(253.13780082570139029,-225.44446488989345312),
+              (210.63162755685320349,-230.44519115681680432),(213.4084048080380569,-254.0477977918878878),
+              (228.2178834810238186,-273.94803475871253795),(282.82783608765890904,-269.32007267340446788),
+              (252.74608253315653883,-243.40348499567934937)),
+             ((262.37713119618894098,-219.77606105199234321),(266.10600947781182413,-239.35267203051256502),
+              (294.07259658998356144,-261.72594172024992076),(324.36973262816962915,-247.27653837896122013),
+              (300.59813358282360696,-225.83548825962955675),(294.53870637518645026,-203.46221856989217258),
+              (262.37713119618894098,-219.77606105199234321)))
+    poly3 = Polygon(poly3)
+    # two parts, each with one outer ring
+    poly4 = ((((287.91859438149782591,-335.03713428477897196),(378.62665125353572648,-240.62670774449458122),
+               (485.99537163268269069,-301.71580727056095839),(510.98636689334614402,-347.06983570657990867),
+               (538.75413940519445077,-502.56936177293061974),(484.14418679855941718,-499.79258452174576632),
+               (457.30200670377269034,-380.39116272079792225),(370.29631949998122309,-377.61438546961306884),
+               (402.69205409713759991,-316.52528594354674851),(365.66835741467315302,-306.34376935586897162),
+               (320.31432897865420273,-370.20964613312020219),(287.91859438149782591,-335.03713428477897196)),),
+            (((274.96030054263525244,-342.4418736212718386),(311.98399722509969934,-379.4655703037362855),
+              (268.94394983173475566,-422.50561769710122917),(184.25224367059732344,-337.81391153596376853),
+              (187.02902092178214843,-335.03713428477897196),(274.96030054263525244,-342.4418736212718386)),))
+    poly4 = MultiPolygon(poly4)
+
+    # use the polygon method addRing():
+
+    p1 = Polygon()
+    p1.addRing( ((321.52641810650015941,-385.52558314627935943),(357.71607808855492294,-382.53470215602692406),
+                 (450.82285978434140361,-386.87030964022920898),(473.96267021088169713,-498.86699210468418642),
+                 (380.76171029810586788,-518.12338878087757621),(285.14181713031297249,-516.45324802885477311),
+                 (218.49916310187694535,-486.83429068288319286),(209.24323893126086205,-469.24803475871260616),
+                 (216.64797826775372869,-443.33144708098745923),(240.71338111135560212,-424.81959873975523578),
+                 (275.88589295969683235,-429.44756082506330586),(321.52641810650015941,-385.52558314627935943)) )
+
+    p1.addRing( ((275.88589295969683235,-441.48026224686429941),(244.41575077960209228,-435.92670774449459259),
+                 (228.6806796895546654,-449.81059400041874596),(228.6806796895546654,-465.54566509046617284),
+                 (245.34134319666367219,-484.05751343169833945),(274.03470812557361569,-493.31343760231447959),
+                 (324.01669864690063605,-498.86699210468418642),(376.77546641941250982,-492.38784518525289968),
+                 (391.58494509239829995,-470.17362717577418607),(389.73376025827508329,-441.48026224686429941),
+                 (365.66835741467315302,-421.11722907150880246),(337.90058490282484627,-414.63808215207751573),
+                 (315.60443879742075524,-409.43564806081656116),(315.68636689334613266,-409.08452764970786575),
+                 (275.88589295969683235,-441.48026224686429941)) )
+
+    p2 = Polygon()
+    p2.addRing( ((361.27016520072675121,-376.7665935641414876),
+                 (328.98417466974592571,-374.33894830141070997),(371.22191191704285984,-312.82291627530025835),
+                 (394.36172234358309652,-321.15324802885476174),(361.27016520072675121,-376.7665935641414876)) )
+    p3 = Polygon()
+    p3.addRing( ((275.88589295969683235,-455.36414850278845279),(342.75289231998959849,-442.08747236662020441),
+                (346.23091665637934966,-484.98310584876003304),(311.98399722509969934,-487.75988309994488645),
+                (275.88589295969683235,-481.28073618051359972),(275.88589295969683235,-455.36414850278845279)) )
+
+    poly5 = MultiPolygon()
+    poly5.addPart(p1.getGeom())
+    poly5.addPart(p2.getGeom())
+    poly5.addPart(p3.getGeom())
+
+
+    l1 = MultiLine( (((186.86734599332530138,-330.01102525246926689),(281.02152260430347042,-334.20601331929503885),(380.16725392010351925,-233.1784919062212964)),))
+    l2 = MultiLine( (((298.38411210311005561,-148.6943188085558063),(351.63715506253709009,-206.8415145126128607),(380.16725392010351925,-233.1784919062212964),
+                    (422.01973262816943588,-259.16233790163414596),(492.40231019380161115,-297.84945007347175761),(522.2333364467847332,-341.66376988254080516),
+                    (544.6066061365220321,-475.90338802096505333)),) )
+
+    l3 = MultiLine( (((245.16397476845918391,-416.3710923394440897),(271.43529456551368639,-425.78911264404854364),(320.83859405808800602,-377.5424121362502774)),
+                     ((320.83859405808800602,-377.5424121362502774),(367.51562451511898644,-310.29444259284662166),(397.25674126650147855,-318.88632076546821281),
+                      (365.94595446435147323,-379.69038167940567519)),
+                     ((320.83859405808800602,-377.5424121362502774),(334.22209659621012179,-379.52515325300907989),(365.94595446435147323,-379.69038167940567519)),
+                     ((365.94595446435147323,-379.69038167940567519),(454.17793416011954832,-383.82109233931993231),(478.79696969320832522,-499.06791975092721714))) )
+
+    orte = [Point((238.968,-248.829)),
+            Point((271.353,-308.312)),
+            Point((242.933,-363.828)),
+            Point((320.839,-377.542)),
+            Point((365.863,-344.001)),
+            Point((382.386,-275.266)),
+            Point((462.357,-347.306)),
+            Point((310.347,-466.27)),
+            Point((422.702,-451.73)),
+            Point((528.448,-318.886))]
+
+    return (orte, (l1,l2,l3), (poly2, poly3, poly4, poly5))
+</code></pre>
+
+<p>Die Funktion test() kann auch in <code>__init__.py</code> implementiert werden!</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

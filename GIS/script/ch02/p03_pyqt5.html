@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Python und Qt - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Graphische Benutzeroberf\u00e4chen", url: "#_top", children: [
+              {title: "Einf\u00fchrung", url: "#einfuhrung" },
+              {title: "Aufbau einer PyQt5-Anwendung", url: "#aufbau-einer-pyqt5-anwendung" },
+              {title: "Events mit Signals and Slots", url: "#events-mit-signals-and-slots" },
+              {title: "Qt-Layout", url: "#qt-layout" },
+              {title: "Dialoge", url: "#dialoge" },
+              {title: "Aufgabe ein eigenes Widget zur Anzeige des Pegelverlaufs", url: "#aufgabe-ein-eigenes-widget-zur-anzeige-des-pegelverlaufs" },
+              {title: "QtDesigner", url: "#qtdesigner" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="graphische-benutzeroberfachen">Graphische Benutzeroberfächen</h1>
+<h2 id="einfuhrung">Einführung</h2>
+<h3 id="gui-programmierung">GUI-Programmierung</h3>
+<ul>
+<li>
+<p>Eine Anwendung mit graphischer Benutzeroberfläche (GUI) programmieren</p>
+<ul>
+<li>Ein GUI setzt sich aus Fensterelementen zusammen (Widgets): Menü, Statusleiste, Formulare, Listenfelder, Textfelder, etc</li>
+<li>Elemente werden in Bibliotheken vorgehalten</li>
+<li>Oft vom Betriebssystem abhängig: Windows, Mac, aber auch: Plattformübergreifende WidgetSets, integrieren sich in ein Gast-System (z.B. Windows)</li>
+</ul>
+</li>
+<li>
+<p>QGIS  benutzt die Qt-Widgets für das eigene GUI</p>
+<ul>
+<li>Für Python existiert das Modulpaket PyQt5</li>
+<li>Plugins für QGIS werden mit pyqt5 entwickelt</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="simple" src="../img/chap2_pyqt_simple.png" /><figcaption>
+<p>eine simple und minimale Anwendung</p>
+</figcaption>
+</figure>
+<h3 id="begriffe-aus-der-gui-welt">Begriffe aus der GUI-Welt</h3>
+<ul>
+<li>
+<p>Widget = Window Gadget: Ein "Fensterdingsbums", kleinster Teil eines GUI</p>
+</li>
+<li>
+<p>Dialog = ein aus 1..n Widgets bestehende GUI zur Realisierung einer spezifischen Nutzerinteraktion, oft auch als Formular bezeichnet (s. Abb.)</p>
+</li>
+<li>
+<p>MainWindow  = Hauptfenster einer Applikation, mit Buttons und Menüs, welche bestimmte Funktionen ausführen oder Dialoge aufrufen (s. QGIS)</p>
+</li>
+<li>
+<p>GUI = Graphical User Interface: Graphische Benutzerschnittstelle; Oberbegriff</p>
+</li>
+<li>Maus+Tastatur+Bildschirm (oder andere Eingaben mit graphischer Rückmeldung)</li>
+<li>Ereignis-Programmierung: Fensterobjekte– Datenobjekte – Eingabeobjekte interagieren miteinander und manipulieren sich gegenseitig</li>
+</ul>
+<figure><img alt="widgets" src="../img/chap2_pyqt_widgets.png" /><figcaption>
+<p>Häufig verwendete QtGUI-Widgets in Dialogen</p>
+</figcaption>
+</figure>
+<p>Qt arbeitet auch der Basis von Events nach <a href="https://de.wikipedia.org/wiki/Signal-Slot-Konzept">Signal-Slot-Schema</a>. Es werden hierbei Nachrichten von Fensterelementen (Signal) an einen festen Adressaten (Slot) gesendet, der Adressat ist in der Regel eine Funktion/Methode <a href="https://doc.qt.io/qt-5/signalsandslots.html">Qt5-Dokumentation</a>.</p>
+<p>Erfolgt eine Steuerung z.B. über touch-sensitive Geräte, so werden zu den Widgets passende Events benutzt, die auf die Berühung mit Fingern reagieren.</p>
+<h3 id="dokumentation">Dokumentation</h3>
+<p><a href="https://www.riverbankcomputing.com/static/Docs/PyQt5/">PyQt5 Reference Guide</a>
+<a href="https://doc.qt.io/qt-5/index.html">Qt5-Dokumentation</a>
+<a href="https://wiki.python.org/moin/PyQt">Übersicht python.org</a></p>
+<h2 id="aufbau-einer-pyqt5-anwendung">Aufbau einer PyQt5-Anwendung</h2>
+<h3 id="hello-world">Hello World</h3>
+<ul>
+<li>Benötigte Module importieren und Funktion main() einrichten</li>
+</ul>
+<pre><code class="python">import sys
+from PyQt5.QtWidgets import *
+
+def main(argv):
+    pass
+
+if __name__ == '__main__':
+    main(sys.argv)
+</code></pre>
+
+<ul>
+<li>
+<p>Die Anwendung kann auch Kommandozeilenargumente verarbeiten, daher wird <code>sys.argv</code> übergeben.</p>
+</li>
+<li>
+<p>Jede PyQt-GUI-Anwendung benötigt ein QApplication Objekt. Dieses stellt allgemeine Informationen wie z.B. das Anwendungsdirectory, Bildschirmparameter und v.A. den Event-Loop zur Verfügung. </p>
+</li>
+</ul>
+<pre><code class="python">import sys
+from PyQt5.QtWidgets import QApplication, QTextEdit
+
+def main(argv):
+    # each Qt-Programm needs an application object
+    app = QApplication(argv)
+    # to show the string Hello World in a window
+    textEdit = QTextEdit()
+    textEdit.setText(&quot;Hello World&quot;)
+    # show window
+    textEdit.show()
+    app.exec_()
+
+if __name__ == '__main__':
+    main(sys.argv)
+</code></pre>
+
+<ul>
+<li>
+<p>Ein QTextEdit Widget wird erstellt: In PyQt kann jedes Widget als Top-Level Fenster dienen. Ist dies der Fall, wird ihm automatisch die typische Titelzeile und u.a. der X-Button verliehen.</p>
+</li>
+<li>
+<p>Nachfolgend wird ein "paint event" zur Anzeige des Widgets in den Event-Loop eingesetzt. Damit steht die Anzeige des Widgets in der Warteschleife.</p>
+</li>
+<li>
+<p>Schließlich muss man den Event-Loop starten, das Widget erscheint am Bildschirm, bis X gedrückt wird.</p>
+</li>
+</ul>
+<pre><code class="python">    textEdit.resize(250, 450)
+    textEdit.move(300, 300)
+    textEdit.setWindowTitle('Simple')
+    # show window
+    textEdit.show()
+    app.exec_()
+</code></pre>
+
+<p>Ein QTextEdit als top level widget erlaubt es, Parameter des Fensters zu setzen</p>
+<h3 id="objektorientierung">Objektorientierung</h3>
+<p>Ein Dialog-Fenster mit Textfeld wird als Klasse definiert:</p>
+<pre><code class="python">import sys
+from PyQt5.QtWidgets import (QApplication, 
+                             QDialog, 
+                             QTextEdit, 
+                             QVBoxLayout)
+
+class MyForm(QDialog):
+
+    def __init__(self):
+        QDialog.__init__(self)
+        self.textEdit = QTextEdit('Hello World!')
+        self.textEdit.selectAll()
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.textEdit)
+        self.setLayout(layout)
+
+app = QApplication(sys.argv)
+form = MyForm()
+form.show()
+app.exec_()
+</code></pre>
+
+<ul>
+<li>self ist das Dialogobjekt</li>
+<li>ein QVBoxLayout-Objekt ordnet andere Widgets vertikal an</li>
+<li>setLayout() ist eine Methode, um in dem Dialog self ein QTextFeld anzuzeigen</li>
+<li>self.textEdit: unter dieser Variable bleibt das Textfeld ansprechbar</li>
+</ul>
+<h2 id="events-mit-signals-and-slots">Events mit Signals and Slots</h2>
+<p><img alt="event" src="../img/chap2_pyqt_event.png" />
+:Herkömmliches und Event-basiertes Programm</p>
+<ul>
+<li>Events als Nachrichten zwischen Objekten</li>
+<li>Jedes Widget kennt eigene Events und kann eine Funktion vorsehen, um diese zu verarbeiten</li>
+<li>
+<p>Signals and Slots, als Konzept, </p>
+<ul>
+<li>definiert ein Signal, etwa 'clicked()' für ein QPushButton, </li>
+<li>das einen Slot in einem anderen Objekt (dem Empfänger) belegt, </li>
+<li>und dort eine Funktion ausführt.</li>
+</ul>
+</li>
+<li>
+<p>Die Basis hierfür ist die Funktion connect, die jedes Qt-Objekt ausführen kann</p>
+</li>
+</ul>
+<p><code>QObject.[signal_name].connect(function)</code></p>
+<p>z.B. das Push-Button-Widget pbOK soll ein click-Event auslösen und über die Funktion doOK() verarbeiten:</p>
+<p><code>pbOK.clicked.connect(doOK)</code></p>
+<h3 id="hello-world-mit-ok-button">'Hello World' mit OK-Button</h3>
+<pre><code class="python">import sys
+from PyQt5.QtWidgets import (QApplication,
+                             QDialog,
+                             QTextEdit,
+                             QVBoxLayout,
+                             QPushButton) # new
+
+class MyForm(QDialog):
+
+    def __init__(self):
+        QDialog.__init__(self)
+        self.textEdit = QTextEdit('Hello World!')
+        self.textEdit.selectAll()
+
+        self.buttonOK = QPushButton() # new
+        self.buttonOK.setText('OK')
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.textEdit)
+        layout.addWidget(self.buttonOK) #new
+        self.setLayout(layout)
+
+        self.buttonOK.clicked.connect(self.doOK) # new
+
+    def doOK(self): # new
+        self.textEdit.setText(&quot;Hello PyQt5!&quot;)
+
+app = QApplication(sys.argv)
+form = MyForm()
+form.show()
+app.exec_()
+</code></pre>
+
+<p>Noch ein Signal and Slot? Wir nehmen den Button zum Schließen des Fensters:</p>
+<pre><code class="python">        self.buttonOK.clicked.connect(self.doOK) # den Button haben wir schon...
+        self.pbOK.clicked.connect(self.close)    # QDialog besitzt bereits einen Slot 'close'
+</code></pre>
+
+<p>In einer Class referenziert self immer das aus der Klasse abgeleitete Objekt. <code>self.close</code> wurde zwar nicht in der class <code>MyForm</code> definiert, aber in der vererbenden Klasse <code>QDialog</code>.</p>
+<p>Zusätzlich können wir aber auch die Methode close des QDialogs überschreiben:</p>
+<pre><code class="python">    def close(self):
+        print(self.textEdit.toPlainText())
+        QDialog.close(self)
+</code></pre>
+
+<p>https://pythonspot.com/gui/</p>
+<h2 id="qt-layout">Qt-Layout</h2>
+<ul>
+<li>Sehr umfangreiche Layout-Einstellungen</li>
+<li>QVBoxLayout und QHBoxLayout oder QGridLayout bieten grundlegende Möglichkeiten zum Layout</li>
+<li>erweitertes Beispiel zu Hello World zeigt den Einsatz</li>
+<li>Layout können auch geschachtelt werden, d.h. ein layout kann ein anderes enthalten</li>
+</ul>
+<pre><code class="python">def __init__(self):
+        # Widgets
+        self.textEdit = QTextEdit('Hello World!')
+        self.textEdit.selectAll()
+
+        self.lblText = QLabel()
+        self.lblText.setText(&quot;Editor&quot;)
+
+        self.buttonOK = QPushButton()
+        self.buttonOK.setText('OK')
+
+        self.buttonEsc = QPushButton()
+        self.buttonEsc.setText('Beenden')
+
+        # übergeordnetes Layout erstellen
+        self.vlayout = QVBoxLayout(self)
+        self.hlayout = QHBoxLayout()
+
+        self.vlayout.addWidget(self.lblText)
+        self.vlayout.addWidget(self.textEdit)
+
+        # Button horizontal darunter anordnen
+        self.hlayout.addWidget(self.buttonOK)
+        self.hlayout.addWidget(self.buttonEsc)
+
+        # hor. layout zu vert layout hinzufügen
+        self.vlayout.addLayout(self.hlayout)
+
+        self.buttonOK.clicked.connect(self.doOK)
+        self.buttonEsc.clicked.connect(self.close)
+</code></pre>
+
+<h2 id="dialoge">Dialoge</h2>
+<p>Wir unterscheiden:</p>
+<ul>
+<li>Dialogboxen, die bereits als Klassen bestehen: <ul>
+<li>Nachricht mit Ja/Nein, File Save/File Open, Farbwahl, Eingabezeile etc. <a href="https://doc.qt.io/qt-5/dialogs.html">Dokumentation</a></li>
+</ul>
+</li>
+<li>Eigene Formulare und Dialoge auf Basis von QDialog<ul>
+<li>sind an ein anderes Widget (z.B. MainWindow) gebunden</li>
+<li>können modal oder unabhängig sein</li>
+<li>geben einen Wert zurück</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="modaler Dialog" src="../img/chap2_pyqt_dlgmodal.png" /><figcaption>
+<p>Schema eines modalen Dialogs</p>
+</figcaption>
+</figure>
+<h3 id="bestehende-dialoge">Bestehende Dialoge</h3>
+<p>Ein Dialog für eine Eingabe:</p>
+<pre><code class="python">    def doOK(self): # new
+        # open Input-Dialog
+        text, ok = QInputDialog.getText(self, 'Editor',
+            'Neuer Text:')
+        if ok:
+            self.textEdit.setText(text)
+        else:
+            self.textEdit.setText(&quot;Hello PyQt5!&quot;)
+</code></pre>
+
+<p>liefert einen String zurück und außerdem den Wert für OK mit true bzw. false, je nachdem, ob der Benutzer OK geklickt hat, ober nicht.</p>
+<p>Ein kleines Beispiel zum Aufruf eines MessageBox-Dialogs</p>
+<pre><code class="python">import sys
+from PyQt5.QtWidgets import *
+
+def callDialog():
+    result = QMessageBox.question(w, 'Message', &quot;Do you like Python?&quot;,
+                                  QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+
+    if result == QMessageBox.Yes:
+        print(&quot;yes&quot;)
+    else:
+        print(&quot;no&quot;)
+
+app = QApplication(sys.argv)
+
+w = QPushButton('Ask me...')
+w.clicked.connect(callDialog)
+w.show()
+app.exec_()
+</code></pre>
+
+<p>Ein Beispiel für den Aufruf verschiedener Dialoge aus dem <strong>ZetCode PyQt4 tutorial</strong> von Jan Bodnar und <a href="https://pythonspot.com/pyqt5-input-dialog/">pythonspot</a>:</p>
+<pre><code class="python">import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit
+from PyQt5.QtGui import QIcon
+
+class App(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.title = 'PyQt5 input dialogs - pythonspot.com'
+        self.left = 10
+        self.top = 10
+        self.width = 640
+        self.height = 480
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+
+        self.getInteger()
+        self.getText()
+        self.getDouble()
+        self.getChoice()
+
+        self.show()
+
+    def getInteger(self):
+        i, okPressed = QInputDialog.getInt(self, &quot;Get integer&quot;,&quot;Percentage:&quot;, 28, 0, 100, 1)
+        if okPressed:
+            print(i)
+
+    def getDouble(self):
+        d, okPressed = QInputDialog.getDouble(self, &quot;Get double&quot;,&quot;Value:&quot;, 10.50, 0, 100, 10)
+        if okPressed:
+            print( d)
+
+    def getChoice(self):
+        items = (&quot;Red&quot;,&quot;Blue&quot;,&quot;Green&quot;)
+        item, okPressed = QInputDialog.getItem(self, &quot;Get item&quot;,&quot;Color:&quot;, items, 0, False)
+        if ok and item:
+            print(item)
+
+    def getText(self):
+        text, okPressed = QInputDialog.getText(self, &quot;Get text&quot;,&quot;Your name:&quot;, QLineEdit.Normal, &quot;&quot;)
+        if okPressed and text != '':
+            print(text)
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = App()
+    sys.exit(app.exec_())
+</code></pre>
+
+<p>Die einzelnen Dialoge sind auch konfigurierbar. Hier die Varianten für den <code>QFileDialog</code></p>
+<pre><code>import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QInputDialog, QLineEdit, QFileDialog
+from PyQt5.QtGui import QIcon
+
+class App(QWidget):
+
+    def __init__(self):
+        super().__init__()
+        self.title = 'PyQt5 file dialogs - pythonspot.com'
+        self.left = 10
+        self.top = 10
+        self.width = 640
+        self.height = 480
+        self.initUI()
+
+    def initUI(self):
+        self.setWindowTitle(self.title)
+        self.setGeometry(self.left, self.top, self.width, self.height)
+
+        self.openFileNameDialog()
+        self.openFileNamesDialog()
+        self.saveFileDialog()
+
+        self.show()
+
+    def openFileNameDialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getOpenFileName(self,&quot;QFileDialog.getOpenFileName()&quot;, &quot;&quot;,&quot;All Files (*);;Python Files (*.py)&quot;, options=options)
+        if fileName:
+            print(fileName)
+
+    def openFileNamesDialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        files, _ = QFileDialog.getOpenFileNames(self,&quot;QFileDialog.getOpenFileNames()&quot;, &quot;&quot;,&quot;All Files (*);;Python Files (*.py)&quot;, options=options)
+        if files:
+            print(files)
+
+    def saveFileDialog(self):
+        options = QFileDialog.Options()
+        options |= QFileDialog.DontUseNativeDialog
+        fileName, _ = QFileDialog.getSaveFileName(self,&quot;QFileDialog.getSaveFileName()&quot;,&quot;&quot;,&quot;All Files (*);;Text Files (*.txt)&quot;, options=options)
+        if fileName:
+            print(fileName)
+
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ex = App()
+    sys.exit(app.exec_())
+</code></pre>
+
+<h2 id="aufgabe-ein-eigenes-widget-zur-anzeige-des-pegelverlaufs">Aufgabe ein eigenes Widget zur Anzeige des Pegelverlaufs</h2>
+<figure><img alt="Eigenes Widget" src="../img/chap2_pyqt_customwidget.png" /><figcaption>
+<p>Eigenes Widget zur Darstellung des Pegelverlaufs</p>
+</figcaption>
+</figure>
+<p>Das Widget ist eigentlich eine Kombination aus bestehenden Qt-Widgets. Allerdings soll es einen sehr speziellen Zweck erfüllen: Der Benutzer soll mit diesem Widget eine Station über ihren Namen auswählen können und das Widget lädt anschließend die entsprechende Graphik in das Fenster.</p>
+<p>Es basiert auf einer Abfrage von Pegelonline in dieser Form:</p>
+<p><a href="https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/BONN/W/measurements.png?start=P15D">stations/BONN/W/measurements.png?start=P15D</a></p>
+<p>Der Vorteil eines eigenen Widgets: Es können Funktion und Bedienung festgelegt werden und in eine größere Anwendung, ein GUI, integriert werden.</p>
+<p>Hierbei legen wir eine Schnittstelle fest, mit der das Widget gesteuert werden kann. Dies kann im einfachsten Fall das Eintagen der Stationsnamen sein.</p>
+<p>Das Widget selbst importiert unser Modul Urlreader, um die Graphiken zu einer Station zu laden.</p>
+<p>Hier ein Entwurf für das PoGraphDisplay-Widget als Python-Code:</p>
+<pre><code class="python">import sys
+from PyQt5 import QtWidgets
+from PyQt5 import QtCore, QtGui
+
+from pomodules.urlreader import Urlreader, quote
+from pomodules import poBaseURL
+
+
+class PoGraphDisplay(QWidget):
+
+    def __init__(self):
+        super().__init__()
+
+        # Aufbau der Elemente im Widget
+        self.initUI()
+
+    def initUI(self):
+        pass
+
+    # Slot    
+    def doLoadGraph(self):
+        pass
+
+    # Schnittstelle 
+    def setStations(self, stations):
+        pass
+
+# Test
+if __name__ == '__main__':
+    ur = Urlreader(poBaseURL + &quot;/stations.json&quot;)
+    data = ur.getJsonResponse()
+
+    app = QApplication(sys.argv)
+    w = PoGraphDisplay()
+    w.setStations(data)
+    w.show()
+    sys.exit(app.exec_())        
+</code></pre>
+
+<h3 id="die-widgets-im-widget">Die Widgets im Widget</h3>
+<p>Das oben gezeigte Fenster mit dem PoGraphDisplay-Widget besitzt neben einigen QLabel-Widgets</p>
+<ul>
+<li>eine <a href="https://doc.qt.io/qtforpython/PySide2/QtWidgets/QComboBox.html">QComboBox</a> um eine Station auszuwählen,</li>
+<li>eine <a href="https://doc.qt.io/qtforpython/PySide2/QtWidgets/QSpinBox.html">QSpinBox</a> um die Anzahl der Tage festzulegen, für die das Diagramm ausgegeben wird (max. sind es 30 Tage...),</li>
+<li>einen <a href="https://doc.qt.io/qtforpython/PySide2/QtWidgets/QPushButton.html">QPushButton</a> um die Eingaben umzusetzen und die Graphik anzuzeigen,</li>
+<li>und darunter ein weiters QLabel-Widget zur Anzeige der Graphik.</li>
+</ul>
+<p>Als Layout bietet sich auch hier eine Kombination aus vertikalem und horizontalen Layouts an.</p>
+<pre><code class="python">
+    def setupUI(self):
+        # übergeordnetes Layout
+        self.verticalLayout = QtWidgets.QVBoxLayout(self)
+
+        # erste Zeile
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        # mehrere Widget horizontal ...
+
+        self.verticalLayout.addLayout(self.horizontalLayout)
+
+        # zweite Zeile
+        # nur ein Label widget
+        self.lbGraph = QtWidgets.QLabel()
+        self.verticalLayout.addWidget(self.lbGraph)
+
+        # dritte Zeile: Spacer!
+        # dritte Zeile
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
+        self.verticalLayout.addItem(spacerItem)
+</code></pre>
+
+<p>Die Box-Layouts versuchen stets die gesamte zur Verfügung stehende Fläche ausfüllen, das QVBoxLayout in der Höhe und das QHBoxLayout in der Beite. </p>
+<ul>
+<li>Fügen Sie der ersten Zeile (also dem <code>horizontalLayout</code>) die Widgets zu, um den Effekt zu sehen. </li>
+<li>In der dritten Zeile habe ich ein QSpacerItem eingesetzt, dieser sorgt dafür, dass in der vertikalen Richtung die Zeilen zusammengeschoben werden.</li>
+</ul>
+<p>Im folgenden habe ich den Widgets folgende Variablennamen gegeben:</p>
+<ul>
+<li>self.lbStation, zeigt Text "Station" an</li>
+<li>self.comboBox, für Stationsnamen</li>
+<li>self.lbTage, zeigt Text "Tage" an</li>
+<li>self.sbDays, die SpinBox, Anzahl der Tage, Min.: 5, Max.: 30, vorgegeben: 14 </li>
+<li>self.pbLoad, der PushButton mit dem Text "Laden".</li>
+<li>self.lbGraph, zeigt nichts an, bis eine Graphik geladen wurde</li>
+</ul>
+<h3 id="anzeige-der-stationsnamen">Anzeige der Stationsnamen</h3>
+<p>Im Widget stehen die Stationsnamen in der ComboBox, die über setStations <em>befüllt</em> werden kann:</p>
+<pre><code class="python">    def setStations(self, stations):
+        self.comboBox.clear()
+        for e in stations:
+            name = e['shortname']
+            self.comboBox.addItem(name)
+
+        self.comboBox.setCurrentIndex(0)
+</code></pre>
+
+<p>Neben der Übergabe der json-Daten als Liste mit Dictionarys, sollten wir auch eine Liste mit Strings akzeptieren. Entweder als weitere Variante von setStations oder durch ein if-Statement innerhalb der Methode. Geeignet wäre z.B. die Funktion <code>isinstance()</code>, die True zurückgibt, wenn ein Objekt aus der  angegebenen Klasse abgeleitet wurde:</p>
+<pre><code class="python">    if isinstance(e, dict):
+        pass
+    elif isinstance(e, str):
+        pass
+    else:
+        pass
+</code></pre>
+
+<h3 id="signal-slots-im-pographdisplay-widget">Signal-Slots im PoGraphDisplay-Widget</h3>
+<p>Wir benötigen nur ein Event, dass ausgelöst wird, wenn der Nutzer den pbLoad-Button anklickt. Dafür ist es wichtig, dass die ComboBox und die sbDays gültige Werte haben, denn diese werden innerhalb des slots ausgelesen. Ich habe den Slot mit der Methode doLoadGraph belegt:</p>
+<pre><code class="python"># einfügen in initUI: self.pbLoad.clicked.connect(self.doLoadGraph)
+
+    def doLoadGraph(self):
+        # Anzahl der Tage in der SpinBox
+        days = days = self.sbDays.value()
+        # Name der Station aus der ComboBox
+        station = quote(self.comboBox.currentText()) # benutze quote() für die url
+        print(&quot;Lade den Graphen&quot;)
+        # url zusammenbauen
+
+        # Urlreader mit getDataResponse
+
+        # Fehler-Code abfragen (es gibt Stationen ohne Wasserstandsdaten)
+
+        # wenn ok, dann Graphik einsetzen
+        pixmap = QtGui.QPixmap()
+        pixmap.loadFromData(img_data) # img_data als Ergebnis von getDataResponse
+        self.lbGraph.setPixmap(pixmap)
+        self.lbGraph.resize(pixmap.width(), pixmap.height())
+</code></pre>
+
+<p>Die Anweisungen zur Anzeige der Graphik gehen davon aus, dass sie eine gülige Grafik zugewiesen bekommen. Die Anzeige im lbGraph-Widget wird entsprechend der Größe der Grafik angepasst.</p>
+<p>Ansonsten müssen zunächst </p>
+<ul>
+<li>eine gültige url gebildet, </li>
+<li>diese mit dem Urlreader abgerufen und</li>
+<li>ein Fehlercode abgefragt werden (Es gibt immer einen Code, Fehler liegen im Zahlenbereich &gt; 299)</li>
+</ul>
+<h2 id="qtdesigner">QtDesigner</h2>
+<p>Mit dem Qt-Designer können GUI's und Widgets interaktiv erstellt werden. Hier gibt eine kurze <a href="designer.html">Einführung</a>. Der QtDesigner ist Teil der PyQt-Installation.</p>
+<p><img alt="Aufruf des QtDesigners" src="../img/chap2_qtdesign_call.png" />
+:Aufruf des QtDesigners</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

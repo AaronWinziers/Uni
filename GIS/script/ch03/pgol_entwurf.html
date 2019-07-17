@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Entwurf der Pegel-Online Schnittstelle - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Entwurf der Pegel-Online Schnittstelle", url: "#_top", children: [
+              {title: "Anforderungen", url: "#anforderungen" },
+              {title: "Abfragen an Pegel-Online", url: "#abfragen-an-pegel-online" },
+          ]},
+          {title: "Hinweise f\u00fcr das QGIS-Plugin PegelOnline", url: "#hinweise-fur-das-qgis-plugin-pegelonline", children: [
+              {title: "Datenbank \u00f6ffnen", url: "#datenbank-offnen" },
+              {title: "Download und Daten speichern", url: "#download-und-daten-speichern" },
+          ]},
+          {title: "Rezepte", url: "#rezepte", children: [
+              {title: "Anzeige eines Layers", url: "#anzeige-eines-layers" },
+              {title: "Selektionen", url: "#selektionen" },
+              {title: "csv-Datei speichern", url: "#csv-datei-speichern" },
+              {title: "Nachrichten an den Nutzer", url: "#nachrichten-an-den-nutzer" },
+              {title: "Debuging und Tests", url: "#debuging-und-tests" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="entwurf-der-pegel-online-schnittstelle">Entwurf der Pegel-Online Schnittstelle</h1>
+<h2 id="anforderungen">Anforderungen</h2>
+<p>In einem QGIS-Plugin soll der Zugriff auf die Daten von Pegel-Online ermöglicht werden. Hierbei sollen</p>
+<ul>
+<li>die Liste der Stationen abgerufen und als Layer in QGIS dargestellt werden.</li>
+<li>die aktuellen Wasserstände für alle Stationen abgerufen werden, der Trend (Angabe zum Pegelstand auf Pegel-Online) soll dabei in der Karte dargestellt werden.</li>
+<li>Für jeweils eine Station soll der Pegelverlauf abgerufen werden, Pegel-Online stellt dafür die Datenwerte sowie ein PNG-Bild zur Verfügung. Beide Möglichkeiten sollen realisiert werden.</li>
+</ul>
+<p>Um die Daten von Pegel-Online verwalten zu können, sollen</p>
+<ul>
+<li>die Liste der Stationen und die aktuellen Wasserstände aller Stationen in einer SQLite-Datenbank gespeichert werden (zwei Tabellen).</li>
+<li>Die PNG-Grafiken des Pegelverlaufs werden später in die Oberfläche eingefügt, die Daten werden nicht dauerhaft gespeichert, sondern nur als Datenstruktur in einer Variablen (oder Eigenschaft) zur Verfügung gestellt.</li>
+<li>Die Daten zum Pegelverlauf sollen als CSV-Tabelle gespeichert werden können.</li>
+</ul>
+<h2 id="abfragen-an-pegel-online">Abfragen an Pegel-Online</h2>
+<p>So sehen die unterschiedlichen Abfragen und zugehörigen Attribute der einzelnen Abfragen aus:</p>
+<p>Basis-URL:
+<code>http://www.pegelonline.wsv.de/webservices/rest-api/v2</code></p>
+<h3 id="stationen">Stationen</h3>
+<p>mit includeTimeseries und den zurückgegebene dictionaries:</p>
+<ul>
+<li>includeTimeseries listet alle Zeitreihen auf, die an der Station erhoben werden</li>
+</ul>
+<pre><code>    &quot;/stations.json?includeTimeseries=true&quot;
+        &quot;uuid&quot;, &quot;number&quot;, &quot;shortname&quot;, &quot;longname&quot;, &quot;km&quot;,
+        &quot;agency&quot;, &quot;longitude&quot;, &quot;latitude&quot;, &quot;water&quot;, &quot;timeseries&quot;
+
+        mit water:
+        &quot;shortname&quot;, &quot;longname&quot;
+
+        mit timeseries:
+        &quot;shortname&quot;, &quot;longname&quot;, &quot;unit&quot;,
+        &quot;equidistance&quot;, &quot;gaugeZero&quot;
+
+        mit gaugeZero:
+        &quot;unit&quot;, &quot;value&quot;, &quot;validFrom&quot;
+</code></pre>
+
+<p><a href="http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?includeTimeseries=true">Abruf</a></p>
+<h3 id="stationen-mit-current-measurements">Stationen mit Current Measurements</h3>
+<ul>
+<li>CurrentMeasurements sind hier auf die Pegelstände beschränkt: timeseries=W</li>
+<li>dies erfordert außerdem den Parameter includeTimeseries=True</li>
+</ul>
+<pre><code>    &quot;/stations.json?timeseries=W&amp;includeTimeseries=true&amp;includeCurrentMeasurement=true&quot;
+        &quot;timestamp&quot;, &quot;value&quot;, &quot;trend&quot;,
+        &quot;stateMnwMhw&quot;, &quot;stateNswHsw&quot;
+</code></pre>
+
+<p><a href="http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?timeseries=W&amp;includeTimeseries=true&amp;includeCurrentMeasurement=true">Abruf</a></p>
+<p>(Diese Abfrage liefert ein recht komplexes Ergebnis: wir benötigen lediglich die uuid zur Identifikation der Station und die Angaben zu currentMeasurements)</p>
+<h3 id="einzelne-station">Einzelne Station</h3>
+<p>mit einer gemessenen Zeitreihe der Pegelstände:</p>
+<ul>
+<li>shortname ist der Name der Station</li>
+<li>W bezeichnet die Zeitreihe "Wasserstand"</li>
+<li>measurements.json: gibt die Daten mit Zeitpunkt und Wert zurück</li>
+</ul>
+<pre><code>    &quot;/stations/&quot; + shortname + &quot;/W/measurements.json&quot;
+        &quot;timestamp&quot;, &quot;value&quot;
+</code></pre>
+
+<p><a href="http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/BONN/W/measurements.json">Abruf für Bonn</a></p>
+<p>Alle Attribute, die Pegelonline benutzt werden auf deren Webseite erläutert! <a href="http://www.pegelonline.wsv.de/webservice/dokuRestapi#ressourcen">Dokumentation</a></p>
+<h1 id="hinweise-fur-das-qgis-plugin-pegelonline">Hinweise für das QGIS-Plugin PegelOnline</h1>
+<h2 id="datenbank-offnen">Datenbank öffnen</h2>
+<p>Die Datenbank kann bereits beim Aufruf des Plugins in run() geöffnet und ein connection-Objekt erstellt werden. Da wir dort das Datenbank-Objekt instanzieren, ist deren <code>__init__()</code> eine geeignete Stelle. Beim Öffnen der Datenbank sollten wir testen, ob diese existiert, bzw. die nötigen Tabellen enthält.</p>
+<pre><code class="python"># datenbank.py
+from pyspatialite import dbapi2 as db
+
+class PoDB(object):
+    def __init__(self, dbname, iface):
+        self.dbname = dbname
+        self.iface = iface
+        self.connection = db.connect(self.dbname)
+        # query table names
+        sql = &quot;&quot;&quot;SELECT name FROM sqlite_master WHERE type='table';&quot;&quot;&quot;
+        result = self.connection.execute(sql)
+        tables = [row[0] for row in result.fetchall()]
+        # ...
+</code></pre>
+
+<p>Hier sehen wir, wie eine Abfrage auf eine interne Tabelle der Datenbank erfolgt. Diese gibt die Namen aller vorhandenen Tabellen zurück. Fehlt uns eine Tabelle, müssen wir sie zuerst erstellen! Diese Tabellen müssen in der Liste enthalten sein (Namen sind Vorschläge):</p>
+<ul>
+<li>"poStations" mit den Stationsnamen und der Punktgeometrie. </li>
+<li>"poCurrentW" mit den Wasserständen der Stationen</li>
+<li>Ist eine von diese beiden nicht vorhanden, legen wir sie mit dem SQL-Befehl "create table" an.</li>
+<li>"geometry_columns": interne Tabelle, anhand der wir erkennen, ob die Datenk eine gültige Geodatenbank ist.</li>
+<li>fehlt diese Tabelle, führen wir 'SELECT InitSpatialMetadata(1)' aus.</li>
+</ul>
+<h2 id="download-und-daten-speichern">Download und Daten speichern</h2>
+<p>Der Download kann am besten in dem jeweiligen Modul erfolgen und auf die Funktionen aus urlreader.py zurückgreifen. Allerdings haben die Daten so ihre Eigenarten, die eine 1:1-Übertragung in eine Tabellenform unmöglich machen. Für den Download der Stationen hatten die bereits festgehalten, wie <a href="../ch02/geodatabase.html#beispieltabelle-postation">hier</a> beschrieben. Eine Umwandlung für die Daten der Pegelstände erfolgt dann ähnlich, dort haben wir eine verschachtelte json-Struktur aus dem Dictionary "timeseries", Listen und dem dict "currentMeasurement" - siehe dazu die Abfragen von <a href="#abfragen-an-pegel-online">Pegelonline</a></p>
+<pre><code>[
+  {
+    &quot;uuid&quot;: &quot;47174d8f-1b8e-4599-8a59-b580dd55bc87&quot;,
+    &quot;number&quot;: &quot;48900237&quot;,
+    &quot;shortname&quot;: &quot;EITZE&quot;,
+    &quot;longname&quot;: &quot;EITZE&quot;,
+    &quot;km&quot;: 9.56,
+    &quot;agency&quot;: &quot;WSA VERDEN&quot;,
+    &quot;longitude&quot;: 9.27676943537587,
+    &quot;latitude&quot;: 52.90406541008721,
+    &quot;water&quot;: {
+      &quot;shortname&quot;: &quot;ALLER&quot;,
+      &quot;longname&quot;: &quot;ALLER&quot;
+    },
+    &quot;timeseries&quot;: [
+      {
+        &quot;shortname&quot;: &quot;W&quot;,
+        &quot;longname&quot;: &quot;WASSERSTAND ROHDATEN&quot;,
+        &quot;unit&quot;: &quot;cm&quot;,
+        &quot;equidistance&quot;: 15,
+        &quot;currentMeasurement&quot;: {
+          &quot;timestamp&quot;: &quot;2018-07-02T20:15:00+02:00&quot;,
+          &quot;value&quot;: 234.0,
+          &quot;trend&quot;: 1,
+          &quot;stateMnwMhw&quot;: &quot;low&quot;,
+          &quot;stateNswHsw&quot;: &quot;unknown&quot;
+        },
+        &quot;gaugeZero&quot;: {
+          &quot;unit&quot;: &quot;m. ü. NN&quot;,
+          &quot;value&quot;: 8.0,
+          &quot;validFrom&quot;: &quot;1985-03-13&quot;
+        }
+      }
+    ]
+  },...
+]
+</code></pre>
+
+<p>Allerdings benötigen wir nur diese Angaben in der Datenbank: </p>
+<ul>
+<li>uuid: ID zur Zuordnung eine Station</li>
+<li>value: wie in currentMeasurement angegeben</li>
+<li>trend: Prognose zum zeitlichen Verlauf</li>
+<li>stateMnwMhw: Status zum Vergleich mit Mittelwert,</li>
+<li>stateNswHsw: Status zum Vergleich mit Höchstwert</li>
+</ul>
+<p>(genaue Definitionen sind auf Pegelonline beschrieben!)</p>
+<p>Wir können dennoch die Funktion getDataTable() aus urlreader benutzen, müssen die Daten aber "nacharbeiten".</p>
+<p>Im Endeffekt müssen die Daten in der Datenbank-Tabelle oder wie beim Pegelverlauf, als csv-Datei gespeichert werden.</p>
+<ul>
+<li>Für die Datenbanktabellen verwenden wir das sql-Kommando INSERT INTO in der Form
+<code>sql = "INSERT INTO %s (%s) VALUES (%s)"%(table, str_fields, str_fgz)</code></li>
+<li>Die Angabe von Fragezeichen in der Values-Liste hilft, die Datentypen automatisch erkennen zu lassen!</li>
+<li>Vor der Ausführung sollten die vorhandenen Daten gelöscht werden (DELETE FROM)</li>
+<li>Wir sollten eine Liste der Tabellenspalten in einem der Module abrufen können!</li>
+<li>Solche umfangreichen Operationen schließen stets mit der Methode commit() des Connection-Objekts ab.</li>
+</ul>
+<h1 id="rezepte">Rezepte</h1>
+<p>Die folgenden Rezepte sind fast alle so verfasst, dass sie auch ohne Plugin ausprobiert werden können, indem wir die angegebenen Code-Beispiele in den QGIS-Python-Editor kopieren. </p>
+<h2 id="anzeige-eines-layers">Anzeige eines Layers</h2>
+<p>Die Anzeige eines Layers haben wir schon durchgespielt, hier haben wir es mit einer spatialite-Datenquelle (Provider) zu tun. <a href="../ch02/pyqgis.html#spatialite-layer">Vergleiche 'Spatialite Layer' in: QGIS und Python.</a></p>
+<ul>
+<li>uri festlegen, mit table und geom_column</li>
+<li>layer erzeugen als QgsVectorLayer()</li>
+<li>hinzufügen zur Karte mit QgsMapLayerRegistry.instance().addMapLayer()</li>
+</ul>
+<p>Für die Anzeige der Pegelstände können wir zwei Varianten einführen:
+- Zugriff auf die Datenbank über eine SQL-Abfrage mit einem Join der Tabellen poStations und poCurrentW. 
+- Einsatz eines QGIS-Renderers zur Darstellung der Werte der Spalte "trend" aus der SQL-Abfrage</p>
+<p><a href="../ch02/pyqgis.html#spatialite-layer">Ebenfalls unter 'Spatialite Layer' beschrieben!</a></p>
+<h3 id="tabelle-anzeigen">Tabelle anzeigen</h3>
+<p>Die QGIS-Funktion zur Tabellenanzeige lautet showAttributeTable(), Parameter ist ein Layer-Object:</p>
+<p><code>iface.showAttributeTable(qgsLayer)</code></p>
+<h2 id="selektionen">Selektionen</h2>
+<p>Ein Plugin kann über Signal-Slot-Definitionen benachrichtigt werden, wenn der Benutzer eine Auswahl an Objekten in einem Layer getroffen hat.</p>
+<pre><code class="python">def doLayerSelectionChanged(selected):
+    print selected
+    lay = iface.activeLayer()
+    feats = lay.selectedFeatures()
+    for f in feats:
+        print f.attributes()
+
+lay = iface.activeLayer()
+lay.selectionChanged.connect(doLayerSelectionChanged)
+</code></pre>
+
+<p>Mit dem iface-Objekt kann dann auch ein "ZoomToSelected" ausgeführt werden:</p>
+<pre><code class="python">iface.mapCanvas().panToSelected()
+iface.mapCanvas().zoomIn()
+</code></pre>
+
+<p>Die Zoom-Funktion kann auch mit diesen Methodes des mapCanvas ausgeführt werden:</p>
+<ul>
+<li><code>zoomScale(fScale)</code>, hier ist es möglich einen Maßstab anzugeben</li>
+<li><code>zoomToFeatureExtent(aQgsRectangle)</code>, das Rechteck sollte dann das Ausmaß der selektierten Objekte haben: <code>box = layer.boundingBoxOfSelected()</code></li>
+<li><code>zoomToFeatureIds(aQgsVectorLayer, aFeatureIdList)</code>: sollte das gleiche bewirken, z.B.: mit selected aus der Funktion doLayerSelectionChanged()</li>
+</ul>
+<pre><code class="python">def doLayerSelectionChanged(selected):
+    # ...
+    iface.mapCanvas().zoomToFeatureIds(lay, selected)        
+</code></pre>
+
+<p>In unserem Plugin können wir für den Layer der Pegelstände (CurrentW) eine Selektion einrichten und die Egebnisse in der ComboBox anzeigen.</p>
+<pre><code class="python">from PyQt4.QtGui import QComboBox
+comboBox = QComboBox(iface.mainWindow())
+comboBox.show()
+
+def doLayerSelectionChanged(selected):
+    # ...
+    comboBox.clear()
+    if len(selected) &gt; 0:
+        for feat in lay.selectedFeatures():
+            # shortname ist eine Attributspalte des Layers
+            print feat['shortname']
+            comboBox.addItem(feat['shortname'])
+</code></pre>
+
+<h2 id="csv-datei-speichern">csv-Datei speichern</h2>
+<p>Als csv werden die Pegelverläufe (timeline) einer ausgewählten Station gespeichert.
+Hierzu entnehmen wir den aktuell angezeigten Namen aus der ComboBox:</p>
+<pre><code class="python">import urlreader2 as urlreader
+
+name = unicode(comboBox.currentText())
+# File-Dialog: Nutzer gibt Speicherot an
+fileName = QFileDialog.getSaveFileName(None, 'CSV Datei speichern', name + &quot;.csv&quot;, '*.csv')
+# Download von Pegel-Online
+json_data = urlreader.getJsonResponse(urlreader.maskURLString(self.urljson%name))
+table = urlreader.getDataTable(json_data)
+
+if fileName:
+    f = open(fileName, 'w+')
+    fields = [&quot;timestamp&quot;, &quot;value&quot;]
+    csvHeader = &quot;;&quot;.join(fields)
+    f.write(csvHeader + '\n')
+
+    for row in table:
+        csvRow = &quot;;&quot;.join(str(e) for e in row)
+        f.write(csvRow + '\n')
+
+    f.close()
+</code></pre>
+
+<p>Eine vollständige Lösung zur Speicherung mit open() und write(), alternativ kann auch das Python-Standard-Modul csv benutzt werden.</p>
+<h2 id="nachrichten-an-den-nutzer">Nachrichten an den Nutzer</h2>
+<p>Bei vermeintlich länger laufenden Operationen, auftretenden Fehlern etc. sollte der Nutzer informiert werden. Wir halten uns dabei an die QGIS-üblichen Möglichkeiten: </p>
+<ul>
+<li>StatusBar: Anzeige am unteren Bildschirm-Rand</li>
+<li>MessageBar: Zeitlich gesteuerte Einblendung oben im Kartenfenster</li>
+</ul>
+<p>Statusbar: 
+self.iface.mainWindow().statusBar().showMessage("Download ...")
+self.iface.mainWindow().statusBar().clearMessage()</p>
+<p>MessageBar:
+iface.messageBar().pushMessage(levelText, messageText, level=numLevel, duration=seconds)</p>
+<p><a href="qgisplugin.html#qgis-objekte-und-iface-objekt">MessageBar in "QGIS-Plugin"</a> oder in der <a href="https://docs.qgis.org/2.18/en/docs/pyqgis_developer_cookbook/communicating.html">QGIS-Dokumentation</a>.</p>
+<p>Weiterhin besteht die Möglichkeit, eine QProgressBar anzuzeigen, bzw. die in QGIS vorhandene Fortschrittsleiste zu verwenden. Ebenfalls auf der Seite der <a href="https://docs.qgis.org/2.18/en/docs/pyqgis_developer_cookbook/communicating.html#showing-progress">QGIS-Dokumentation</a>.</p>
+<h2 id="debuging-und-tests">Debuging und Tests</h2>
+<p>Für das Testen des Plugins stehen verschiedene Ansätze zur Verfügung, hilfreich ist der bereits besprochene Plugin-Reloader.</p>
+<ul>
+<li>Bevor das Plugin in QGIS geladen wird, testen wir es in der IDE (PyScripter). Hier können wir schon viele Fehler erkennen.</li>
+<li>Jedes Modul kann in einem Codeblock unter <code>if __name__ == '__main__':</code> Funktionen testen.</li>
+<li>Wir laden das Plugin in QGIS und versuchen, im Falle von Fehlern, diese mit print-Anweisungen einzugrenzen.</li>
+</ul>
+<p>Sehr anspruchsvoll ist es, mit Python eine Standalone QGIS-Umgebung zu erstellen, die komplett in der IDE läuft, um dort das Plugin zu laden und es mit Debugger-Funktionen untersuchen zu können. <a href="plugintester.html">Plugin-Tester</a></p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

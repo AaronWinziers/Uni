@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Entwurf des PegelOnline-Plugin - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Voraussetzungen", url: "#_top", children: [
+              {title: "Module einrichten", url: "#module-einrichten" },
+          ]},
+          {title: "PoRunner", url: "#porunner", children: [
+              {title: "Einbinden einer Basiskarte", url: "#einbinden-einer-basiskarte" },
+          ]},
+          {title: "Layermanagement", url: "#layermanagement", children: [
+              {title: "Beispiel \"Basemap\"", url: "#beispiel-basemap" },
+              {title: "Basemap-Layer verwalten", url: "#basemap-layer-verwalten" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="voraussetzungen">Voraussetzungen</h1>
+<p>Die Basis für QGIS-Plugin bilden die Abfragen auf den Pegelonline-Datenbestand:</p>
+<ul>
+<li>Stationen</li>
+<li>Wasserstände</li>
+<li>Stationsbezogene Pegelverläufe als Diagramm</li>
+</ul>
+<p>Es sollen folgende Funktionen im Plugin realisiert werden:</p>
+<ul>
+<li>Laden und Anzeigen des Datenbestands -&gt; Aus den json-Daten von Pegelonline werden QGIS-Layer erzeugt und visualisiert</li>
+<li>Ergänzungen: <ul>
+<li>"Basiskarte", </li>
+<li>Darstellung unterschiedlicher Attribute -&gt; Änderung der Darstellung für z.B. Wasserstände</li>
+<li>...</li>
+</ul>
+</li>
+<li>Plugin-GUI: Das GUI wird als Dockwidget realisiert und erlaubt die Steuerung aller Funktionen und Interaktionen<ul>
+<li>Layer: Selektionen von Stationen</li>
+<li>Integration des "Custom"-Widgets Pegelverlauf-Graph</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="GUI des Plugin" src="../img/chap03_plugin_gui.png" /><figcaption>
+<p>mögliches GUI des Plugin</p>
+</figcaption>
+</figure>
+<p>Mit dem Plugin-Builder wird ein Dockwidget samt Logik erzeugt. Dies stellt eine Variante zum Dialog dar, und ist geeignet, mehrere interaktive Funktionen zu steuern, da ein Dockwidget dauerhaft angezeigt bleibt.</p>
+<h2 id="module-einrichten">Module einrichten</h2>
+<p>Vorgehensweise:</p>
+<ul>
+<li>mit dem Plugin-Builder erstellen wir ein neues Plugin "pegelonline".</li>
+<li>in der OSGeo4W-Shell übersetzen wir die Datei <code>resources.qrc</code> mit dem Programm <code>pyrcc5</code></li>
+<li>wir fügen dem Plugin ein Modul hinzu, um alle unsere Funktionen zu integrieren: <code>po_runner.py</code> mit einer Klasse: <code>class PoRunner</code></li>
+</ul>
+<p>PoRunner wird die zentrale Stelle, in der wir unsere Funktionen für das Plugin schreiben. Damit erhalten wir eine besserer Übersicht über unseren eigenen Code und verändern die vom Plugin-Builder erzeugten Modul nur minimal.</p>
+<p>Hierzu importieren wir in <code>pegelonline.py</code>:</p>
+<pre><code class="python"># Our runner-class
+from .po_runner import PoRunner
+</code></pre>
+
+<p>und erstellen dort innerhalb der run-Methode ein Objekt z.B. als <code>self.runner</code></p>
+<pre><code class="python">    def run(self):
+        &quot;&quot;&quot;Run method that loads and starts the plugin&quot;&quot;&quot;
+
+        if not self.pluginIsActive:
+            self.pluginIsActive = True
+
+        if self.dockwidget == None:
+            # Create the dockwidget
+            self.dockwidget = PegelOnlineDockWidget()
+            # setup runner class
+            self.runner = PoRunner(self.dockwidget, self.iface)
+</code></pre>
+
+<h1 id="porunner">PoRunner</h1>
+<p>Mit PoRunner lagern wir alle Funktionen in einem eigenen Modul und in einer Klasse aus. Die Schnittstelle zum Plugin erhalten über zwei Objekte: <code>iface</code> und <code>ui</code> (das Dockwidget und seine Widgets):</p>
+<pre><code class="python">class PoRunner(object):
+
+    def __init__(self, ui, iface):
+        self.ui = ui
+        self.iface = iface
+</code></pre>
+
+<p>PoRunner wird sämtliche Funktionen enthalten, die zum Betrieb des Plugins geschrieben werden müssen:</p>
+<ul>
+<li>Methoden für Signal-Slots</li>
+<li>Methoden zur Zusammenarbeit mit pomodules</li>
+</ul>
+<pre><code class="python">from .pomodules.poqgsstations import PoQgsStations
+from .pomodules.poqgscurrentw import PoQgsCurrentW
+</code></pre>
+
+<p>Falls poqgscurrentw noch nicht existiert, kommentieren wir es zunächst aus.</p>
+<p>Jetzt können wir das Plugin testen. Dazu kopieren wir den Ordner in das QGIS-Plugin-Verzeichnis und starten QGIS. Eventuell muss das neue Plugin noch unter dem Menü Erweiterungen aktiviert werden!</p>
+<figure><img alt="Erste Version des GUI" src="../img/chap03_plugin_dockw_pur.png" /><figcaption>
+<p>Eine erste Version des GUI</p>
+</figcaption>
+</figure>
+<h2 id="einbinden-einer-basiskarte">Einbinden einer Basiskarte</h2>
+<p>Über eine Basiskarte soll eine minimale Orientierungshilfe gegeben werden. Sie wird die Flüsse/Gewässer enthalten, an denen Stationen liegen.</p>
+<p>Hierzu erstellen wir in unserem Plugin-Ordner eine Unterodner <code>basemap</code> und speichern dort die Daten zur Basiskarte. In diesem Fall ist es ein GeoPackage 'waters.gpkg' mit zwei Layern (waters_l und  waters_f). Außerdem enthält das GeoPackage zwei Styles (water_f_style, water_l_style), die mit beiden Layer verknüpft sind und deren Darstellung festlegen.</p>
+<figure><img alt="Basiskarte des Plugins" src="../img/chap3_plugin_basemap.png" /><figcaption>
+<p>Die Basiskarte des Plugins</p>
+</figcaption>
+</figure>
+<p>Die Basiskarte muss optimalerweise beim Laden in QGIS als letztes (oder ganz unten) in der Legende eingefügt werden, damit andere Informatione darüber gezeichnet werden können. Hierzu gibt es ein kleines Rezept aus dem PyQGIS-Cookbook:</p>
+<pre><code class="python">#... layer wurde erstellt, dann:
+layerTree = iface.layerTreeCanvasBridge().rootGroup()
+layerTree.insertChildNode(-1, QgsLayerTreeLayer(vlayer))
+</code></pre>
+
+<p>Das folgende Beispiel basemap.py zeigt eine lauffähigen Code für die QGIS-Python-Konsole:</p>
+<pre><code class="python">import os
+def show_basemap():
+    local_dir = r&quot;c:\Mein_Plugin_Ordner\basemap&quot;
+    water_lines = os.path.join(local_dir, &quot;waters.gpkg|layername=water_l&quot;)
+    water_areas = os.path.join(local_dir, &quot;waters.gpkg|layername=water_f&quot;)
+
+    vlayer = QgsVectorLayer(water_lines, &quot;Flüsse&quot;, &quot;ogr&quot;)
+    if not vlayer.isValid():
+        print(&quot;Layer '%s' not valid&quot;%water_lines)
+        return
+    QgsProject.instance().addMapLayer(vlayer, False)
+    layerTree = iface.layerTreeCanvasBridge().rootGroup()
+    layerTree.insertChildNode(-1, QgsLayerTreeLayer(vlayer))
+
+    vlayer = QgsVectorLayer(water_areas, &quot;Gewässer&quot;, &quot;ogr&quot;)
+    if not vlayer.isValid():
+        print(&quot;Layer '%s' not valid&quot;%water_areas)
+        return
+    QgsProject.instance().addMapLayer(vlayer, False)
+    layerTree = iface.layerTreeCanvasBridge().rootGroup()
+    layerTree.insertChildNode(-1, QgsLayerTreeLayer(vlayer))
+
+show_basemap()
+</code></pre>
+
+<p>Wir können die Grafikvorgaben eines Styles auch ändern und im GeoPackage aktualisieren. </p>
+<figure><img alt="Style-Eigenschaften mit QGIS speichern" src="../img/chap03_plugin_stylesave.png" /><figcaption>
+<p>Style-Eigenschaften mit QGIS speichern</p>
+</figcaption>
+</figure>
+<ul>
+<li>wir ändern die Grafik des Layers in QGIS</li>
+<li>dann wählen wir in der QGIS-Legende den Layer aus und rufen das Eigenschaften-Fenster auf (Properties)</li>
+<li>unter Stil (Style) können wir die aktuellen Grafikeinstellungen speichern</li>
+<li>um den vorhandenen Stil zu aktualisieren, benutzen wir denselben Stilnamen</li>
+</ul>
+<figure><img alt="Angabe der Optionen beim Speichern" src="../img/chap03_plugin_stylesave2.png" /><figcaption>
+<p>Angabe der Optionen beim Speichern</p>
+</figcaption>
+</figure>
+<h1 id="layermanagement">Layermanagement</h1>
+<p>Im Plugin wird auf Layer zugegriffen</p>
+<ul>
+<li>Pegelonlinedaten werden geladen und ein Layer erzeugt</li>
+<li>Es werden Funktionen auf den Layer angewendet</li>
+</ul>
+<p>Layer können im Plugin referenziert werden,</p>
+<ul>
+<li>über den Namen</li>
+<li>über eine ID (Name+Zufallsstring)</li>
+<li>über ein Layer-Objekt (QgsVectorLayer)</li>
+</ul>
+<p>Was passiert wenn der Nutzer</p>
+<ul>
+<li>die abgerufenen Informationen aktualisiert und neue Layer erzeugt?</li>
+<li>den Layer in QGIS löscht?</li>
+<li>in einem  Layer Daten selektiert?</li>
+</ul>
+<p>Laden</p>
+<ul>
+<li>Ladevorgang (wie im Script <code>basemap.py</code>)</li>
+<li>wir merken uns alle Layer im Plugin als Layer-Objekt
+(self.stationen = vlayer)</li>
+</ul>
+<p>Aktualisieren</p>
+<ul>
+<li>werden die Daten neu geladen, so erstellen wir einen neuen Layer</li>
+<li>wir verfahren wie beim Laden</li>
+</ul>
+<p>Löschen</p>
+<ul>
+<li>Der Benutzer kann einen Layer löschen, dies muss unser Plugin registrieren</li>
+<li>Die Variable und Referenz zum Layer wird zurückgesetzt (self.stationen = None)</li>
+</ul>
+<h2 id="beispiel-basemap">Beispiel "Basemap"</h2>
+<ul>
+<li>Im Plugin als Option (QCheckBox)</li>
+<li>Option steht auf <em>aus</em>: Kein Layer geladen</li>
+<li>Benutzer schaltet Option ein:<ul>
+<li>Layer wird geladen</li>
+<li>Layer wird angezeigt</li>
+</ul>
+</li>
+<li>Benutzer schaltet Option wieder aus<ul>
+<li>Layer wird nicht gelöscht, sondern nur ausgeblendet</li>
+<li>Alternativ: Layer löschen und neu laden ...</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="CheckBox zur Anzeige der Basiskarte" src="../img/chap03_plugin_basemap_checkb.png" /><figcaption>
+<p>CheckBox zur Anzeige der Basiskarte</p>
+</figcaption>
+</figure>
+<ul>
+<li>Wir richten mit QtDesinger eine CheckBox ein, Name <code>chBshowBasemap</code><ul>
+<li>eine Methode in PoRunner übernimmt die Signal-Slot-Definitionen: <code>init_connects()</code></li>
+<li>Wir schreiben einen Slot(Methode) als <code>doBasemapOptionChanged</code></li>
+</ul>
+</li>
+</ul>
+<p>Umsetzung in po_runner:</p>
+<pre><code class="python"># veränderte init-Methode
+def __init__(self, ui, iface):
+        self.ui = ui
+        self.iface = iface
+
+        self.init_connects()
+
+        self.local_dir = os.path.dirname(os.path.realpath(__file__))
+# neue Methode init_connects 
+def init_connects(self):
+    self.ui.chBshowBasemap.toggled.connect(self.doBasemapOptionChanged)
+
+# Slot-Methode doBasemapOptionChanged
+def doBasemapOptionChanged(self):
+    pass
+</code></pre>
+
+<p>Ein Layer kann über Python ein- und ausgeschaltet werden, indem auf das Legendenobjekt LayerTreeRoot zugriffen wird. Die enthält Einträge (items), die mit <code>setItemVisibilityChecked()</code> auf True bzw False gesetzt werden.</p>
+<p>Ein Beispiel für die QGIS-Python-Konsole:</p>
+<pre><code class="python">lyr = iface.activeLayer()
+
+lt = QgsProject.instance().layerTreeRoot().findLayer(lyr.id())
+lt.setItemVisibilityChecked(False)
+</code></pre>
+
+<p>Innerhalb des Plugins prüfen wir innerhlb des Slots für die CheckBox, ob ein- oder ausgeschaltet wurde:</p>
+<pre><code class="python">def doBasemapOptionChanged(self):
+    if self.ui.chBshowBasemap.isChecked() == True:
+        # Layer anzeigen
+    else:
+        # Layer ausblenden
+</code></pre>
+
+<h2 id="basemap-layer-verwalten">Basemap-Layer verwalten</h2>
+<p>Zur Verwaltung des Layers gehört die Referenz auf das Objekt und das Verhalten des Plugins bei Veränderungen an diesem Layer.</p>
+<p>Zunächst, prüfen wir, ob der Layer bereits geladen wurde, andernfall wird der Layer geladen. Das 
+Laden erfolgt wie in <code>basemap.py</code> getestet. Zusätzlich</p>
+<ul>
+<li>merken wir uns das erstellte VectorLayer-Objekt</li>
+<li>blenden wir nur ein, wenn der Nutzer die Aktion nochmals auslöst wurde und der Layer schon erzeugt wurde</li>
+</ul>
+<pre><code class="python">water_lines = os.path.join(self.local_dir, &quot;basemap&quot;,
+                           &quot;waters.gpkg|layername=water_l&quot;)
+# Layer bereits erstellt?
+if self.base_l is None:
+    vl = QgsVectorLayer(water_lines, &quot;Flüsse&quot;, &quot;ogr&quot;)
+    if not vl.isValid():
+        print(&quot;Layer '%s' not valid&quot;%water_lines)
+        return
+    QgsProject.instance().addMapLayer(vl, False)
+    layerTree = self.iface.layerTreeCanvasBridge().rootGroup()
+    layerTree.insertChildNode(-1, QgsLayerTreeLayer(vl))
+    self.base_l = vl
+# nur einblenden
+else:
+    lyrtree = QgsProject.instance().layerTreeRoot().findLayer(self.base_l.id())
+    lyrtree.setItemVisibilityChecked(True)
+</code></pre>
+
+<p>HINWEISE:</p>
+<ul>
+<li>In po_runner müssen die benötigten PyQGI-Klassen aus qgis.core importiert werden</li>
+<li>dasselbe Vorgehen wie oben wählen wir für den zweiten Layer <code>water_f</code>.</li>
+</ul>
+<p>Eine weitere Anforderung unseres Plugins betrifft den Vorgang, wenn ein Nutzer einen oder beide Layer in der QGIS-Legende löscht. In diesem Fall zeigen die Variablen der <code>QgsVektorLayer</code> auf einen Layer, der nicht mehr existiert und es kann zu Fehlern in unserem Code kommen.</p>
+<ul>
+<li>Es existiert ein Signal (Event), das ausgelöst wird, wenn der Layer gelöscht werden soll: <code>willBeDeleted</code></li>
+<li>eine entsprechende Anweisung wird in <code>doBasemapOptionChanged</code> eingefügt, dort wo der Layer erstellt wird</li>
+</ul>
+<p><code>self.base_l.willBeDeleted.connect(self.doDisconnectBaseL)</code></p>
+<ul>
+<li>mit dem zugehörige Slot sollte auch geprüft werden, ob andere Objekte von der Aktion betroffen sind, z.B. der CheckBox-Schalter. Minimal sollten wir auf jeden Fall die Layer-Variable zurücksetzen:</li>
+</ul>
+<pre><code class="python">def doDisconnectBaseL(self):
+    self.base_l = None
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

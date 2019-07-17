@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Qt-Designer: der Qt-Editor - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Qt-Designer: der Qt-Editor", url: "#_top", children: [
+              {title: "Aufbau einer Python-QtDesigner Anwendung", url: "#aufbau-einer-python-qtdesigner-anwendung" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="qt-designer-der-qt-editor">Qt-Designer: der Qt-Editor</h1>
+<ul>
+<li>Qt-Designer erlaubt die graphische Gestaltung einer Benutzeroberfläche</li>
+<li>Ursprünglich für C++-Programmierer entwickelt, speichert eine xml-Datei</li>
+</ul>
+<figure><img alt="QtDesigner" src="../img/chap2_qtdesign_main.png" /><figcaption>
+<p>Hauptfenster des QtDesigners mit Liste der Widgets (links), einem Dialogentwurf (mitte) und den Widgeteinstellungen (rechts)</p>
+</figcaption>
+</figure>
+<ul>
+<li>Für PyQt muss die XML-Datei in Python-Code umgewandelt werden
+(Nicht vergessen, py3_env und qt5_env auszuführen!)</li>
+</ul>
+<p><code>pyuic5 name.ui -o name.py</code>
+Dies erzeugt aus der Designer-Datei (.ui) eine Python-Datei (.py)</p>
+<ul>
+<li>
+<p>Es gibt auch eine Methode, die ui-Datei direkt in Python "aufzurufen", dazu später mehr im Themenbereich QGIS-Plugins.</p>
+</li>
+<li>
+<p>Werden "ressources" eingebunden, müssen diese auch übersetzt werden:</p>
+</li>
+</ul>
+<p><code>pyrcc5 ressources.qrc –o ressources.py</code></p>
+<ul>
+<li>Ressources werden später behandelt, sie beinhalten z.B. eingebundene Bilder für Icons etc.</li>
+</ul>
+<figure><img alt="Designer-Sidebar" src="../img/chap2_qtdesign_sidebar.png" /><figcaption>
+<p>rechte Seitenleiste mit Widget-Einstellungen</p>
+</figcaption>
+</figure>
+<h2 id="aufbau-einer-python-qtdesigner-anwendung">Aufbau einer Python-QtDesigner Anwendung</h2>
+<ul>
+<li>die übersetzten Pythonscripte aus den ui- und qrc-Dateien bleiben als Module unverändert</li>
+<li>in einem weiteren Modul importieren wir diese und erstellen eine neue class, die von der Klasse aus dem Designer abgeleitet wird.</li>
+</ul>
+<p>Beispiel: heißt die Klasse in der ui-Datei z.B. DataTable, erstellen wir in einem neuen Modul die Klassen MyDataTable:</p>
+<p><code>class MyDataTable(DataTable):</code></p>
+<ul>
+<li>In dieser neuen Klasse können wir dann die Funktionalität und Interaktivität unterbringen, um die Oberfläche (oder das Widget) anzuzeigen.</li>
+<li>Man kann dann noch weiter gehen und für das eigentliche Qt-Programm noch ein weiteres Modul anlegen, sodass die Klassen auch in anderen Programmen verwendet werden können.</li>
+</ul>
+<p>Eine kurze Einführung in den Prozess der GUI-Erstellung mit PyQt und QtDesigner finder z.B. <a href="https://nikolak.com/pyqt-qt-designer-getting-started/">hier</a></p>
+<p>Der aufgeführte Quellcode stammt aus dieser Quelle <a href="https://gist.github.com/Nikola-K/615def9e197d5db04bef">hier</a>.</p>
+<figure><img alt="Designer Tutorial Dialog" src="../img/chap2_qtdesign_tutapp.png" /><figcaption>
+<p>Anzeige des Dialogs aus dem Tutorial von Nikola Kovacevic</p>
+</figcaption>
+</figure>
+<p><em>Dieser Code basiert noch auf python2 mit pyqt4 und ist nicht ohne weiteres lauffähig...</em></p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'design.ui'
+#
+# Created: Wed May 27 16:39:17 2015
+#      by: PyQt4 UI code generator 4.11.3
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt4 import QtCore, QtGui
+
+try:
+    _fromUtf8 = QtCore.QString.fromUtf8
+except AttributeError:
+    def _fromUtf8(s):
+        return s
+
+try:
+    _encoding = QtGui.QApplication.UnicodeUTF8
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig, _encoding)
+except AttributeError:
+    def _translate(context, text, disambig):
+        return QtGui.QApplication.translate(context, text, disambig)
+
+class Ui_MainWindow(object):
+    def setupUi(self, MainWindow):
+        MainWindow.setObjectName(_fromUtf8(&quot;MainWindow&quot;))
+        MainWindow.resize(240, 345)
+        self.centralwidget = QtGui.QWidget(MainWindow)
+        self.centralwidget.setObjectName(_fromUtf8(&quot;centralwidget&quot;))
+        self.verticalLayout = QtGui.QVBoxLayout(self.centralwidget)
+        self.verticalLayout.setObjectName(_fromUtf8(&quot;verticalLayout&quot;))
+        self.listWidget = QtGui.QListWidget(self.centralwidget)
+        self.listWidget.setObjectName(_fromUtf8(&quot;listWidget&quot;))
+        self.verticalLayout.addWidget(self.listWidget)
+        self.btnBrowse = QtGui.QPushButton(self.centralwidget)
+        self.btnBrowse.setObjectName(_fromUtf8(&quot;btnBrowse&quot;))
+        self.verticalLayout.addWidget(self.btnBrowse)
+        MainWindow.setCentralWidget(self.centralwidget)
+
+        self.retranslateUi(MainWindow)
+        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
+    def retranslateUi(self, MainWindow):
+        MainWindow.setWindowTitle(_translate(&quot;MainWindow&quot;, &quot;MainWindow&quot;, None))
+        self.btnBrowse.setText(_translate(&quot;MainWindow&quot;, &quot;Pick a folder&quot;, None))
+</code></pre>
+
+<p class="skulpt" onclick="savePython(event, 'design.py')"><a href="javascript:void()">download</a> <img alt="Download" src="../img/icons/011_InboxDownload.png" /></p>
+<p>Aus der ui-Datei erzeugter Python-Code, er wurde demnach schon übersetzt! Die Klassen für eine GUI enthalten den Code mit den Widgets und einer Funktion retranslateUi, womit eine Internationalierung mit mehreren Sprachen erreicht werden kann (In diesem Falle ungenutzt).</p>
+<p>Die zugehöriger ui-Datei für den QtDesigner:</p>
+<pre><code class="xml">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;ui version=&quot;4.0&quot;&gt;
+ &lt;class&gt;MainWindow&lt;/class&gt;
+ &lt;widget class=&quot;QMainWindow&quot; name=&quot;MainWindow&quot;&gt;
+  &lt;property name=&quot;geometry&quot;&gt;
+   &lt;rect&gt;
+    &lt;x&gt;0&lt;/x&gt;
+    &lt;y&gt;0&lt;/y&gt;
+    &lt;width&gt;240&lt;/width&gt;
+    &lt;height&gt;345&lt;/height&gt;
+   &lt;/rect&gt;
+  &lt;/property&gt;
+  &lt;property name=&quot;windowTitle&quot;&gt;
+   &lt;string&gt;MainWindow&lt;/string&gt;
+  &lt;/property&gt;
+  &lt;widget class=&quot;QWidget&quot; name=&quot;centralwidget&quot;&gt;
+   &lt;layout class=&quot;QVBoxLayout&quot; name=&quot;verticalLayout&quot;&gt;
+    &lt;item&gt;
+     &lt;widget class=&quot;QListWidget&quot; name=&quot;listWidget&quot;/&gt;
+    &lt;/item&gt;
+    &lt;item&gt;
+     &lt;widget class=&quot;QPushButton&quot; name=&quot;btnBrowse&quot;&gt;
+      &lt;property name=&quot;text&quot;&gt;
+       &lt;string&gt;Pick a folder&lt;/string&gt;
+      &lt;/property&gt;
+     &lt;/widget&gt;
+    &lt;/item&gt;
+   &lt;/layout&gt;
+  &lt;/widget&gt;
+ &lt;/widget&gt;
+ &lt;resources/&gt;
+ &lt;connections/&gt;
+&lt;/ui&gt;
+</code></pre>
+
+<p class="skulpt" onclick="savePython(event, 'design.ui')"><a href="javascript:void()">download</a> <img alt="Download" src="../img/icons/011_InboxDownload.png" /></p>
+<p>Das eigentliche Hauptprogramm:</p>
+<pre><code class="python">from PyQt4 import QtGui  # Import the PyQt4 module we'll need
+import sys  # We need sys so that we can pass argv to QApplication
+
+import design  # This file holds our MainWindow and all design related things
+
+# it also keeps events etc that we defined in Qt Designer
+import os  # For listing directory methods
+
+
+class ExampleApp(QtGui.QMainWindow, design.Ui_MainWindow):
+    def __init__(self):
+        # Explaining super is out of the scope of this article
+        # So please google it if you're not familar with it
+        # Simple reason why we use it here is that it allows us to
+        # access variables, methods etc in the design.py file
+        super(self.__class__, self).__init__()
+        self.setupUi(self)  # This is defined in design.py file automatically
+        # It sets up layout and widgets that are defined
+        self.btnBrowse.clicked.connect(self.browse_folder)  # When the button is pressed
+                                                            # Execute browse_folder function
+
+    def browse_folder(self):
+        self.listWidget.clear() # In case there are any existing elements in the list
+        directory = QtGui.QFileDialog.getExistingDirectory(self,
+                                                           &quot;Pick a folder&quot;)
+        # execute getExistingDirectory dialog and set the directory variable to be equal
+        # to the user selected directory
+
+        if directory: # if user didn't pick a directory don't continue
+            for file_name in os.listdir(directory): # for all files, if any, in the directory
+                self.listWidget.addItem(file_name)  # add file to the listWidget
+
+
+def main():
+    app = QtGui.QApplication(sys.argv)  # A new instance of QApplication
+    form = ExampleApp()  # We set the form to be our ExampleApp (design)
+    form.show()  # Show the form
+    app.exec_()  # and execute the app
+
+
+if __name__ == '__main__':  # if we're running file directly and not importing it
+    main() # run the main function
+</code></pre>
+
+<p class="skulpt" onclick="savePython(event, 'main.py')"><a href="javascript:void()">download</a> <img alt="Download" src="../img/icons/011_InboxDownload.png" /></p>
+<p>Hier sehen wir die objektorientierte Umsetzung mit der eigenen Klasse <code>ExampleApp</code>, die den funktionalen Teil der GUI festlegt. In main() finden wir die übliche Objekterzeugung, hier <code>form</code> (Instanz von ExampelApp) und den Aufruf des Event-Loops der <code>app</code> (Instanz von QApplication) als <code>app.exec_()</code>.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

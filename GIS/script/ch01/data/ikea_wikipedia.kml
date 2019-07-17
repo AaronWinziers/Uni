@@ -1,0 +1,443 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://earth.google.com/kml/2.1">
+<Document>
+	<name><![CDATA[IKEA Deutschland]]></name>
+	<open>1</open>
+	<Folder>
+		<name><![CDATA[Standorte]]></name>
+		<open>1</open>
+		<Placemark>
+			<name><![CDATA[Augsburg (Gersthofen)]]></name>
+			<Point>
+				<coordinates>10.871211,48.404989,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Berlin-Lichtenberg]]></name>
+			<Point>
+				<coordinates>13.513302,52.534309,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Berlin-Spandau]]></name>
+			<Point>
+				<coordinates>13.215839,52.528326,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Berlin-Tempelhof (Berlin-Schöneberg)]]></name>
+			<Point>
+				<coordinates>13.367127,52.469922,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Berlin-Waltersdorf (Schönefeld)]]></name>
+			<Point>
+				<coordinates>13.556411,52.367051,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Bielefeld]]></name>
+			<Point>
+				<coordinates>8.492467,51.98186,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Braunschweig]]></name>
+			<Point>
+				<coordinates>10.505021,52.308971,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Brinkum (Stuhr)]]></name>
+			<Point>
+				<coordinates>8.803143,53.026698,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Bremerhaven]]></name>
+			<Point>
+				<coordinates>8.604879,53.488475,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Chemnitz]]></name>
+			<Point>
+				<coordinates>12.859614,50.802847,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Dortmund]]></name>
+			<Point>
+				<coordinates>7.369357,51.491731,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Dresden]]></name>
+			<Point>
+				<coordinates>13.693918,51.086005,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Duisburg]]></name>
+			<Point>
+				<coordinates>6.764579,51.482604,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Düsseldorf]]></name>
+			<Point>
+				<coordinates>6.849048,51.18826,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Erfurt]]></name>
+			<Point>
+				<coordinates>10.948891,50.958943,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Essen]]></name>
+			<Point>
+				<coordinates>7.000661,51.459889,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Frankfurt]]></name>
+			<Point>
+				<coordinates>8.655715,50.195704,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Freiburg]]></name>
+			<Point>
+				<coordinates>7.833133,48.028352,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Großburgwedel]]></name>
+			<Point>
+				<coordinates>9.838034,52.4918,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Halle/Leipzig (Leuna)]]></name>
+			<Point>
+				<coordinates>12.182342,51.34833,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Hamburg-Altona]]></name>
+			<Point>
+				<coordinates>9.941456,53.551402,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Hamburg-Moorfleet]]></name>
+			<Point>
+				<coordinates>10.093855,53.510831,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Hamburg-Schnelsen]]></name>
+			<Point>
+				<coordinates>9.928151,53.648552,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Hanau]]></name>
+			<Point>
+				<coordinates>8.942975,50.149681,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Hannover EXPO-Park]]></name>
+			<Point>
+				<coordinates>9.816887,52.314197,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Kaarst]]></name>
+			<Point>
+				<coordinates>6.628706,51.218254,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Kaiserslautern]]></name>
+			<Point>
+				<coordinates>7.700793,49.440769,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Kamen]]></name>
+			<Point>
+				<coordinates>7.669566,51.570071,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Karlsruhe]]></name>
+			<Point>
+				<coordinates>8.441159,49.00546,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Kassel]]></name>
+			<Point>
+				<coordinates>9.525507,51.277312,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Kiel]]></name>
+			<Point>
+				<coordinates>10.108075,54.314063,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Koblenz]]></name>
+			<Point>
+				<coordinates>7.567248,50.381968,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Köln-Am Butzweilerhof]]></name>
+			<Point>
+				<coordinates>6.897657,50.984406,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Köln-Godorf]]></name>
+			<Point>
+				<coordinates>6.97164,50.861665,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Ludwigsburg]]></name>
+			<Point>
+				<coordinates>9.154519,48.918,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Lübeck]]></name>
+			<Point>
+				<coordinates>10.736002,53.913255,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Magdeburg]]></name>
+			<Point>
+				<coordinates>11.611442,52.168816,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Mannheim]]></name>
+			<Point>
+				<coordinates>8.444499,49.556214,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[München-Brunnthal (Taufkirchen)]]></name>
+			<Point>
+				<coordinates>11.657018,48.040879,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[München-Eching (Eching)]]></name>
+			<Point>
+				<coordinates>11.634064,48.303891,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Nürnberg/Fürth (Fürth)]]></name>
+			<Point>
+				<coordinates>11.009346,49.484912,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Oldenburg]]></name>
+			<Point>
+				<coordinates>8.255698,53.140054,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Osnabrück]]></name>
+			<Point>
+				<coordinates>7.970298,52.263422,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Regensburg]]></name>
+			<Point>
+				<coordinates>12.177343,49.001405,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Rostock]]></name>
+			<Point>
+				<coordinates>12.051189,54.108324,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Saarlouis]]></name>
+			<Point>
+				<coordinates>6.759342,49.293931,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Siegen]]></name>
+			<Point>
+				<coordinates>8.002414,50.862219,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Sindelfingen]]></name>
+			<Point>
+				<coordinates>9.00554,48.702175,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Ulm]]></name>
+			<Point>
+				<coordinates>9.976352,48.40364,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Wallau (Hofheim am Taunus)]]></name>
+			<Point>
+				<coordinates>8.37168,50.057626,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Walldorf]]></name>
+			<Point>
+				<coordinates>8.629355,49.305262,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Wetzlar]]></name>
+			<Point>
+				<coordinates>8.497226,50.568875,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Wuppertal]]></name>
+			<Point>
+				<coordinates>7.25508,51.310104,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+		<Placemark>
+			<name><![CDATA[Würzburg]]></name>
+			<Point>
+				<coordinates>9.982603,49.82204,0</coordinates>
+			</Point>
+			<Snippet></Snippet>
+			<description><![CDATA[<br>Source: Wikipedia article <a href="https://de.wikipedia.org/wiki/IKEA_Deutschland#cite_ref-expansion_9-0">IKEA Deutschland</a>]]></description>
+		</Placemark>
+	</Folder>
+</Document>
+</kml>

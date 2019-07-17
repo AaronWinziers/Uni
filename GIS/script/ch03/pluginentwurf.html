@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Entwurf des Plugins Pegel Online Reader - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Entwurf des Plugins Pegel Online Reader", url: "#_top", children: [
+              {title: "Dialog zum Pegel Online Reader", url: "#dialog-zum-pegel-online-reader" },
+              {title: "Klassen/Objektorientierter Entwurf", url: "#klassenobjektorientierter-entwurf" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="entwurf-des-plugins-pegel-online-reader">Entwurf des Plugins Pegel Online Reader</h1>
+<h2 id="dialog-zum-pegel-online-reader">Dialog zum Pegel Online Reader</h2>
+<ul>
+<li>
+<p>Mit dem Plugin-Builder erstellen wir ein Plugin als Dockwidget</p>
+<ul>
+<li>Dockwidgets werden an den Rand eines MainWindow angedockt (z.B. als "Seitenleiste")</li>
+<li>in QGIS als "Bedienfeld"</li>
+</ul>
+</li>
+<li>
+<p>Mit dem QtDesigner entwerfen wir den Inhalt des Widgets</p>
+<ul>
+<li>innerhalb eines Dockwidgets werden andere Elemente angelegt</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="Dockwidget" src="../img/chap3_pgonline_dock.png" /><figcaption>
+<p>Dockwidget zum Pegel Online Reader</p>
+</figcaption>
+</figure>
+<p>Diese Funktionalität soll abgebildet werden:</p>
+<h3 id="stationen">Stationen</h3>
+<ul>
+<li>Download<ul>
+<li>Liste der Stationen von Pegelonline lesen</li>
+<li>Daten in DB speichern</li>
+<li>Benutzer informieren</li>
+</ul>
+</li>
+<li>Kartenanzeige<ul>
+<li>Tabelle der DB als Vektorlayer öffnen</li>
+<li>Layer merken</li>
+</ul>
+</li>
+<li>Tabellenanzeige<ul>
+<li>prüfen, ob Layer geladen ist</li>
+<li>QGIS-Tabellenfenster für Layer öffnen</li>
+</ul>
+</li>
+</ul>
+<h3 id="aktuelle-pegelstande">aktuelle Pegelstände</h3>
+<ul>
+<li>Download<ul>
+<li>aktuelle Messwerte aller Stationen von Pegelonline lesen</li>
+<li>Daten in DB speichern</li>
+<li>Benutzer informieren</li>
+</ul>
+</li>
+<li>Kartenanzeige<ul>
+<li>Abfrage auf DB (Join Stationen, Messwerte) als Vektorlayer öffnen</li>
+<li>Layer merken und Renderer/Symbology einsetzen</li>
+<li>Signal/Slot für den Layer einrichten, selektierte Objekte merken</li>
+</ul>
+</li>
+<li>Tabellenanzeige<ul>
+<li>prüfen, ob Layer geladen ist</li>
+<li>QGIS-Tabellenfenster für Layer öffnen</li>
+</ul>
+</li>
+</ul>
+<h3 id="pegelverlauf">Pegelverlauf</h3>
+<ul>
+<li>
+<p>ComboBox</p>
+<ul>
+<li>enthält die Namen der selektierten Stationen aus dem Pegellayer</li>
+<li>Nutzer wählt hier genau eine Station aus</li>
+</ul>
+</li>
+<li>
+<p>Diagrammanzeige</p>
+<ul>
+<li>Ausgewählte Station ermitteln</li>
+<li>Daten (png) von Pegelonline herunterladen</li>
+<li>Diagramm im Plugin anzeigen</li>
+</ul>
+</li>
+<li>
+<p>Daten des Verlaufs speichern</p>
+<ul>
+<li>Ausgewählte Station ermitteln</li>
+<li>json-Daten von Pegelonline lesen</li>
+<li>heruntergeladene Daten als Datei (csv) speichern</li>
+</ul>
+</li>
+<li>
+<p>Denkbare Zusatzfunktionen</p>
+<ul>
+<li>Zoom auf eine Auswahl</li>
+<li>Auswahl-Button im Dockwidget</li>
+<li>Anzeige einer Basiskarte (Fluss-SHP, OSM-WMS-Anzeige)</li>
+</ul>
+</li>
+</ul>
+<h3 id="elemente-des-gui-und-namen-festlegen">Elemente des GUI und Namen festlegen</h3>
+<table>
+<thead>
+<tr>
+<th>PushButton</th>
+<th>Beschriftung</th>
+<th>Name der Funktion für Signal/Slot</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>pbStationsLoad</td>
+<td>Load Stations</td>
+<td>doStationsLoad</td>
+</tr>
+<tr>
+<td>pbStationsMap</td>
+<td>Show Map</td>
+<td>doStationsMap</td>
+</tr>
+<tr>
+<td>pbStationsTable</td>
+<td>Show Table</td>
+<td>doStationsTable</td>
+</tr>
+<tr>
+<td>pbCurrentLoad</td>
+<td>Load Levels</td>
+<td>doCurrentLoad</td>
+</tr>
+<tr>
+<td>pbCurrentMap</td>
+<td>Show Map</td>
+<td>doCurrentMap</td>
+</tr>
+<tr>
+<td>pbCurrentTable</td>
+<td>Show Table</td>
+<td>doCurrentTable</td>
+</tr>
+<tr>
+<td>cboxTimelineSelect</td>
+<td>ohne Beschriftung</td>
+<td>ohne Funktion</td>
+</tr>
+<tr>
+<td>pbTimelinePNG</td>
+<td>Show Timeline</td>
+<td>doTimelinePNG</td>
+</tr>
+<tr>
+<td>pbTimelineExport</td>
+<td>Export Values</td>
+<td>doTimelineExport</td>
+</tr>
+</tbody>
+</table>
+<h3 id="dateien-des-plugin-builders">Dateien des Plugin-Builders</h3>
+<p>Zentral für die Entwicklung des Plugin ist das Modul, dessen Namen wir im Pluginbuilder angegeben haben: z.B. pegel_online.py. Innerhalb dieses Modules wird unser Plugin in QGIS registriert, außerdem stellt es die Methode run() zur Verfügung, mit der unser Dockwidget in QGIS angezeigt wird. Innerhalb dieser Methode binden wir unsere Signal/Slot-Funktionen ein:</p>
+<pre><code class="python">    def run(self):
+        &quot;&quot;&quot;Run method that loads and starts the plugin&quot;&quot;&quot;
+
+        if not self.pluginIsActive:
+            self.pluginIsActive = True
+
+            #print &quot;** STARTING PegelOnline&quot;
+
+            # dockwidget may not exist if:
+            #    first run of plugin
+            #    removed on close (see self.onClosePlugin method)
+            if self.dockwidget == None:
+                # Create the dockwidget (after translation) and keep reference
+                self.dockwidget = PegelOnlineDockWidget()
+
+            # connect to provide cleanup on closing of dockwidget
+            self.dockwidget.closingPlugin.connect(self.onClosePlugin)
+
+            # show the dockwidget
+            # TODO: fix to allow choice of dock location
+            self.iface.addDockWidget(Qt.RightDockWidgetArea, self.dockwidget)
+            self.dockwidget.show()
+</code></pre>
+
+<p>und unsere Funktionen können auf diese Weise eingebunden werden:</p>
+<pre><code class="python">            # connect to provide cleanup on closing of dockwidget
+            self.dockwidget.closingPlugin.connect(self.onClosePlugin)
+
+            # ## here we go
+            self.makeEvents()
+
+            # show the dockwidget
+            #...
+
+    def makeEvents(self):
+        self.dockwidget.myButton.clicked.connect(self.doSomething)
+        # ...
+
+    def doSomething(self):
+        pass
+
+    def doSomethingElse(self):
+        pass
+</code></pre>
+
+<h2 id="klassenobjektorientierter-entwurf">Klassen/Objektorientierter Entwurf</h2>
+<p>Der grundsätzliche Umgang mit den Daten von Pegel-Online liegt ja bereits vor. </p>
+<ul>
+<li>Die Daten werden heruntergeladen, bis auf die Grafiken als json-Strukturen, </li>
+<li>wir überführen die Daten in eine Python Datenstruktur und geben sie in Form einer Tabelle (<em>List of Tuples</em>) aus.</li>
+<li>Diese Daten können dann in einer Datenbank, auch mit GIS-tauglichen räumlichen Objekten, abgelegt und auch wieder gelesen werden (letzteres werden wir allerdings QGIS überlassen).</li>
+</ul>
+<p>Wir sollten nun für die einzelnen Operationen Begriffe finden, die sie treffend beschreiben und voneinander abgrenzen.</p>
+<ul>
+<li>Eine Datenbank muss mit der Anwendung verbunden (open-DB) und wieder geschlossen werden (close-DB). Dabei sollte überprüft werden, ob diese Datenbank existiert oder eine neue angelegt werden soll!</li>
+<li>Eine DB-Tabelle muss mit ihren Spalten und Datentypen zu den abgefragten Daten passen, eine Attributliste ist hier nötig! Darauf basierend werden Tabellen erstellt und Daten strukturiert!</li>
+<li>Eine Tabelle mit Geomtrie-Attribut erfordert eine andere Herangehensweise, als eine "normale" Tabelle</li>
+</ul>
+<h3 id="klassen-anlegen">Klassen anlegen</h3>
+<p>Vier Klassen (als Vorschlag):</p>
+<ul>
+<li>Modul database mit class PoDB -&gt; Zugriff auf SQLite-Datenbank</li>
+<li>Modul stations mit class PoStations -&gt; Lesen/Anzeigen der Stationen</li>
+<li>Modul currentw mit class PoCurrentW -&gt; Lesen/Anzeigen der aktuellen Wasserstände</li>
+<li>Modul timeline mit class PoTimeline -&gt; Lesen der Wasserstände der letzten x Tage</li>
+</ul>
+<p>Wir ordnen grob Eigenschaften und Methoden zu, danach entscheiden wir,</p>
+<ul>
+<li>welche Spezialisierungen brauchen wir -&gt; abzuleitende Klassen</li>
+<li>welche Verallgemeinerungen erkennen wir -&gt; (abstrakte) Klassen</li>
+</ul>
+<p>Bei den Methoden versuchen wir, bereits vorhandene Funktionen zu verwenden und testen vorgesehene Methoden aus.</p>
+<p>Entwickeln Sie ihre eigenen Module für die Klassen, welche die Funktionalität bestmöglich abbilden. Diskutieren Sie untereinander mögliche Lösungen! Auch Schemazeichnungen können helfen! Schreiben Sie den Code zunächst mit Platzhaltern und überlegen Sie, welche Eigenschaften und Methoden in welcher Klasse am besten untergebracht werden können!</p>
+<h3 id="module-importieren-und-objekte-erzeugen">Module importieren und Objekte erzeugen</h3>
+<ul>
+<li>Wir importieren unsere Klassen aus den vier Modulen am Anfang von pegel_online.py.</li>
+<li>In <code>__init__</code> legen wir vier Variablen als Eigenschaften an,</li>
+<li>In run(), unterhalb des Aufrufs instanzieren wir die entsprechenden Objekte </li>
+</ul>
+<p>in init():</p>
+<pre><code class="python">        # initialize plugin directory
+        self.plugin_dir = os.path.dirname(__file__)
+
+        ### HERE WE GO
+        self.dbname = os.path.join(self.plugin_dir, &quot;stations.sqlite&quot;)
+        self.db = None
+        self.stations = None
+        self.currentw = None
+        self.timeline = None
+</code></pre>
+
+<p>Wir legen den Namen der Datenbank und des Speicherortes fest, dieser sollte im Plugin-Verzeichnis liegen.</p>
+<p>in run()</p>
+<pre><code class="python">                # connect Signals and Slots:
+                self.makeEvents()
+
+                # initialize PoObjects:
+                self.db = PoDB(self.dbname, self.iface)
+                self.stations = PoStations(self.db, self.iface)
+                self.currentw = PoCurrentW(self.db, self.iface, self.dockwidget)
+                self.timeline = PoTimeline(self.iface, self.dockwidget)
+</code></pre>
+
+<ul>
+<li>wir übergeben bei der Objekterzeugung <ul>
+<li>self.db, zum Zugriff auf die Datenbank</li>
+<li>self.iface, um Zugriff auf QGIS zu haben</li>
+<li>self.dockwidget, um Zugriff auf das gui des Plugins zu haben</li>
+</ul>
+</li>
+</ul>
+<p>Eine gute Idee ist es, das Modul pegel_online.py nicht zu umfangreich werden zu lassen, da es sonst zu ünübersichtlich wird. Alle do-Funktionen sollen daher die Verarbeitung den spezialisierten Klassen(Objekten überlassen).</p>
+<p>Beispiel:</p>
+<ul>
+<li>doStationsLoad() ruft eine Methode <em>download()</em> des Objekts self.stations auf.</li>
+<li>innerhalb der Methode  laden wir die json-Daten herunter und speichern diese als Taellendaten in der Datenbank</li>
+<li>wie die Aufgaben zwischen dem Datenbank-Modul und dem Stationen-Modul verteilt werden, sollte gut überlegt werden. Eine sehr ähnliche Funktionsweise trifft ja auch auf die Pegelstände zu!</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

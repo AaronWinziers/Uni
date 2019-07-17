@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Einrichtung von PyScripter - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Einrichtung von PyScripter", url: "#_top", children: [
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="einrichtung-von-pyscripter">Einrichtung von PyScripter</h1>
+<p>PyScripter benötig einige Umgebungsvariablen, um auf die Python-Module des QGIS zugreifen zu können, da sich diese in der OSGEO4W-Installation nicht unter dem Standardpfad befinden. Für den GIS-Stick gelten folgende Maßnahmen, um mit PyScripter QGIS-Plugins schreiben zu können:</p>
+<ul>
+<li>
+<p>ini-Dateien anpassen: dies sind Batchfiles, die innerhalb der QGIS-Umgebung bei jedem Programmstart ausgeführt werden (z.B. in der OSGeo4W-Shell)</p>
+<ul>
+<li>ini-Dateien finden wir im OSGEO4W-Verzeichnis unter etc/ini</li>
+<li>die Datei python.bat enthält die notwendigen Einstellungen für die Verwendung mit der LTR-Version von QGIS:</li>
+</ul>
+</li>
+</ul>
+<pre><code>SET QGIS_PREFIX_PATH=%OSGEO4W_ROOT:\=/%/apps/qgis-ltr
+SET PYTHONPATH=%OSGEO4W_ROOT%\apps\qgis-ltr\python
+
+SET PYTHONHOME=%OSGEO4W_ROOT%\apps\Python27
+SET PATH=%PATH%;%OSGEO4W_ROOT%\apps\Python27\Scripts;%OSGEO4W_ROOT%\apps\qgis-ltr\bin
+</code></pre>
+
+<ul>
+<li>
+<p>Erläuterung:</p>
+<ul>
+<li>QGIS_PREFIX_PATH legt fest, unter welchem Pfad QGIS installiert wurde.</li>
+<li>PYTHONPATH enthält Pfade zu alternativen Orten, an denen python mit import nach Modulen sucht</li>
+<li>PYTHONHOME verweist auf das Installationsverzeichnis von python. Der EIntrag ist wichtig, wenn es mehrere Pythonversionen gibt oder die Pythonversion nicht im Rechner registriert ist (bei OSGEO4W wird, im Gegensatz zu ArcGIS, python nicht registriert)</li>
+</ul>
+</li>
+<li>
+<p>PyScripter startet gleichfalls mit einem Batchfile und muss die Einstellungen übernehmen und beibehalten</p>
+<ul>
+<li>wichtig ist, dass der Pythonpath nicht überschrieben, sondern ergänzt wird <br>(<code>SET PYTHONPATH=%PYTHONPATH%;%PYSC_DIR%;...</code>)</li>
+</ul>
+</li>
+</ul>
+<pre><code>set PYSC_DIR=%~dp0
+
+for %%F in (&quot;%OSGEO4W_ROOT%\etc\ini\*.bat&quot;) do call &quot;%%F&quot;
+
+SET PYTHONPATH=%PYTHONPATH%;%PYSC_DIR%;%PYSC_DIR%\lib;%OSGEO4W_ROOT%\apps\python27;%OSGEO4W_ROOT%\apps\python27\lib;%OSGEO4W_ROOT%\bin;
+SET PATH=%PYSC_DIR%;%PATH%
+
+start &quot;PyScripter&quot; %PYSC_DIR%\PyScripter.exe --python27 --pythondllpath=%OSGEO4W_ROOT%\bin
+</code></pre>
+
+<p>Test: </p>
+<p>Importieren Sie im PyScripter in einem Script die Module qgis.core und qgis.gui.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

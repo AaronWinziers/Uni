@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Oomaps - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Das Modul DrawMap", url: "#_top", children: [
+              {title: "Aufbau des Moduls", url: "#aufbau-des-moduls" },
+              {title: "Die Klasse Style:", url: "#die-klasse-style" },
+              {title: "Die Klasse MapLayer", url: "#die-klasse-maplayer" },
+              {title: "Die Klasse DrawMap", url: "#die-klasse-drawmap" },
+              {title: "Test von DrawMap", url: "#test-von-drawmap" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h2 id="das-modul-drawmap">Das Modul DrawMap</h2>
+<h3 id="aufbau-des-moduls">Aufbau des Moduls</h3>
+<ul>
+<li>DrawMap als Ein-Dateien-Modul</li>
+<li>Darstellung von Raster-Layern fehlt</li>
+<li>Vektordarstellung mit Layern für Point-, Line- und Polygon-Layer</li>
+<li>benutzt Gemetriemodul geomet(2)</li>
+<li>akzeptiert auch Multipart-Geometrien für Linien und Polygone</li>
+</ul>
+<p>Python imports im Modul:</p>
+<pre><code class="python">import matplotlib.path as mpath
+import matplotlib.patches as mpatches
+import matplotlib.pyplot as plt
+import matplotlib.markers as mplmarkers
+import matplotlib.colors as mplcolors
+Path = mpath.Path
+
+# geometry Modul
+import geomet
+</code></pre>
+
+<p>Achten Sie beim import von geomet auf die richtige Version,
+sie können als auch schreiben <code>import geomet2 as geomet</code>.Der Name geomet muss allerdings erhalten bleiben, da er im Mudul verwendet wird.</p>
+<h3 id="die-klasse-style">Die Klasse Style:</h3>
+<p>Style speichern die Signaturen für Punkte, Linien und Flächen. Die allgemeine Klasse Style wird anschließend um die Klassen PointStyle, LineStyle und PolyStyle erweitert.</p>
+<p>Da die Zeichenfunktionen auf der matplotlib basieren, finden wir in <code>Style</code> die wichtigsten Graphik-Definitionen  aus dieser Zeichenbibliothek:</p>
+<pre><code class="python">class Style(object):
+    &quot;&quot;&quot;a style class matching style attribute for matplotlib, root class for
+    PointStyle, LineStyle and PolyStyle. MapLayer use them to draw with matplotlib.&quot;&quot;&quot;
+    def __init__(self):
+        # Markers for Point Symbols, as defined in the matplotlib module
+        self.markers = {'tickleft' : 0,
+                        'tickright' : 1,
+                        'tickup' : 2,
+                        'tickdown' : 3,
+                        ...}
+
+        # Colors for Point and Line Symbols, as defined in the matplotlib module
+        self.colors = { &quot;blue&quot;: &quot;b&quot; ,
+                        &quot;green&quot;: &quot;g&quot;,
+                        &quot;red&quot;: &quot;r&quot;,
+                        &quot;cyan&quot;: &quot;c&quot;,
+                        &quot;magenta&quot;: &quot;m&quot;,
+                        &quot;yellow&quot;: &quot;y&quot;,
+                        &quot;black&quot;: &quot;k&quot;,
+                        &quot;white&quot;: &quot;w&quot;}
+
+        # Line types for Line Symbols, as defined in the matplotlib module
+        self.lines = { &quot;solid line style&quot; : '-',
+                        &quot;dashed line style&quot; : '--',
+                        &quot;dash-dot line style&quot; : '-.',
+                        &quot;dotted line style&quot; : ':',
+                        &quot;point marker&quot; : '.',
+                        &quot;pixel marker&quot; : ',',
+                        &quot;circle marker&quot; : 'o',
+                        ...}
+
+    def findSymByName(self, name, symdict, default):
+        &quot;&quot;&quot;used to indenfy a style in the internal dictionary&quot;&quot;&quot;
+        if name in symdict.keys():
+            return symdict[name]
+        elif name in symdict.values():
+            return name
+        else:
+            return default
+
+    def findColorChar(self, value):
+        &quot;&quot;&quot;used to indenfy a color style, returns a color letter
+        as defined in matplotlib&quot;&quot;&quot;
+        return self.findSymByName(value, self.colors, &quot;k&quot;)
+
+    def findMarkerChar(self, value):
+        &quot;&quot;&quot;used to identify a marker style, returns a marker letter
+        as defined in matplotlib&quot;&quot;&quot;
+        return self.findSymByName(value, self.markers, &quot;o&quot;)
+
+    def findLineChar(self, value):
+        &quot;&quot;&quot;used to identify a line style, returns a line type letter
+        as defined in matplotlib&quot;&quot;&quot;
+        return self.findSymByName(value, self.lines, &quot;-&quot;)
+
+    def rgb256Hex(self, r, g, b):
+        &quot;&quot;&quot;use this to define new colors for polygon fills,
+        r,g,b should be int in range 0..255,
+        returns the hex-coded color like '#a0bc0f'&quot;&quot;&quot;
+        col = (1.0*xrange/255 for xrange in (r, g, b))
+        return mplcolors.rgb2hex(col)
+
+    def rgb2Hex(self, r, g, b):
+        &quot;&quot;&quot;use this to define new polygon fills,
+        r,g,b should be float in range 0.0..1.0,
+        returns the hex-coded color like '#a0bc0f'&quot;&quot;&quot;
+        col = (r, g, b)
+        return mplcolors.rgb2hex(col)
+</code></pre>
+
+<p>Die abgeleiteten Style-Klassen:</p>
+<pre><code class="python">class PointStyle(Style):
+    &quot;&quot;&quot;create a PointStyle with marker and color. See attributes markers and colors,
+    retrieve with getStyle for drawing.&quot;&quot;&quot;
+    def __init__(self, marker='circle', color='red'):
+        super(PointStyle, self).__init__()
+        self.marker = self.findMarkerChar(marker)
+        self.color = self.findColorChar(color)
+
+    def __str__(self):
+        return self.color + self.marker
+
+    def getStyle(self):
+        return self.__str__()
+</code></pre>
+
+<pre><code class="python">class LineStyle(Style):
+    &quot;&quot;&quot;create a line style with line type and color, See attributes lines and colors,
+    retrieve with getStyle for drawing.&quot;&quot;&quot;
+    def __init__(self, linetype='-', color='k'):
+        super(LineStyle, self).__init__()
+        self.linetype = self.findLineChar(linetype)
+        self.color = self.findColorChar(color)
+
+    def __str__(self):
+        return self.color + self.linetype
+
+    def getStyle(self):
+        return self.__str__()
+
+</code></pre>
+
+<pre><code class="python">class PolyStyle(Style):
+    &quot;&quot;&quot;create a polygon style withh fill color and outline color.
+    You can use both colors by name as defined in attribute colors or
+    give a hex value like '#ff9900'. May use rgb2hex or rgb256hex
+    to create a color hex string. Retrieve with getStyle for drawing.&quot;&quot;&quot;
+    def __init__(self, linecolor='blue', fillcolor=&quot;#ff9900&quot;):
+        super(PolyStyle, self).__init__()
+
+        self.linecolor = self.checkColor(linecolor)
+        self.fillcolor = self.checkColor(fillcolor)
+
+    def checkColor(self, color):
+        if isinstance(color, basestring) and color[0] == '#':
+            return color
+        elif isinstance(color, tuple):
+            return self.rgb256Hex(*color)
+        else:
+            return self.findColorChar(color)
+
+    def getStyle(self):
+        return (self.fillcolor, self.linecolor)
+</code></pre>
+
+<h3 id="die-klasse-maplayer">Die Klasse MapLayer</h3>
+<p>In einem MapLayer werden die Geomtrien zusammen mit ihren Signaturen verwaltet. Die Geometrien eines Layers werden in Klassen eingeteilt und für jede Klasse wird genau eine Signatur genutzt.</p>
+<pre><code class="python">class MapLayer(object):
+    &quot;&quot;&quot;manage a collection of objects into classes.
+    Each class can have a seperate style (PointStyle etc.).
+    Provides a method 'draw()' which is associated with the MapDrawer class
+    and uses the matplotlib drawing capabilities.&quot;&quot;&quot;
+    def __init__(self, map, geomtype = &quot;Points&quot;, name = &quot;&quot;):
+        self.layertypes = (&quot;Points&quot;, &quot;Lines&quot;, &quot;Polygons&quot;)
+        self.map = map
+        self.name = name
+        self.geomtype = geomtype
+        # a list of geometries
+        self.classes = []
+        # a list of styles, corresponding to classes
+        self.styles = []
+        self.extent = None
+
+    def addClass(self, objects, style):
+        &quot;&quot;&quot;adds a class to the map layer. Each class holds a collection of
+        geometry objects and a style, so all objects in that class are displayed
+        in the same way&quot;&quot;&quot;
+        self.classes.append(objects)
+        self.styles.append(style)
+
+    def calcExtent(self):
+        &quot;&quot;&quot;helper function to get the layer's extent&quot;&quot;&quot;
+        flatcoords = []
+
+        for cl in self.classes:
+            for o in cl:
+                if self.geomtype == &quot;Points&quot;:
+                    flatcoords.append(o.getGeom())
+                else:
+                    flatcoords.extend(o.extent.getPoints())
+
+        self.extent = geomet.Extent(flatcoords)
+
+    def draw(self):
+        &quot;&quot;&quot;draw a layer. This method is called from a DrawMap instance.&quot;&quot;&quot;
+        for icl in range(len(self.classes)):
+            style = self.styles[icl]
+            pstyle = style.getStyle()
+            for o in self.classes[icl]:
+
+                if self.geomtype == &quot;Points&quot;:
+                    x,y = o.getGeom()
+                    self.map.plot.plot(x, y, pstyle)
+
+                elif self.geomtype == &quot;Lines&quot;:
+                    if isinstance(o, geomet.LineString):
+                        line = o.getGeom()
+                        x, y = zip(*line)
+                        self.map.plot.plot(x, y, pstyle)
+                    elif isinstance(o, geomet.MultiLine):
+                        for line in o.getGeom():
+                            x, y = zip(*line)
+                            self.map.plot.plot(x, y, pstyle)
+
+
+                elif self.geomtype == &quot;Polygons&quot;:
+                    if isinstance(o, (geomet.Polygon, geomet.MultiPolygon)):
+                        if o.dim == 3:
+                            geom = ((o.getGeom()),)
+                        elif o.dim == 4:
+                            geom = o.getGeom()
+                        else:
+                            print &quot;error in polygon geometry!&quot;
+                            continue
+
+                        for part in geom: #### HERE WE STAND ####
+                            path = self.PolygonAsPath(part)
+                            patch = mpatches.PathPatch(path, facecolor=pstyle[0], edgecolor=pstyle[1])
+                            self.map.plot.add_patch(patch)
+
+
+    def PolygonAsPath(self, polygon):
+        &quot;&quot;&quot;helper function for matplotlib's path construction.
+        It is used for polygon drawing.&quot;&quot;&quot;
+        pathdata = []
+        # each ring is a single polygon in matplotlib
+        for ring in polygon:
+            # indexes of  points in ring
+            go = range(len(ring))
+            # pop and store the first
+            first = go.pop()
+            # store the last
+            last = go[-1]
+
+            # a path consists of a drawing command and a (x,y)
+            # start with a MoveTo
+            pathdata.append((Path.MOVETO,ring[first]))
+
+            for p in go:
+                # all folling points will draw with line to
+                pathdata.append((Path.LINETO, ring[p]))
+            # close with the last point
+            pathdata.append((Path.CLOSEPOLY,ring[last]))
+
+        # all rings define one path
+        codes, verts = zip(*pathdata)
+        # build the path object and return
+        return mpath.Path(verts, codes)
+</code></pre>
+
+<h3 id="die-klasse-drawmap">Die Klasse DrawMap</h3>
+<p>Mit DrawMap wird eine Karte repräsentiert. Es ist so möglich, die zuvor erstellten Layer zu zeichnen, einen Ausschnitt festzulegen oder eine Überschrift anzugeben. Mit addSingleSymbolLayer kann auf einfache Weise ein Layer angelegt werden, der nur aus einer Klasse besteht und demnach alle Geometrien mit der derselben Signatur darstellt.</p>
+<pre><code class="python">class DrawMap(object):
+    &quot;&quot;&quot;a map drawing class, based on matplotlib (pyplot).
+    Use MapLayers to populate the map with addLayer(). Call drawAll() and show()
+    to display the map!&quot;&quot;&quot;
+    def __init__(self):
+        self.pyplot = plt
+        self.figure = plt.figure()
+        self.plot = self.figure.add_subplot(111)
+        self.title = &quot;Draw Map&quot;
+        self.frame = None
+        self.margin = 0.02
+        self.layer = []
+        self.extent = None
+
+    def getLayersExtent(self):
+        &quot;&quot;&quot;calculate the extent of all layers. This is called by addLayer&quot;&quot;&quot;
+        flatcoords = []
+        for lay in self.layer:
+            flatcoords.extend(lay.extent.getPoints())
+
+        self.extent = geomet.Extent(flatcoords)
+
+    def setFrame(self, extent):
+        self.frame = (extent.left, extent.bottom, extent.right, extent.top)
+
+    def addLayer(self, layer):
+        &quot;&quot;&quot;add a Layer object to the map&quot;&quot;&quot;
+        self.layer.append(layer)
+        layer.calcExtent()
+        self.getLayersExtent()
+
+    def addSingleSymbolLayer(self, geomtype, objects, style):
+        ssl = MapLayer(self, geomtype)
+        ssl.addClass(objects, style)
+        self.layer.append(ssl)
+        return ssl
+
+    def drawAll(self):
+        for lay in self.layer:
+            lay.draw()
+
+    def show(self):
+        &quot;&quot;&quot;open the matplotlib window, sets some litte layout and calls imported object method: plt.show()&quot;&quot;&quot;
+        self.plot.grid()
+
+        if not self.frame:
+            xmarg = self.extent.width * self.margin / 2
+            ymarg = self.extent.height * self.margin / 2
+            self.frame = (self.extent.left - xmarg, self.extent.bottom - ymarg,
+                          self.extent.right+xmarg, self.extent.top+ymarg)
+
+        self.plot.set_xlim(self.frame[0], self.frame[2])
+        self.plot.set_ylim(self.frame[1], self.frame[3])
+        self.plot.set_title(self.title)
+
+        # self.drawAll()
+        plt.show()
+</code></pre>
+
+<h3 id="test-von-drawmap">Test von DrawMap</h3>
+<p>Der Test zeigt die Verwendung der Klassen. Benutzt wird die Funktion test() im geomet-Modul, um die dort zurückgegebenen Beispielgeometrien nutzen zu können.</p>
+<pre><code class="python">def main():
+
+    geo = geomet.test()
+
+    # ## drawing
+    map = DrawMap()
+
+    polys = geo[2]
+    lay = MapLayer(map, &quot;Polygons&quot;)
+    style = PolyStyle(linecolor=&quot;#FF4444&quot;)
+    lay.addClass(polys,style)
+    map.addLayer(lay)
+
+    lines = geo[1]
+    lay = MapLayer(map, &quot;Lines&quot;)
+    style = LineStyle(color=&quot;blue&quot;)
+    lay.addClass(lines, style)
+    map.addLayer(lay)
+
+    orte = geo[0]
+    lay = MapLayer(map, &quot;Points&quot;)
+    style = PointStyle(marker=&quot;*&quot;, color=&quot;blue&quot;)
+    lay.addClass(orte, style)
+    map.addLayer(lay)
+
+    map.drawAll()
+    map.show()
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

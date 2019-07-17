@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Objektorientierung - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Objektorientierte Programmierung", url: "#_top", children: [
+              {title: "Objektorientierter Entwurf", url: "#objektorientierter-entwurf" },
+              {title: "Objektorientierte Anwendungen", url: "#objektorientierte-anwendungen" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="objektorientierte-programmierung">Objektorientierte Programmierung</h1>
+<p>Alles in Python ist ein Objekt:</p>
+<p>"Objects are Python’s abstraction for data. All data in a Python program is represented by objects or by relations between objects. (In a sense, and in conformance to Von Neumann’s model of a <em>stored program computer,</em> code is also represented by objects.)" <a href="https://docs.python.org/3.7/reference/datamodel.html">Dokumentation</a></p>
+<p>Zu den Möglichkeiten der Objektorientierten Programmierung haben wir in Python bislang nur elementare Dinge zum Aufbau eigener Klassen kennengelernt.</p>
+<p>Dazu gehören: </p>
+<ul>
+<li>die Verwendung des Schlüsselworts <code>class</code></li>
+<li>der Einsatz von <code>__init__</code> als Methode</li>
+<li>die Bedeutung von <code>self</code> als Objektvariable</li>
+<li>der allgemeine Einsatz von Methoden</li>
+</ul>
+<pre><code class="python">class Point(object):
+
+    def __init__(self, x=0.0, y=0.0):
+        self.X = x
+        self.Y = y
+
+    def __str__(self):
+        return &quot;POINT (%s %s)&quot; % (self.X, self.Y)
+
+    def distance(self, point):
+        dx = abs(self.X - point.X)
+        dy = abs(self.Y - point.Y)
+        return math.sqrt(dx**2 + dy**2)
+</code></pre>
+
+<p>Daran können wir bereits wesentliche Eigenschaften (Vorteile) der OO-Programmierung erkennen:</p>
+<ul>
+<li>Encapsulation: Daten und Funktionen werden zusammen verwaltet, </li>
+<li>Data Abstraction: interne Datenstrukturen werden nicht direkt zugegriffen, sondern über eine Schnittstelle weitergegeben (wir erlauben hier den Zugriff auf X und Y, besser wären Methoden, s.u.),</li>
+<li>Polymorphism: Klassenstrukturen helfen, die Schnittstelle über verschiedene Klassen konsistenz zu halten: z.B: Methodennamen lauten in allen Klassen gleich,</li>
+<li>Inheritance: Vererbung meint die Weitergabe von Daten und Methoden von allgemeineren Klassen zu spezielleren, hier nur Vererbung aus der Klasse <code>object</code>. In Python3 kann dies weggelassen werden! <a href="https://stackoverflow.com/questions/4015417/python-class-inherits-object">Diskussion auf stackoverflow</a></li>
+</ul>
+<p>Variante mit Zugriff auf Daten mit Properties:</p>
+<pre><code class="python">class Point(object):
+
+    def __init__(self, x=0.0, y=0.0):
+        print(&quot;init&quot;)
+        self.X = x
+        self.Y = y
+
+    def __str__(self):
+        print(&quot;str&quot;)
+        return &quot;POINT: %s, %s&quot; % (self.X, self.Y)
+
+    def setX(self, x):
+        print(&quot;setX&quot;)
+        if x &gt;= 0:
+            self._x = x
+
+    def setY(self, y):
+        print(&quot;setY&quot;)
+        if y &gt;= 0:
+            self._y = y
+
+    def getX(self):
+        print(&quot;getX&quot;)
+        return self._x
+
+    def getY(self):
+        print(&quot;getY&quot;)
+        return self._y
+
+    X = property(getX, setX)
+    Y = property(getY, setY)
+</code></pre>
+
+<p>Properties sind Objekte, die es ermöglichen, Daten auch in Zuweisungen zu nutzen, außerdem ist der direkte Zugriff auf die Daten <strong>nicht</strong> möglich. Hier wurden <code>_x</code> und <code>_y</code> durch den Unterstrich explizit geschützt.
+<a href="https://hackernoon.com/understanding-the-underscore-of-python-309d1a029edc">Was war nochmal der underscore?</a> Diese Seite erläutert dies ziemlich umfassend, zugleich kurz und übersichtlich.</p>
+<p>Properties können auch mit decorators erzeugt werden: <a href="https://www.programiz.com/python-programming/property">Python @property</a></p>
+<pre><code class="python">p1 = Point()
+print(p1)
+print(p1.getX(), p1.getY())
+print(p1.X, p1.Y)
+p1.X = -0.5
+p1.Y = 1.0
+print(p1)
+</code></pre>
+
+<h2 id="objektorientierter-entwurf">Objektorientierter Entwurf</h2>
+<p>Klassenstrukturen sind Teil des Entwurfs, sie werden zunächst aufgeschrieben:</p>
+<figure><img alt="Klassendiagramm" src="../img/chap1_classprimer.png" /><figcaption>
+<p>Klassendiagramm für Datenobjekte</p>
+</figcaption>
+</figure>
+<p>Hier der Entwurf zu einer Klassenstruktur zum Einlesen von Daten (Datenquelle), entweder aus Dateien oder aus Datenbanken. Beide "Zweige" des Entwurfs benutzen eine Klasse <code>Table</code>, mit der die Daten verbunden werden. Die oberste Klasse <code>Datenquelle</code> ist im Idealfall eine abstrakte Klasse, aus der sich keine Objekte ableiten lassen, sondern die die gemeinsamen Strukturen der anderen Klasse vorschreibt.</p>
+<pre><code class="python">class DataSource(object):
+
+    def __init__(self):
+        pass
+
+    def open(self, location):
+        pass
+
+    def read(self):
+        pass
+
+
+class DataFile(DataSource):
+
+    def open(self, location):
+        pass
+
+
+class CSVFile(DataFile):
+
+    def read(self, delim):
+        pass
+</code></pre>
+
+<p>Ein erster Entwurf für die Klasse <code>CSVFile</code>, sie erbt Methoden und Eigenschaften von <code>DataFile</code>, die Wiederum aus der Klasse <code>DataSource</code> abgeleitet ist. Diese abstrakte Klasse gibt bereits die Namen der Methoden vor. Angedeutet ist ebenfalls, dass Methoden von einer spezialisierten Klasse überschrieben werden können: </p>
+<ul>
+<li>
+<p>In <code>DataFile</code> definieren wir die Methode <code>open()</code> neu, da zum Öffnen einer Datei eine andere Vorgehensweise gewählt werden muss, als beispielsweise zum Öffnen einer Datenbank.</p>
+</li>
+<li>
+<p>In <code>CSVFile</code> trifft dies auf die Methode <code>read()</code> zu. Wir gehen davon aus, dass eine CSV-Datei genau wie eine beliebige Datei geöffnet wird, aber bedingt durch das Format, eine andere Form des Lesens der Inhalte gewählt werden muss. </p>
+</li>
+</ul>
+<h2 id="objektorientierte-anwendungen">Objektorientierte Anwendungen</h2>
+<p>Viele Anwendungen (im Sinne von Software/Programmen) werden durch den Einsatz von Klassen aufgebaut. Typisch für die Vorgehensweise ist es, eine eigene Klasse für die Software sebst zu definieren. Python-Scripte basieren immer auf Modulen und diese Module können entweder importiert oder ausgeführt werden:</p>
+<pre><code class="python">def main():
+    pass
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<p>Zwar ist in Python ein Modul ein Objekt, das Programm selbst ist in diesem Beispiel aber keine Klasse!
+Hier schon:</p>
+<pre><code class="python">class App(object):
+    def main():
+        print(&quot;Hello World!&quot;)
+
+if __name__ == '__main__':
+    app = App()
+    app.main()
+</code></pre>
+
+<p>Doch lohnt dieser Aufwand natürlich nur, wenn die Klasse zur Applikation (App) Teil einer umfangreicheren Software ist und spezielle Aufgaben übernimmt. Dies ist z.B. bei Benutzeroberflächen der Fall. Die Klasse App dient dann der Verarbeitung von Benutzereingaben und die konkreten auszuführenden Funktionen werden in einer abgeleiteten Klasse verarbeitet.</p>
+<p>Als Beispiel schauen wir uns das Python-Modul <code>cmd</code> an. Mit cmd können CLI-Programme realisiert werden. d.h. hier läuft die Benutzersteuerung über eine Kommandozeile und die ANwendung definiert ihre eigenen Befehle. Das Modul cmd enthält eine Klasse Cmd, welche die Funktionalität bereitstellt, um es dem  Benutzer zu ermöglichen, Befehle als Eingabe zu verwenden. Eine kurze Beschreibung des Moduls finden wir <a href="https://coderwall.com/p/w78iva/give-your-python-program-a-shell-with-the-cmd-module">hier</a>.</p>
+<p>Hier unser eigenes Beispiel für eine minimale <em>cmd-Shell</em>:</p>
+<pre><code class="python">from cmd import Cmd
+
+class MyPrompt(Cmd):
+
+    def do_hello(self, args):
+        &quot;&quot;&quot;Says hello. If you provide a name, it will greet you with it.&quot;&quot;&quot;
+        if len(args) == 0:
+            name = 'stranger'
+        else:
+            name = args
+        print (&quot;Hello, %s&quot; % name)
+
+    def do_quit(self, args):
+        &quot;&quot;&quot;Quits the program.&quot;&quot;&quot;
+        print (&quot;Quitting.&quot;)
+        raise SystemExit
+
+
+def main():
+    prompt = MyPrompt()
+    prompt.prompt = '&gt; '
+    prompt.cmdloop('Starting prompt...')
+
+if __name__ == '__main__':
+    main()
+</code></pre>
+
+<p>Wir importieren zunächst die Klasse Cmd, und erstellen eine eigene, vom Cmd abgeleitete Klasse 'MyPrompt'. Cmd sieht vor, dass Befehle durch Methoden definiert werden, deren Name mit <code>do_</code> beginnt und mit dem Befehlswort endet: <code>do_hello</code> legt also das Kommando hello an.</p>
+<ul>
+<li>do_hello hat zudem zwei Parameter: neben der obligatorischen Objektvariable <code>self</code> den Parameter <code>args</code>. Wenn wir nun den Befehl hello mit einem zusätzliche Parameter eingeben, wird user dieser als Name wieder ausgegeben. Fehlt der Parameter, wird "stranger" ausgegeben.</li>
+<li>do_quit schließt das Programm. Außerdem gibt es per default ein Kommando "help", das die Befehle auflistet oder zu einem bestimmten Befehl den doc-String der Methode ausgibt.</li>
+<li>Das Python-typische <code>main()</code> in Verbindung mit <code>if __name__ == '__main__'</code> wurde hier beibehalten.</li>
+<li>Die Verwendung von raise SystemExit aus dem Originalcode wurde beibehalten, in der Dokumentation zum cmd-Modul ist angegeben, ein <code>return True</code> zu verwenden. </li>
+</ul>
+<h3 id="beispiel-package-mit-__main__py">Beispiel: Package mit <code>__main__.py</code></h3>
+<p>In Python kann ein Package direkt ausführbar gemacht werden, indem ein Modul <code>__main__.py</code> hinzugefügt wird. Die enthält dann den Code zur Ausführung und wird gestartet wenn der Python-Interpreter mit -m gestartet wird:</p>
+<p>Dazu fügen wir eine Datei <code>__main__.py</code> dem Package hinzu.</p>
+<pre><code class="text">meinProjekt
+   - `__init__.py`
+   - `__main__.py`
+   - `meinModul.py`
+</code></pre>
+
+<p><code>__main__.py:</code></p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+from meinProjekt.meinModul import MeineClass
+
+m = MeineClass()
+m.beispiel(&quot;Tada!&quot;)
+</code></pre>
+
+<p>Dies ist übrigens derselbe Code wie in <code>useMainProjekt.py</code>, <code>__main__.py</code> ist also nur eine von mehreren Möglichkeiten.</p>
+<h3 id="beispiel-pyqgis">Beispiel: PyQGIS</h3>
+<p>Auch QGIS kann unter Python als objektorientiertes Programm ausgeführt werden. Im Folgenden werden wir ein <em>standalone script</em> schreiben, das QGIS-Funktionen ohne GUI ausführen kann.</p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+from qgis.core import *
+import os
+
+# supply path to qgis install location
+env_prefix_path = os.environ['QGIS_PREFIX_PATH']
+QgsApplication.setPrefixPath(env_prefix_path, True)
+
+# create a reference to the QgsApplication, setting the
+# second argument to False disables the GUI
+qgs = QgsApplication([], False)
+
+# load providers
+qgs.initQgis()
+
+# Write your code here to load some layers, use processing
+# algorithms, etc.
+
+# When your script is complete, call exitQgis() to remove the
+# provider and layer registries from memory
+qgs.exitQgis()
+</code></pre>
+
+<p>Das Script öffent und schließt QGIS gleich wieder. </p>
+<ul>
+<li>Der erste Teil, bis Zeile 7 bereitet den Start von qgis vor</li>
+<li>Der zweite Zeil (Zeilen 9-14) öffnet QGIS als QgsApplication-Objekt</li>
+<li>dahinter wäre der Platz zur Ausführung von QGIS-Funktionen</li>
+<li>Im letzten Teil wird qgis mit der Methode exitQgis() geschlossen</li>
+</ul>
+<p>Wir werden dieses Script im nächsten Kapitel als Alternative zur Python Shell innerhalb von QGIS nutzen können.
+Zudem ist es ein Beispiel für Qt-Anwendung unter Python, mit der wir letztendlich unser Plugin erstellen werden.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

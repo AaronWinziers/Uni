@@ -1,0 +1,186 @@
+var win = null;
+var elem = null;
+var skulpt_page = "/skulpt/skulpt.html";
+
+function wreset() {	
+	win.document.getElementById("yourcode").value = elem.innerText;
+	win.document.getElementById("output").innerText = "_";
+	console.log("wreset - done");
+}
+
+function wopen() {
+	win = window.open(skulpt_page, "Skulpt");
+	win.onload = function (e) {
+		
+		wreset();
+		
+		/*editor = CodeMirror.fromTextArea(document.getElementById('yourcode'), {
+			mode: {
+				name: "python",
+				version: 2,
+				singleLineStringErrors: false
+			},
+			lineNumbers: true,
+			indentUnit: 4
+		});*/
+		console.log(document.getElementById('yourcode'))
+
+		console.log("onload event - done");
+            
+	}
+	console.log("wopen - done");
+}
+
+function run_skulpt(event) {
+    elem = event.target.parentNode.previousElementSibling
+	if (event.target.href.startsWith("file://")) {
+		skulpt_page = "." + skulpt_page
+	} else {
+		skulpt_page = skulpt_page 
+	}
+    if (win == null || win.closed) {
+        wopen();
+    } else {
+        win.close();
+		wopen();
+    }
+	console.log("run_skulpt - done");
+}
+
+function do_skulpt(code_id) {
+    elem = document.getElementById(code_id);
+    
+	if (win == null || win.closed) {
+		console.log("no win: ");
+		wopen();
+	} else {
+		// after some reading: you can't set focus on tabs, so close and open again
+		win.close();
+		wopen();
+	}
+	
+}
+
+function clearit() {
+	document.getElementById('yourcode').value = "";
+	document.getElementById('output').innerText = "_";
+	console.log("clearit - done");
+}
+
+var openFile = function(event) {
+	var input = event.target;
+
+    var reader = new FileReader();
+    reader.onload = function(){
+        var text = reader.result;
+        var node = document.getElementById('yourcode');
+		console.log(node);
+		console.log(text);
+        node.value = text;
+        console.log(reader.result.substring(0, 200));
+    };
+    reader.readAsText(input.files[0]);
+};
+	  
+// output functions are configurable.  This one just appends some text
+// to a pre element.
+function outf(text) { 
+    var mypre = document.getElementById("output");
+    text = text.replace(/</g, '&lt;');
+    mypre.innerHTML = mypre.innerHTML + text; 
+} 
+
+function builtinRead(x) {
+    if (Sk.builtinFiles === undefined || Sk.builtinFiles["files"][x] === undefined)
+            throw "File not found: '" + x + "'";
+    return Sk.builtinFiles["files"][x];
+}
+// Here's everything you need to run a python program in skulpt
+// grab the code from your textarea
+// get a reference to your pre element for output
+// configure the output function
+// call Sk.importMainWithBody()
+/* function runit() { 
+    var prog = document.getElementById("yourcode").value; 
+    var mypre = document.getElementById("output");
+
+    if (prog != "" ) {   
+        mypre.innerHTML = ''; 
+        Sk.pre = "output";
+        Sk.configure({
+			inputfun: function (prompt) {
+				return window.prompt(prompt);
+				},
+			inputfunTakesPrompt: true,
+			output:outf, 
+			read:builtinRead}); 
+	
+        try {
+            eval(Sk.importMainWithBody("<stdin>", false, prog));
+        } catch (e) {
+            sErr = e.toString(); 
+            alert(sErr);
+            outf(sErr);
+        }
+		
+    } else {
+        sErr = "Please give us your code!"; 
+        alert(sErr);
+        outf(sErr);
+    }
+} */
+function runit() { 
+    var prog = document.getElementById("yourcode").value; 
+    var mypre = document.getElementById("output");
+
+    if (prog != "" ) {   
+        mypre.innerHTML = ''; 
+        Sk.pre = "output";
+        Sk.configure({
+			inputfun: function (prompt) {
+				return window.prompt(prompt);
+				},
+			inputfunTakesPrompt: true,
+			output:outf, 
+			read:builtinRead}); 
+	
+        try {
+            eval(Sk.importMainWithBody("<stdin>", false, prog));
+        } catch (e) {
+            sErr = e.toString(); 
+            alert(sErr);
+            outf(sErr);
+        }
+		
+    } else {
+        sErr = "Please give us your code!"; 
+        alert(sErr);
+        outf(sErr);
+    }
+	console.log("runit - done");
+} 
+
+// some more or less skulpt related functions
+function savePython(event, filename) {
+	text = document.getElementById("yourcode").value;
+	dataURL = 'data:text/plain,' + encodeURIComponent(text);
+	downloadDataUrlFromJavascript(filename, dataURL);
+	console.log("savePython - done");
+}
+
+function downloadDataUrlFromJavascript(filename, dataUrl) {
+
+    // Construct the a element
+    var link = document.createElement("a");
+    link.download = filename;
+    //link.target = "_blank";
+
+    // Construct the uri
+    link.href = dataUrl;
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup the DOM
+    document.body.removeChild(link);
+    delete link;
+}

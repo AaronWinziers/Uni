@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Aufbau von QGIS-Plugins - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "QGIS-Plugins", url: "#_top", children: [
+              {title: "Grundlagen", url: "#grundlagen" },
+              {title: "Helfer-Plugins", url: "#helfer-plugins" },
+              {title: "Beispiel-Plugin Quick WKT", url: "#beispiel-plugin-quick-wkt" },
+              {title: "Lebenszyklus des Plugins untersuchen", url: "#lebenszyklus-des-plugins-untersuchen" },
+          ]},
+          {title: "Ein eigenes Plugin erstellen", url: "#ein-eigenes-plugin-erstellen", children: [
+              {title: "Der QGIS-Plugin Builder", url: "#der-qgis-plugin-builder" },
+              {title: "Anpassungen im QtDesigner", url: "#anpassungen-im-qtdesigner" },
+              {title: "Logik des Plugin-Dialogs", url: "#logik-des-plugin-dialogs" },
+          ]},
+          {title: "Aufgabe: Pegelonline-Layer als Plugin", url: "#aufgabe-pegelonline-layer-als-plugin", children: [
+              {title: "Vorgehensweise", url: "#vorgehensweise" },
+              {title: "Erg\u00e4nzungen", url: "#erganzungen" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="qgis-plugins">QGIS-Plugins</h1>
+<h2 id="grundlagen">Grundlagen</h2>
+<p>Innerhalb von QGIS können Plugins benutzt werden, die erweiterte Funktionen in die Benutzeroberfläche integrieren. Diese Plugins werden üblicherweise von einem Repositorium heruntergeladen und installiert. Zuständig hierfür ist der Dialog <strong>Erweiterungen</strong> (<em>Plugins</em> in der engl. Version) aus dem Menü desselben Namens (Menü-&gt;Erweiterungen-&gt;Erweiterungen verwalten und installieren).</p>
+<p>Wird ein Plugin nur für den Eigengebrauchentwickelt, so kann dieses auch als zip-File installiert oder die erforderlichen Ordner und Dateien direkt in das QGIS-Plugin-Verzeichnis kopiert werden.</p>
+<p>In QGIS können Plugins in verschiedener Form auftreten:</p>
+<ul>
+<li>als Dialogfenster (Formular), das sich über der Anwendung öffnet</li>
+<li>als Andockfenster (Panel), das sich in den Bereichen der Benutzeroberfäche eingfügt</li>
+<li>zur Installation von Processing-Scripten, die in der Processing-Toolbox auftauchen</li>
+</ul>
+<p>Dialogfenster und Andockfenster werden über ein Icon in einer Funktionleiste (Toolbar) aktiviert oder tauchen als Eintrag in einem Menü auf. Auch Mischformen können entwickelt werden oder es wird gänzlich auf ein GUI für das Plugin verzichtet.</p>
+<p>Um ein eigenes Plugin zu schreiben, müssen wir</p>
+<ul>
+<li>die Plugin-Schnittstelle beachten und implementieren</li>
+<li>den Installationspfad für PlugIns kennen</li>
+<li>einen Code entwickeln, der in QGIS ausgeführt werden kann...</li>
+</ul>
+<p>Bevor wir soweit sind, installieren wir nutzt einige Helferlein und schauen uns ein Beispiel an, um den Aufbau eines Plugins zu analysieren.</p>
+<h2 id="helfer-plugins">Helfer-Plugins</h2>
+<p>Um die Erstellung und Programmierung von Plugins zu erleichtern, installieren wir zwei Helfer-Plugins:</p>
+<ul>
+<li><code>Plugin Builder 3</code>: Erstellt das Grundgerüst eines Plugins, mit allen erforderlichen Dateien</li>
+<li><code>Plugin Reloader</code>: Ermöglicht ein erneutes Einlesen des Plugins, z.B. nach Änderungen im Code, ohne QGIS jeweils neu starten zu müssen</li>
+</ul>
+<p>Ein weiteres Helfer-Plugin kann bei der Fehlersuche sinnvoll sein: <code>FirstAid</code> fängt Python-Fehler in QGIS ab und bietet teilweise Funktionen eines Debuggers.</p>
+<h2 id="beispiel-plugin-quick-wkt">Beispiel-Plugin Quick WKT</h2>
+<p>Aus dem Repository installieren wir ein einfaches Plugin mit minimalem Code: Quick WKT
+Das Plugin verfügt über einen Dialog, um eine Texteingabe im Format WKT (Well-Known-Text) als Layer in QGIS anzuzeigen. Nach der Installation lässt sich das Plugin über die Werkzeugleiste "Erweiterungen" mit dem entsprechendem Icon aufrufen.</p>
+<p>Wir wollen den Python-Code analysieren, um herauszufinden, wie der Aufruf funktioniert. Alle heruntergeladenen Anwendungen werden in einem Verzeichnis <code>~/.qgis3/profiles/default/python/plugins</code> bzw. <code>~/QGIS/QGIS3/profiles/default/python/plugins</code> gespeichert. Hierbei entspricht die Tilde (~) dem Benutzerverzeichnis, auf dem GIS-Stick ist dies der Ordner "Home", unter Windows häufig <code>C:\Users\benutzername\AppData\Roaming</code> unter Linux <code>/home/benutzername</code></p>
+<p>In dem Verzeichnis <code>plugins</code> befindet sich dann ein Ordner QuickWKT mit diesen Dateien und Unterordnern:</p>
+<ul>
+<li><code>__pycache__</code></li>
+<li><code>icons</code></li>
+<li><code>__init__.py</code></li>
+<li><code>metadata.txt</code></li>
+<li><code>QuickWKT.py</code></li>
+<li><code>QuickWKTDialog.py</code></li>
+<li><code>Readme.rst</code></li>
+<li><code>resources.qrc</code></li>
+<li><code>Ui_QuickWkt.ui</code></li>
+</ul>
+<p><strong>metadata.txt</strong></p>
+<p>ist eine Pflichtdatei, es enthält eine Beschreibung des Plugins. </p>
+<p><strong><code>__init__.py</code></strong></p>
+<p>Mit <code>__init__.py</code> wird der Verzeichnisinhalt für den Python-Interpreter zu einem Package. Es kann in Python über den Ordnernamen <code>QuickWkt</code> importiert werden. Die init-Datei wird dann als erstes gelesen und ausgeführt. Diesen Mechanismus nutzt QGIS zum einbetten des Plugins: Es fügt den Plugin-Pfad als Ort mit Python-Modulen dem Python-Interpreter hinzu und importiert automatisch alle Plugin-Packages. Beim Start von QGIS wird also die init-Datei jedes Moduls ausgeführt!</p>
+<p>Zwingende Voraussetzung für ein QGIS-Plugin ist die Funktion 'classFactory()'. Sie bildet die Schnittstelle zum QGIS, das das iface-Objekt als Parameter übergibt. </p>
+<pre><code class="python">def classFactory(iface):
+    from .QuickWKT import QuickWKT
+    return QuickWKT(iface)
+</code></pre>
+
+<p>Die zentrale Klasse des Plugins wird hier importiert und eine Objekt-Instanz erstellt, die an QGIS zurückgegeben wird. Diese Klasse enthält dann den Code, um das Plugin die Oberfläche von Qgis, als Icon oder Menüeintrag, zu integrieren.</p>
+<p><strong>QuickWKT.py</strong></p>
+<p>enthält die gleichnamige Klasse, die von <code>__init__.py</code> importiert und instanziiert wurde. </p>
+<p>Diese Klasse übernimmt das iface-Objekt als Eigenschaft und definiert die Methode <strong>initGUI()</strong>. Diese wird von QGIS aufgerufen, um so die Verbindung zum Aufruf der GUI des Plugins zu ermöglichen. </p>
+<ul>
+<li>es wird ein QAction-Objekt erstellt und mit der run-Methode des Formulars verbunden</li>
+<li>hierbei wird ein Icon aus dem Unterordner <code>icons</code> eingelesen</li>
+<li>das QAction-Objekt wird in eine Toolbar und in das Plugin-Menü eingebaut.</li>
+</ul>
+<p>Ebenso gibt es eine Funktion zum Abmelden des Plugins aus QGIS: <strong>unload()</strong> entfernt schlicht die Aufrufmöglichkeiten für das Plugin, sodass es nicht mehr gestartet werden kann.</p>
+<p>In dieser Klasse finden wir auch die run-Methode, hier heißt sie <strong>quickwkt()</strong>. Die Methode zeigt den Dialog an, wenn der Benutzer das QAction als Klick auf das Icon oder im Menü auslöst. Außerdem wertet sie aus, welche Eingaben im Dialog gemacht wurden und versucht einen Layer aus dem WKT-Textfeld zu erzeugen.</p>
+<p><strong>resources.py</strong></p>
+<p>die Übersetzung der XML-Datei resource.qrc, in der Icons und andere Medienelemente aufgeführt sein  können. Das Icon für das QAction-Objekt ist hier angegeben, die recource-Datei enthält den Dateinamen und einen relativen Pfad innerhalb QGIS-Plugin-Pfads. Allerdings ist in diesem Fall die resources.qrc nicht übersetzt worden und wird wohl innerhalb des Plugins nicht verwendet. Wir würden sonst einen Import von resources in <code>QuickWKT.py</code> finden.</p>
+<p><strong>Ui_QuickWKT.ui</strong></p>
+<p>meist mit dem QtDesigner erstellte XML-Datei, welche die Benutzeroberfläche beschreibt. Der Name ist frei wählbar, oft finden wir auch <code>pluginname_dialog</code> oder etwas ähnliches. Das Modul QuickWKTDialog importiert diese ui-Datei.</p>
+<p><strong>QuickWKTDialog.py</strong></p>
+<p>Hier wird die Logik des Dialogs festgelegt. Einmal aufgerufen, zeigt er die Widgets an, die in der ui-Datei <code>Ui_QuickWKT.ui</code> aufgeführt sind. Für diese enthält die Klasse die Signal-Slot-Angaben und Methoden. Der Dialog enthält z.B. eine ComboBox, die mit Werten gefüllt und mit der Methode on_exampleComboBox_currentIndexChanged verbunden wird.</p>
+<p>Die vorhandene Button-Leiste hat bereits vordefinierte Signal-Slots für Clear,OK und Cancel, die in der ui-Datei enthalten sind. Textfeld und CheckBox haben keinen verbundenen Signal-Slot.</p>
+<h2 id="lebenszyklus-des-plugins-untersuchen">Lebenszyklus des Plugins untersuchen</h2>
+<p>Mit ein paar wenigen print-Anweisungen wollen wir sehen, welche Methoden aus welchem Modul, wann aufgerufen werden. Wir beginnen mit <code>__init__.py</code> und dem Aufruf von classFactory, nehmen uns dann nacheinander alle Intialisierungsmethoden vor sowie die Stellen im Code, wo <em>"etwas passiert"</em>, z.B. in den Signal-Slot-Methoden.</p>
+<p>Wir öffnen die QGIS-Python-Console, um die Ausgaben sehen zu können und benutzen den Plugin-Reloader, um das Plugin erneut einzulesen.</p>
+<h1 id="ein-eigenes-plugin-erstellen">Ein eigenes Plugin erstellen</h1>
+<p>Um zu sehen, wie wir ein eigenes Plugin entwickeln können, wollen wir einen Dialog erstellen, der die Datenquellen (Pfade) aller geladenen Layer anzeigt. Unser Plugin soll daher ListLayers heißen.</p>
+<p>Vorgehensweise:</p>
+<ul>
+<li>Um die nötigen Dateien zu erhalten, nutzen wir den Plugin-Builder</li>
+<li>In die vom Plugin-Builder erstellte ui-Datei bearbeiten wir mit dem QtDesigner</li>
+<li>Wir <em>"installieren"</em> das Plugin im Plugin-Ordner und starten QGIS (neu)</li>
+</ul>
+<h2 id="der-qgis-plugin-builder">Der QGIS-Plugin Builder</h2>
+<p>Das Modul integriert sich in die QGIS-Oberfläche als Icon (Hammer) bzw. unter dem Menü Erweiterungen-&gt;Plugin Builder. Beim Start des Plugin öffnet sich ein Dialog mit Formular. Wir folgen den Anweisungen und wählen als Template "Tool button with dialog".</p>
+<figure><img alt="Fenster des PluginBuilder" src="../img/chap03_plugin_builder.png" /><figcaption>
+<p>Fenster des PluginBuilder mit Pflichtfeldern</p>
+</figcaption>
+</figure>
+<ul>
+<li>Wir füllen aus: <ul>
+<li>ClassName: wird in den Code übernommen und wird zu: <code>class ListLayers():</code></li>
+<li>Plugin-Name: Kann frei gewählt werden, z.B. <code>List Layers</code></li>
+<li>Modulname: sollte dem Klassennamen entsprechen, wird zu <code>listlayers.py</code></li>
+<li>Versionsangaben belassen wir ...</li>
+<li>Author/Company und Email address kann ihre Angaben beinhalten</li>
+</ul>
+</li>
+<li>Weiter gehts:<ul>
+<li>About: Kurzbeschreibung des Plugins</li>
+</ul>
+</li>
+<li>Nächster Schritt:<ul>
+<li>Template: Wir wählen Tool button mit Dialog</li>
+<li>Mit Menu kann festgelegt werden, in welchem Menü das Plugin in QGIS aufgerufen werden kann.</li>
+</ul>
+</li>
+<li>Weiter:<ul>
+<li>Angaben zu erweiterten Dateien und Tools zur Pluginentwicklung: diesmal abwählen</li>
+</ul>
+</li>
+<li>Noch ein Schritt:<ul>
+<li>Angaben zu bug tracker und code repository füllen wir mit Platzhaltern</li>
+</ul>
+</li>
+<li>letzter Schritt<ul>
+<li>Wir wählen den Ausgabeordner und bestätigen mit "Generate"</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="erzeugte Dateien" src="../img/chap03_pbuilder_files.png" /><figcaption>
+<p>vom Plugin Builder erzeugte Dateien</p>
+</figcaption>
+</figure>
+<p>Wie wir sehen, legt der Plugin-Builder mehr Dateien an, als wir es von unserem ersten Beispiel kennen. Alle Angaben zu der Ausgabe des Plugin-Builder finden wir in der <a href="http://g-sherman.github.io/Qgis-Plugin-Builder/">Dokumentation</a>. Die dort erwähnten Programme make und pb_tool verwenden wir zunächst nicht!</p>
+<h2 id="anpassungen-im-qtdesigner">Anpassungen im QtDesigner</h2>
+<p>Der Plugin-Builder erstellt eine ui-Datei mit einem leeren Dialog, den wir mit dem QtDesigner bearbeiten wollen (listlayers_dialog_base.ui). Unser Plugin soll alle geladen Layer mit ihrer Datenquelle anzeigen und in einer Datei speichern. Dazu benötigen wir geeignete Widgets im Formular:</p>
+<figure><img alt="Formular" src="../img/chap3_ListLayers_dialog.png" /><figcaption>
+<p>Dialog mit Labeln, ListWidget und LineEdit</p>
+</figcaption>
+</figure>
+<p>Außerdem existiert die Datei resources.qrc, die zunächst übersetzt werden muss, um später das Icon anzeigen zu können...</p>
+<p>In der OSGeo4W-Shell führen wir hierzu folgende Befehle aus:</p>
+<pre><code class="Shell">&lt;Laufwerksbuchstabe:&gt;
+cd zu_pluin_ordner
+py3_env
+qt5_env
+pyrcc5 -o resources.py resources.qrc
+</code></pre>
+
+<h2 id="logik-des-plugin-dialogs">Logik des Plugin-Dialogs</h2>
+<p>Im Beispiel-Plugin haben wir gesehen, dass innerhalb der run-Methode der Code zu finden ist, der ausgeführt wird, wenn der Benutzer den Dialog mit OK beendet.</p>
+<p>In der vom Plugin-Builder erzeugten Datei <code>listlayers.py</code> sieht das so aus:</p>
+<pre><code class="python">    def run(self):
+        &quot;&quot;&quot;Run method that performs all the real work&quot;&quot;&quot;
+
+        # Create the dialog with elements (after translation) and keep reference
+        # Only create GUI ONCE in callback, so that it will only load when the plugin is started
+        if self.first_start == True:
+            self.first_start = False
+            self.dlg = ListLayersDialog()
+
+        # show the dialog
+        self.dlg.show()
+        # Run the dialog event loop
+        result = self.dlg.exec_()
+        # See if OK was pressed
+        if result:
+            # Do something useful here - delete the line containing pass and
+            # substitute with your code.
+            pass
+</code></pre>
+
+<p>In unserem Fall bieten sich hier zwei Eingriffspunkte an:</p>
+<ul>
+<li>In der if-Abfrage <code>if result:</code> ersetzen wir <code>pass</code> durch den Code, der ausgeführt wird, wenn der Benutzer den Dialog mit OK bereits wieder geschlossen hat</li>
+<li>Vor der Anzeige des Dialogs sollten wir aber die Widgets <em>füllen</em>, vor allem das ListWidget. </li>
+</ul>
+<p>Zu Beginn der run-Methode wird überprüft, ob der Dialog zum ersten Mal geöffnet werden soll und er wird in diesem Fall an dieser Stelle überhaupt erst erzeugt. Innerhalb des if-Blocks unter <code>if self.first_start == True:</code> bietet sich die Möglichkeit, den Dialog zu füllen. Aber die run-Methode wird jedesmal ausgeführt, wenn der Benutzer auf das Icon oder den Menüeintrag klickt - Was ist, wenn  zwischenzeitlich Layer hinzugefügt oder entfernt wurden?</p>
+<p>Daher liegt die geeignete Stelle für unseren Code hinter der if-Anweisung und vor der Anzeige des Dialogs!</p>
+<pre><code class="python">    def run(self):
+        &quot;&quot;&quot;Run method that performs all the real work&quot;&quot;&quot;
+
+        # Create the dialog with elements (after translation) and keep reference
+        # Only create GUI ONCE in callback, so that it will only load when the plugin is started
+        if self.first_start == True:
+            self.first_start = False
+            self.dlg = ListLayersDialog()
+
+        # prepare dialogs content
+
+        # show the dialog
+        self.dlg.show()
+        # Run the dialog event loop
+        result = self.dlg.exec_()
+        # See if OK was pressed
+        if result:
+            # Do something useful here - delete the line containing pass
+            # get dialogs content and process
+            pass
+</code></pre>
+
+<p>Als erstes kümmern wir uns um den Teil unter <code># prepare dialogs content</code>
+Um das ListWidget füllen, verwenden wir dessen Methode <code>addItem()</code> und übertragen so die Datenquellen aller Layer:</p>
+<pre><code class="python">        # prepare dialogs content
+        print(&quot;run - prepare&quot;)
+        self.dlg.listWidget.clear()
+        for lyr in self.iface.mapCanvas().layers():
+            print(lyr.dataProvider().dataSourceUri())
+            self.dlg.listWidget.addItem(lyr.dataProvider().dataSourceUri())
+</code></pre>
+
+<p>Hier iterieren wir über alle Layer aus <code>self.iface.mapCanvas().layers()</code>. Um deren Datenquelle zu bestimmen benötigen wir den Provider und dessen Methode dataSourceUri: <code>lyr.dataProvider().dataSourceUri()</code></p>
+<p>Schliesslich benutzen wir den Inhalt des ListWidgets und des LineEdits, um die Angaben in eine Datei zu schreiben, bzw. wie hier, um sie zunächst mit print() auszugeben:</p>
+<pre><code class="python">        if result:
+            # Do something useful here - delete the line containing pass
+            # get dialogs content and process
+            filename = self.dlg.lineEdit.text()
+            if filename:
+                print(filename)
+                for i in range(self.dlg.listWidget.count()):
+                    print(self.dlg.listWidget.item(i).text())        
+</code></pre>
+
+<p>Auch hier durchlaufen wir eine for-Schleife, diesmal mit einer Index-Variablen i aus range und der Anzahl der Listenelemente: <code>for i in range(self.dlg.listWidget.count()):</code>. Die Variable i benötigen wir, um nacheinander die Einträge der Liste zu erhalten, und zwar als Strings: <code>self.dlg.listWidget.item(i).text()</code></p>
+<!--
+# Rezepte für Plugins
+
+- Einbetten von eigenen Widgets, z.B. poGraph zur Anzeige des Pegelverlaus einzelner Stationen
+
+- Ausführen von Processing-Scripts in Plugins
+-->
+
+<h1 id="aufgabe-pegelonline-layer-als-plugin">Aufgabe: Pegelonline-Layer als Plugin</h1>
+<p>Eine Aufgabe zur Verbindung von Plugin und Pegelonline-Package pomodules.</p>
+<p>Wir erstellen ein simples Plugin mit Dialog, über den die Stationen von PegelOnline als Layer in QGIS geladen werden.</p>
+<p>Grundlage ist das Script, über das dieser Import über die Python-Konsole möglich ist. Der Code benutzt pomodules und soll nun in ein Plugin integriert werden.</p>
+<p>Hier ist eine mögliche Umsetzung des ursprünglichen Scripts:</p>
+<pre><code class="python">import sys
+sys.path.append(r&quot;mein_script_verzeichnis&quot;) # ersetzen
+from pomodules.poqgsstations import PoQgsStations
+
+po = PoQgsStations()
+features = po.getFeatures()
+fields = po.fields
+crs = po.crs
+
+# QgsVectorLayer benutzt eine URI
+layer_uri = &quot;Point?crs=%s&quot;%crs.authid()
+
+# layer erzeugen: im Arbeitsspeicher, temporär
+vl = QgsVectorLayer(layer_uri, &quot;Stations&quot;, &quot;memory&quot;)
+
+# Provider = Dateiebene
+pr = vl.dataProvider()
+pr.addAttributes(fields)
+vl.updateFields()
+
+pr.addFeatures(features)
+vl.updateExtents()
+
+print(&quot;fields:&quot;, len(pr.fields()))
+print(&quot;features:&quot;, pr.featureCount())
+e = vl.extent()
+print(&quot;extent:&quot;, e.xMinimum(), e.yMinimum(), e.xMaximum(), e.yMaximum())
+
+QgsProject.instance().addMapLayer(vl)
+</code></pre>
+
+<h2 id="vorgehensweise">Vorgehensweise</h2>
+<p>In einem neuen Plugin <code>poStationLoader</code> muss nur der richtige Ort für den Code gefunden werden, und einige Anpassungen vorgenommen werden, damit der Code im Plugin läuft:</p>
+<ul>
+<li>wir kopieren unser aktuelles pomodules in den Plugin-Ordner</li>
+<li>wir importieren die Klasse <code>PoQgsStations</code> im Kopfteil des Moduls postationloader.py, auf die Erweiterung des sys.path können wir verzichten. Allerdings ist pomodules jetzt Teil des Plugins (als Subpackage) und wird relativ importiert.</li>
+<li>wir importieren auch die verwendeten Klassen aus dem qgis.core-Modul: <br>
+<code>from qgis.core import (QgsVectorLayer, QgsProject)</code></li>
+<li>wir fügen den restlichen Code z.B. als neue Methode 'loadStations()' ein und rufen diese in run() auf.</li>
+</ul>
+<p>Änderungen im Modul pomodules:</p>
+<p><strong>stations</strong></p>
+<pre><code class="python">from .urlreader import Urlreader
+from . import poBaseURL
+</code></pre>
+
+<p><strong>poqgsstations</strong></p>
+<pre><code class="python">from .currentw import CurrentW
+</code></pre>
+
+<p><strong>postaionsloader.py</strong></p>
+<pre><code class="python">from .pomodules.poqgsstations import PoQgsStations
+</code></pre>
+
+<h2 id="erganzungen">Ergänzungen</h2>
+<p>Beim Entwurf des pomodules-Package hatten wir geplant, auch die Wasserstände als QGIS-Layer laden zu können. Jetzt ist der richtige Zeitpunkt gekommen, dies auszuprobieren! Fügen Sie in das Dialogfenster eine Option ein, um entweder alle Stationen, oder die Stationen mit aktuellen Pegelständen zu laden.</p>
+<p>Wir erweitern hierzu das Package pomodules um die zwei Dateien pocurrentw.py und poqgscurrentw.py. Analog zum Laden der Stationen sollen in pocurrentw die json-Daten aufbereitet werden und in poqgscurrentw die aufbereiteten Daten als QgsFields und QgsFeatures bereitgestellt werden. </p>
+<p>Die Abfrage erfolgt mit der URL: </p>
+<p><code>stations.json?timeseries=W&amp;includeTimeseries=true&amp;includeCurrentMeasurement=true</code></p>
+<p>Attribute der Pegelonline-Wasserstände sind:</p>
+<pre><code class="python">'geometry': ( d['longitude'], d['latitude']),
+'attributes': ( d['uuid'],
+                d['shortname'],
+                d['timeseries'][0]['currentMeasurement']['timestamp'],
+                d['timeseries'][0]['currentMeasurement']['value'],
+                d['timeseries'][0]['currentMeasurement']['trend'],
+                d['timeseries'][0]['currentMeasurement']['stateMnwMhw'],
+                d['timeseries'][0]['currentMeasurement']['stateNswHsw'])
+</code></pre>
+
+<p>Vergleiche auch <a href="../ch02/p02_jsonqgis.html#abfragen-verarbeiten">hier</a> im Kapitel zu <em>QGIS mit Pegelonline-Daten</em></p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Rezepte für Layer und Interaktionen - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "\u00dcbersicht", url: "#_top", children: [
+              {title: "Styles f\u00fcr Wasserst\u00e4nde", url: "#styles-fur-wasserstande" },
+          ]},
+          {title: "Layermanagement f\u00fcr die Wasserst\u00e4nde", url: "#layermanagement-fur-die-wasserstande", children: [
+              {title: "Funktionsweise der Radio-Buttons", url: "#funktionsweise-der-radio-buttons" },
+              {title: "Integration in po_runner", url: "#integration-in-po_runner" },
+          ]},
+          {title: "Selektionen", url: "#selektionen", children: [
+              {title: "Selektion auf Wassenst\u00e4nde", url: "#selektion-auf-wassenstande" },
+              {title: "Aufgabe: Integration in po_runner", url: "#aufgabe-integration-in-po_runner" },
+              {title: "Einbetten eines Custom-Wigets in QtDesiger", url: "#einbetten-eines-custom-wigets-in-qtdesiger" },
+              {title: "Integration in po_runner", url: "#integration-in-po_runner_1" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="ubersicht">Übersicht</h1>
+<p>An dieser Stelle sollen verschiedene Lösungsmöglichkeiten aufgezeigt werden, die bei der Umsetzung des Plugins pegelonline helfen.</p>
+<h2 id="styles-fur-wasserstande">Styles für Wasserstände</h2>
+<p>Nach den Attributen der Wasserstände (Beispieldaten: polevel_26_06.gpkg):</p>
+<ul>
+<li>value</li>
+<li>trend</li>
+<li>stateMnwMhw</li>
+<li>stateNswHsw</li>
+</ul>
+<p>kann die Darstellung der Stationen variiert werden. Hierbei haben die Attribute folgende Werte</p>
+<ul>
+<li>Value: Die absoluten Werte der Pegel. Leider sind diese nicht untereinander vergleichbar, sodass wir diese zunächst nicht berücksichtigen wollen</li>
+<li>Trend: Werte = (-1, 0, 1, -999), Bedeutung: fallend, konstant, steigend und unbekannt</li>
+<li>stateMnwMhw: Werte: (low, normal, high, commented, out-dated, unknown), als Abweichung von langfristigen Mittelwerten</li>
+<li>stateNswHsw: Werte wie stateMnwMhw, hier als Abweichung von absoluten Extremwerten</li>
+</ul>
+<p>Im Plugin können die unterschiedlichen Attribute z.B. über RadioButtons realisiert werden:</p>
+<figure><img alt="RadioButtons zur Attributauswahl" src="../img/chap03_plugin_levelchoice.png" /><figcaption>
+<p>RadioButtons zur Attributauswahl</p>
+</figcaption>
+</figure>
+<p>Zur Umsetzung legen wir vorgefertigte Styles an, die wir als qml-Dateien im Plugin-Ordner unter styles speichern. Die Gestaltung erfolgt in QGIS und die Styles können, ähnlich wie es für die Basiskarte gemacht wurde, gespeichert werden. </p>
+<h3 id="vorgehensweise">Vorgehensweise</h3>
+<ul>
+<li>Pegelstände laden</li>
+<li>Layer-&gt;Layergestaltung</li>
+<li>wir wählen <em>Kategorisiert</em> als Darstellungsart</li>
+<li>Spalte: Trend</li>
+<li>Klassifizieren: alle Werte weden angezeigt</li>
+<li>Grafik anpassen</li>
+<li>unter Layer-&gt;Exportieren oder Layer-Eigenschaften-Stil: <em>Als QGIS-Layerstildatei speichern</em></li>
+</ul>
+<figure><img alt="Layergestaltung für Trend" src="../img/chap03_plugin_styleatribute.png" /><figcaption>
+<p>Beispiel der Layergestaltung für das Attribut Trend</p>
+</figcaption>
+</figure>
+<p>Test: </p>
+<ul>
+<li>Layergestaltung zurücksetzen auf Einzelsymbol</li>
+<li>Layer-&gt;Eigenschaften-&gt;Stil-&gt;Lade Stil-&gt;aus Datei</li>
+</ul>
+<p>Zur Anzeige des Layers mit Python für das entsprechende Attribut laden wir eine Style-Datei mit der Methode <code>loadNamedStyle</code>. Wir testen dies zunächst mit den Beispieldaten in der QGIS-Python-Konsole:</p>
+<pre><code class="python">import os
+local_dir = r&quot;Mein_Plugin_Pfad\pegelonline&quot;
+lyr = iface.activeLayer()
+lyr.loadNamedStyle(os.path.join(local_dir, &quot;styles/stateM.qml&quot;))
+
+# im plugin als refreshLayer() vorhanden
+if iface.mapCanvas().isCachingEnabled():
+    lyr.triggerRepaint()
+else:
+    iface.mapCanvas().refresh()
+</code></pre>
+
+<h1 id="layermanagement-fur-die-wasserstande">Layermanagement für die Wasserstände</h1>
+<p>Ein Verfahren für das Layermanagement haben anhand der Funktionen für die Basiskarte bereits kennengelernt. Die wollen wir nun auf die Behandlung der Stationen mit Wasserstandsdaten anwenden. </p>
+<ul>
+<li>dies setzt voraus, dass die Pegel geladen werden können, </li>
+<li>testweise hier mit dem Geopackage <code>polevel_25_06.gpkg</code></li>
+<li>doLoadCurrentW() als Slot für den PushButton <code>pBloadCurrentW</code></li>
+</ul>
+<p>Im QtDesigner erweitern wir das GUI des Plugins, um die folgenden Elemente: </p>
+<ul>
+<li>PushButton zum Laden aus Geopackage <code>pBloadCurrentW</code></li>
+<li>Eine GroupBox mit drei Radio-Buttons für<ul>
+<li><code>rBstyleTrend</code> für das Attribut trend</li>
+<li><code>rBstyleMid</code> für das Attribut stateMnwMhw</li>
+<li><code>rBstyleAbs</code> für das Attribut stateNswHsw</li>
+</ul>
+</li>
+</ul>
+<h2 id="funktionsweise-der-radio-buttons">Funktionsweise der Radio-Buttons</h2>
+<p>RadioButton funktionieren zusammen als Gruppe</p>
+<ul>
+<li>Ein Klick auf einen RadioButton schaltet den zuletzt aktiven aus</li>
+<li>Mehrere RadioButtons lassen sich gruppieren</li>
+<li>Mehrere Gruppierungen ermöglichen unterschiedliche Funktionen für die jeweiligen RadioButtons</li>
+</ul>
+<p>In der Objektanzeige des QtDesigners lassen sich mehrere RadioButtons auswählen</p>
+<ul>
+<li>Mit der rechten Maustaste wählen wir den Befehl Gruppierung -&gt; neue Gruppierung</li>
+<li>Wir erhalten ein neues QButtonGroup-Widget, nennen wir es <code>bGStyleCurrentW</code></li>
+</ul>
+<p>Auf dieser Basis können wir die Events der gruppierten RadioButtons auswerten:</p>
+<p>Verbinden:</p>
+<p><code>bGStyleCurrentW.buttonClicked.connect(self.doCurrentWChangeStyle)</code></p>
+<p>Slot:</p>
+<pre><code class="python">def doCurrentWChangeStyle(self, button):
+    pass
+</code></pre>
+
+<p>Dem Slot wird automatisch der aktive RadioButton übergeben, so dass wir die Wahl des Styles aus dem Namen des Button bestimmen können:</p>
+<p><code>button.objectName() # -&gt; rBstyleTrend,rBstyleAbs,rBstyleMid</code></p>
+<h2 id="integration-in-po_runner">Integration in po_runner</h2>
+<h3 id="daten-uber-das-plugin-laden">Daten über das Plugin laden</h3>
+<p>Zunächst laden wir die Daten und ergänzen:</p>
+<p>In <code>__init__()</code>:</p>
+<p><code>self.currentw = None</code></p>
+<p>In <code>init_connects ()</code>:</p>
+<p><code>self.ui.pBloadCurrentW.clicked.connect(self.doLoadCurrentW)</code></p>
+<p>In <code>doLoadCurrentW()</code>:(zusammen mit allen anderen Anweisungen)</p>
+<pre><code class="Python">currentw = QgsVectorLayer(currentw_path,
+                          &quot;Wasserstände&quot;, &quot;ogr&quot;)
+if not currentw.isValid:
+    print(&quot;Could not load layer %s&quot;%currentw_path)
+    return
+self.currentw = currentw
+QgsProject.instance().addMapLayer(self.currentw)
+self.layerRefresh(self.currentw)
+</code></pre>
+
+<ul>
+<li>currentw_path ist der Pfad zur Testdatei polevel_25_06.gpkg</li>
+<li>willBeDeleted nicht vergessen!</li>
+</ul>
+<p>Sie können auch, wenn bereits geschrieben, den Layer über pomodules laden und aktuelle Daten verwenden</p>
+<p>Einen LayerRefresh brauchen wir häufiger, daher als eigene Methode:</p>
+<pre><code class="python">def layerRefresh(self, lyr):
+    if self.iface.mapCanvas().isCachingEnabled():
+        lyr.triggerRepaint()
+    else:
+        self.iface.mapCanvas().refresh()
+</code></pre>
+
+<h3 id="styles-umschalten">Styles umschalten</h3>
+<pre><code class="python">def doCurrentWChangeStyle(self, button):
+    if self.currentw is None:
+        return
+
+    if button.objectName() == &quot;rBstyleTrend&quot;:
+        self.currentw.loadNamedStyle(os.path.join(self.local_dir, &quot;styles/trend.qml&quot;))
+    elif button.objectName() == &quot;rBstyleAbs&quot;:
+        pass
+        # und so weiter
+
+    self.layerRefresh(self.currentw)
+</code></pre>
+
+<p>dies ist bisher nur ein minimaler Code, der noch auf verschiedene Aspekte hin erweitert werden kann:</p>
+<ul>
+<li>Soll der Layer einen Default-Style bekommen?</li>
+<li>Kann dies über die GroupBox erfolgen (z.B: ersten Button aktivieren)</li>
+<li>Was passiert beim Löschen, was soll passieren?</li>
+</ul>
+<h1 id="selektionen">Selektionen</h1>
+<p>In QGIS kann ein Benutzer die Features eines VectorLayers selektieren. Sie werden dann in Tabelle und Karte markiert. Dies geschieht entweder interaktiv, mit der Maus, oder durch eine Art SQL-Abfrage.</p>
+<p>Diese Form der Selektion wollen wir nutzen, um für das Plugin Stationen auszuwählen, die dann weiterverarbeitet werden, zum Beispiel zur Abfrage des Pegelverlaufs als Diagramm.</p>
+<h2 id="selektion-auf-wassenstande">Selektion auf Wassenstände</h2>
+<p>Auf den Layer der Wasserstände sollen Selektionen möglich sein. Damit ein Plugin mitbekommt, dass eine Selektion ausgeführt wurde, muss der passende Signal/Slot implementiert werden. Signals und Slots für Layer-Objekte finden wir in der QGIS-API-Dokumentation:</p>
+<figure><img alt="Signal-Slot für QGIS-Layer" src="../img/chap03_plugin_layerevents.png" /><figcaption>
+<p>Signal-Slot für QGIS-Layer</p>
+</figcaption>
+</figure>
+<p>Den Signal-Slot für <code>willBeDeleted</code> haben wir bereits kennengelernt, er ist allen QgsMapLayern nutzbar (also z.B. auch für Raster-Layer), während <code>selectionChanged</code> nur für QgsVectorLayer existiert.</p>
+<p>In der QGIS-Python-Konsole können wir testhalber einen Signal-Slot einrichten:</p>
+<pre><code class="python">lyr = iface.activeLayer()
+lyr.selectionChanged.connect(doSelectionChanged)
+</code></pre>
+
+<p>Dieser benötigt dann die Methode <code>doSelectionChanged()</code> und nach den Tests sollten wir den verbundenen Slot wieder freigeben:</p>
+<p>Komplettes Script:</p>
+<pre><code class="python">def doSelectionChanged(selection):
+    print(selection) 
+
+def layerDisconnectDoSelCh():
+    lyr.selectionChanged.disconnect(doSelectionChanged)
+
+lyr = iface.activeLayer()
+lyr.selectionChanged.connect(doSelectionChanged)
+</code></pre>
+
+<p>Wir testen mit diesem Script, was dem Slot doSelectionChanged übergeben wird. In der QGIS-Python-Konsole sind das die folgenden Schritte:</p>
+<ul>
+<li>Script erstellen</li>
+<li>ausführen</li>
+<li>im Layer selektieren -&gt; print(selection) wird ausgeführt</li>
+<li>danach layerDisconnectDoSelCh(lyr) ausführen -&gt; Slot wird ausgeschaltet</li>
+<li>nochmals im Layer Selektion ändern -&gt; Slot wird nicht mehr ausgeführt</li>
+</ul>
+<p>Nun wenden wir uns etwas genauer der Frage zu, was der Parameter selection enthält. Die ausgegeben Zahlen deuten darauf hin, dass es sich dabei um id's handelt, die Angaben sind identisch mit den fid's in der Tabelle. </p>
+<p>Mit einer for-Schleife im Slot <code>doSelectionChanged</code> wollen wir Zugriff auf die entsprechenden Qgis-Features erhalten:</p>
+<pre><code class="python">def doSelectionChanged(selection):
+    print(selection)
+
+    for id in selection:
+        feat = lyr.getFeature(id)
+        print(feat['shortname'])
+
+    for feature in lyr.selectedFeatures():
+        print(feature.id())
+</code></pre>
+
+<p>Während die erste for-Schleife die Elemente in selection durchläuft, um die Features abzurufen, nutzt die zweite for-Schleife alternativ die Methode selectedFeatures() eines VectorLayer-Objekts.</p>
+<p>Somit ist es egal, welche der beiden Varianten wir verwenden.</p>
+<h2 id="aufgabe-integration-in-po_runner">Aufgabe: Integration in po_runner</h2>
+<p>Dieses Konstrukt kann nun in po_runner umgesetzt werden, hierdurch ändern sich die Funktionen, da sie als Methode zusätzlich die Objektvariable self als Parameter bekommen. Außer nutzen wir nicht eine globale Variable, wie <code>lyr</code> oben im Beispiel, sondern <code>self.currentw</code> als Referenz auf den Layer der Pegelstände.</p>
+<p>Selektionen auf Layer Wasserstände:</p>
+<ul>
+<li>Einrichten, wenn Layer geladen wird</li>
+<li>Prüfen, ob bereits ein Layer verbunden ist</li>
+</ul>
+<pre><code class="python">def doLoadCurrentW(self):
+    if self.currentw:
+        pass # disconnect signals/slots
+    currentw = QgsVectorLayer(...)
+    # ...
+    self.currentw = currentw
+    # connect signals/slots
+    # ...
+</code></pre>
+
+<h2 id="einbetten-eines-custom-wigets-in-qtdesiger">Einbetten eines Custom-Wigets in QtDesiger</h2>
+<p>Im <a href="../ch02/p03_pyqt5.html">Kapitel zu PyQt5</a> haben wir ein Widget programmiert, dass die Pegelverläufe zu einer Station anzeigt. In dem Modul <code>poGraph</code> steht dafür das Widget als Klasse <code>poGraphDisplay</code> zur Verfügung.</p>
+<p>Dieses Widget soll nun in das GUI des Plugin integriert werden. Dazu haben wir zwei Möglichkeiten:</p>
+<ul>
+<li>In QtDesigner bauen wir das Widget nachmals nach und übernehmen den Code in das po_runner-Modul</li>
+<li>Im QtDesigner nutzen wir eine Funktion, um ein unbekanntes Widget über einen Platzhalter zu integrieren.</li>
+</ul>
+<p>Letztere Möglichkeit bietet mehr Flexibilität, da sie auf Modularität setzt und doppelten Aufwand vermeidet. </p>
+<p>Als Platzhalter setzen wir ein QWidget in das Dockwidget ein:</p>
+<figure><img alt="Platzhalter in QtDesigner konfigurieren" src="../img/chap03_plugin_customplatzhalter.png" /><figcaption>
+<p>Platzhalter in QtDesigner konfigurieren</p>
+</figcaption>
+</figure>
+<p>Zum Aufrufen des Fensters makieren wir das QWidget und wählen über das Kontextmenü (rechte Maustaste) <em>Als Platzhalter für benutzerdefinierte Klasse festlegen</em>. </p>
+<ul>
+<li>der Platzhalter erhält die Angabe einer include-Datei</li>
+<li>in unserem Fall das Modul poGraph</li>
+<li>wir kopieren die Moduldatei poGraph.py in den Plugin-Ordner pegelonline </li>
+<li>In QtDesigner legen wir fest:<ul>
+<li>Klassenname: PoGraphDisplay</li>
+<li>include-Datei: pegelonline.poGraph (dies wird eine import-Anweisung)</li>
+<li>einen eindeutigen Namen für das Platzhalter-Widget: poGraphDisplay</li>
+</ul>
+</li>
+</ul>
+<p>Weiter brauchen wir uns um nichts zu kümmern. Die gespeicherte ui-Datei enthält alle benötigten Angaben, um das Widget zu aktivieren. Es wird nun in QGIS angezeigt.</p>
+<h2 id="integration-in-po_runner_1">Integration in po_runner</h2>
+<p>Ziel: Ausgewählte Stationen werden im PoGraph-Widget angezeigt</p>
+<p>Voraussetzung ist eine Selektion auf den Layer <em>Wasserstände</em>, deren Einrichtung oben beschrieben wurde.</p>
+<p>Nun wollen wir die Selektionen auswerten:</p>
+<ul>
+<li>die Namen der Stationen werden ins poGraphDisplay-Widget eingetragen</li>
+<li>poGraphDisplay hat die Methode setStations() und erwartet eine Liste mit Namen</li>
+</ul>
+<p>Der Slot:</p>
+<pre><code class="python">def doCurrentWSelection(self, selection):
+    # for Schleife erzeugt Namensliste stations
+    stations = []
+    # ins poGraphDisplay-Widget eintragen
+    self.ui.poGraphDisplay.setStations(stations)
+</code></pre>
+
+<p>Bei einem Disconnect oder beim Löschen des Layers sollte Liste geleert werden:</p>
+<p><code>self.ui.poGraphDisplay.setStations([])</code></p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

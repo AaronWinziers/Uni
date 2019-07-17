@@ -1,0 +1,24 @@
+p.skulpt { padding-left: 24px; 
+          padding-bottom: 0px; 
+          margin-bottom: 12px;
+		  color: #FFF;
+          background: rgb(23, 138, 204);
+          }
+		  
+p.skulpt a {
+    text-decoration: underline;
+    color: #FFF;
+}
+
+p.skulpt:hover {
+	text-decoration: underline;
+	font-weight: bold;
+	cursor: pointer;
+}
+ p.skulpt img {
+    vertical-align: middle;
+	border: none;
+	background-color: rgba(255, 255, 255, 0);
+    padding: 0px 0px 0px 0px;
+	margin: 0px 10px 0px 0px;
+}

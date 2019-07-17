@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>PyQGIS-Tutorial - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "\u00dcbersicht zu PyQGIS", url: "#_top", children: [
+              {title: "Ressourcen", url: "#ressourcen" },
+              {title: "Das pyqgis-Modul (qgis)", url: "#das-pyqgis-modul-qgis" },
+              {title: "Iface-Objekt", url: "#iface-objekt" },
+          ]},
+          {title: "Das Devoloper-Cookbook", url: "#das-devoloper-cookbook", children: [
+              {title: "Loading Projects", url: "#loading-projects" },
+              {title: "Loading Layers", url: "#loading-layers" },
+              {title: "Using Raster Layers", url: "#using-raster-layers" },
+              {title: "Using Vector Layers", url: "#using-vector-layers" },
+              {title: "Creating Vector-Layers", url: "#creating-vector-layers" },
+              {title: "Aufgabe zum Import aus einer CSV-Datei", url: "#aufgabe-zum-import-aus-einer-csv-datei" },
+              {title: "Geometry Handling", url: "#geometry-handling" },
+              {title: "Projections Support", url: "#projections-support" },
+              {title: "Aufgabe zur Koordinatentransformation", url: "#aufgabe-zur-koordinatentransformation" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="ubersicht-zu-pyqgis">Übersicht zu PyQGIS</h1>
+<p>Für QGIS existiert eine umfangreiche Python-Schnitstelle, die die Komplette C++-API umfasst. Diese Schnitstelle zu der kompletten GIS-Funktionalität wird PyQGIS genannt.</p>
+<p>Wie wir gesehen haben, lassen sich mit Python eigenständige GIS-Programme schreiben, die auf das QgsApplication-Objekt zugreifen. Aber auch innerhalb des QGIS kann Python eingesetzt werden, um den Funktionsumfang zu erweitern:</p>
+<ul>
+<li>Scripte ausführen, über die eingebaute Python-Shell</li>
+<li>Processing scripts schreiben, werden in der Processing Toolbox angezeigt</li>
+<li>Plugins, lassen sie über den Plugin-Manager installieren und können in den Menüs und Toolbars aufgerufen werden </li>
+</ul>
+<h2 id="ressourcen">Ressourcen</h2>
+<ul>
+<li>Umfangreiches <a href="https://docs.qgis.org/3.4/en/docs/pyqgis_developer_cookbook">Cookbook</a>.</li>
+<li>Beschreibung der <a href="https://qgis.org/api/3.2/">API - C++</a></li>
+<li>Speziell aufbereitet für [Python] (https://qgis.org/pyqgis/3.4/)</li>
+<li>Code-Beispiele für <a href="https://webgeodatavore.github.io/pyqgis-samples/">Python-Classes der API</a></li>
+<li>Buch zur Python-Qgis-Entwicklung von <a href="http://locatepress.com/ppg3">Gary Sherman: The PyQGIS Programmer’s
+Guide</a></li>
+</ul>
+<h2 id="das-pyqgis-modul-qgis">Das pyqgis-Modul (qgis)</h2>
+<p>Ein Modul mit Untermodulen für den den Zugang der QGIS-Funktionen und Benutzeroberfäche, aufgeteilt in die Untermodule</p>
+<ul>
+<li>qgis.core - core classes</li>
+<li>qgis.gui - graphical user interface classes</li>
+<li>qgis.analysis - analysis related classes</li>
+<li>weitere ... (Im Ordner osgeo4w unter apps\qgis-ltr\python\qgis)</li>
+</ul>
+<h2 id="iface-objekt">Iface-Objekt</h2>
+<p>qgis.gui.iface entspricht der Schnittstelle (QgisInterface) zu den aktiven Elementen von QGIS, etwa zum Kartenfenster und den dort angezeigten Layern. In der QGIS-Python-Konsole ist das iface-Objekt bereits importiert.</p>
+<p>Auch Plugins bekommen über dieses Objekt Zugriff auf QGIS-Elemente.</p>
+<p>Beispiel: </p>
+<p>Wir laden hierfür den Layer mit Ikea-Standorten!</p>
+<pre><code class="python">&gt;&gt;&gt; layer = iface.activeLayer()
+&gt;&gt;&gt; layer.id()
+&gt;&gt;&gt; layer.featureCount()
+</code></pre>
+
+<p>Weitere Beispiele zur Nutzung des Iface-Objekts</p>
+<p>mapCanvas()</p>
+<pre><code class="python">&gt;&gt;&gt; map = iface.mapCanvas()
+&gt;&gt;&gt; map.layers()
+[...]
+</code></pre>
+
+<p>Layer laden:</p>
+<pre><code class="python">iface.addVectorLayer(r&quot;Pfad_zu\data\fluesse_01_03.gpkg&quot;, &quot;Fluss&quot;, &quot;ogr&quot;)
+iface.addRasterLayer(r&quot;Pfad_zu\data\brd_dgm_utm.tif&quot;, &quot;DGM&quot;)
+</code></pre>
+
+<p>Nachrichten an den Nutzer mit messageBar:</p>
+<pre><code class="python">&gt;&gt;&gt; iface.messageBar().pushMessage(
+    &quot;Error&quot;, 
+    &quot;I'm sorry Dave, I'm afraid I can't do that&quot;, 
+    level=Qgis.Critical)
+</code></pre>
+
+<h1 id="das-devoloper-cookbook">Das Devoloper-Cookbook</h1>
+<p>Die folgenden Beispiele sind dem Developer Cookbook entnommen (s. oben in Ressourcen). Es behandelt die wichtigsten Grundlagen zur Programmierung mit Python und QGIS. Einige der Beispiele benutzen andere Daten oder wurden zur Kürzung leicht abgeändert.</p>
+<h2 id="loading-projects">Loading Projects</h2>
+<pre><code class="python">&gt;&gt;&gt; project = QgsProject.instance()
+&gt;&gt;&gt; project
+&lt;qgis._core.QgsProject object at 0x11326CB0&gt;
+&gt;&gt;&gt; project.fileName()
+''
+&gt;&gt;&gt; project.read(r'C:\Pfad\zum\projekt\analyse.qgz')
+True
+</code></pre>
+
+<!-- Ergänzung: map layer-> raster layer, vector layer-->
+
+<h2 id="loading-layers">Loading Layers</h2>
+<p>Hier wird die Vorgehensweise ohne iface-Objekt beschrieben.</p>
+<h3 id="vektor-layer">Vektor-Layer</h3>
+<p>Wir legen im Editor ein Script an:</p>
+<pre><code class="python">path=r&quot;C:\Pfad\zu\qgis_einf\ikea_wikipedia.kml&quot;
+vlayer = QgsVectorLayer(path, 
+    &quot;Ikea layer&quot;, 
+    &quot;ogr&quot;)
+if not vlayer.isValid():
+    print(&quot;Layer failed to load!&quot;)
+else:
+    QgsProject.instance().addMapLayer(vlayer)
+</code></pre>
+
+<!-- Ergänzung: wie im plugin mit refresh layer -->
+
+<p>Das Laden eines Vektor-Layers erfolgt mit Parametern, die abhängig von der Datenquelle sind. Im Cookbook werden Beispiele gegeben für </p>
+<ul>
+<li>Shapefile</li>
+<li>dxf</li>
+<li>PostGIS Datenbank</li>
+<li>CSV</li>
+<li>GPX </li>
+<li>WFS Internet-Zugriff</li>
+<li>und andere mehr</li>
+</ul>
+<h3 id="raster">Raster</h3>
+<p>Wir benutzen ein DGM-Raster für Deutschland</p>
+<pre><code class="python">path = r&quot;C:\Pfad\zu\data\brd_dgm_utm.tif&quot;
+rlayer = QgsRasterLayer(path, &quot;SRTM DEM layer&quot;)
+if not rlayer.isValid():
+    print(&quot;Layer failed to load!&quot;)
+else:
+    QgsProject.instance().addMapLayer(rlayer)
+</code></pre>
+
+<p>Auch bei Rastern gibt es mehrere mögliche Datenformate.</p>
+<h2 id="using-raster-layers">Using Raster Layers</h2>
+<p>Wir bleiben bei dem zuvor geladenen Raster-Layer und benutzen die Python-Console</p>
+<pre><code class="python">&gt;&gt;&gt; rlayer
+&lt;qgis._core.QgsRasterLayer object at 0x05505620&gt;
+&gt;&gt;&gt; rlayer.width(), rlayer.height()
+(3207, 4331)
+&gt;&gt;&gt; rlayer.extent()
+&lt;QgsRectangle: 279899.99999999988358468 5235899.99999999813735485, 921299.99999999953433871 6102099.99999999720603228&gt;
+rlayer.extent().toString()
+'279899.9999999998835847,5235899.9999999981373549 : 921299.9999999995343387,6102099.9999999972060323'
+rlayer.rasterType()
+0
+</code></pre>
+
+<p>Der Rastertyp verwender eine Zahl als Code:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Wert</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>GrayOrUndefined (single band)</td>
+</tr>
+<tr>
+<td>1</td>
+<td>Palette (single band)</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Multiband</td>
+</tr>
+</tbody>
+</table>
+<h3 id="renderer">Renderer</h3>
+<p>Der Renderer ist dafür zuständig, wie das Raster dargestellt wird. Für Raster gibt es:</p>
+<table>
+<thead>
+<tr>
+<th>Name/Klasse</th>
+<th>Erläuterung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QgsMultiBandColorRenderer</td>
+<td>typically drawn by mapping the bands to RGB colors</td>
+</tr>
+<tr>
+<td>QgsPalettedRasterRenderer</td>
+<td>using the palette stored inside the raster</td>
+</tr>
+<tr>
+<td>QgsSingleBandGrayRenderer</td>
+<td>in gray colors (low values = black, high values = white)</td>
+</tr>
+<tr>
+<td>QgsSingleBandPseudoColorRenderer</td>
+<td>use pseudocolor algorithm that assigns colors to values</td>
+</tr>
+</tbody>
+</table>
+<pre><code class="python">&gt;&gt;&gt; rlayer.renderer()
+&lt;qgis._core.QgsSingleBandGrayRenderer object at 0x045951C0&gt;
+&gt;&gt;&gt; rlayer.renderer().type()
+'singlebandgray'
+</code></pre>
+
+<h3 id="qgssinglebandpseudocolorrenderer">QgsSingleBandPseudoColorRenderer</h3>
+<p>Ein Beispiel für ein Farbreihe mit dem QgsSingleBandPseudoColorRenderer. Wir schreiben ein Script im Editor!</p>
+<p>Im ersten Schritt erfolgt die Definition eines Shaders, im zweiten wir ein Renderer-Objekt erstellt und dem Raster zugewiesen:</p>
+<pre><code class="python">fcn = QgsColorRampShader()
+fcn.setColorRampType(QgsColorRampShader.Interpolated)
+lst = [ QgsColorRampShader.ColorRampItem(0, QColor(100,255,0)) ,
+      QgsColorRampShader.ColorRampItem(1000, QColor(226, 83, 3)), ]
+fcn.setColorRampItemList(lst)
+shader = QgsRasterShader()
+shader.setRasterShaderFunction(fcn)
+
+renderer = QgsSingleBandPseudoColorRenderer(rlayer.dataProvider(), 1, shader)
+rlayer.setRenderer(renderer)
+rlayer.triggerRepaint()
+</code></pre>
+
+<!-- Ergänzung: einfacher mit loadStyle -->
+
+<h3 id="query-values">Query Values</h3>
+<p>Hier geht darum, wie der Wert einer Rasterzelle abgefragt werden können.</p>
+<p>Dazu benötigen wir einen Punkt, in QGIS ein QgsPointXY-Objekt:</p>
+<pre><code class="python">ident = rlayer.dataProvider().identify(QgsPointXY(609933, 5737266), QgsRaster.IdentifyFormatValue)
+
+if ident.isValid():
+  print(ident.results())
+</code></pre>
+
+<p>Koordinaten müssen zum System des Rasters passen: UTM32: 609933, 5737266 im Bereich des Harz</p>
+<p>Entspricht der interaktiven Funktion "Identify Features"</p>
+<h3 id="losung-fur-zugriff-auf-rasterdaten">Lösung für Zugriff auf Rasterdaten</h3>
+<p>Gemeint ist die Nutzung der "Pixelwerte" eines Rasters. In Python realisierbar über das Modul Numpy.
+Eine mögliche Lösung, um ein Numpy-Array aus einem Rasterdatensatz zu erzeugen, führt über das gdal-Modul:</p>
+<pre><code class="python">from osgeo import gdal
+
+def layerAsArray(layer):
+    &quot;&quot;&quot; read the data from a single-band layer into a numpy/Numeric array.
+    Only works for gdal layers!
+    &quot;&quot;&quot;
+
+    gd = gdal.Open(str(layer.source()))
+    array = gd.ReadAsArray()
+    return array
+</code></pre>
+
+<p><a href="https://gis.stackexchange.com/questions/317464/converting-qgsraster-object-to-array/317650#317650">GIS Stackexchange</a>
+Die Funktion liest die Rasterdatenquelle und gibt ein Numpy-Array zurück.
+Mehr zu Numpy:
+<a href="http://endor.uni-trier.de/karto/python/#ch03/p05_raster.html#das-modul-numpy">Numpy aus dem letzten Semester</a>
+Mehr zu gdal/ogr:
+<a href="https://pcjericks.github.io/py-gdalogr-cookbook/">Das Python GDAL/OGR-Cookbook</a></p>
+<h2 id="using-vector-layers">Using Vector Layers</h2>
+<p>Wir verwenden weiter den Layer mit den IKEA-Standorten</p>
+<p>Eine Liste aller Attributspalten (Felder):</p>
+<pre><code class="python">for field in vlayer.fields():
+    print(field.name(), field.typeName())
+Name String
+description String
+timestamp DateTime
+begin DateTime
+end DateTime
+altitudeMode String
+tessellate Integer
+extrude Integer
+visibility Integer
+drawOrder Integer
+icon String
+snippet String
+</code></pre>
+
+<h3 id="iterating-over-vector-layer">Iterating over Vector Layer</h3>
+<p>Wir legen ein Script an.</p>
+<p>Im Script geben wir Informationen über alle Ikea-Stadorte aus:</p>
+<pre><code class="python">features = vlayer.getFeatures()
+
+for feature in features:
+    print(&quot;Feature ID: &quot;, feature.id(), end=&quot;, &quot;)
+    print(&quot;Geometry type:&quot;, feature.geometry().type())
+</code></pre>
+
+<p>Der Geometrietyp aller Objekte ist 0. Die Zahl ist ein Code für die folgenden Geometrietypen:</p>
+<table>
+<thead>
+<tr>
+<th>Code</th>
+<th>Definition</th>
+<th>Bedeutung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>QgsWkbTypes.PointGeometry</td>
+<td>Punkt</td>
+</tr>
+<tr>
+<td>1</td>
+<td>QgsWkbTypes.LineGeometry</td>
+<td>Linie</td>
+</tr>
+<tr>
+<td>2</td>
+<td>QgsWkbTypes.PolygonGeometry</td>
+<td>Polygon</td>
+</tr>
+<tr>
+<td>3</td>
+<td>QgsWkbTypes.UnknownGeometry</td>
+<td>Unbekannte Geometrie</td>
+</tr>
+<tr>
+<td>4</td>
+<td>QgsWkbTypes.MultiPoint</td>
+<td>Multi-Gemeometrie mit Punkten</td>
+</tr>
+<tr>
+<td>5</td>
+<td>QgsWkbTypes.MultiLineString</td>
+<td>Multi-Gemeometrie mit Linien</td>
+</tr>
+<tr>
+<td>6</td>
+<td>QgsWkbTypes.MultiPolygon</td>
+<td>Multi-Gemeometrie mit Polygonen</td>
+</tr>
+</tbody>
+</table>
+<p>Eine Erläuterung, woher diese Festlegung von Geometrietypen stammt, ist weiter unten erläutert.</p>
+<p>Kennen wir den Typ, so können wir auch die Koordinaten ausgeben:</p>
+<pre><code class="python">    # in der for-Schleife
+    geom = feature.geometry()
+    p = geom.asPoint()
+    print(&quot;Point: &quot;, p)
+</code></pre>
+
+<p>Die Ausgabe der Geometrie kann auch als Well-Known-Text (WKT-String) erfolgen: <code>p.asWkt()</code></p>
+<p>Das Feature-Objekt ermöglicht den Zugriff auf Attributwerte über ein Python-Dictionary, hier der Name der Ikea-Filiale, oder alternativ über den Index:</p>
+<pre><code>    # in der for-Schleife
+    print(feature['Name'])
+    # alternativ: feature[0] -- Name ist das erste Attribute
+</code></pre>
+
+<h3 id="selecting-features">Selecting features</h3>
+<p>Selektionen auf Daten bilden eine Auswahl, meist über einen Wert oder Ausdruck. Die entsprechenden Elemente werden in QGIS in einer voreingestellten Farbe <em>markiert</em>.</p>
+<p>Dies selektiert alle Objekte:</p>
+<pre><code class="python"># Get the active layer (must be a vector layer)
+&gt;&gt;&gt; layer = iface.activeLayer()
+&gt;&gt;&gt; layer.selectAll()
+</code></pre>
+
+<p>weitere Selektionsfunktionen:</p>
+<table>
+<thead>
+<tr>
+<th>Funktion</th>
+<th>Beispiel/Erläuterung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>layer.removeSelection()</code></td>
+<td>entfernt die Markierung wieder</td>
+</tr>
+<tr>
+<td><code>selectByExpression()</code></td>
+<td><code>layer.selectByExpression('"Name" like \'W%\'', QgsVectorLayer.SetSelection)</code></td>
+</tr>
+<tr>
+<td><code>iface.mapCanvas().setSelectionColor()</code></td>
+<td><code>iface.mapCanvas().setSelectionColor( QColor("red") )</code></td>
+</tr>
+</tbody>
+</table>
+<h2 id="creating-vector-layers">Creating Vector-Layers</h2>
+<p>Das Cookbook erwähnt zwei unterschiedliche Möglichkeiten einen Vektorlayer zu erzeugen:</p>
+<ul>
+<li><code>QgsVectorFileWriter</code> </li>
+<li><code>QgsVectorLayer</code> </li>
+</ul>
+<p>In diesem Beispiel benutzen wir QgsVectorFileWriter, um den Layer der Ikea-Standorte in einem Geopacke zu speichern:</p>
+<pre><code class="python">layer = iface.activeLayer()
+# Write to a GeoPackage (default)
+error = QgsVectorFileWriter.writeAsVectorFormat(layer, &quot;c:/path/to/folder/my_data&quot;, &quot;&quot;)
+if error[0] == QgsVectorFileWriter.NoError:
+    print(&quot;success!&quot;)
+</code></pre>
+
+<p>Haben wir die Daten noch nicht als Layer vorliegen, müssen wir sie zunächst als Features erzeugen, inkl. Attributen und Geometrien.</p>
+<p>Dieser Vorgang erfolgt in mehreren Schritten:</p>
+<ul>
+<li>Erzeugen der Attribute/Felder </li>
+<li>Anlegen einer neuen Vektor-Datei</li>
+<li>Erzeugung der Feature-Objekte</li>
+<li>Speichern der Features in der Vektor-Datei</li>
+</ul>
+<pre><code class="python">from qgis.PyQt.QtCore import QVariant
+
+path = &quot;C:/Pfad/zu/meinem/out_shape.shp&quot;
+
+# define fields for feature attributes. A QgsFields object is needed
+fields = QgsFields()
+fields.append(QgsField(&quot;Id&quot;, QVariant.Int))
+fields.append(QgsField(&quot;Name&quot;, QVariant.String))
+
+# create a writer object
+writer = QgsVectorFileWriter(path, &quot;UTF-8&quot;, fields, QgsWkbTypes.Point, driverName=&quot;ESRI Shapefile&quot;)
+
+if writer.hasError() != QgsVectorFileWriter.NoError:
+    print(&quot;Error when creating shapefile: &quot;,  w.errorMessage())
+
+# add a feature
+fet = QgsFeature()
+
+fet.setGeometry(QgsGeometry.fromPointXY(QgsPointXY(10,10)))
+fet.setAttributes([1, &quot;beispiel&quot;])
+writer.addFeature(fet)
+
+# delete the writer to flush features to disk
+del writer
+</code></pre>
+
+<h2 id="aufgabe-zum-import-aus-einer-csv-datei">Aufgabe zum Import aus einer CSV-Datei</h2>
+<p>Die Beispieldatei temp_1961-90.csv enthält die durchschnittlichen Temperaturwerte, die an 727 Messstationen aufgezeichnet wurden. Die Temperaturen sind im Monats- und im Jahresmittel angegeben.</p>
+<p>So sehen die ersten beiden Zeilen der Textdatei 'temp_1961-90.csv' aus:</p>
+<pre><code class="text">ALIASNAME;Höhe ü NN;Breite;Länge;Bundesland;Jan;Feb;Mrz;Apr;Mai;Jun;Jul;Aug;Sep;Okt;Nov;Dez;Jahr
+AACHEN (WEWA);202;50°47';06°05';Nordrhein-Westfalen;2.4;2.8;5.4;8.4;12.8;15.6;17.3;17.1;14.4;10.8;6.1;3.4;9.7
+</code></pre>
+
+<p>Wir verwenden Bordmittel für den Import:</p>
+<ul>
+<li>Datei öffnen</li>
+<li>Feldnamen lesen</li>
+<li>Qgis-Felder erzeugen</li>
+<li>Ausgabedatei mit QgsVectorFileWriter anlegen</li>
+<li>Features zeilenweise lesen, jeweils:<ul>
+<li>Werte als Variablen mit den korrekten Typen anlegen</li>
+<li>eine Punktgeometrie erzeugen</li>
+<li>QGIS-Feature erzeugen und in Ausgabe-Datei schreiben</li>
+</ul>
+</li>
+</ul>
+<pre><code class="python"># Helper function
+def toDD(Deg, Min, Sec=0):
+    &quot;&quot;&quot;make decimal from degree, minutes, seconds&quot;&quot;&quot;
+    return float(Deg + Min/60 + Sec/3600)
+
+# read csv
+with open('data/temp_1961-90.csv') as csvfile:
+    header = csvfile.readline().split(';') # Header line
+
+    # create qgis fields
+
+    # create outfile with QgsVectorFileWriter
+
+    for srow in csvfile:
+        row = srow.split(';')
+
+        name = row[0]
+        H = float(row[1])
+        # B = toDD(*map(int, row[2].strip(&quot;'&quot;).split('°')))
+        # L = toDD(*map(int, row[3].strip(&quot;'&quot;).split('°')))
+        # https://www.i18nqa.com/debug/utf8-debug.html
+
+        # row[2].strip(&quot;'&quot;).split('\u00c2\u00b0') =&gt; ['49','7']
+        # map(int, ['49','7']) =&gt; [49, 7]
+        # *[49, 7] =&gt; 49, 7
+        B = toDD(*map(int, row[2].strip(&quot;'&quot;).split('\u00c2\u00b0')))
+        L = toDD(*map(int, row[3].strip(&quot;'&quot;).split('\u00c2\u00b0')))
+        land = row[4]
+        values = list(map(float, row[5:]))
+
+        # make a point geometry
+
+        # build a qgis feature
+
+        # write to file
+</code></pre>
+
+<p>Hinweis:</p>
+<p>Das Script benutzt die with-Anweisung: in Python kann ein Code-Block mit with erzeugt werden. Hierbei wird eine Anweisung hinzugefügt, die ein Objekt erzeugt, das nur innerhalb des Blocks gültig ist und von python am Ende der Verarbeitung automatisch gelöscht wird. <a href="https://stackoverflow.com/questions/1369526/what-is-the-python-keyword-with-used-for">stackoverflow</a></p>
+<p>In unserem Fall ist dies die Open-Anweisung, welche ein file object zurückgibt. Vorteil: Das file object muss nicht explizit geschlossen werden.</p>
+<!-- Ergänzung: Create layer, wie später im Plugin -->
+
+<!-- Ergänzung: Renderer wir vector layer und mit loadStyle -->
+
+<h2 id="geometry-handling">Geometry Handling</h2>
+<p>Behandelt das Thema zur Umgang mit Geometrien von Vektordaten, ausführlicher als oben im Beispiel der erzeugten Punkte.</p>
+<p>QGIS benutzt für die Geometrien die Definitionen aus dem <a href="https://docs.qgis.org/3.4/en/docs/training_manual/spatial_databases/simple_feature_model.html">Simple-Features-Modell</a>:</p>
+<figure><img alt="Simple Features" src="../img/chap01_simple_features.png" /><figcaption>
+<p>Schema des Simple-Feature-Modells</p>
+</figcaption>
+</figure>
+<p>Behandelt werden Points, Linestrings und Polygons mit Single oder Multipart-Geometrien. Eine abstakte Klasse dazu ist <code>QgsGeometry</code>.</p>
+<p>Ein Beispiel um Geometrien als Point, LineString und Polygon zu erzeugen:</p>
+<pre><code class="python">gPnt     = QgsGeometry.fromPointXY(QgsPointXY(1,1))
+gLine    = QgsGeometry.fromPolyline([QgsPoint(1, 1), QgsPoint(2, 2)])
+gPolygon = QgsGeometry.fromPolygonXY([[QgsPointXY(1, 1),  QgsPointXY(2, 2), QgsPointXY(2, 1)]])
+</code></pre>
+
+<p>Die Definition eine Geometrietyps wird über die Methode wkbType() realisiert.</p>
+<table>
+<thead>
+<tr>
+<th>Objekt</th>
+<th>Typvergleich</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>gPnt.wkbType() # 1</td>
+<td>gPnt.wkbType() == QgsWkbTypes.Point</td>
+</tr>
+<tr>
+<td>gLine.wkbType() # 2</td>
+<td>gLine.wkbType() == QgsWkbTypes.LineString</td>
+</tr>
+<tr>
+<td>gPolygon.wkbType() # 3</td>
+<td>gPolygone.wkbType() == QgsWkbTypes.Polygon</td>
+</tr>
+</tbody>
+</table>
+<p>wkbType steht für Well-Known-Binary-Type und gibt die angegebenen Codes zurück. Vorsicht: Diese unterscheiden sich von der Angabe in geometry.type()!</p>
+<p>Ein Beispiel, um Geometrien als Python-Lists zu erhalten:</p>
+<pre><code class="python">gPnt.asPoint()
+# output: &lt;QgsPointXY: POINT(1 1)&gt;
+gLine.asPolyline()
+# output: [&lt;QgsPointXY: POINT(1 1)&gt;, &lt;QgsPointXY: POINT(2 2)&gt;]
+gPolygon.asPolygon()
+# output: [[&lt;QgsPointXY: POINT(1 1)&gt;, &lt;QgsPointXY: POINT(2 2)&gt;, &lt;QgsPointXY: POINT(2 1)&gt;, &lt;QgsPointXY: POINT(1 1)&gt;]]
+</code></pre>
+
+<p>Hinweis:</p>
+<p>QgsPointXY ist keine QGIS-Geometrieklasse, sondern ein Hilfsmittel (eine <em>Primitive</em>), um Geometrien zu erzeugen.
+Neben QgsPointsXY existiert eine weitere Klasse QgsPoint als <a href="https://qgis.org/api/classQgsAbstractGeometry.html">abstrakte Geometrie</a>. In diesem Bereich fallen auch QgsLineString und QgsPolygon. Sie können ebenfalls den Geometrie-Funktionen fromPolyline bzw. fromPolygon übergeben werden.</p>
+<p>Auch asPolyline() und asPolygon() geben keine QGIS-Geometrien zurück, sondern verpacken QgsPointXY-Objekte in python lists.</p>
+<p>Geometrien nehmen mit steigender Dimension an Komplexität zu. Folgende Abbildung zeigt die unterschiedlichen Definitionen ein Polygons:</p>
+<figure><img alt="Polygon und  Multipolygon" src="../img/chap1_polygon.png" /><figcaption>
+<p>Polygon und  Multipolygon</p>
+</figcaption>
+</figure>
+<ol>
+<li>ist ein Polygon, bestehend aus einem Linear Ring, dem sog. Exterior Ring</li>
+<li>ein Polygon mit einem Loch, also mit einem Exterior Ring und einem Interior Ring</li>
+<li>ein Multipolygon, bestehend aus zwei Polygonen wie unter 1 beschrieben</li>
+<li>Ein Multipolygon, bestehend aus zwei Polygonen wie unter 2 beschrieben</li>
+</ol>
+<h2 id="projections-support">Projections Support</h2>
+<p>QGIS definiert Projektionen/Koordinatensysteme über die Klasse <code>QgsCoordinateReferenceSystem</code>. Die Koordinatensysteme können als Code angegeben werden, nämlich u.a. als EPSG-Codes, oder als Well-Known-Text, also einem festgelegten Stringformat. Ein Verzeichnis aller Codes finden wir <a href="https://spatialreference.org/ref/epsg/">hier</a></p>
+<pre><code class="python">crs = QgsCoordinateReferenceSystem(4326, QgsCoordinateReferenceSystem.EpsgCrsId)
+print(crs.description())
+print(crs.toWkt())
+</code></pre>
+
+<p>Wenn das Koordinatensystem einer Geometrie geändert werden soll, muss es transformiert werden. QGIS definiert hierfür die Klasse QgsCoordinateTransform:</p>
+<pre><code class="python">crsSrc = QgsCoordinateReferenceSystem(4326)    # WGS 84
+crsDest = QgsCoordinateReferenceSystem(25832)  # ETRS89 / UTM zone 32N
+xform = QgsCoordinateTransform(crsSrc, crsDest, QgsProject.instance())
+pt1 = xform.transform(QgsPointXY(49.756, 6.643)) # Trierer Dom
+print(&quot;Transformed point:&quot;, pt1)
+
+# inverse transformation: dest -&gt; src
+pt2 = xform.transform(pt1, QgsCoordinateTransform.ReverseTransform)
+print(&quot;Transformed back:&quot;, pt2)
+</code></pre>
+
+<h2 id="aufgabe-zur-koordinatentransformation">Aufgabe zur Koordinatentransformation</h2>
+<p>Wir transformieren die Punkte der Temperatur-Messstationen von ihrem Ausgangskoordinatensystem WGS84 in das der UTM-Zone 32.</p>
+<p>Aufbauend auf den Script-Entwurf oden ergänzen wir die notwendigen Schritte:</p>
+<pre><code class="python"># Helper function
+def toDD(Deg, Min, Sec=0):
+    &quot;&quot;&quot;make decimal from degree, minutes, seconds&quot;&quot;&quot;
+    return float(Deg + Min/60 + Sec/3600)
+
+# read csv
+with open('data/temp_1961-90.csv') as csvfile:
+    header = csvfile.readline().split(';') # Header line
+
+    # create qgis fields
+
+    # prepare coordinate transformation: create crsSrc, crsDest und xform
+
+    # create outfile with QgsVectorFileWriter
+    # use Parameter srs=crsDest to store crs with the shapefile
+
+    for srow in csvfile:
+        row = srow.split(';')
+
+        name = row[0]
+        H = float(row[1])
+        # B = toDD(*map(int, row[2].strip(&quot;'&quot;).split('°')))
+        # L = toDD(*map(int, row[3].strip(&quot;'&quot;).split('°')))
+        # https://www.i18nqa.com/debug/utf8-debug.html
+
+        # row[2].strip(&quot;'&quot;).split('\u00c2\u00b0') =&gt; ['49','7']
+        # map(int, ['49','7']) =&gt; [49, 7]
+        # *[49, 7] =&gt; 49, 7
+        B = toDD(*map(int, row[2].strip(&quot;'&quot;).split('\u00c2\u00b0')))
+        L = toDD(*map(int, row[3].strip(&quot;'&quot;).split('\u00c2\u00b0')))
+        land = row[4]
+        values = list(map(float, row[5:]))
+
+        # transform with xform into a QgsPointXY
+
+        # make a point geometry
+
+        # build a qgis feature
+
+        # write to file
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

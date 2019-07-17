@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Python-Zugriff auf Datenbanken - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Python-Zugriff auf Datenbanken", url: "#_top", children: [
+              {title: "Objekte zum Zugriff auf Datenbanken", url: "#objekte-zum-zugriff-auf-datenbanken" },
+              {title: "SQL Part 1", url: "#sql-part-1" },
+              {title: "Beispieldatenbank", url: "#beispieldatenbank" },
+              {title: "Beispieltabelle poStation", url: "#beispieltabelle-postation" },
+              {title: "Eine Geometry-Spalte einrichten", url: "#eine-geometry-spalte-einrichten" },
+              {title: "Geodaten in eine Tabelle schreiben", url: "#geodaten-in-eine-tabelle-schreiben" },
+              {title: "Aufgabenstellungen", url: "#aufgabenstellungen" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="python-zugriff-auf-datenbanken">Python-Zugriff auf Datenbanken</h1>
+<ul>
+<li>SQLite als Datenbank seht verbreitet,</li>
+<li>besteht aus Funktionsbibliothek und Datenbankdatei,</li>
+<li>Unterstützt den Standard SQL als Abfragesprache,</li>
+<li>mit Erweiterung zu Spatiallite auch Geodatenverwaltung in einer Geodatabase</li>
+</ul>
+<p>Spatialite wird durch eine Funktionsbibliothek repräsentiert, für die es ein Python-Modul gibt: pyspatialite
+Um die Funktionen zu nutzen impotieren wir das Modul:</p>
+<p><code>import pyspatialite.dbapi2 as db</code></p>
+<p>oder</p>
+<p><code>from pyspatialite import dbapi2 as db</code></p>
+<p>dbapi2 ist das einzige "Submodul" in pyspatialite</p>
+<h2 id="objekte-zum-zugriff-auf-datenbanken">Objekte zum Zugriff auf Datenbanken</h2>
+<p><strong>db-Modul</strong></p>
+<table>
+<thead>
+<tr>
+<th>Methode</th>
+<th>Rückgabe</th>
+<th>Beispiel</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>db.connect(filepath)</td>
+<td>Connection-Objekt</td>
+<td>connect = db.connect("C:\tmp\test.sqlite")</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>
+<p>enthält zudem Fehler-Klassen und die Klassen Cursor, Row, etc. Diese werden aber nur innerhalb des Moduls benutzt</p>
+</li>
+<li>
+<p>legt eine neue Datenbankdatei an, falls diese noch nicht existiert.</p>
+</li>
+</ul>
+<p><strong>Connection-Objekt</strong></p>
+<ul>
+<li>Verbindung zur Datenbank</li>
+<li>wird automatisch durch die Methode connect des db-Moduls erzeugt</li>
+<li>erlaubt es, SQL-Befehle abzusetzen</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Methode</th>
+<th>Rückgabe</th>
+<th>Beispiel/Erläuterung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>connect.cursor()</td>
+<td>Cursor-Objekt</td>
+<td>cur = connect.cursor()</td>
+</tr>
+<tr>
+<td>connect.execute()</td>
+<td>Cursor-Objekt</td>
+<td>cur = connect.execute("Select 'Hello World'")</td>
+</tr>
+<tr>
+<td>connect.close()</td>
+<td>keine</td>
+<td>schließt die Verbindung</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Cursor-Objekt</strong></p>
+<ul>
+<li>Zeiger auf die zurückgegebenen Daten eines SQL-Befehls</li>
+<li>Kann auch selbst SQL-Befehle ausführen</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>Methode</th>
+<th>Rückgabe</th>
+<th>Beispiel/Erläuterung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cur.fetchall()</td>
+<td>List-Objekt</td>
+<td>result = cur.fetchall()</td>
+</tr>
+<tr>
+<td>cur.execute()</td>
+<td>Cursor-Objekt</td>
+<td>cur.execute("Select 'Hello New World'")</td>
+</tr>
+<tr>
+<td>cur.close()</td>
+<td>keine</td>
+<td>schließt die Verbindung</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>fetchall() wird aufgerufen, nachdem ein SQL-Kommando ausgeführt wurde</li>
+<li>execute() überschreibt den Zustand des Cursers mit der (neuen) Abfrage</li>
+<li>close() schließt den Cursor. Enthaltene Daten einer Abfrage werden gelöscht.</li>
+</ul>
+<h2 id="sql-part-1">SQL Part 1</h2>
+<p><strong>eine Tabelle verwalten</strong></p>
+<p>Anlegen einer Tabelle unter Angabe der Spaltennamen und Datentypen (Tabellendefinition). <a href="https://www.sqlite.org/datatype3.html">SQL-Datentypen</a>:</p>
+<pre><code>CREATE TABLE kreise
+   (ks INTEGER,
+    name VARCHAR(30),
+    einw INTEGER);
+</code></pre>
+
+<hr />
+<p>Ändern der Tabellendefinition, hier wird eine Spalte ergänzt:</p>
+<pre><code>ALTER TABLE kreise
+   ADD COLUMN
+   sitz VARCHAR(30);
+</code></pre>
+
+<hr />
+<p>Löschen eines DB-Elements, also z.B. einer Tabelle (<code>DROP TABLE kreise</code>):</p>
+<pre><code>DROP {database, table, index, view} name
+</code></pre>
+
+<hr />
+<p>Daten in ein Tabelle eintragen</p>
+<pre><code>INSERT INTO kreise (ks, name, einw) VALUES (7131, Ahrweiler,127770);
+</code></pre>
+
+<hr />
+<p><strong>Tabellendaten verarbeiten</strong></p>
+<p>Tabellendaten können durch Suchausdrücke, mit einer sog. WHERE-Clause, auf Zeilenebene selektiert werden.
+<a href="https://www.tutorialspoint.com/sqlite/sqlite_where_clause.htm">siehe auch</a></p>
+<p>Tabellendaten aktualisieren (<em>ersetzen</em>):</p>
+<pre><code>UPDATE name SET zuweisung
+   WHERE suchausdruck
+</code></pre>
+
+<hr />
+<p>Tabellendaten löschen:</p>
+<pre><code>DELETE FROM name
+   WHERE suchausdruck
+</code></pre>
+
+<hr />
+<p>Tabelle abfragen
+Für den SELECT-Befehl existieren drei grundlegende Anwendungsmöglichkeiten</p>
+<pre><code>-- die ganze Tabelle
+SELECT * FROM name
+-- Einschränkungen der auszugebenden Spalten
+SELECT attribute FROM name
+-- Einschränkung der auszugebenden Zeilen
+SELECT attribute FROM name
+   WHERE suchausdruck
+</code></pre>
+
+<hr />
+<h2 id="beispieldatenbank">Beispieldatenbank</h2>
+<p>mit Daten der Kreise und Kreisfreien Städte in Rheinland-Pfalz.</p>
+<p>Wir erstellen diese Datenbank mit SQL-Befehlen in <a href="spatialite.md">spatialite_gui</a>:</p>
+<pre><code>CREATE TABLE kreise
+   (ks INTEGER NOT NULL PRIMARY KEY,
+    name VARCHAR(30),
+    einw INTEGER);
+insert into kreise VALUES (7311,&quot;Frankenthal (Pfalz)&quot;,48363);
+insert into kreise VALUES (7312,&quot;Kaiserslautern&quot;,98520);
+insert into kreise VALUES (7111,&quot;Koblenz&quot;,112586);
+insert into kreise VALUES (7313,&quot;Landau in der Pfalz&quot;,45362);
+insert into kreise VALUES (7314,&quot;Ludwigshafen am Rhein&quot;,164718);
+insert into kreise VALUES (7315,&quot;Mainz&quot;,209779);
+insert into kreise VALUES (7316,&quot;Neustadt an der Weinstraße&quot;,52999);
+insert into kreise VALUES (7317,&quot;Pirmasens&quot;,40125);
+insert into kreise VALUES (7318,&quot;Speyer&quot;,50284);
+insert into kreise VALUES (7211,&quot;Trier&quot;,114914);
+insert into kreise VALUES (7319,&quot;Worms&quot;,82102);
+insert into kreise VALUES (7320,&quot;Zweibrücken&quot;,34260);
+insert into kreise VALUES (7131,&quot;Ahrweiler&quot;,127770);
+insert into kreise VALUES (7132,&quot;Altenkirchen (Ww)&quot;,129171);
+insert into kreise VALUES (7331,&quot;Alzey-Worms&quot;,127274);
+insert into kreise VALUES (7332,&quot;Bad Dürkheim&quot;,132203);
+insert into kreise VALUES (7133,&quot;Bad Kreuznach&quot;,156821);
+insert into kreise VALUES (7231,&quot;Bernkastel-Wittlich&quot;,111828);
+insert into kreise VALUES (7134,&quot;Birkenfeld&quot;,80615);
+insert into kreise VALUES (7135,&quot;Cochem-Zell&quot;,62391);
+insert into kreise VALUES (7333,&quot;Donnersbergkreis&quot;,75230);
+insert into kreise VALUES (7232,&quot;Eifelkreis Bitburg-Prüm&quot;,97180);
+insert into kreise VALUES (7334,&quot;Germersheim&quot;,127303);
+insert into kreise VALUES (7335,&quot;Kaiserslautern&quot;,104966);
+insert into kreise VALUES (7336,&quot;Kusel&quot;,70997);
+insert into kreise VALUES (7339,&quot;Mainz-Bingen&quot;,208749);
+insert into kreise VALUES (7137,&quot;Mayen-Koblenz&quot;,211925);
+insert into kreise VALUES (7138,&quot;Neuwied&quot;,180655);
+insert into kreise VALUES (7140,&quot;Rhein-Hunsrück-Kreis&quot;,102529);
+insert into kreise VALUES (7141,&quot;Rhein-Lahn-Kreis&quot;,123543);
+insert into kreise VALUES (7338,&quot;Rhein-Pfalz-Kreis&quot;,151546);
+insert into kreise VALUES (7337,&quot;Südliche Weinstraße&quot;,110526);
+insert into kreise VALUES (7340,&quot;Südwestpfalz&quot;,96474);
+insert into kreise VALUES (7235,&quot;Trier-Saarburg&quot;,147999);
+insert into kreise VALUES (7233,&quot;Vulkaneifel&quot;,60794);
+insert into kreise VALUES (7143,&quot;Westerwaldkreis&quot;,200302);
+</code></pre>
+
+<p class="skulpt" onclick="savePython(event, 'create_insert_rlp.sql')"><a href="javascript:void()">download</a> <img alt="Download" src="../img/icons/011_InboxDownload.png" /></p>
+<h3 id="beispiele-fur-abfragen">Beispiele für Abfragen</h3>
+<p>Abfragen für <a href="spatialite.md">spatialite_gui</a></p>
+<pre><code>SELECT name FROM kreise
+    WHERE einw &lt; 100000;
+</code></pre>
+
+<hr />
+<pre><code>SELECT name, einw FROM kreise
+    WHERE name like &quot;%kreis%&quot;;
+</code></pre>
+
+<hr />
+<pre><code>SELECT name, einw FROM kreise
+    WHERE NOT name like &quot;%pfalz%&quot;;
+</code></pre>
+
+<hr />
+<pre><code>ALTER TABLE kreise
+    ADD COLUMN kurzname varchar(3)
+</code></pre>
+
+<hr />
+<pre><code>UPDATE kreise SET kurzname = substr(name,0,3)
+UPDATE kreise SET kurzname = substr(name,0,3) || substr(name,-1,2)
+   WHERE substr(name, -1,2) != ')'
+</code></pre>
+
+<hr />
+<h3 id="abfragen-mit-python">Abfragen mit Python</h3>
+<pre><code class="python">from pyspatialite import dbapi2 as db
+conn = db.connect(r&quot;C:\temp\station.sqlite&quot;)
+cur = conn.cursor()
+sql = &quot;&quot;&quot;SELECT name, einw FROM kreise
+    WHERE name like &quot;%kreis%&quot;;&quot;&quot;&quot;
+cur.execute(sql)
+result = cur.fetchall()
+print result
+</code></pre>
+
+<p>Die Abfrage liefert als Ergebnis ein Liste mit Tupeln als Zeilen! Informationen zur Abfrage liefert cur.description, es enthält die Eigenschaften der Spalten (hier nur die Namen).</p>
+<pre><code class="python">print cur.description
+# nur die Namen
+print zip(*cur.description)[0]
+# mögliche Anwendung:
+print &quot;%s\t%s&quot;%zip(*cur.description)[0]
+</code></pre>
+
+<h2 id="beispieltabelle-postation">Beispieltabelle poStation</h2>
+<h3 id="eine-tabelle-anlegen">Eine Tabelle anlegen</h3>
+<pre><code class="python">from pyspatialite import dbapi2 as db
+import urlreader
+
+def createDbTableStation(cur):
+        sql = &quot;&quot;&quot;CREATE TABLE poStation (
+        uuid char(36) NOT NULL PRIMARY KEY,
+        number char(7) NOT NULL,
+        shortname varchar,
+        longname varchar,
+        km float,
+        agency varchar,
+        longitude float,
+        latitude float,
+        water varchar)&quot;&quot;&quot;
+        cur.execute(sql)
+
+dbname = r&quot;C:\temp\station.sqlite&quot;
+conn = db.connect(dbname)
+cur = conn.cursor()
+createDbTableStation(cur)
+conn.close()
+</code></pre>
+
+<p>Die angelegte Datenbank und die Tabelle können z.B. mit dem Programm <a href="spatialite.md">spatialite_gui</a> angsehen werden.</p>
+<h3 id="daten-laden-und-aufbereiten">Daten laden und aufbereiten</h3>
+<pre><code class="python">def getDataTable(jsdata, columns=[]):
+    table = []
+    for st in jsdata:
+        row = []
+        for key in columns:
+            row.append(st[key] if st.has_key(key) else None)
+        table.append(row)
+    return table
+
+url = &quot;https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json&quot;
+jsdata = urlreader.getJsonResponse(url)
+fields = [&quot;uuid&quot;, &quot;number&quot;, &quot;shortname&quot;, &quot;longname&quot;, &quot;km&quot;, &quot;agency&quot;, &quot;longitude&quot;, &quot;latitude&quot;, &quot;water&quot;]
+table = getDataTable(jsdata, fields)
+</code></pre>
+
+<p>Ein Problem stellt der Eintrag <em>water</em> dar. Die angelegte Tabelle erwartet einen String, wir aber haben ein Dictionary-Objekt:</p>
+<p><code>&gt;&gt;&gt; print table[0][-1]</code></p>
+<p>Bei der weiteren Verarbeitung müssen wir den Namen als longname extrahieren. Angenommen wir betrachten die Zeilen der Tabelle, dann betrifft die Änderung die letzte Spalte:</p>
+<pre><code>row = table[0]
+row[-1] = row[-1]['longname']
+</code></pre>
+
+<p>Die konkrete Anwendung erfolgt im nächsten Schritt.</p>
+<h3 id="daten-in-eine-tabelle-einfugen">Daten in eine Tabelle einfügen</h3>
+<p>Mit dem SQL-Befehl <em>INSERT INTO tablename VALUES (v1,v2,...)</em> können wir einer Tabelle eine Zeile mit Werten hinzufügen.</p>
+<p>Da alle SQL-Befehle als String übergeben werden, empfiehlt es sich, die Datenwerte aus einer Python-List in den String einzufügen. Wir kennen bereits Format-Strings in der Form <code>"%s %s %s"%(v1,v2,v3)</code>. Für einen Cursor wurde dieses Konzept erweitert, sodass auch die Datentypen entsprechend der SQL-Syntax eingefügt werden können.</p>
+<pre><code>INSERT INTO poStation VALUES ('36e85829-2fb3-41a0-8a1b-aa9e76431b47',
+                             4940020,
+                             'NIEDERBLOCKLAND',
+                             'NIEDERBLOCKLAND',
+                             7.992,
+                             'WSA BREMEN',
+                             8.826504838107983,
+                             53.161504277715444,
+                             'WÜMME')
+</code></pre>
+
+<p>Die ist ein gültiger Insert-Befehl, wobei Strings mit einfachen Hochkommata gekennzeichnet sint, Zahlenwerte hingegen nicht.</p>
+<p>Eine erweiterte Möglichkeit für SQL-Befehle und das Cursor-Objekt besteht in einem Formatstring, der Fragezeichen als Platzhalter in der Werteliste verwendet.</p>
+<pre><code class="python">row = ['36e85829-2fb3-41a0-8a1b-aa9e76431b47',
+                             4940020,
+                             'NIEDERBLOCKLAND',
+                             'NIEDERBLOCKLAND',
+                             7.992,
+                             'WSA BREMEN',
+                             8.826504838107983,
+                             53.161504277715444,
+                             'WÜMME']
+sql = &quot;INSERT INTO poStation VALUES (?,?,?,?,?,?,?,?,?)&quot;
+cur.execute(sql, row)
+</code></pre>
+
+<p>Erklärung: row ist eine Python-Liste, die in execute als zweiter Parameter übergeben wird. Die Funktion execute setzt die Werte dann, entsprechend ihres Datentyps (also mit oder ohne Hochkomma), in die Werteliste ein.</p>
+<p>Um in einer Python-Funktion soviele Fragezeichen einzufügen, wie eine Tabelle Spalten oder Zeile Werte hat, können wir die Multiplikation von Zeichen mit einer Integerzahl nutzen:</p>
+<pre><code>&gt;&gt;&gt; ['?']*9 # erzeugt eine Liste mit len(row) Fragezeichen
+['?', '?', '?', '?', '?', '?', '?', '?', '?']
+&gt;&gt;&gt; &quot;,&quot;.join(['?']*9) # fügt eine Liste mit Fragezeichen als String zusammen und trennt diese mit einem Komma
+'?,?,?,?,?,?,?,?,?'
+</code></pre>
+
+<p>Hintergrund der zweiten Operation: In SQL stehen die Platzhalter in einem String!</p>
+<p>Nun können wir für unsere Fragestellung auch schreiben:</p>
+<pre><code class="python">row = ['36e85829-2fb3-41a0-8a1b-aa9e76431b47',
+                             4940020,
+                             'NIEDERBLOCKLAND',
+                             'NIEDERBLOCKLAND',
+                             7.992,
+                             'WSA BREMEN',
+                             8.826504838107983,
+                             53.161504277715444,
+                             'WÜMME']
+
+fgz = &quot;,&quot;.join(['?']*len(row))
+sql = &quot;INSERT INTO poStation VALUES (%s)&quot;%fgz
+print sql
+</code></pre>
+
+<p>dies bauen wir jetzt in das Script ein:</p>
+<pre><code class="python">table = getDataTable(jsdata, fields)
+for row in table:
+    row[-1] = row[-1]['longname'] # letztes Feld enthält dict -&gt; string
+    fgz = &quot;,&quot;.join(['?']*len(row))
+    sql = &quot;INSERT INTO poStation VALUES (%s)&quot;%fgz
+    cur.execute(sql, row)
+# Änderungen abschließen
+conn.commit()
+</code></pre>
+
+<p>Wird ein insert-Befehl doppelt ausgeführt, erzeugt er einen Fehler, da mit <em>create table</em> die Spalte <em>uuid</em> als eindeutig festgelegt wurde. Dieser Fehler kann umgangen werden, indem wir nicht <em>insert</em> allein benutzen, sondern schreiben:</p>
+<p><code>insert or replace into</code></p>
+<p>Die Tabelle kann auf diese Weise mit den aktuellen, abgefragten Werten gefüllt werden. Das Ergebnis der Operation kann wieder mit spatialite_gui betrachtet werden.</p>
+<h3 id="daten-aus-der-datenbank-lesen">Daten aus der Datenbank lesen</h3>
+<pre><code class="python">from pyspatialite import dbapi2 as db
+
+dbname = r&quot;C:\temp\station.sqlite&quot;
+conn = db.connect(dbname)
+cur = conn.cursor()
+
+cur.execute(&quot;SELECT * FROM poStation WHERE water='MOSEL'&quot;)
+data = cur.fetchall()
+
+for row in data:
+    for val in row:
+        print val,
+    print &quot;&quot;
+</code></pre>
+
+<h2 id="eine-geometry-spalte-einrichten">Eine Geometry-Spalte einrichten</h2>
+<ul>
+<li>Standard der Simple Features</li>
+<li>Sqlite mit InitSpatialData verhält sich wie Postgresql mit PostGIS</li>
+<li>nutzen (fast) dieselben Funktionen, um geometrische Daten zu verwalten</li>
+</ul>
+<p>Wir fügen eine Geometriespalte für die Stationen hinzu:</p>
+<pre><code class="python">from pyspatialite import dbapi2 as db
+
+dbname = r&quot;C:\temp\station.sqlite&quot;
+conn = db.connect(dbname)
+cur = conn.cursor()
+
+# räumliche Datenstrukturen anlegen
+sql = 'SELECT InitSpatialMetadata(1)' # gibt es nicht in PostGIS
+cur.execute(sql) 
+
+# creating a POINT Geometry column
+sql = &quot;&quot;&quot;SELECT AddGeometryColumn('poStation',
+         'geom', 4326, 'POINT', 'XY')&quot;&quot;&quot;
+cur.execute(sql)
+</code></pre>
+
+<h2 id="geodaten-in-eine-tabelle-schreiben">Geodaten in eine Tabelle schreiben</h2>
+<h3 id="well-known-text">Well-Known-Text</h3>
+<ul>
+<li>Geometrien werden entweder binär oder als String verarbeitet</li>
+<li>Im Fall des SQL-INSERTS übergeben wir der Funktion GeomFromText() einen String</li>
+<li>Das Well-Known-Text-Format definiert für die Simple-Features das passende Textformat für Datenbanken</li>
+<li>Beispiel für Punkte als String: 'POINT(27.13 47.11)', optional kann/muss auch das Koordinatensystem angegeben werden</li>
+<li>In einer Abfrage (SQL-SELECT) verwenden wir AsText(), um das Geometrieobjekt als String auszugeben</li>
+<li><a href="http://www.opengeospatial.org/standards/sfs">Link</a> zur offiziellen Formatbeschreibung</li>
+</ul>
+<figure><img alt="Well-Known Text" src="../img/chap2_simplefeature_wkt.png" /><figcaption>
+<p>Well-Known-Text-Formate für Simple-Features und SQL</p>
+</figcaption>
+</figure>
+<p>in SQL sähe dies so aus:</p>
+<pre><code>UPDATE poStation set geom = GeomFromText('POINT(27.13 47.11)', 4326) 
+</code></pre>
+
+<p>uns als Abfrage/Anzeige aller Daten:</p>
+<pre><code>SELECT &quot;uuid&quot;, &quot;number&quot;, &quot;shortname&quot;, &quot;longname&quot;, &quot;km&quot;, &quot;agency&quot;, 
+       &quot;longitude&quot;, &quot;latitude&quot;, &quot;water&quot;, AsText(&quot;geom&quot;)
+FROM &quot;poStation&quot;
+</code></pre>
+
+<p>Probieren Sie dies in spatialite_gui aus: Jetzt haben allerdings alle Stationen diesselbe Koordinate. Natürlich müssen wir die Geometrien aus den Angaben für longitute und latitude der Pegelonline-Daten generieren.</p>
+<p>Wir schauen uns diesen Weg via Python an:</p>
+<pre><code class="python">from pyspatialite import dbapi2 as db
+
+dbname = r&quot;C:\temp\station.sqlite&quot;
+conn = db.connect(dbname)
+
+sql_select = &quot;&quot;&quot;SELECT &quot;uuid&quot;, &quot;longitude&quot;, &quot;latitude&quot; FROM poStation;&quot;&quot;&quot;
+cur_select = conn.execute(sql_select)
+
+for row in cur_select.fetchall():
+    uuid, lon, lat = row
+    if lon and lat:
+        sql_update = &quot;&quot;&quot;UPDATE poStation
+                 set geom = GeomFromText('POINT(%f %f)', 4326)
+                 WHERE &quot;uuid&quot; = '%s';&quot;&quot;&quot;%(lon, lat, uuid)
+        conn.execute(sql_update)
+conn.commit()
+</code></pre>
+
+<h3 id="umsetzung-fur-das-projekt">Umsetzung für das Projekt</h3>
+<p>Ein sauberer Weg führt allerdings über eine direkte Verarbeitung, mit den Schritten</p>
+<ul>
+<li>leere Tabelle erstellen</li>
+<li>Geometriespalte hinzufügen</li>
+<li>Daten von Pegel-Online lesen</li>
+<li>Daten, inkl. Geometrie einfügen</li>
+</ul>
+<p>Einschränkung: Die Verwendung der Platzhalter ('?') funktioniert mit Funktionen, wie GeomFromText(), die in der Werteliste stehen, etwas anders.</p>
+<p>An der Stelle, wo ein Wert in eine Funktion eingesetzt wird, muss auch der Funktionsname mit in die Liste der Fragezeichen aufgenommen werden: ''''INSERT INTO poStation VALUES (?,?,?,?,?,?,?,?,?, GeomFromText(?, 4326))''''</p>
+<pre><code class="python">from pyspatialite import dbapi2 as db
+import urlreader
+
+def createDbTableStation(cur):
+    sql = &quot;&quot;&quot;CREATE TABLE poStation (
+        uuid char(36) NOT NULL PRIMARY KEY,
+        number char(7) NOT NULL,
+        shortname varchar,
+        longname varchar,
+        km float,
+        agency varchar,
+        longitude float,
+        latitude float,
+        water varchar)&quot;&quot;&quot;
+    cur.execute(sql)
+
+    # creating a POINT Geometry column
+    sql = &quot;&quot;&quot;SELECT AddGeometryColumn('poStation', 'geom', 4326, 'POINT', 'XY')&quot;&quot;&quot;
+    cur.execute(sql)
+
+def getDataTable(jsdata, columns=[]):
+    table = []
+    for st in jsdata:
+        row = []
+        for key in columns:
+            row.append(st[key] if st.has_key(key) else None)
+        table.append(row)
+    return table
+
+dbname = r&quot;C:\temp\station.sqlite&quot;
+conn = db.connect(dbname)
+
+# räumliche Datenstrukturen anlegen
+# sql = 'SELECT InitSpatialMetadata(1)'
+# conn.execute(sql)
+
+cur = conn.cursor()
+##createDbTableStation(cur)
+
+url = &quot;https://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json&quot;
+jsdata = urlreader.getJsonResponse(url)
+fields = [&quot;uuid&quot;, &quot;number&quot;, &quot;shortname&quot;, &quot;longname&quot;, &quot;km&quot;, &quot;agency&quot;, &quot;longitude&quot;, &quot;latitude&quot;, &quot;water&quot;]
+table = getDataTable(jsdata, fields)
+
+for row in table:
+    # replace water dict with longname
+    row[-1] = row[-1]['longname']
+
+    # accept only rows with point coordinates
+    if row[6] and row[7]:
+        # strings for sql statement
+        # WKT-Point-String
+        str_geom = &quot;POINT(%f %f)&quot;%(row[6], row[7])
+        # field list as string
+        str_fields = &quot;,&quot;.join(fields + ['geom'])
+        # 'Fragezeichen' as a string
+        str_fgz = &quot;,&quot;.join(['?']*len(row))
+        # Functions are always part of this
+        str_fgz += &quot;, GeomFromText(?, 4326)&quot;
+
+        # let execute() add all values from row, including WKT-Point-String
+        row.append(str_geom)
+        # build the whole sql string
+        # sql = &quot;INSERT INTO poStation (%s)&quot;%str_fields + &quot; VALUES (%s)&quot;%str_fgz
+        sql = &quot;INSERT INTO poStation VALUES (%s)&quot;%str_fgz
+        cur.execute(sql, row)
+# Änderungen abschließen
+conn.commit()
+</code></pre>
+
+<h2 id="aufgabenstellungen">Aufgabenstellungen</h2>
+<p>Funktionen zur Automatisierung:</p>
+<h3 id="insert-befehl-erzeugen">Insert-Befehl erzeugen</h3>
+<p>Entwerfen Sie eine Funktion, die einen SQL-String für den insert-Befehl erstellt, der direkt aus einer Liste von Feldnamen erzeugt wird und daraus die entsprechende Anzahl an Platzhaltern erzeugt.</p>
+<ul>
+<li>Die Funktion sollte in der Lage sein, auch eine Geometriespalte einzufügen!</li>
+<li>Geometriespalten stehen nicht notwendigerweise am Schluss einer Feldliste</li>
+</ul>
+<p>möglicher Funktionsaufruf: buildSQLstring(row, fields, geom_field, srid)</p>
+<ul>
+<li>row: die Datenzeile einer <em>Tabelle</em> als zweidimensionales Feld (List, Tuple)</li>
+<li>fields: Liste der Namen der Tabellenspalten</li>
+<li>geom_field: die Position oder der Name der Geometriespalte in fields, bzw. ein Wert, der anzeigt, dass keine Geometrie vorliegt (bspw. None, -1)</li>
+<li>srid: Die Nummer des Koordinatensystems der Geometrie, wird an GeomFromText() übergeben </li>
+</ul>
+<h3 id="wkt-darstellungen-aus-tuplen-erzeugen">WKT-Darstellungen aus Tuplen erzeugen</h3>
+<p>Entwerfen Sie eine Funktion, die aus Geomtriedaten (bestehend aus <em>Tuples</em>), eine WKT-Darstellung erzeugt. Diese soll eingesetzt werden, wenn Geometrien in eine DB-Tabelle eingefügt werden sollen.</p>
+<ul>
+<li>
+<p>Geometrietypen sollen als POINT, LINESTRING und POLYGON umgewandelt werden können</p>
+</li>
+<li>
+<p>Nutzen Sie z.B. die Funktion test_dim aus dem Geometriemodul geomet, um zwischen den Geometrietypen zu unterscheiden!</p>
+</li>
+</ul>
+<p>Beide Funktionen sollen so funktionieren, dass sie in einer for-Schleife, wie oben, eingesetzt werden können!</p>
+<p>Probieren Sie es aus!</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

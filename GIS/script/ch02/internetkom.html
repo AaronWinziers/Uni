@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Python-Module zur Internetkommunikation - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Python-Module zur Internetkommunikation", url: "#_top", children: [
+              {title: "urlib2 zum Download nutzen", url: "#urlib2-zum-download-nutzen" },
+              {title: "XML- und json-Daten", url: "#xml-und-json-daten" },
+              {title: "Ein eigenes Modul: urlreader", url: "#ein-eigenes-modul-urlreader" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="python-module-zur-internetkommunikation">Python-Module zur Internetkommunikation</h1>
+<p>urllib, urllib2 sind die Standardmodule zur Internetkommunikation über das http-Protokoll. 
+Darüber hinaus wird das Modul request als Ersatz empfohlen, es muss allerdings nachträglich installiert werden. In der Standardbibliothek finden sich außerdem Module für alle anderen Zwecke der Internetkommunikation, wie ftplib, cgi oder smtp - bis hin zum http-Server (SimpleHttpServer)</p>
+<p>Der Unterschied zwischen urllib und urllib2 stellt sich durch einen erweiterten Funktionsumfang von urllib2 dar.</p>
+<h2 id="urlib2-zum-download-nutzen">urlib2 zum Download nutzen</h2>
+<h3 id="uri-uniform-request-identifier">URI: Uniform Request Identifier</h3>
+<p>Internet-Adresse zum Zugriff auf "Ressourcen": html-Seiten, Bilder etc.</p>
+<figure><img alt="URI" src="../img/chap2_uri.png" /><figcaption>
+<p>Schema zum Aufbau eines URI's</p>
+</figcaption>
+</figure>
+<p>Um mit python eine URI zu lesen benötigt es eine einfachen Anweisung:</p>
+<pre><code class="python">import urllib2
+url = &quot;http://endor.uni-trier.de/karto/python2/ch01/receipes/index.html&quot;
+response = urllib2.urlopen(url).read()
+print response
+</code></pre>
+
+<h3 id="fehlerbehandlung">Fehlerbehandlung</h3>
+<p>Tritt ein Fehler bei der Kommunikation auf, erzeugt das Modul einen Ausnahmefehler, den wir abfangen können:</p>
+<pre><code class="python">import urllib2
+
+def read_request(url):
+    try:
+        response = urllib2.urlopen(url).read()
+    except (urllib2.HTTPError, urllib2.URLError):
+        print &quot;error reading url:&quot;, url
+        return None
+
+    return response
+
+url = &quot;http://endor.uni-trier.de/karto/python2/ch01/receipes/index.html&quot;
+resp = read_request(url)
+print resp
+</code></pre>
+
+<p>Detailierte Fehlerbehandlung: </p>
+<ul>
+<li>Wir trennen read von urlopen und </li>
+<li>teilen Fehlerbehandlung in zwei auf</li>
+<li>anstelle der URL rufen wir das Request-Objekt ab (später mehr)</li>
+</ul>
+<pre><code class="python">import urllib2
+
+def read_request(url):
+    try:
+        request = urllib2.Request(url)
+        print request.headers
+        response = urllib2.urlopen(request)
+        data = response.read()
+        return data
+    except urllib2.HTTPError as e:
+        print &quot;HTTP error reading url:&quot;, url
+        print &quot;Code&quot;, e.code
+        print &quot;Returns&quot;, e.read()
+    except urllib2.URLError as e:
+        print &quot;URL error reading url:&quot;, url
+        print &quot;Reason:&quot;, e.reason
+
+
+url = &quot;http://endor.uni-trier.de/karto/python2/ch01/receipes/index.html&quot;
+resp = read_request(url)
+print resp
+</code></pre>
+
+<h3 id="ablauf-einer-http-kommunikation">Ablauf einer http-Kommunikation</h3>
+<p>HTTP: Anwendungsschicht von Netzwerkprotokollen</p>
+<ul>
+<li>Funktionen für Anwendungen auf der höchsten Ebene</li>
+</ul>
+<p>Zustandslos, zwischen Anfragen kann nichts gespeichert werden</p>
+<ul>
+<li>Ausnahmen durch andere Techniken: Sitzungen (mit Login), Cookies</li>
+</ul>
+<p>Nachrichten zwischen Server und Client als Anfrage und Antwort</p>
+<ul>
+<li>Request und Response mit Header und Body</li>
+</ul>
+<figure><img alt="Request and Response" src="../img/chap2_request-response.png" /><figcaption>
+<p>Schema der Kommunikation mit HTTP 
+<a href="https://www.slideshare.net/origamiaddict/http-40249449" target="_blank">Quelle: Slideshare</a></p>
+</figcaption>
+</figure>
+<p>GET</p>
+<p>Schickt einen Request, benutzt einen URI, um eine Ressource (Datei) anzufordern,
+Daten können in begrenztem Maß über die URI übermittelt werden</p>
+<p>POST
+-  Schickt einen Request + Daten an den Server, Daten sind im POST-Body abgelegt und nicht begrenzt</p>
+<pre><code class="python">import urllib2
+url = &quot;http://endor.uni-trier.de/karto/python2/ch01/receipes/index.html&quot;
+
+request = urllib2.Request(url)
+print &quot;URL&quot;, request.get_full_url()
+print &quot;HOST&quot;, request.get_host()
+print &quot;Method&quot;, request.get_method()
+
+response = urllib2.urlopen(request)
+print &quot;Code&quot;, response.code
+print &quot;Message&quot;, response.msg
+print &quot;Headers&quot;, response.headers.dict
+print &quot;Content-type:&quot;, response.headers.dict[&quot;content-type&quot;]
+print &quot;Content-length:&quot;, response.headers.dict[&quot;content-length&quot;]
+</code></pre>
+
+<p>Der Content-type im response-Header ist ein sehr interessanter Teil des Headers, er teilt uns mit, welches Datenformat übertragen wird (der MIME-Type). <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types" target="_blank">Erläuterung zu möglichen Werten.</a></p>
+<p>Um dem request via GET einen Header mitzugeben, kann der Queryteil des URI benutzt werden:</p>
+<ul>
+<li><a href="https://www.w3schools.com/action_page.php?fname=andreas&amp;lname=mueller" target="_blank">https://www.w3schools.com/action_page.php?fname=andreas&amp;lname=mueller</a></li>
+</ul>
+<pre><code class="python">url = &quot;https://www.w3schools.com/action_page.php?fname=andreas&amp;lname=mueller&quot;
+request = urllib2.Request(url)
+response = urllib2.urlopen(request)
+print response.read()
+</code></pre>
+
+<p>Mehr zum Modul und seinen Möglichkeiten finden wir in der <a href="https://docs.python.org/2/howto/urllib2.html" target="_blank">Python-Online Dokumentation</a></p>
+<h3 id="daten-aus-dem-response-objekt-speichern">Daten aus dem Response-Objekt speichern</h3>
+<p>Mit read haben wir bereits eine Methode zum Lesen von Daten kennengelernt. Die so erhalten Daten können wir in Dateien speichern:</p>
+<pre><code class="python">import urllib2
+
+url = &quot;https://www.uni-trier.de/fileadmin/_migrated/pics/Zugang_Kartographie.png&quot;
+request = urllib2.Request(url)
+response = urllib2.urlopen(request)
+data = response.read()
+
+f = open(r&quot;c:\tmp\campus2.png&quot;, &quot;wb&quot;) # binäre Datei schreiben
+f.write(data)
+f.close()
+</code></pre>
+
+<p>Falls das Lesen der Daten besser kontrolliert werden soll (um Fehler oder eine große Datenmenge zu managen), kann auch <em>blockweise</em> (im Sinne von gepuffert) vorgegangen werden:</p>
+<pre><code class="python">import urllib2
+
+url = &quot;https://ia902604.us.archive.org/4/items/BennyGoodman_795/BennyGoodman1.mp3&quot;
+
+def download(url, dest):
+
+    file_name = url.split('/')[-1]
+    response = urllib2.urlopen(url)
+
+    f = open(dest + file_name, 'wb')
+
+    file_size_dl = 0
+    block_sz = 8192
+    while True:
+        buffer = response.read(block_sz)
+        if not buffer:
+            break
+
+        file_size_dl += len(buffer)
+        f.write(buffer)
+
+    f.close()
+    return file_size_dl
+
+download(url, &quot;c:\\tmp\\&quot;)
+</code></pre>
+
+<h3 id="lesen-komprimierter-daten">Lesen komprimierter Daten</h3>
+<p>Manche Dienste verlangen, dass angeforderte Daten in komprimierter Form übertragen werden sollen.
+In diesem Fall können wir das Modul gzip verwenden, um den Datenstrom zu entpacken:</p>
+<pre><code class="python">import gzip
+from StringIO import StringIO
+import urllib2
+
+def getFileResponse(url):
+    request = urllib2.Request(url)
+    # accept compressed data
+    request.add_header('Accept-Encoding', 'gzip')
+
+    # request was sent, get response
+    response = urllib2.urlopen(request)
+
+    # is response compressed?
+    if response.info().get('Content-Encoding') == 'gzip':
+        # read data and uncompress it
+        buf = StringIO(response.read()) # StingIO makes it readable for gzip
+        f = gzip.GzipFile(fileobj=buf)  # again: uncompressed data is a stream
+    else:
+        f = response
+
+    return f
+
+url = &quot;https://www.uni-trier.de/&quot;
+
+f = getFileResponse(url)
+print f.read()
+</code></pre>
+
+<h3 id="eine-universelle-struktur-zum-lesen-mit-http">eine universelle Struktur zum Lesen mit http</h3>
+<p>Wir erstellen ein Modul <em>urlreader</em>:</p>
+<pre><code class="python">import gzip
+from StringIO import StringIO
+import urllib2
+
+def uncompressIO(file_like):
+    &quot;&quot;&quot;read a compressed file like stream, uses gzip, return a file-object&quot;&quot;&quot;
+    buf = StringIO(file_like.read())
+    f = gzip.GzipFile(fileobj=buf)
+    return f
+
+def openURL(url):
+    &quot;&quot;&quot;Send a request to url, return the response&quot;&quot;&quot;
+    try:
+        request = urllib2.Request(url)
+        request.add_header('Accept-Encoding', 'gzip')
+        response = urllib2.urlopen(request)
+        return response
+
+    except urllib2.HTTPError as e:
+        print &quot;HTTP error reading url:&quot;, url
+        print &quot;Code&quot;, e.code
+        print &quot;Returns&quot;, e.read()
+    except urllib2.URLError as e:
+        print &quot;URL error reading url:&quot;, url
+        print &quot;Reason:&quot;, e.reason
+    return None
+
+def getFileResponse(url):
+    &quot;&quot;&quot;example: how to read from compressing url, return a file object&quot;&quot;&quot;
+    response = openURL(url)
+    # is response compressed?
+    if response.info().get('Content-Encoding') == 'gzip':
+        # read data and uncompress it
+        buf = StringIO(response.read()) # StingIO makes it readable for gzip
+        f = gzip.GzipFile(fileobj=buf)  # again: uncompressed data as a stream
+    else:
+        f = response
+
+    return f
+
+if __name__ == '__main__':
+    url = &quot;https://www.uni-trier.de/&quot;
+
+    f = getFileResponse(url)
+    print f.read()
+</code></pre>
+
+<p>Wir speichern dieses Modul als urlreader01.py!</p>
+<h2 id="xml-und-json-daten">XML- und json-Daten</h2>
+<p>Einige Internetdienste, wie z.B. auf dem REST-Protokoll basierende Datenbanken, liefern als Response xml- oder json-Daten.</p>
+<ul>
+<li>REST: [Representational State Transfer] ist ein Programmierparadigma für verteilte Systeme, insbesondere
+Webdienste zur Kommunikation zwischen Maschinen,</li>
+<li>URL wird als Datenbankanfrage verstanden, </li>
+<li>jede "Information" hat ihre eigene Adresse (URL)
+daraus lassen sich Meshups erstellen: Internetseiten, die aus verschiedenen Quellen neu zusammengestellt werden</li>
+<li>wird mit den http-Befehlen umgesetzt</li>
+</ul>
+<p>Http-Befehle als Datenbankabfrage:</p>
+<ul>
+<li>GET: read a resource (Abfrage liefert Daten)</li>
+<li>POST: create a new resource (Abfrage erzeugt Dateneintrag)</li>
+<li>PUT: update a resource (Abfrage aktualisiert Datensatz)</li>
+<li>DELETE: remove a resource (Abfrage löscht einen Dateneintrag)</li>
+</ul>
+<p>Das json-Format (Javascript Object Notation)</p>
+<ul>
+<li>wurde als Ersatz zu XML entwickelt</li>
+<li>nutzt die Javascript-Syntax</li>
+<li>ein XML-Tag wird zu einem Javascript-Objekt</li>
+<li>aufeinanderfolgende gleiche Tags werden zu einer Javascript-Liste</li>
+</ul>
+<p><a href="https://www.w3schools.com/js/js_json_xml.asp" target="_blank">Beispiele</a></p>
+<ul>
+<li>ein Javascript-Objekt wird in Python zu einem Dictionary,</li>
+<li>eine Javascript-Liste zu einer Python-Liste</li>
+</ul>
+<p>Hier ein Beispiel zur Umwandlung des Inhalts einer json-Datei:</p>
+<pre><code class="python">import json
+
+strJson = &quot;&quot;&quot;{&quot;employees&quot;:[
+    { &quot;firstName&quot;:&quot;John&quot;, &quot;lastName&quot;:&quot;Doe&quot; },
+    { &quot;firstName&quot;:&quot;Anna&quot;, &quot;lastName&quot;:&quot;Smith&quot; },
+    { &quot;firstName&quot;:&quot;Peter&quot;, &quot;lastName&quot;:&quot;Jones&quot; }
+]}&quot;&quot;&quot;
+
+data = json.loads(strJson) # liest aus einem String
+
+print data
+</code></pre>
+
+<p>Um direkt aus einer Datei zu lesen, kann ein File-Objekt erstellt und der Methode json.load() übergeben werden:</p>
+<pre><code class="python">import json
+
+f = open(&quot;trgastro.geojson&quot;)
+data = json.load(f) # liest aus einer Datei
+print data.keys()
+f.close()
+</code></pre>
+
+<p>Als Ergebnis erhalten wir den Inhalt eines GeoJson-Objekts. <a href="http://geojson.org/" target="_blank">mehr zu GeoJson</a>
+Es enthält drei Strukturen:</p>
+<ul>
+<li>crs: Coordinate Reference System: den Daten zugrunde liegendes Koordinatensystem</li>
+<li>type: Feature Type, Geometrietyp: Point, LineString, Polygon, MultiPoint, MultiLineString und MultiPolygon</li>
+<li>features: Die eigentlichen Daten mit Geometrie und Sachattributen</li>
+</ul>
+<p>Das nächste Beispiel nutzt den Dienst Pegelonline, um das Stationsnetz der Pegelmessstellen an deutschen Flüssen im json-Format abzufragen.
+Nun kommt auch das Modul urlreader wieder zum Einsatz.</p>
+<pre><code class="python">import urlreader01 as urlreader
+import json
+
+def readRestJson(url):
+    &quot;&quot;&quot;load a json structure from a REST-URL, returns a list/dict python object&quot;&quot;&quot;
+
+    # read from http with url
+    response = urlreader.openURL(url)
+
+    if response.info().get('Content-Encoding') == 'gzip':
+        data =  json.load(urlreader.uncompressIO(response))
+    else:
+        data = json.load(response)
+    response.close()
+    return data
+
+url = &quot;http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json&quot;
+jsdata = readRestJson(url)
+print &quot;Anzahl der Stationen:&quot;, len(jsdata)
+print &quot;Attribute:&quot;, jsdata[0].keys()
+</code></pre>
+
+<p>Im Prinzip unterscheidet sich diese Abfrage nicht von einem Datei-Download, nur das wir die Daten aus dem json Format in Python-Datentypen umgewandelt bekommen.</p>
+<ul>
+<li>Ergebnis ist eine Liste der Stationen</li>
+<li>Jede Station entspricht einem Dictionary mit den Attributen als Schlüssel</li>
+</ul>
+<p>Wir übertragen die neue Funktion readRestJson() in unser Modul urlreader und nennen die Funktion getJsonResponse()!
+Änderungen: Angabe <code>urlreader.</code> entfällt!</p>
+<p>Nun probieren wir eine andere Abfrage:</p>
+<p><code>http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?waters=MOSEL,SAAR</code></p>
+<p>Hier benutzen wir den Query-Teil der URL, um die Abfrage der Stationen auf die Flüsse <em>Mosel</em> und <em>Saar</em> zu begrenzen.</p>
+<p>Testen Sie die Abfragen auch im Browser!</p>
+<p>Um die Daten auszuwerten, erstellen wir daraus eine Tabelle (zweidimensionale Liste) und geben diese aus:</p>
+<pre><code class="python">import urlreader01 as urlreader
+
+def getDataTable(jsdata, columns=[]):
+    table = []
+    for st in jsdata:
+        row = []
+        for key in columns:
+            row.append(st[key] if key in st.keys() else None)
+        table.append(row)
+    return table
+
+url = &quot;http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations.json?waters=MOSEL,SAAR&quot;
+jsdata = urlreader.getJsonResponse(url)
+
+print &quot;Anzahl der Stationen:&quot;, len(jsdata)
+print &quot;Attribute:&quot;, jsdata[0].keys()
+
+table = getDataTable(jsdata, [&quot;number&quot;, &quot;longname&quot;, &quot;agency&quot;, &quot;longitude&quot;, &quot;latitude&quot;])
+
+print &quot;\t&quot;.join(map(str, [&quot;number&quot;, &quot;longname&quot;, &quot;agency&quot;, &quot;longitude&quot;, &quot;latitude&quot;]))
+for st in table:
+    print u&quot;\t&quot;.join(map(unicode, st))
+</code></pre>
+
+<p>Daten aus dem Netz sind häufig als unicode (UTF-8) codiert, hier müssen wir immer aufpassen, da python2 nicht automatisch zwischen String und Unicode umwandelt!</p>
+<p>Andererseits werden Sonderzeichen, die in UTF-8 erlaubt sind in einer URL immer maskiert.</p>
+<table>
+<thead>
+<tr>
+<th>Sonderzeichen</th>
+<th>URL-maskierung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Leerzeichen</td>
+<td>%20</td>
+</tr>
+<tr>
+<td>Ö</td>
+<td>%C3%96</td>
+</tr>
+<tr>
+<td>ö</td>
+<td>%C3%B6</td>
+</tr>
+<tr>
+<td>Ä</td>
+<td>%C3%84</td>
+</tr>
+<tr>
+<td>ä</td>
+<td>%C3%A4</td>
+</tr>
+<tr>
+<td>Ü</td>
+<td>%C3%9C</td>
+</tr>
+<tr>
+<td>ü</td>
+<td>%C3%BC</td>
+</tr>
+<tr>
+<td>Vergleiche auch den <a href="https://de.wikipedia.org/wiki/URL-Encoding" target="_blank">Artikel bei Wikipedia</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Da bei den Namen in einer Abfrage Umlaute vorkommen können, müssen wir sicherstellen, dass diese korrekt in die URL eingetragen werden. - Gleichzeitig ein Beispiel zur Abfrage des Wasserstands der Station <em>Köln</em>.</p>
+<pre><code class="python">import urlreader01 as urlreader
+
+def maskURLString(urlstr):
+    return urlstr.replace(u&quot; &quot;, u'%20').replace(u'Ö',u'%C3%96').replace(u'Ä',u'%C3%84').replace(u'Ü', u'%C3%9C')
+
+url = u&quot;http://www.pegelonline.wsv.de/webservices/rest-api/v2/stations/KÖLN/W/currentmeasurement.json&quot;
+murl = maskURLString(url)
+jsdata = urlreader.getJsonResponse(murl)
+print jsdata
+</code></pre>
+
+<p><a href="http://stackoverflow.com/questions/5607551/how-to-urlencode-a-querystring-in-python" target="_blank">Alternative zu maskURLString: urllib.quote_plus()</a></p>
+<h2 id="ein-eigenes-modul-urlreader">Ein eigenes Modul: <em>urlreader</em></h2>
+<p>Im Modul urlreader02 fassen wir die Erkenntnisse zusammen. Es soll diese Funktionen umfassen:</p>
+<ul>
+<li>openURL(url): benutzt die urllib2, um ein response-Objekt zurückzugeben</li>
+<li>getJsonResponse(url): analog zu getDataResponse, liest den Datenstrom und gibt das Ergebnis von json.load() zurück</li>
+<li>Hilfsfunktionen: maskURLString(), uncompressIO(), </li>
+</ul>
+<p>Neue Funktionen:
+- getFileResponse(url): Änderung der vorhandenen Funktion, der Datenstrom wird in einer Datei gespeichert
+- getDataResponse(url): benutzt openURL, liest den Datenstrom und speichert diesen in einer Variablen, das Ergebnis wird zurückgegeben</p>
+<p>überlegen Sie, wie die Daten mit getFileResponse bzw. getDataResponse <em>blockweise</em> gelesen werden können!</p>
+<p>Hilfsfunktion zum Entpacken eines <code>blocks</code>:</p>
+<pre><code class="python">def uncompressBuffer(buffer):
+    buf = StringIO(buffer)
+    f = gzip.GzipFile(fileobj=buf)
+    data = f.read()
+    return data
+</code></pre>
+
+<p>Die Funktion arbeitet wie uncompressIO, nur das die Daten eines Blocks (hier <code>buffer</code>) hier schon gelesen und damit entpackt werden.</p>
+<p>Wie kann das Modul objektorientiert aufgebaut werden?</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

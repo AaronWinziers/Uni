@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Objektorientierte Programmierung - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Objektorientierte Programmierung", url: "#_top", children: [
+              {title: "Ansatz der OOP", url: "#ansatz-der-oop" },
+              {title: "Python Klassendefinition", url: "#python-klassendefinition" },
+              {title: "Python Objekte", url: "#python-objekte" },
+              {title: "Vererbung", url: "#vererbung" },
+              {title: "Aufgabenstellung zu Klassen", url: "#aufgabenstellung-zu-klassen" },
+          ]},
+          {title: "Gro\u00dfe Module", url: "#groe-module", children: [
+              {title: "Import", url: "#import" },
+              {title: "Beispiel Modul-Shapely", url: "#beispiel-modul-shapely" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="objektorientierte-programmierung">Objektorientierte Programmierung</h1>
+<h2 id="ansatz-der-oop">Ansatz der OOP</h2>
+<ul>
+<li>Encapsulation: Daten und Funktionen werden zusammen verwaltet, </li>
+<li>Data Abstraction: interne Datenstrukturen werden über eine Schnittstelle weitergegeben</li>
+<li>Polymorphism: Klassenstrukturen helfen, die Schnittstelle über verschiedene Klassen konsistenz zu halten</li>
+<li>Inheritance: Vererbung meint die Weitergabe von Daten und Methoden von allgemeineren Klassen zu spezielleren</li>
+</ul>
+<p>Die Begriffe Objekt und Klasse bezeichnen dabei jeweils die Form (Klasse) und die Instanz (Objekt), die aus dieser Form hervorgeht. Sucht man in Programmiersprachen nach einem ähnlichen Kontrukt, so kann vielleicht eine Funktion als Vergleich gelten: Die Funktion besitzt eine Funktionsdefinition (Form), die im Programm aufgerufen werden muss (Instanz), um aktiv zu sein.</p>
+<p>In einer Klasse werden Eigenschaften (Daten) und Methoden (Funktionen) definiert. Diese legen Art und Verhalten von Objekt fest.</p>
+<p>Wir kennen das Prinzip schon:</p>
+<pre><code>einObjekt.eigenschaft
+einObjekt.methode()
+</code></pre>
+
+<p>Beispiel: Entwurf einer Klassenstruktur für "Datenobjekte"</p>
+<p>Diese Datenobjekte sollen den Zugriff auf Dateien oder auf Datenbanken ermöglichen.</p>
+<figure><img alt="Klassendiagramm" src="../img/chap1_classprimer.png" /><figcaption>
+<p>Klassendiagramm für Datenobjekte</p>
+</figcaption>
+</figure>
+<p><strong>class Datenquelle</strong>, </p>
+<ul>
+<li>definiert Methoden: open, read, insert, delete, close</li>
+<li>definiert Eigenschaften: location</li>
+</ul>
+<p><strong>class Datei</strong>, abgeleitet aus <strong>Datenquelle</strong>,</p>
+<ul>
+<li>erbt Methoden und Eigenschaften von Datenquelle</li>
+<li>spezifiziert aber für den speziellen Typ einer Datenquelle</li>
+<li>wie die Methoden auf eine Datei zugreifen</li>
+<li>benutzt als location einen lokalen Pfad </li>
+</ul>
+<p><strong>class Database</strong>, abgeleitet aus <strong>Datenquelle</strong>,</p>
+<ul>
+<li>erbt auch von Datenquelle</li>
+<li>implementiert einen Zugriff auf eine Datenbank</li>
+<li>benutzt location als Connect-String des Datenbank-Management-Systems</li>
+</ul>
+<p><strong>class CSV</strong>, abgeleitet aus <strong>Datei</strong></p>
+<ul>
+<li>erbt die Methoden der Klasse Datei</li>
+<li>implementiert den Zugriff für <em>tabellenartige Daten</em> im csv-Format</li>
+<li>sieht speziell für das CSV-Format weitere Methoden vor, z.B. zum Zugriff auf Spalten</li>
+</ul>
+<p><strong>class SQLDB</strong>, abgeleitet aus <strong>Database</strong></p>
+<ul>
+<li>erbt die Database-Methoden</li>
+<li>implementiert alle Zugriffe auf die Datenbank über SQL-Befehle</li>
+<li>benutzt für <em>tabellenartige Daten</em> dieselbe oder ähnliche Zugriffe wie die CSV-Klasse</li>
+</ul>
+<p><strong>class Table</strong>, neue Klasse für <em>tabellenartige Daten</em></p>
+<ul>
+<li>wird erstellt, um doppelten Code in CSV- und SQLDB zu vermeiden</li>
+</ul>
+<h2 id="python-klassendefinition">Python Klassendefinition</h2>
+<h3 id="minimal">Minimal</h3>
+<pre><code class="python">class Point(object):
+    X = 0
+    Y = 0
+
+p1 = Point()
+p1.X = 1.2
+p1.Y = 2.3
+
+</code></pre>
+
+<h3 id="initialisierung-eines-objekts">Initialisierung eines Objekts</h3>
+<pre><code class="python">class Point(object):
+
+    def __init__(self, x=0.0, y=0.0):
+        self.X = x
+        self.Y = y
+
+p1 = Point(1.2,2.3)
+print p1.X
+# gibt 1.2
+
+p2 = Point(2.1,2.5)
+print p2.Y
+# gibt 2.5
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a>  <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="weitere-vordefinierte-methoden">weitere vordefinierte Methoden</h3>
+<p>Umwandlung in einen String:</p>
+<pre><code class="python">class Point(object):
+
+    def __init__(self, x=0.0, y=0.0):
+        self.X = x
+        self.Y = y
+
+    def __str__(self):
+        return &quot;POINT: %s, %s&quot; % (self.X, self.Y)
+
+p1 = Point(1.2,2.3)
+print p1
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a>  <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>eine kurze Liste einiger <em>magischer</em> Methoden:</p>
+<ul>
+<li><code>__new__</code>: gibt an, wie das Objekt erzeugt wird</li>
+<li><code>__init__</code>: gibt an, wie das zuvor erzeugte Objekt initialisiert wird</li>
+<li><code>__del__</code>: gibt an, was passiert, wenn das Objekt gelöscht wird</li>
+<li><code>__str__</code>: gibt an, was passiert, wenn das Objekt in einen String umgewandelt wird: z.B. mit print!</li>
+<li><code>__add__</code>: gibt an, wie eine Addition durchgeführt wird</li>
+</ul>
+<p>Weitere Informationen: <a href="https://www.tutorialspoint.com/python/python_classes_objects.htm">tutorialspoint</a></p>
+<p>Der Lebenslauf eines Objekts:</p>
+<pre><code class="python">class Point(object):
+    count = 0
+    def __new__(cls, x=0.0, y=0.0):
+        print &quot;NEW&quot;
+        cls.count += 1
+        return super(Point, cls).__new__(cls)
+
+    def __init__(self, x=0.0, y=0.0):
+        print &quot;INIT&quot;, self.count
+        self.X = x
+        self.Y = y
+
+    def __str__(self):
+        print &quot;STR&quot;
+        return &quot;POINT: %s, %s&quot; % (self.X, self.Y)
+
+    def __del__(self):
+        print &quot;DEL&quot;
+        self.__class__.count -= 1
+        print &quot;Point %s deleted. Count is %s&quot;%(id(self), self.count)
+
+
+p1 = Point(1.2,2.3)
+print p1
+del p1
+p1 = Point(4.5,4.6)
+p2 = Point(3.4,3.5)
+del p1
+</code></pre>
+
+<p class="skulpt">Dieses Beispiel funktioniert nicht mit skulpt!</p>
+<h3 id="eigene-methoden">Eigene Methoden</h3>
+<pre><code class="python">import math
+
+class Point(object):
+
+    def __init__(self, x=0.0, y=0.0):
+        self.X = x
+        self.Y = y
+
+    def __str__(self):
+        return &quot;POINT: %s, %s&quot; % (self.X, self.Y)
+
+    def distance(self, second):
+        return math.sqrt((self.X - second.X)**2 + (self.Y - second.Y) **2)
+
+p1 = Point(1.2,2.3)
+p2 = Point(3.4,3.5)
+p1.distance(p2)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a>  <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="getter-setter-properties">Getter, Setter, Properties</h3>
+<p>Ziel: Werte schützen! Zuweisungen kontrolliert ablaufen lassen.</p>
+<pre><code>value_too_small = 0.001
+p1 = Point(1.2,2.3)
+p2.X = value_to_small
+</code></pre>
+
+<p>Beispiel: Zuweisung von zu kleinen Werten verbieten</p>
+<pre><code class="python">class Point(object):
+
+    def __init__(self, x=0.0, y=0.0):
+        self.setX(x)
+        self.setY(y)
+
+    def __str__(self):
+        return &quot;POINT: %s, %s&quot; % (self.X, self.Y)
+
+    def setX(self, x):
+        if x &gt;= 0:
+            self.__x = x
+
+    def setY(self, y):
+        if y &gt;= 0:
+            self.__y = y
+
+    def getX(self):
+        return self.__x
+
+    def getY(self):
+        return self.__y
+
+    X = property(getX, setX)
+    Y = property(getY, setY)
+
+
+p1 = Point()
+p1.X = -0.5
+p1.Y = 1.0
+print p1
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a>  <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h2 id="python-objekte">Python Objekte</h2>
+<p>alles in Python ist ein Objekt:</p>
+<p>"Objects are Python’s abstraction for data. All data in a Python program is represented by objects or by relations between objects. (In a sense, and in conformance to Von Neumann’s model of a “stored program computer,” code is also represented by objects.)"
+<a href="https://docs.python.org/2/reference/datamodel.html">Dokumentation</a></p>
+<h3 id="der-datentyp">Der Datentyp</h3>
+<p>Datentypen und Klassen sind identisch:</p>
+<pre><code class="python">a = &quot;Ich bin ein String&quot;
+print type(a)
+print a.__class__
+print str
+print type(a) == str
+</code></pre>
+
+<p class="skulpt">Dieses Beispiel funktioniert nicht mit skulpt!</p>
+<p>"Nichts" ist ein Objekt: None ist ein Objekt vom Typ NoneType</p>
+<pre><code>&gt;&gt;&gt; print None.__class__
+&lt;type 'NoneType'&gt;
+</code></pre>
+
+<p class="skulpt">Dieses Beispiel funktioniert nicht mit skulpt!</p>
+<p>Konstanten und Funktionen: auch Objekte...</p>
+<pre><code>&gt;&gt;&gt; print &quot;abc&quot;.__class__
+&lt;type 'str'&gt;
+&gt;&gt;&gt; 5.__class__
+SyntaxError: invalid syntax
+&gt;&gt;&gt; (5).__class__
+&lt;type 'int'&gt;
+&gt;&gt;&gt; def h(a,b): return a**b
+&gt;&gt;&gt; h.__class__
+&lt;type 'function'&gt;
+</code></pre>
+
+<p _="**" class="skulpt">Dieses Beispiel funktioniert nicht mit skulpt!</p>
+<p>Typen überprüfen</p>
+<p>isinstance(obj, cls): überprüft, ob das Objekt obj eine Instanz der Klasse cls ist
+das Funktioniert auch mit Vererbungen, s.u.</p>
+<p>Annahme: str und unicode haben eine gemeinsame übergeordnete Klasse</p>
+<pre><code>&gt;&gt;&gt; a = &quot;A String!&quot;
+&gt;&gt;&gt; isinstance(a, str)
+True
+&gt;&gt;&gt; b = u&quot;äh, string?&quot;
+&gt;&gt;&gt; print type(b)
+&lt;type 'unicode'&gt;
+&gt;&gt;&gt; print isinstance(b, basestring)
+True
+&gt;&gt;&gt; print isinstance(a, basestring)
+True
+</code></pre>
+
+<p class="skulpt">Dieses Beispiel funktioniert nicht mit skulpt!</p>
+<h2 id="vererbung">Vererbung</h2>
+<h3 id="parent-und-child">Parent und Child</h3>
+<p>Entwurf einer Klassenstruktur, Vererbung von Eigenschaften und Methoden, Spezialisierung von Klassendefinitionen</p>
+<pre><code class="python">class Geometry(object):
+    # geometry class is derived from object (object indeed is empty...)
+    # http://stackoverflow.com/questions/4015417/python-class-inherits-object
+    pass
+
+class Point(Geometry):
+    # point class is derived from geometry
+    # all definitions from Geometry will be with points too
+    pass
+
+p = Point()
+print isinstance(p, Geometry)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a>  <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Bei der Vererbung muss anders initialisiert werden:</p>
+<pre><code class="python">class Geometry(object):
+    def __init__(self, geom=None, gtype=&quot;&quot;):
+        self.geom = geom  # Geometry data is stored in tuples
+        self.gtype = gtype # Geometry Type: Name from ('Point', 'Line', 'Polygon' etc.) 
+
+class Point(Geometry):
+    def __init__(self, geom=(0.0, 0.0)):
+        # call super
+        super(Point, self).__init__(self, geom, &quot;Point&quot;)
+
+p = Point()
+print p.geom, p.gtype
+</code></pre>
+
+<p class="skulpt">Dieses Beispiel funktioniert nicht mit skulpt!</p>
+<p>Alternativ, ohne super(), aber mit weiteren Methoden:</p>
+<pre><code class="python">class Geometry(object):
+    def __init__(self, geom=None, gtype=&quot;&quot;):
+        self.geom = geom  # Geometry data is stored in tuples
+        self.gtype = gtype # Geometry Type: Name from ('Point', 'Line', 'Polygon' etc.) 
+
+    def test(self):
+        &quot;&quot;&quot;check Geometry, needs to be overloaded &quot;&quot;&quot;
+        pass
+
+    def setGeom(self, geom):
+        &quot;&quot;&quot;set Geometry, needs to be overloaded &quot;&quot;&quot;
+        # test and set geometry value
+        pass
+
+    def __str__(self):
+        return &quot;%s: %s&quot;%(self.gtype, self.geom)
+
+class Point(Geometry):
+    def __init__(self, geom=(0.0, 0.0)):
+        # call super
+        Geometry.__init__(self, geom, &quot;Point&quot;)
+
+    def test(self):
+        &quot;&quot;&quot;test for two-value-tuple&quot;&quot;&quot;
+        if isinstance(self.geom, tuple) and len(self.geom) == 2:
+            return True
+        return False
+
+    def setGeom(self, geom):
+        &quot;&quot;&quot;set Geometry, needs to be overloaded &quot;&quot;&quot;
+        # test and set geometry value
+        self.geom = geom
+        if not self.test():
+            self.geom = (0.0, 0.0)
+
+p = Point()
+p.setGeom((5.5,1.1))
+print p.gtype, p.geom
+print p
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a>  <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h2 id="aufgabenstellung-zu-klassen">Aufgabenstellung zu Klassen</h2>
+<p>Ergänzen Sie eine Klasse für Linien (class Line)</p>
+<ul>
+<li>implementieren Sie die Methoden <strong>init</strong>, test und setGeom</li>
+<li>testen Sie die neue Klasse</li>
+</ul>
+<p>Überlegen Sie, was zu tun ist, um Fehler zu vermeiden</p>
+<ul>
+<li>Wo können wir Fehler erwarten? </li>
+<li>Wie gehen wir mit ihnen um?</li>
+</ul>
+<h1 id="groe-module">Große Module</h1>
+<p>Ein Python-Script ist immer auch ein Modul. Wird in der Entwicklung ein Modul zu groß, so kann es auf mehrere Dateien aufgeteilt werden und kann per import wieder zusammengeführt werden. Große Module in Python können sich auch über Ordner und Unterodner erstrecken, in denen jeweils wieder kleinere Module als Python-Scripte gespeichert sind. Diese werden auch als Packages bezeichnet. </p>
+<p>Ein Odner an sich speichert allerdings keinen Code und kann somit nicht importiert werden. Damit sich ein Ordner auch wie ein Modul verhält, wird in einem Python-Package eine spezielle Datei angelegt, die dem Pythoninterpreter deutlich macht, das dieser Ordner wie ein Modul zu behandeln ist, sie heißt <code>__init__.py</code>.</p>
+<p>Eine kompakte Darstellung finden wir <a href="https://www.programiz.com/python-programming/package">hier</a></p>
+<figure><img alt="Beispiel Package" src="https://cdn.programiz.com/sites/tutorial2program/files/PackageModuleStructure.jpg" /><figcaption>
+<p>Beispiel eines Python Packages auf programiz.com</p>
+</figcaption>
+</figure>
+<h2 id="import">Import</h2>
+<p>Module lassen sich in Python über import in anderen Modules nutzen. Module und Packages werden normalerweise unter dem Ordner site-packages installiert. Weitere Möglichkeiten zum Import ist Speicherung von Modulen/Packages im selben Ordner, in dem auch das Python-Script gespeichert wurde oder ein Pfad, der im Environment der Shell (des Rechners) angegeben ist (Variablenname ist PYTHONPATH). </p>
+<p>Dieser kann auch in einem Script bearbeitet werden. Hierzu bietet das Standardmodul sys die Eigenschaft path an: <code>sys.path</code> ist eine Python-Liste mit den entsprechenden Pfadangaben.</p>
+<h2 id="beispiel-modul-shapely">Beispiel Modul-Shapely</h2>
+<p><a href="https://toblerity.org/shapely/manual.html">Shapely</a> ist ein Geometrie-Package für Python, welches sich durch sehr umfangreiche analytische Funktionen auszeichnet. Wir werden Shapely in diesem Kurs zwar nicht verwenden, können es aber studieren, um mehr über große Python-Module zu erfahren.</p>
+<p>Der Quell-Code liegt im site-package-Verzeichnis des GIS-Sticks unter osgeo4w/apps/Python27/Lib/site-packages, kann aber auch auf der Entwicklerplatform github eingesehen werden (<a href="https://github.com/Toblerity/Shapely/tree/master/shapely">Shapely auf github</a>).</p>
+<p>Ein paar Auszüge:</p>
+<p><code>__init__.py</code> enthält lediglich eine Angabe zur Version</p>
+<pre><code class="python">__version__ = &quot;1.6.4.post1&quot;
+</code></pre>
+
+<p>Welche Version liegt auf dem GIS-Stick?</p>
+<pre><code class="python">import shapely
+print shapely.__version__
+</code></pre>
+
+<p>Mit dem Shapely-Modul können Geometrien als WKT ausgegeben werden, hierzu existiert das Modul wkt.py, welches wiederum das Modul geos importiert:</p>
+<pre><code class="python">&quot;&quot;&quot;Load/dump geometries using the well-known text (WKT) format
+&quot;&quot;&quot;
+
+from shapely import geos
+
+# Pickle-like convenience functions
+
+def loads(data):
+    &quot;&quot;&quot;Load a geometry from a WKT string.&quot;&quot;&quot;
+    return geos.WKTReader(geos.lgeos).read(data)
+
+def load(fp):
+    &quot;&quot;&quot;Load a geometry from an open file.&quot;&quot;&quot;
+    data = fp.read()
+    return loads(data)
+
+def dumps(ob, trim=False, **kw):
+    &quot;&quot;&quot;Dump a WKT representation of a geometry to a string.
+    See available keyword output settings in ``shapely.geos.WKTWriter``.
+    &quot;&quot;&quot;
+    return geos.WKTWriter(geos.lgeos, trim=trim, **kw).write(ob)
+
+def dump(ob, fp, **settings):
+    &quot;&quot;&quot;Dump a geometry to an open file.&quot;&quot;&quot;
+    fp.write(dumps(ob, **settings))
+</code></pre>
+
+<p>Unter algorithms/cga.py finden wi übrigens einen alten Bekannten: Die Funktion signed_area(), sie lässt sich folgendermaßen importieren:</p>
+<pre><code class="python">from shapely.algorithms.cga import signed_area
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,9 @@
+div.col-md-9 figure img {margin-bottom: 0px;}
+div.col-md-9 figure figcaption {font-style:italic;}
+div.col-md-9 figure {margin-bottom: 24px;}
+
+/*
+figure img {margin-bottom: 0px !important;}
+figure figcaption {font-style:italic;}
+figure {margin-bottom: 24px;}
+*/

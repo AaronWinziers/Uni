@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Plugin-Tester - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Plugin-Tester", url: "#_top", children: [
+              {title: "Der Quellcode rund um QgsPluginTester", url: "#der-quellcode-rund-um-qgsplugintester" },
+              {title: "Anwendung des Moduls f\u00fcr das Plugin ListLayers", url: "#anwendung-des-moduls-fur-das-plugin-listlayers" },
+              {title: "Objekte und Methoden", url: "#objekte-und-methoden" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="plugin-tester">Plugin-Tester</h1>
+<p>Eine Python-Anwendung, die die Verwendung von QGIS-Plugins <em>simuliert</em>.</p>
+<p>Im Zentrum steht eine simple standalone QGIS Anwendung in Python mit den wichtigsten Obejketn und Funktionen, um eigene Plugins in der Python IDE testen und  debuggenzu können. Am besten funktioniert es, eine eigene Klasse aus QgsPluginTester abezuleiten, um die Methode prepare() zu überladen und auf die eigenen Anforderungen hin zu testen. Auf diese Weise können beispielsweise Layer geladen werden oder was das Plugin sonst realistischer Weise von QGIS benötigt.</p>
+<p>Die Verarbeitung erfolgt in dann drei Schritten</p>
+<ul>
+<li>in main() eine Instanz der Klasse erzeugen </li>
+<li>Import eines Plugins</li>
+<li>Aufruf von registerPlugin() und run()</li>
+</ul>
+<figure><img alt="PluginTester" src="../img/chap3_qgsPluginTester.png" /><figcaption>
+<p>Fenster des Plugin-Testers mit geladenem Plugin</p>
+</figcaption>
+</figure>
+<h2 id="der-quellcode-rund-um-qgsplugintester">Der Quellcode rund um QgsPluginTester</h2>
+<p>Benutzte Quellen für das Modul:</p>
+<ul>
+<li><a href="https://gis.stackexchange.com/questions/71206/writing-automated-tests-for-qgis-plugins/71226#71226">gis.stackexchange: Writing automated tests for qgis plugins</a></li>
+<li><a href="https://snorfalorpagus.net/blog/2014/01/04/writing-unit-tests-for-qgis-python-plugins/">Blog von snorfalorpagus: Writing unit tests for qgis python plugins</a></li>
+<li><a href="https://github.com/UdK-VPT/Open_eQuarter/blob/master/mole/tests/qgis_models.py">Testcode für das Plugin Open eQuarter</a></li>
+<li><a href="http://docs.qgis.org/2.14/en/docs/pyqgis_developer_cookbook/intro.html#using-pyqgis-in-standalone-scripts">Standalone PyQGIS Scripts im Cookbook</a></li>
+<li><a href="https://gis.stackexchange.com/questions/77660/standalone-applications-using-qgis-and-environment-variables">Diskussion auf gis.stackexchange zu Standalone PyQGIS Applications</a></li>
+</ul>
+<pre><code class="python">#-------------------------------------------------------------------------------
+# Name:        Qgis-PluginTester
+# Purpose:     Mimics a QGIS-Application for degugging python plugins
+#
+# Author:      muellea
+#
+# Created:     22.06.2017
+# Copyright:   (c) muellea 2017
+# Licence:     free
+#-------------------------------------------------------------------------------
+from qgis.core import *
+from qgis.gui import *
+
+from PyQt4 import QtCore, QtGui, QtTest
+
+import os
+import sys
+
+
+# https://gis.stackexchange.com/questions/71206/writing-automated-tests-for-qgis-plugins/71226#71226
+# https://snorfalorpagus.net/blog/2014/01/04/writing-unit-tests-for-qgis-python-plugins/
+# ## Mimic IFACE ## #
+class MyInterface(object):
+    &quot;&quot;&quot;mimics clas QgisInterface for iface&quot;&quot;&quot;
+
+    def __init__(self, win, canvas):
+        self.win = win
+        self.canvas = canvas
+        self.legendinterface = MyLegendInterface()
+
+    def __getattr__(self, *args, **kwargs):
+        def dummy(*args, **kwargs):
+            return self
+        return dummy
+
+    def __iter__(self):
+        return self
+
+    def next(self):
+        raise StopIteration
+
+    def layers(self):
+        # simulate iface.legendInterface().layers()
+        return QgsMapLayerRegistry.instance().mapLayers().values()
+
+    def mainWindow(self):
+        return self.win
+
+    def mapCanvas(self):
+        # self.canvas.setLayerSet(QgsMapLayerRegistry.instance().mapLayers().values())
+        return self.canvas
+
+    def legendInterface(self):
+        return self.legendinterface
+
+class MyLegendInterface(object):
+    &quot;&quot;&quot;mimics QgsLegendInterface class for iface.legendInterface()&quot;&quot;&quot;
+
+    def __init__(self):
+        pass
+
+    def __getattr__(self, *args, **kwargs):
+        def dummy(*args, **kwargs):
+            return self
+        return dummy
+
+    def currentLayer(self):
+        return QgsMapLayerRegistry.instance().mapLayers().values()[0]
+
+    def layers(self):
+        return QgsMapLayerRegistry.instance().mapLayers().values()
+
+
+# https://github.com/UdK-VPT/Open_eQuarter/blob/master/mole/tests/qgis_models.py
+class MyMapCanvas(object):
+    &quot;&quot;&quot;mimics QgsMapCanvas class for iface.mapCanvas()&quot;&quot;&quot;
+
+    def __init__(self):
+        self.layer_set = []
+
+    def __getattr__(self, *args, **kwargs):
+        def dummy(*args, **kwargs):
+            return self
+        return dummy
+
+    def layers(self):
+        return self.layer_set
+
+    def layer(self, index):
+        layer = self.layer_set[index].layer()
+        return layer
+
+    def setLayerSet(self, layer_set):
+        self.layer_set = layer_set
+
+    def layerCount(self):
+        return len(self.layer_set)
+
+
+# https://www.tutorialspoint.com/pyqt/pyqt_qtoolbar_widget.htm
+class SimpleGUI(QtGui.QMainWindow):
+    &quot;&quot;&quot;simple gui with a toolbar to register a plugin and call its action(s)&quot;&quot;&quot;
+    def __init__(self, parent=None):
+        super(SimpleGUI, self).__init__(parent)
+
+        self.initUI(parent)
+        self.plugin = None
+
+    def initUI(self, parent):
+
+        layout = QtGui.QVBoxLayout()
+        self.tbPlugin = self.addToolBar(&quot;Plugins&quot;)
+
+        self.setLayout(layout)
+        self.setGeometry(300, 300, 290, 150)
+        self.setWindowTitle('Start the Plugin!')
+        self.show()
+
+    def registerPlugin(self, plgin):
+        self.plugin = plgin
+        self.plugin.initGui()
+        # ## make the plugin callable ## #
+        self.tbPlugin.addAction(self.plugin.action)
+
+    def setAction(self, action):
+        self.tbPlugin.addAction(action)
+
+
+class QgsPluginTester(object):
+    &quot;&quot;&quot;simple QGIS standalone application to test and debug plugins.
+    Subclassing allows to use method prepare() to load data, etc.
+    Import a plugin, call registerPlugin() and then run():
+
+    class MyTest(QgsPluginTester):
+            def __init__(self, argv=[]):
+                super(MyTest, self).__init__(argv)
+
+    # insert code you need to run before plugin is loaded
+    def prepare(self):
+        # ...
+
+    def main(argv):
+        tester = MyTest(argv)
+        import myPluginModul
+        tester.registerPlugin(myPluginModul)
+        tester.run()
+&quot;&quot;&quot;
+
+    def __init__(self, argv=[]):
+        # standalone app
+        self.app = QtGui.QApplication(argv)
+        self.qgis_prefix = os.path.realpath(os.environ[&quot;QGIS_PREFIX_PATH&quot;])
+        QgsApplication.setPrefixPath(self.qgis_prefix, True)
+        QgsApplication.initQgis()
+        QCoreApplication.setOrganizationName('QGIS')
+        QCoreApplication.setApplicationName('QGIS2')
+        # MainWindow gui with toolbar
+        self.mainW = SimpleGUI()
+        # mimics for qgis objects
+        self.canvas = MyMapCanvas()
+        self.iface = MyInterface(self.mainW, self.canvas)
+        # register at runtime
+        self.plugin = None
+
+    def registerPlugin(self, plugin_modul):
+        &quot;&quot;&quot;register a plugin by calling classFactory(), initGui()
+        and add actions to MainWindow's toolbar&quot;&quot;&quot;
+
+        self.plugin = plugin_modul.classFactory(self.iface)
+        self.plugin.initGui()
+        try:
+            self.mainW.setAction(self.plugin.action)
+        except AttributeError:
+            for action in self.plugin.actions:
+                self.mainW.setAction(action)
+
+    def run(self):
+        &quot;&quot;&quot;run the app's event loop, calls prepare() for data initialisation&quot;&quot;&quot;
+        self.prepare()   # use prepare to load some data or what else your plugin needs
+        self.app.exec_()
+        QgsApplication.exitQgis()
+
+    # ## PREPARE ## #
+    # prepare the application, so it has data needed for the plugin
+    def prepare(self):
+        pass
+</code></pre>
+
+<p class="skulpt" onclick="savePython(event, 'qgsPluginTester.py')"><a href="javascript:void()">download</a> <img alt="Download" src="../img/icons/011_InboxDownload.png" /></p>
+<p>Das Modul verwendet <em>magische</em> Methoden und Argumente für die implementierten Qgis-Klassen, nämlich die Methode <code>__getattr__()</code> mit den Argumenten <code>*args</code> und <code>**kwargs</code>. Damit können dem Objekt beliebige Methoden mit beligigen Argumenten übergeben werden.</p>
+<ul>
+<li><code>__getattr__</code> bietet die Möglichkeit, Eigenschaften und Methoden einer Objekts zu erfragen, die nicht im Code definiert wurden, sondern zur Laufzeit hinzugefügt wurden. Implementiert man <code>__getattr__</code> wie hier, werden alle Namen als Methode akzeptiert und immer das aktuelle Objekte zurückgegeben. Dies führt dazu, dass auch Verkettungen von Methoden möglich sind, z.B. iface.opa().oma(), das zurückgebene <code>self</code> ist immer wieder das iface-Objekt. Hierzu eine <a href="https://stackoverflow.com/questions/4295678/understanding-the-difference-between-getattr-and-getattribute">Diskussion</a> auf stackoverflow.</li>
+<li><code>*args</code> erlaubt es, einer Funktion (oder Methode) beliebig viele Argumente zu übergeben. Die Argumente haben dann jedoch keinen Namen, sondern können wie eine Liste abgearbeitet werden.</li>
+<li><code>**kwargs</code> erlaubt es, beliebige benannte Argumente zu übergeben. Die Argumente haben einen Namen und einen Wert und können wie ein dictionary behandelt werden.</li>
+</ul>
+<p><a href="https://pythontips.com/2013/08/04/args-and-kwargs-in-python-explained/">Erläuterung</a> auf pythontipps.com.</p>
+<p>Alle anderen in der Klasse definierten Methoden und Eigenschaften sind von der Regel ausgenommen, sodass für Plugins wichtige Elemente, insbesondere Methoden, die wirkliche Daten zurückgeben, implementiert werden können. Weiter unten sind die Objekte mit solchen Methoden nochmals aufgeführt.</p>
+<h2 id="anwendung-des-moduls-fur-das-plugin-listlayers">Anwendung des Moduls für das Plugin ListLayers</h2>
+<p>Hier wurde die Klasse MyTest von QgsPluginTester abgeleitet. </p>
+<ul>
+<li><code>__init__</code> ist erforderlich, um das Objekt korrekt zu initialisieren, wir rufen hier lediglich super auf. </li>
+<li>prepare wurde überladen, um aus einem Verzeichnis einige Shapefiles als QGIS-Layer zu laden.</li>
+<li>main folgt den Schritten Plugin importieren - registrieren - App starten</li>
+</ul>
+<pre><code class="python">from qgsPluginTester import *
+
+# ## use this to overwrite prepare() ## #
+class MyTest(QgsPluginTester):
+    def __init__(self, argv=[]):
+        super(MyTest, self).__init__(argv)
+
+    # https://snorfalorpagus.net/blog/2014/01/04/writing-unit-tests-for-qgis-python-plugins/
+    def prepare(self):
+        # read in some shapefiles and register as Layers
+        import glob
+        search_dir = r&quot;C:\temp\data&quot;
+        for lyr in glob.glob(os.path.join(search_dir, &quot;*.shp&quot;)):
+            layer = QgsVectorLayer(lyr, os.path.basename(lyr).split(&quot;.&quot;)[0], 'ogr')
+            if layer.isValid():
+                 QgsMapLayerRegistry.instance().addMapLayer(layer)
+            else:
+                print &quot;Layer %s failed to load!&quot;%lyr
+        # important if plugin uses iface.mapCanvas()
+        self.canvas.setLayerSet(QgsMapLayerRegistry.instance().mapLayers().values())
+        print &quot;I'm prepared!&quot;
+
+# ## MAIN ## #
+
+def main(argv):
+    tester = MyTest(argv)
+
+    # ## TESTING a QGIS PLUGIN ## #
+    import ListLayers
+    tester.registerPlugin(ListLayers)
+    tester.run()
+
+
+if __name__ == '__main__':
+    main(sys.argv)
+</code></pre>
+
+<p class="skulpt" onclick="savePython(event, 'testplugin.py')"><a href="javascript:void()">download</a> <img alt="Download" src="../img/icons/011_InboxDownload.png" /></p>
+<p>Das Modul wurde mit einigen Plugins getestet, die sämtlich lauffähig waren und so in PyScripter mittels Debugging untersucht werden konnten. Da es sich nicht um ein vollständiges QGIS handelt - es ist sehr weit davon entfernt - können auch nicht alle Funktionen, die in einem Plugin benutzt werden, tatsächlich auf fehlerfreie Ausführung hin getestet werden. Die meisten Objekte und Methoden führen gar keinen Code aus, erzeugen aber auch keine Fehler... Wird zwingend ein solches Ergebnis einer Methode benötigt, dann muss die entsprechende Klasse ergänzt werden.</p>
+<h2 id="objekte-und-methoden">Objekte und Methoden</h2>
+<p>iface:</p>
+<ul>
+<li>mainWindow(): gibt ein gültiges QT-Hauptfenster zurück</li>
+<li>mapCanvas(): simuliert einen MapCanvas, angelegt als Dummy</li>
+<li>legendInterface(): simuliert QgsLegendInterface, angelegt als Dummy</li>
+</ul>
+<p>mapCanvas:</p>
+<ul>
+<li>layers(): gibt die Layer zurück, die beispielsweise über prepare geladen wurden, benutzt QgsMapLayerRegistry.instance().mapLayers().values()</li>
+<li>setLayerSet(): nimmt eine Liste mit QgsMapLayern entgegen und ersetzt zuvor vohandene Layer</li>
+<li>layerCount(): Anzahl der Layer wird geladen</li>
+<li>layer(index): Zugriff einen einzelnen Layer über dessen Index</li>
+</ul>
+<p>legendInterface:</p>
+<ul>
+<li>currentLayer(): gibt stets den ersten Layer zurück</li>
+<li>layers(): wie mapCanvas.layers()</li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>QGIS mit Pegelonline-Daten - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Die Pegelonline Schnittstelle", url: "#_top", children: [
+              {title: "Abfragen verarbeiten", url: "#abfragen-verarbeiten" },
+          ]},
+          {title: "Processing-Scripts", url: "#processing-scripts", children: [
+              {title: "ohne Processing-Script", url: "#ohne-processing-script" },
+              {title: "als Processing-Script", url: "#als-processing-script" },
+              {title: "Aufgabe: Processing-Script mit pomodules", url: "#aufgabe-processing-script-mit-pomodules" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="die-pegelonline-schnittstelle">Die Pegelonline Schnittstelle</h1>
+<p>Auf Basis des Moduls urlreader lassen sich die Daten von Pegelonline herunterladen. 
+Eine Betrachtung der Restschnittstelle zeigt verschiedene 
+<a href="https://www.pegelonline.wsv.de/webservice/dokuRestapi">Möglichkeiten</a> auf.</p>
+<p>Insbesondere ist es möglich:</p>
+<ul>
+<li>
+<p>alle Stationen, quasi als Stammdaten, mit diversen Attributen zu verwenden</p>
+<ul>
+<li>Station mit ID, Name, Ort, Gewässer, Betreiber</li>
+<li>die an einer Station gemessenen Parameter (timeseries)</li>
+<li>Referenzwerte zur Klassifikation (characteristic values)</li>
+</ul>
+</li>
+<li>
+<p>aktuelle Messwerte aller Stationen, für jeden dort erhobenen Parameter zu erhalten (currentMeasurment)</p>
+<ul>
+<li>der häufigste gemessene Parameter ist der Wasserstand (timeseries=W)</li>
+</ul>
+</li>
+<li>
+<p>eine Zeitreihe für einen Parameter für eine einzelne Station, für maximal 30 Tage</p>
+<ul>
+<li>hier ist es möglich, die Daten als Grafik oder im JSON-Format abzurufen.</li>
+</ul>
+</li>
+</ul>
+<h2 id="abfragen-verarbeiten">Abfragen verarbeiten</h2>
+<p>Mit Ausnahme der stationsbezogenen Zeitreihen, 
+müsssen zwei Schritte durchlaufen werden, 
+um die Daten von Pegelonline in QGIS als Karte anzuzeigen.</p>
+<ol>
+<li>
+<p>Die JSON-Daten müssen in eine Tabellenstruktur überführt werden, 
+bzw. nach Geometrie und Attributen getrennt werden.</p>
+</li>
+<li>
+<p>Aus den Angaben müssen QGIS-Features erzeugt werden
+und diese in einem Layer gespeichert werden.</p>
+</li>
+</ol>
+<p>Die dritte Abfragemöglichkeiten zu einzelnen Stationen 
+können wir später im Plugin anzeigen.</p>
+<p>In der Übung der letzen Einheit haben wir bereits ein Modul geschrieben, 
+auf dem die Datenverarbeitung aufbaut, den UrlReader. Auch haben wir bereits gesehen,
+wie die Daten in eine tabellarische Form gebracht werden können.</p>
+<p>Wir werden nun eine übergeordnete Struktur schaffen, um die Funktionen zu strukturieren.
+Hierzu legen wir uns ein python-package an, dazu benötigen wir:</p>
+<ul>
+<li>einen Ordner mit einem sinnvollen Namen, </li>
+<li>darin eine Datei <code>__init__.py</code></li>
+<li>und eine Kopie des Urlreaders</li>
+</ul>
+<p>Wir wollen entsprechend der Möglichkeiten von Pegelonline dort Module anlegen, 
+und objektorientiert die zwei beschriebenen Schritte implementieren.</p>
+<p>Wir erstellen zunächst:</p>
+<ul>
+<li>ein Modul für die Stationsabfrage mit Stammdaten</li>
+<li>ein Modul zur Erstellung der QGIS-Features für die Stationen</li>
+</ul>
+<p>Stationen: Abfrage mit <code>stations.json</code></p>
+<ul>
+<li>lesen Geometrie aus  'longitude', 'latitude'</li>
+<li>und Attribute aus 'uuid', 'number', 'shortname', 'longname',
+                        'km', 'agency', 'water' (water-&gt;shortname)</li>
+</ul>
+<p>Später implementieren wir analog die Abfrage den aktuellen Wasserständen mit entsprechenden Modulen, die Abfrage lautet dann <code>stations.json?timeseries=W&amp;includeTimeseries=true&amp;includeCurrentMeasurement=true</code></p>
+<ul>
+<li>geometrie = 'longitude', 'latitude'</li>
+<li>attribute = 'uuid', 'shortname', 'time', 'value', 'trend', 'stateMnwMhw', 'stateNswHsw'
+alle ab timestamp: ['timeseries'][0]['currentMeasurement'] ['timestamp'] ...</li>
+</ul>
+<p>Der Ordner mit dem Python-Package</p>
+<pre><code class="text">+ pomodules
+   - __init__.py
+   - urlreader.py
+   - postations.py
+   - poqgsstations.py
+</code></pre>
+
+<p>Bei den Modul- und Klassennamen kann es sinnvoll sein einen gemeinsamen Präfix zu verwenden, 
+hier wurde <em>po</em> for PegelOnline benutzt, ausserdem sollen die Namen kennzeichnen, 
+für welche Teilaufgabe oder Datenbereich sie stehen, hier <em>stations</em>. 
+Die Aufbereitung für QGIS wird dann mit <em>qgs</em> versehen.</p>
+<p>Viele Pythonprogrammierer schreiben Modulnamen einer Klasse klein
+und den Klassennamen dann in <em>CamelCase</em>.</p>
+<p>Die Datei <code>__init__.py</code> steht für die Initialisierung des Package und kann leer bleiben.
+Hier allerdings wurde die Variable poBaseURL definiert, die von mehreren Modulen 
+genutzt wird und den Anfangsstring für jede PegelOnline-Abfrage beinhaltet. 
+Das ist zudem praktisch, falls sich diese Adresse einmal ändern sollte...</p>
+<pre><code class="python"># modul __init__
+poBaseURL = 'https://www.pegelonline.wsv.de/webservices/rest-api/v2/'
+</code></pre>
+
+<h3 id="modul-der-stationsabfrage-mit-stammdaten">Modul der Stationsabfrage mit Stammdaten</h3>
+<pre><code class="python"># modul postations
+from pomodules.urlreader import Urlreader
+
+class PoStations(object):
+
+    def __init__(self):
+        self.url = poBaseURL + 'stations.json'
+
+    def getData(self):
+        ur = Urlreader(self.url)
+        json_data = ur.getJsonResponse()
+
+        stations = []
+
+        # process all stations
+
+        return stations
+</code></pre>
+
+<p>Da wir später Geometrie und Attribute getrennt verarbeiten, 
+bietet es sich an, dies schon auf dieser Ebene zu tun, z.B. als dictionary:</p>
+<pre><code class="python">station = {
+    'geometry': (d['longitude'], d['latitude']),
+    'attributes': ( d['uuid'],
+                    d['number'],
+                    d['shortname'],
+                    d['longname'],
+                    d['km'],
+                    d['agency'],
+                    d['water']['longname']
+                  )
+}
+</code></pre>
+
+<p>Denken Sie daran, dass die Daten aus unserer Sicht Fehler enthalten können. 
+So gibt es Stationen, die keine Einträge für d['longitude'] und d['latitude'] haben.</p>
+<p>Die Abfrage oben führt zu einer eingeschränkten Anzahl an Attributen für die Stationen. 
+Je nachdem, welche Verarbeitungen wir uns im QGIS vorstellen, kann es notwendig sein, 
+die Attribute zu erweitern.</p>
+<h3 id="modul-zur-erstellung-von-qgis-features">Modul zur Erstellung von QGIS-Features</h3>
+<p>Die empfangenen und aufbereiteten Daten werden nun in eine Liste mit QGIS-Features umgewandelt. 
+Dazu benötigen wir auch eine Liste der Felddefinitionen als QgsFields-Objekt.</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Datentyp</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>'uuid'</td>
+<td>String</td>
+</tr>
+<tr>
+<td>'number'</td>
+<td>Int</td>
+</tr>
+<tr>
+<td>'shortname'</td>
+<td>String</td>
+</tr>
+<tr>
+<td>'longname'</td>
+<td>String</td>
+</tr>
+<tr>
+<td>'km'</td>
+<td>Double</td>
+</tr>
+<tr>
+<td>'agency'</td>
+<td>String</td>
+</tr>
+<tr>
+<td>'water'</td>
+<td>String</td>
+</tr>
+</tbody>
+</table>
+<p>Unsere Klasse PoQgsStations kann praktischerweise aus PoStations abgeleitet werden.</p>
+<pre><code class="python"># modul 
+from pomodules.postations import PoStations
+
+class PoQgsStations(PoStations):
+
+    def __init__(self):
+        super(PoQgsStations, self).__init__()
+        # oder
+        # PoStations.__init__(self)
+
+        self.fields = None
+        self.crs = None
+
+    def getFeatures(self):
+        data = self.getData()
+        # Diese Fields anlegen: 
+        fnames = ('uuid', 'number', 'shortname', 'longname', 'km', 'agency', 'water')
+        self.fields = QgsFields()
+        # ...
+
+        # Verarbeitung
+        features = []
+        for d in data:
+            f = QgsFeature(self.fields)
+
+            # f.setGeometry(...)
+            # feature-attributes ist ein dictionary: f[attributname] = wert
+            # attributes aus getData sind in Liste, ohne Namen
+            # for-Schleife daher mit Index über alle Namen
+            for i in range(len(self.fnames)):
+                a = self.fnames[i]
+                # ...
+            features.append(f)
+
+        return features
+</code></pre>
+
+<h3 id="fazit-und-weitere-module">Fazit und weitere Module</h3>
+<p>Diese Art der Strukturierung und Verarbeitung ist selbsverständlich nicht zwingend. 
+Es gibt zahllose, ebenso sinnvolle Möglichkeiten, eine Klassenstruktur zu bauen.</p>
+<p>Denken Sie über die Struktur nach, wie hätten Sie es aufgebaut und probieren Sie etwas anderes aus!</p>
+<p>Weitere Module zur Abfrage der aktuellen Messwerte heben wir uns für später auf, 
+aber sie sollten grundsätzlich den selben Aufbau besitzen:</p>
+<pre><code class="text">+ pomodules
+   - __init__.py
+   - urlreader.py
+   - postations.py
+   - poqgsstations.py
+   - pocurrentw.py     =&gt; neu
+   - poqgscurrentw.py  =&gt; neu
+</code></pre>
+
+<h1 id="processing-scripts">Processing-Scripts</h1>
+<p>Processing Scripts bilden eine Möglichkeit in QGIS neue Funktionalität bereitzustellen. 
+In Anlehnung an die ArcGIS-Terminologie ist das ProcessingScript ein Python-Tool. 
+Denn ebenso wie ArcGIS listet QGIS alle Processing-Funktionen in einer <em>Werkzeugkiste</em> auf. </p>
+<p>Da die Tools miteinander kombinierbar sind und über ein Eingabe-Dialog-Fenster verfügen, 
+funktionieren sie etwas anders, als wir es mit pyqgis und dem <code>QgsVectorFileWriter</code>-Objekt
+kennengelernt haben.</p>
+<h2 id="ohne-processing-script">ohne Processing-Script</h2>
+<p>Damit wir die Unterschiede besser verstehen, schreiben wir zunächst ein Script, 
+das in der QGIS-Pythonkonsole ausgeführt wird und den uns bekannten <code>QgsVectorFileWriter</code> benutzt.</p>
+<p>In der Konsole können eventuell keine imports durchgeführt werden, die im Scriptverzeichnis liegen. In diesem Fall sollten wir folgend einfügen:</p>
+<pre><code class="python">import sys, os
+d = r&quot;U:\Mein\script\verzeichnis&quot;
+if not d in sys.path:
+    sys.path.append(d)
+</code></pre>
+
+<p>Die if-Abfrage verhindert, dass bei mehrfacher Ausführung des Scripts, die Angabe mehrfach in sys.path enthalten bleibt.</p>
+<pre><code class="python">from pomodules.poqgsstations import PoQgsStations
+
+po = PoQgsStations()
+features = po.getFeatures()
+fields = po.fields
+crs = po.crs
+
+writer = QgsVectorFileWriter(r&quot;C:\temp\postations.gpkg&quot;, 
+                             &quot;UTF-8&quot;, 
+                             fields, 
+                             QgsWkbTypes.Point, 
+                             srs=crs)
+
+if writer.hasError() != QgsVectorFileWriter.NoError:
+    print(&quot;Error when creating shapefile: &quot;,  writer.errorMessage())
+else:   
+    for f in features:
+        writer.addFeature(fet)
+del writer
+</code></pre>
+
+<p>QgsVectorFileWriter speichert die Daten in einem Datenformat für Geodaten, 
+diese werden allerdings nicht automatisch in QGIS geladen. Wollen wir das,
+so müssen wir einen Layer erstellen. Und genau für diesen Fall gibt es eine Kurzform,
+die ohne den QgsVectorFileWriter auskommt.</p>
+<pre><code class="python"># QgsVectorLayer benutzt eine URI
+layer_uri = &quot;Point?crs=%s&quot;%crs.authid()
+
+# layer erzeugen: im Arbeitsspeicher, temporär
+vl = QgsVectorLayer(layer_uri, &quot;Stations&quot;, &quot;memory&quot;)
+
+# Provider = Dateiebene
+pr = vl.dataProvider()
+pr.addAttributes(fields)
+pr.addFeatures(features)
+# layer-Informationen aktualisieren
+vl.updateFields()
+vl.updateExtents()
+print(&quot;fields:&quot;, len(pr.fields()))
+print(&quot;features:&quot;, pr.featureCount())
+e = vl.extent()
+print(&quot;extent:&quot;, e.xMinimum(), e.yMinimum(), e.xMaximum(), e.yMaximum())
+# Layer anzeigen
+QgsProject.instance().addMapLayer(vl)
+</code></pre>
+
+<p>Diese zweite Variante eignet sich auch für Plugins!</p>
+<h2 id="als-processing-script">als Processing-Script</h2>
+<p>Processing-Script: Ein Werkzeug in QGIS als Python-Script (Processing Framework)
+Benutzer wählt Algorithmus in der Processing-Toolbox. <a href="https://docs.qgis.org/3.4/en/docs/user_manual/processing/scripts.html">Dokumentation</a></p>
+<ul>
+<li>Processing-Scripts haben eine eigene QGIS-Schnittstelle (processing)</li>
+<li>Sie kennen Parameter, die in Formularen Eingaben entgegennehmen</li>
+<li>Layer werden nicht über die Standard-Layer-Funktionen erzeugt (Sie sind Teil von Input- und Output-Parametern)</li>
+</ul>
+<p>Bestehendes Script in QGIS einbinden:</p>
+<ul>
+<li>in der Toolbox toolbar Python-Icon und "Create New Script" </li>
+<li>Script schreiben oder von anderer Quelle kopieren und einfügen</li>
+</ul>
+<p>Speicherort: </p>
+<p><code>%HOME%\.qgis3, bzw. %APPDATA%\QGIS\QGIS3 + \profiles\default\processing\scripts</code></p>
+<p>Beispiele: </p>
+<ul>
+<li>In der <a href="https://docs.qgis.org/3.4/en/docs/user_manual/processing/scripts.html">Dokumentation</a></li>
+<li>Workshop von <a href="https://madmanwoo.gitlab.io/foss4g-python-workshop/processing/">madmanwoo</a></li>
+<li>QGIS-Tutorial von <a href="http://www.qgistutorials.com/en/docs/3/processing_python_scripts.html">Ujaval Gandhi</a></li>
+</ul>
+<p>Objektorientierter Aufbau:</p>
+<ul>
+<li>class MeinProcessingAlgorithmus(QgsProcessingAlgorithm)<ul>
+<li>Schnittstelle muss eingehalten werden</li>
+<li>Methoden, die überschrieben werden müssen, beachten -&gt; Template</li>
+</ul>
+</li>
+<li>wichtige Methoden:<ul>
+<li>def initAlgorithm() zur Festlegung der Parameter</li>
+<li>def processAlgorithm() zur Ausführung nach Klick auf RUN-Button</li>
+</ul>
+</li>
+<li>wichtige Parameter: <ul>
+<li>self.parameterAsSource(): liest Eingabefeld für InputLayer (QgsProcessingParameterFeatureSource)</li>
+<li>self.parameterAsSink(): liest Eingabefeld  für OutputLayer (QgsProcessingParameterFeatureSink)</li>
+</ul>
+</li>
+</ul>
+<h3 id="das-template-script-ein-einfacher-processing-alorithmus">Das Template-Script: ein einfacher Processing-Alorithmus</h3>
+<p>leicht gekürzt, das Processing Script Template aus QGIS:</p>
+<pre><code class="python"># -*- coding: utf-8 -*-
+
+from PyQt5.QtCore import QCoreApplication
+from qgis.core import (QgsProcessing,
+                       QgsFeatureSink,
+                       QgsProcessingException,
+                       QgsProcessingAlgorithm,
+                       QgsProcessingParameterFeatureSource,
+                       QgsProcessingParameterFeatureSink)
+import processing
+
+
+class ExampleProcessingAlgorithm(QgsProcessingAlgorithm):
+    &quot;&quot;&quot;
+    All Processing algorithms should extend the QgsProcessingAlgorithm
+    class.
+    &quot;&quot;&quot;
+
+    # Constants used to refer to parameters and outputs. 
+    INPUT = 'INPUT'
+    OUTPUT = 'OUTPUT'
+
+    def tr(self, string):
+        return QCoreApplication.translate('Processing', string)
+
+    def createInstance(self):
+        return ExampleProcessingAlgorithm()
+
+    def name(self):
+        return 'myscript'
+
+    def displayName(self):
+        return self.tr('My Script')
+
+    def group(self):
+        return self.tr('Example scripts')
+
+    def groupId(self):
+        return 'examplescripts'
+
+    def shortHelpString(self):
+        return self.tr(&quot;Example algorithm short description&quot;)
+
+    def initAlgorithm(self, config=None):
+        &quot;&quot;&quot;
+        Here we define the inputs and output of the algorithm, along
+        with some other properties.
+        &quot;&quot;&quot;
+
+        # We add the input vector features source. It can have any kind of
+        # geometry.
+        self.addParameter(
+            QgsProcessingParameterFeatureSource(
+                self.INPUT,
+                self.tr('Input layer'),
+                [QgsProcessing.TypeVectorAnyGeometry]
+            )
+        )
+
+        # We add a feature sink in which to store our processed features (this
+        # usually takes the form of a newly created vector layer when the
+        # algorithm is run in QGIS).
+        self.addParameter(
+            QgsProcessingParameterFeatureSink(
+                self.OUTPUT,
+                self.tr('Output layer')
+            )
+        )
+
+    def processAlgorithm(self, parameters, context, feedback):
+        &quot;&quot;&quot;
+        Here is where the processing itself takes place.
+        &quot;&quot;&quot;
+
+        # Retrieve the feature source and sink. The 'dest_id' variable is used
+        # to uniquely identify the feature sink, and must be included in the
+        # dictionary returned by the processAlgorithm function.
+        source = self.parameterAsSource(
+            parameters,
+            self.INPUT,
+            context
+        )
+
+        # If source was not found, throw an exception to indicate that the algorithm
+        # encountered a fatal error. The exception text can be any string, but in this
+        # case we use the pre-built invalidSourceError method to return a standard
+        # helper text for when a source cannot be evaluated
+        if source is None:
+            raise QgsProcessingException(self.invalidSourceError(parameters, self.INPUT))
+
+        (sink, dest_id) = self.parameterAsSink(
+            parameters,
+            self.OUTPUT,
+            context,
+            source.fields(),
+            source.wkbType(),
+            source.sourceCrs()
+        )
+
+        features = source.getFeatures()
+        total = 100.0 / source.featureCount() if source.featureCount() else 0
+        for current, feature in enumerate(features):
+            # Stop the algorithm if cancel button has been clicked
+            if feedback.isCanceled():
+                break
+
+            # Do something with the input feature
+            # or it will just be copied to the sink
+
+            # Add a feature in the sink
+            sink.addFeature(feature, QgsFeatureSink.FastInsert)
+
+            # Update the progress bar
+            feedback.setProgress(int(current * total))
+
+        # Return the results of the algorithm. In this case our only result is
+        # the feature sink which contains the processed features, but some
+        # algorithms may return multiple feature sinks, calculated numeric
+        # statistics, etc. These should all be included in the returned
+        # dictionary, with keys matching the feature corresponding parameter
+        # or output names.
+        return {self.OUTPUT: dest_id}
+
+</code></pre>
+
+<h2 id="aufgabe-processing-script-mit-pomodules">Aufgabe: Processing-Script mit pomodules</h2>
+<p>Problem: packages im selben Ordner werden nicht berücksichtigt, da sie nicht gefunden werden - sie stehen nicht im Python-Path</p>
+<p>einfache Lösung:</p>
+<ul>
+<li>Wir kopieren pomodules in das Script-Verzeichnis</li>
+<li>Dieses Verzeichnis fügen wir beim Start des Processing-Scripts dem <em>python path</em> hinzu</li>
+</ul>
+<p>geändertes Template von oben:</p>
+<pre><code class="python">from qgis.core import (QgsProcessing,
+                       QgsApplication,
+                       QgsFeatureSink,
+                       QgsProcessingException,
+                       QgsProcessingAlgorithm,
+                       QgsProcessingParameterFeatureSource,
+                       QgsProcessingParameterFeatureSink)
+import sys
+sys.path.append(QgsApplication.qgisSettingsDirPath() + '\\processing\\scripts')
+
+from pomodules.poqgsstations import PoQgsStations
+</code></pre>
+
+<p>Im Script wurde unsere Klasse importiert und zusätzlich QgsApplication. Dessen Methode qgisSettingsDirPath() gibt den Pfadnamen zum Benutzerprofil zurück.</p>
+<p>Unser Input-Parameter ist keine vorhandene Datenquelle (QgsProcessingParameterFeatureSource), sondern resultiert aus dem Download von Pegelonline. Den Output wollen wir aber als QgsProcessingParameterFeatureSink speichern.</p>
+<p>Wir können einen Input-Parameter aus einem anderen Typ verwenden, hier als Auswahlliste. Auch die Konstanten passen wir an und importieren den dazu passenden Typ QgsProcessingParameterEnum:</p>
+<pre><code class="python">from qgis.core import QgsProcessingParameterEnum
+
+class PegelOnlineLoader(QgsProcessingAlgorithm):
+    INPUT = 'Query'
+    OUTPUT = 'Result'
+    QUERY_OPTIONS = ['Stations', 'Waterlevels']
+
+    def initAlgorithm(self, config=None):
+        &quot;&quot;&quot;
+        Here we define the inputs and output of the algorithm, along
+        with some other properties.
+        &quot;&quot;&quot;
+        self.addParameter(
+            QgsProcessingParameterEnum(self.INPUT,
+                                         self.tr(self.INPUT),
+                                         self.QUERY_OPTIONS))
+        self.addParameter(
+            QgsProcessingParameterFeatureSink(self.OUTPUT,
+                                              self.tr('Output layer'),
+                                              QgsProcessing.TypeVectorAnyGeometry))
+</code></pre>
+
+<p>Auch der Klassennamen wurde verändert, weitere Strings in den Methoden wir tr, name oder group können wir entsprechend anpassen.</p>
+<p>Der Benutzer kann jetzt im Dialog zwischen Stations oder Waterlevels wählen. Unser pomodules unterstützen aber zunächst nur die <em>Stations-Abfrage</em> von Pegelonline.</p>
+<p>Das bringt uns bereits zur Ausführungs-Methode processAlgorithm(). Hier werten wir zunächst den Query-Parameter aus und besorgen uns den ausgewählten Abfragenamen.</p>
+<pre><code class="python">    def processAlgorithm(self, parameters, context, feedback):
+        &quot;&quot;&quot;
+        Here is where the processing itself takes place.
+        &quot;&quot;&quot;
+        # Input parameter
+        qx = self.parameterAsInt(parameters, self.INPUT, context)
+        query = self.QUERY_OPTIONS[qx]
+        feedback.pushInfo(query)
+
+        # we're loading from PegelOnline
+        if query == 'Stations':
+            poQuery = PoQgsStations()
+        # not implemented yet   
+        # elif query == 'Waterlevels':
+            # poQuery = PoQgsCurrentW()
+        else:
+            feedback.pushInfo(&quot;This query is not implemented yet&quot;)
+            # stop and return with empty dict
+            return {}
+
+        feedback.pushInfo(&quot;Downloading %s ...&quot;%query)
+        features = poQuery.getFeatures()
+        # field and crs definitions from query
+        fields = poQuery.fields
+        crs = poQuery.crs
+        feedback.pushInfo(&quot;Download done!&quot;)
+</code></pre>
+
+<p>Wir setzen unser Modul ein, um die Daten von Pegelonline zu laden und als QGIS-Features bereitzustellen. Ausserdem haben wir die Liste der Felder erzeugt sowie das Koordinatensystem.</p>
+<p>Das besondere ist nun, mit dem sink-Objekt zu arbeiten, um die Ergebnisse in QGIS anzuzeigen.</p>
+<p>Im Template-Script wurde der Geometrietyp aus dem Inputlayer übernommen, was in diesem Fall nicht möglich ist. Daher importieren wir QgsWkbTypes und übergeben dann QgsWkbTypes.Point an parameterAsSink():</p>
+<pre><code class="python"># Im Kopfteil:
+from qgis.core import (QgsProcessingParameterEnum,
+                       QgsWkbTypes)
+</code></pre>
+
+<pre><code class="python">## in processAlgorithm      
+## hinter feedback.pushInfo(&quot;Download done!&quot;)
+
+        # our output to qgis
+        sink, dest_id = self.parameterAsSink(parameters, 
+                                             self.OUTPUT, 
+                                             context, 
+                                             fields, 
+                                             QgsWkbTypes.Point, 
+                                             crs)
+
+        for f in features:
+            sink.addFeature(f, QgsFeatureSink.FastInsert)
+
+        return {self.OUTPUT: dest_id}
+</code></pre>
+
+<p>Wir nutzen das sink-Objekt, um unsere QGIS-Features zu speichern und geben mit return das dictionary mit den erforderlichen Daten an QGIS zurück.</p>
+<h3 id="weitere-moglichkeiten-mit-processing-scripts">Weitere Möglichkeiten mit Processing-Scripts</h3>
+<ul>
+<li>mit Python starten (z.B. um ein weiteres <em>processing script</em> einzubinden), Anleitung in der <a href="https://docs.qgis.org/3.4/en/docs/user_manual/processing/scripts.html">QGIS-Dokumentation</a>, bzw. im  QGIS-Script-Template selbst wird dies demonstriert.</li>
+<li>als Plugin installieren (zur Verbreitung, Vorteil: funktioniert mit <em>packages</em>), Anleitung in der <a href="https://docs.qgis.org/3.4/en/docs/pyqgis_developer_cookbook/processing.html">QGIS-Dokumentation</a></li>
+</ul>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Python-Repetitorium - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Python-Repetitorium", url: "#_top", children: [
+              {title: "Datentypen", url: "#datentypen" },
+              {title: "Sprachelemente", url: "#sprachelemente" },
+              {title: "Geodaten", url: "#geodaten" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="python-repetitorium">Python-Repetitorium</h1>
+<p>Im Rückgriff auf den ersten Teil, hier eine kleine Zusammenfassung der Inhalte.
+Klicken Sie <a href="javascript:openIFrame([&quot;row wm-article-nav-buttons&quot;])">Drucken</a> für eine Druckansicht!</p>
+<h2 id="datentypen">Datentypen</h2>
+<h3 id="strings">Strings</h3>
+<p><a href="https://docs.python.org/2/library/string.html">Dokumentation</a></p>
+<h4 id="notation-eines-strings">Notation eines Strings</h4>
+<pre><code class="python">word = 'word'
+
+sentence = &quot;This is a sentence.&quot;
+
+paragraph = &quot;&quot;&quot;This is a paragraph. It is
+made up of multiple lines and sentences.&quot;&quot;&quot;
+
+print &quot;%s\n%s\n%s&quot;%(word, sentence, paragraph)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="verkettungen-von-strings">Verkettungen von Strings</h4>
+<pre><code class="python">a = &quot;Hello&quot;
+b = &quot;World&quot;
+print a + b + &quot;!&quot;
+print &quot; &quot;.join((a, b, &quot;!&quot;))
+c = &quot;!&quot;
+print &quot;%s %s%s Länge von a,b:%d,%d&quot; % (a, b, c, len(a), len(b))
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="strings-fur-pfadangaben">Strings für Pfadangaben</h4>
+<pre><code class="python">print &quot;C:/temp/nix.da&quot;
+print 'C:\\nowhere'
+print r'C:\nowhere'
+</code></pre>
+
+<h4 id="typ-umwandlung">Typ-Umwandlung</h4>
+<pre><code class="python">s = &quot;5&quot;
+i = int(s)
+print i+1
+
+s = &quot;5.1&quot;
+f = float(s)
+print f+1
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="numbers">Numbers</h3>
+<p>Wir unterscheiden Integer (int) und Float (float) als Datentypen.
+<a href="https://docs.python.org/2/library/stdtypes.html#numeric-types-int-float-long-complex">Dokumentation</a>
+Standard-Operatoren sind Addition (+), Subtraktion (-), Multiplikation (*) und Division (/)</p>
+<pre><code class="python">C = 12
+K  = C+237.15 
+F = C*1.8 + 32
+
+print C, K, F
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="modul-math">Modul math</h4>
+<p>Standardmodul in Python, mathematische Funktionen, entsprechen dem Standard der Sprache C
+<a href="https://docs.python.org/2/library/math.html">Dokumentation</a></p>
+<pre><code class="python">import math
+print math.sqrt(5)
+print &quot;Euler:&quot;, math.e
+print &quot;Pi   :&quot;, math.pi
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="umwandlung">Umwandlung</h4>
+<pre><code class="python">a = 9 
+b = 2 
+
+print a/b  
+print float(a)/float(b)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="weitere-datentypen">weitere Datentypen</h3>
+<p><a href="https://docs.python.org/2/library/stdtypes.html">Dokumentation</a></p>
+<h3 id="datenstrukturen">Datenstrukturen</h3>
+<h4 id="listen-list">Listen (list)</h4>
+<pre><code class="python">liste = [1,2,3,4,5] 
+
+print liste 
+print liste[0] 
+print liste[1] 
+print liste[0:2]
+
+print len(liste) 
+print liste.index(4) 
+
+liste.append(6)      # Element anhängen
+print liste 
+
+print liste.pop(2)   # das zweite Element löschen
+print liste 
+
+liste = range(10)    # eine neue Liste erzeugen
+print liste
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Umwandlung</p>
+<pre><code class="python">s = '2546386,000000;5521004,000000;&quot;Kultur&quot;;&quot;Burg Ramstein&quot;'
+liste = s.split(&quot;;&quot;)
+print liste, len(liste)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="tupel-tuple">Tupel (tuple)</h4>
+<pre><code class="python">tuple = ( 'abcd', 786 , 2.23, 'john', 70.2  )
+print tuple
+print tuple[0]
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="dictionarys-dict">Dictionarys (dict)</h4>
+<pre><code class="python">dic = {'Name': 'Andreas', 'Hobby': 'Musik', \
+       'Eltern': ['Mama', 'Papa']} 
+
+# Ausgabe des Werts für 'Name'
+print dic['Name'] 
+
+# Ausgabe aller Schlüssel 
+for key in dic: 
+    print key, dic[key]
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="umwandlungen">Umwandlungen</h4>
+<pre><code class="python">dic = {'Name': 'Andreas', 'Hobby': 'Musik', 'Eltern': ['Mama', 'Papa']}
+liste = list(dic)
+print liste, tuple(liste)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h2 id="sprachelemente">Sprachelemente</h2>
+<h3 id="operatoren">Operatoren</h3>
+<p><a href="http://www.tutorialspoint.com/python/python_basic_operators.htm">Tutorialspoint</a></p>
+<h3 id="if-anweisungen">if-Anweisungen</h3>
+<pre><code class="python">a=0
+b=1
+if a == b:
+    b = b+1
+elif a &lt; b:
+    a = b
+else:
+    a = b + 1
+
+print a,b
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>"ternärer Operator":</p>
+<pre><code class="python">x = 9
+y = 7
+
+a = 1 if x &gt; y else -1
+
+print a
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="for-schleife">for-Schleife</h3>
+<h4 id="liste-erzeugen-und-durchlaufen">Liste erzeugen und durchlaufen</h4>
+<pre><code class="python">aList = range(10)
+
+print aList
+
+for e in aList:
+    print e
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="liste-mit-zahl-variable-durchlaufen">Liste mit Zähl-Variable durchlaufen</h4>
+<pre><code class="python">alist = [&quot;banana&quot;, &quot;orange&quot;, &quot;ananas&quot;, &quot;apple&quot;]
+for i in range(len(alist)):
+    print i, alist[i]
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="iteration-uberspringen">Iteration überspringen</h4>
+<pre><code class="python">alist = [&quot;banana&quot;, &quot;orange&quot;, &quot;ananas&quot;, &quot;apple&quot;]
+skip = &quot;ananas&quot;
+for i in range(len(alist)):
+    if alist[i] == skip:
+        continue
+    print i, alist[i]
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="for-schleife-abbrechen">for-Schleife abbrechen</h4>
+<pre><code class="python">alist = [&quot;banana&quot;, &quot;orange&quot;, &quot;ananas&quot;, &quot;apple&quot;]
+search = &quot;orange&quot;
+for i in range(len(alist)):
+    if alist[i] == search:
+        print i, alist[i]
+        break
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="anwendung-fur-summe">Anwendung für Summe</h4>
+<pre><code class="python">myList = [0, 90, 140, 110, 0,  0, 170, 150, 160, 130]
+
+# Summe berechnen
+total = 0
+for value in myList:
+    total += value
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="while-schleife">while-Schleife</h3>
+<p>Liste rückwärts löschen</p>
+<pre><code class="python">myList = [0, 90, 140, 110, 0,  0, 170, 150, 160, 130]
+
+while len(myList) &gt; 1:
+    print myList.pop()
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Endlosschleife verlassen</p>
+<pre><code class="python">while True:
+   num = raw_input(&quot;Enter a number or q to quit :&quot;)
+   if num == &quot;q&quot;:
+       print &quot;Good bye&quot;
+       break
+   print &quot;You entered: &quot;, num
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="funktionen">Funktionen</h3>
+<p><a href="https://www.tutorialspoint.com/python/python_functions.htm">Tutorialspoint</a></p>
+<h4 id="funktionsdefinition-und-aufruf">Funktionsdefinition und -aufruf</h4>
+<pre><code class="python">def  gC2gK(c):
+    &quot;&quot;&quot;berechnet Grad in Kelvin aus Grad Celsius&quot;&quot;&quot;
+    return c+237.15
+
+gC = 18.4
+print &quot;%s degC = %s degK&quot;%(gC, gC2gK(gC))
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="lamda">Lamda</h4>
+<pre><code class="python">g = lambda x: x**2 # ** exponential
+
+print g(8)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="mapping">Mapping</h4>
+<p>Liste der Quadratzahlen für die Werte 0-9</p>
+<pre><code class="python">import math
+ql = map(lambda x: x**2, range(10)) 
+rl = map(math.sqrt,ql)
+print rl
+print ql
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="zip">Zip</h4>
+<p><a href="https://docs.python.org/2.7/library/functions.html#zip">Dokumentation</a></p>
+<pre><code class="python">rl = range(10)
+ql = map(lambda x: x**2, rl)
+print zip(rl,ql)
+# oder
+print zip(rl, map(lambda x: x**2, rl))
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="weitere-konstrukte">weitere Konstrukte</h3>
+<h4 id="list-dict-comprehensions">list-(dict-)Comprehensions</h4>
+<p>alle geraden Zahlen einer Liste</p>
+<pre><code class="python">lq = [x**2 for x in range(10)]
+print lq
+even = [e for e in lq if e%2 == 0]
+print even
+# oder verschachtelt:
+even = [e for e in [x**2 for x in range(10)] if e%2 == 0]
+print even
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Quadratzahlen als dict</p>
+<pre><code class="python">rl = range(10)
+qd = {k:v for (k, v) in zip(rl, [q*q for q in rl]) }
+print qd[4]
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h3 id="python-module">Python-Module</h3>
+<h4 id="sys">sys</h4>
+<p><a href="http://www.python-kurs.eu/sys_modul.php">Python-Kurs.eu</a></p>
+<pre><code class="python">import sys
+
+for arg in sys.argv:
+    print arg
+</code></pre>
+
+<h4 id="os">os</h4>
+<pre><code class="python">import os
+import sys
+
+for env in os.environ:
+    print env, os.environ[env]
+
+print &quot;--- Python befindet sich hier:&quot;
+print os.environ['PYTHONHOME']
+
+print &quot;--- Running on&quot;,
+if os.sep == &quot;/&quot;:
+    print &quot;Unix!&quot;
+else:
+    print &quot;Windows!&quot;
+
+print &quot;--- Programmverzeichnis:&quot;
+print os.path.dirname(sys.argv[0])
+</code></pre>
+
+<h4 id="random">random</h4>
+<pre><code class="python">import random
+
+for i in range(100):
+    print i, random.randint(0,255)
+</code></pre>
+
+<h4 id="time">time</h4>
+<pre><code class="python">import time
+import math
+import random
+
+startt = time.time()
+ll = []
+
+for i in range(10000):
+    ll.append( (i, math.sqrt(random.randint(0,255))) )
+ll.sort(lambda a,b: 1 if a[1] &gt; b[1] else -1)
+print &quot;done&quot;, time.time() - startt
+</code></pre>
+
+<h4 id="weitere-standardmodule">weitere Standardmodule</h4>
+<p><a href="http://docs.python.org/2/library">Dokumentation</a></p>
+<h2 id="geodaten">Geodaten</h2>
+<h3 id="vektordaten">Vektordaten</h3>
+<p>Punkte, deren horizontaler und vertikaler Abstand sowie die Luftliniendistanz</p>
+<pre><code class="python">import math
+p1 = (7.5, 4.3)
+p2 = (4.7, 5.4)
+dxy = (p1[0] - p2[0], p1[1] - p2[1])
+print &quot;Distanz von p1 %s und p2 %s: %s&quot;%(p1, p2, math.sqrt(dxy[0]**2 + dxy[1]**2))
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Strecke, Segment, Kante: 2 Punkte</p>
+<pre><code class="python">p1 = (7.5, 4.3)
+p2 = (4.7, 5.4)
+edge = (p1,p2)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Rechtecke, MUR: 2 Punkte</p>
+<pre><code class="python">p1 = (7.5, 4.3)
+p2 = (4.7, 5.4)
+# sortiere nach links unten und rechts oben
+def rechteck(p1, p2):
+   return ( ( min(p1[0],p2[0]), min(p1[1],p2[1]) ),
+            ( max(p1[0],p2[0]), max(p1[1],p2[1]) ) )
+
+r1 = rechteck(p1, p2)
+print r1
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Linien: beliege Anzahl von Punkten</p>
+<pre><code class="python">lin = ((7.5, 4.3), (4.7, 5.4), (2.5, 2.1), (5.9, 1.1))
+print lin
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Polygone: Parts und Rings</p>
+<pre><code class="python"># ring
+rng = ((7.5, 4.3), (4.7, 5.4), (2.5, 2.1), (5.9, 1.1), (3.3,1.5))
+
+def pr_closed(pr):
+    # test auf geschlossenen polygonalen ring
+    if pr[0][0] == pr[-1][0] and pr[0][1] == pr[-1][1]:
+        return pr
+    else:
+        pr = list(pr)
+        pr.append(pr[0])
+        return pr
+
+pol = pr_closed(rng)
+print pol
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Test und Korrektur der Drehrichtung: "signed area" nach Gauß</p>
+<pre><code class="python">def pr_signed_area(pr):
+        xs, ys = map(list, zip(*pr))
+        xs.append(xs[1])
+        ys.append(ys[1])
+        return sum(xs[i]*(ys[i+1]-ys[i-1]) for i in range(1, len(pr)))/2.0
+
+def pr_reverse(pr):
+    temp = list(pr)
+    temp.reverse()
+    return tuple(temp)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Linien und Ringe umformen:</p>
+<pre><code class="python">def pr_arrangexy(ls):
+    return zip(*ls)
+
+l = ((1.2,2.3),(2.1,3.2),(3.1,1.3))
+xl, yl = pr_arrangexy(l)
+print &quot;x:&quot;,xl
+print &quot;y:&quot;,yl
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Mehrere Ringe: Polygone mit Löchern</p>
+<ul>
+<li>ein erster Ring bildet den äußeren Rand</li>
+<li>weitere Ringe bilden die Löchern</li>
+<li>innere Ringe haben umgekehrte Drehrichtung</li>
+<li>diese werden auch einfache Polygone genannt</li>
+</ul>
+<figure><img alt="Polygone und Ringe" src="../img/p1chap3_polygoneringe.png" /><figcaption>
+<p>Polygone mit Ringen und unterschiedlichen Drehrichtungen</p>
+</figcaption>
+</figure>
+<p>Multi-Polygone:
+- erlauben mehrere einfache Polygone</p>
+<h3 id="rasterdaten">Rasterdaten</h3>
+<p>Raster 3x3, Integer</p>
+<pre><code class="python">R = ( (7, 9, 6), (6, 8, 9), (6, 7, 8) )
+print &quot;Zeilen:&quot;, len(R)
+print &quot;Spalten:&quot;, len(R[0])
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Raster mit mehreren Bändern:
+<code>R = ( ( (r,g,b), (r,g,b), (r,g,b) ), ( (r,g,b), (r,g,b), (r,g,b) ), ( (r,g,b), (r,g,b), (r,g,b) ) )</code></p>
+<h4 id="numpy">Numpy</h4>
+<p>Rasterdarstellung und Zugriff</p>
+<pre><code class="python">import numpy
+r = numpy.array([[7, 9, 6],
+                [6, 8, 9],
+                [6, 7, 8]])
+# Indexing
+print &quot;r[0]\n&quot;, r[0]
+print &quot;r[(0,1)]\n&quot;, r[(0,1)]
+
+# entspricht
+print &quot;r[0:2]\n&quot;, r[0:2]
+
+# Pixel
+print &quot;r[0,1]\n&quot;, r[0,1]
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Methoden (skulpt kennt nicht alle...):</p>
+<pre><code class="python">import numpy
+a = numpy.array([[7, 9, 6],
+                [6, 8, 9],
+                [6, 7, 8]])
+# Angaben:
+print &quot;Shape&quot;, a.shape
+print &quot;dtype&quot;, a.dtype
+print &quot;Size&quot;, a.size
+print &quot;len&quot;, len(a)
+# print &quot;min&quot;, a.min()
+print &quot;sum&quot;, a.sum()
+# print &quot;max&quot;, a.max()
+# print &quot;sum, axis=1&quot;, a.sum(axis=1)
+# print &quot;sum, axis=0&quot;, a.sum(axis=0)
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<p>Operatoren (skulpt kennt nicht alle...)</p>
+<pre><code class="python">import numpy
+a = numpy.array([[7, 9, 6],
+                [6, 8, 9],
+                [6, 7, 8]])
+print a/2
+print a &gt; 7
+</code></pre>
+
+<p class="skulpt" onclick="run_skulpt(event)"><a href="javascript:void()">try it</a> <img alt="Keyboard" src="../img/icons/141_Keyboard.png" /></p>
+<h4 id="georeferenz">Georeferenz</h4>
+<ul>
+<li>externe Vektordaten als Metadaten (linke untere/obere Ecke)</li>
+<li>Pixelgröße</li>
+<li>Anzahl Zeilen und Spalten</li>
+<li>NODATA-Wert</li>
+</ul>
+<p>Beispiel:</p>
+<pre><code>ncols        129
+nrows        150
+xllcorner    2550946.798032000200
+yllcorner    5506994.751716000000
+cellsize     46.602676800001
+NODATA_value  -9999
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

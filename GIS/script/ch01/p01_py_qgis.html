@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Python3 und QGIS - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Ziel der Veranstaltung", url: "#_top", children: [
+          ]},
+          {title: "Entwicklungsbasis", url: "#entwicklungsbasis", children: [
+              {title: "Python3", url: "#python3" },
+              {title: "QGIS3", url: "#qgis3" },
+              {title: "GIS-Stick: Gis2Go", url: "#gis-stick-gis2go" },
+              {title: "Python unter QGIS nutzen", url: "#python-unter-qgis-nutzen" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="ziel-der-veranstaltung">Ziel der Veranstaltung</h1>
+<p>Im Rahmen des zweiten Teils des Moduls GIS-Anwendungsentwicklung, geht es, wie am Ende des ersten Teils, um die Erweiterung von GIS-Systemen und deren Anpassung an neue Aufgaben. Wir haben mit der Scriptsprache Python bereits die grundlegenden Ansätze kennengelernt, um solche Erweiterungen für das GIS ArcGIS zu programmieren, in diesem Semester wenden wir uns der wichtigen Gruppe der Open-Source-GIS zu. Am Bespiel von QGIS werden wir die notwendigen Grundlagen und Verfahren kennenlernen, um eine eigene Erweiterung in Form eines Plugins zu erstellen.</p>
+<p>Stärker als im letzten Semester werden informatischen Themen behandelt, wie:</p>
+<ul>
+<li>Systementwicklung/Projektmanagement</li>
+<li>Objektorientierung</li>
+<li>Internetkommunikation</li>
+<li>Benutzeroberflächen</li>
+<li>Datenbanken</li>
+</ul>
+<p>Diese zentralen Ansätze bilden die Grundlage für viele GIS-Entwicklungen, sei es auf Basis eines Desktop- oder Web-GIS. Mit QGIS3 verwenden wir im Vergleich zu ArcGIS ein weiteres Desktop-System, dass eine viel größere Integration der Sprache Python aufweist, als dies in ArcGIS gegeben ist.</p>
+<h1 id="entwicklungsbasis">Entwicklungsbasis</h1>
+<h2 id="python3">Python3</h2>
+<p>In <a href="https://pythonclock.org/">Kürze</a> wird die Entwicklung von Python2 eingestellt. Viele Entwickler haben deshalb bereits reagiert und ihre Nutzung von Python auf der Version 3 umgestellt.</p>
+<p>Dies trifft auch auf die in dieser Veranstaltung benutzte Software QGIS zu, die Python3 mit QGIS3 eingeführt hat.</p>
+<p>Zu den Veranstaltungen der letzten Semester ergeben sich durch die veränderten Bedingungen einige Änderungen, die zu einer überarbeiteten neuen Gliederung führen.</p>
+<h2 id="qgis3">QGIS3</h2>
+<p>Die neue Version des GIS QGIS enthält einige Neuerungen, die neben der Umstellung auf Python3 auch die verwendete Bibliothek für Benutzeroberflächen betreffen: Qt. QGIS basiert sehr stark auf dieser Bibiothek, die nun in der Version Qt5 eingebunden ist.</p>
+<h2 id="gis-stick-gis2go">GIS-Stick: Gis2Go</h2>
+<p>Die aktuelle Installation der verwendeten Programme wird als <em>Portable Software</em> angeboten. Dies bedeutet, dass sie auf einem USB-Stick gespeichert und an einem beliebigen Rechner mit Windows-Betriebssystem genutzt werden kann.</p>
+<p>Der aktuelle GIS-Stick ist zum Download nur innerhalb des Campus-Netzes verfügbar. Die Adresse lautet:</p>
+<p><a href="http://endor.uni-trier.de/karto/dl/gp/index.html">http://endor.uni-trier.de/karto/dl/gp/index.html</a></p>
+<p>Mein Tipp ist es, die komplette Installation zu verwenden. Benutzen Sie bereits eine Version des GIS-Sticks, ist es evtl. auch möglich, die betroffenen Pakete zu aktualisieren. Eine Anleitung finden Sie jeweils auf der angegebenen Webseite.</p>
+<h2 id="python-unter-qgis-nutzen">Python unter QGIS nutzen</h2>
+<p>Hier wollen wir uns anschauen, wie die Python-Version, die mit QGIS ausgeliefert wurde, gestartet werden kann. Zunächst in der Kommandozeile, dann in QGIS selbst:</p>
+<p>Wir starten die OSGEO4W-Shell (oder auch OSGEO4W Kommando-Konsole) und erhalten dieses Eingabefenster:</p>
+<figure><img alt="Kommandozeile für OSGEO4W" src="../img/chap01_osgeoshell.png" /><figcaption>
+<p>Kommandozeile für OSGEO4W</p>
+</figcaption>
+</figure>
+<p>Um Python zu starten benötigen wir zwei Befehle:</p>
+<ul>
+<li>mit <code>py3_env</code> setzen wir die Umgebung für das installierte Python3</li>
+<li>mit <code>python3</code> starten wir den Interpreter</li>
+</ul>
+<pre><code class="shell">Python 3.7.0 (v3.7.0:1bf9cc5093, Jun 27 2018, 04:06:47) [MSC v.1914 32 bit (Inte
+l)] on win32
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; _
+</code></pre>
+
+<p>In diese Shell können nun Python-Anweisungen eingegeben werden. Mit der Tastenkombination <Strg><Pause>oder dem Befehl quit() wird die Python-Shell wieder geschlossen. Idealerweise benutzen wir aber besser eine IDE, wie <em>Idle</em> oder <em>PyScripter</em> für solche Programmierarbeiten.</p>
+<p><strong><em>Hinweis:</em></strong></p>
+<p><em>Auf den Rechnern des CIP-Pools sind QGIS und Python in einer 64-bit Version installiert, es gibt jedoch keine installierte IDE. Wenn Sie den GIS-Stick verwenden, können Sie direkt den PyScripter aus dem PStart-Menü aufrufen. Andernfalls können sie sich den PyScripter in einem ihrer Ordner installieren und mit einem Batch-File starten. Die Batchdatei ist notwendig, damit PyScripter die korrekte Python-Version findet und benutzt. Eine ZIP-Datei stelle ich in der Veranstaltung zur Verfügung.</em></p>
+<p>Eine weitere Möglichkeit besteht in der Verwendung von QGIS, das über eine intergrierte Pythonshell verfügt und einen einfachen Editor anbietet. Dies gibt uns zudem eine Gelegenheit, die Benutzeroberfläche von QGIS anzuschauen.</p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

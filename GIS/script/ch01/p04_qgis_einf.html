@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>QGIS-Einführung - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "QGIS", url: "#_top", children: [
+              {title: "USB-Version:", url: "#usb-version" },
+              {title: "Einf\u00fchrungen in QGIS", url: "#einfuhrungen-in-qgis" },
+              {title: "QGIS-Benutzeroberfl\u00e4che", url: "#qgis-benutzeroberflache" },
+              {title: "Bedienfelder und Werkzeugk\u00e4sten", url: "#bedienfelder-und-werkzeugkasten" },
+          ]},
+          {title: "\u00dcbung: Ikea-Filialen", url: "#ubung-ikea-filialen", children: [
+              {title: "Vorgehensweise:", url: "#vorgehensweise" },
+              {title: "Basiskarte f\u00fcr die Ikea-Filialen", url: "#basiskarte-fur-die-ikea-filialen" },
+              {title: "Grafikeinstellungen f\u00fcr Vektorlayer", url: "#grafikeinstellungen-fur-vektorlayer" },
+              {title: "Ikea-Filialen darstellen: Einzelsymbol", url: "#ikea-filialen-darstellen-einzelsymbol" },
+              {title: "Ikea-Filialen darstellen: Abgestuft", url: "#ikea-filialen-darstellen-abgestuft" },
+              {title: "Ikea-Filialen darstellen: Kreisdiagramm", url: "#ikea-filialen-darstellen-kreisdiagramm" },
+              {title: "Alternative zum Diagramm", url: "#alternative-zum-diagramm" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="qgis">QGIS</h1>
+<ul>
+<li>Open Source Software</li>
+<li>Auf den Rechnern der CIP-Pools installiert</li>
+<li>Möglichkeit zur Installation auf USB-Stick/-Laufwerk</li>
+</ul>
+<h2 id="usb-version">USB-Version:</h2>
+<p><a href="http://endor.uni-trier.de/karto/dl/gp">Im Campus-Netz</a> zum herunterladen:</p>
+<ul>
+<li>Große oder Kleine Installation</li>
+<li>USB-Laufwerk (Stick) mit USB3, schnelles Medium</li>
+</ul>
+<figure><img alt="Das Startmenü" src="img/Pstartmenu.png" /><figcaption>
+<p>Das Startmenü der USB-Version</p>
+</figcaption>
+</figure>
+<p>Vorteile:</p>
+<ul>
+<li>Gute Kartographie im Vergleich zu anderen GIS</li>
+<li>kann mit nach Hause genommen werden</li>
+<li>zusätzliche GIS-/Software integriert und mit eigenen PortableApps ergänzbar</li>
+</ul>
+<h2 id="einfuhrungen-in-qgis">Einführungen in QGIS</h2>
+<p>Auf <a href="https://docs.qgis.org/3.4/en/docs/index.html">qgis.org</a></p>
+<ul>
+<li>Neue Version QGIS3 mit teilweise unvollständiger Dokumentation</li>
+<li>Online-Ressourcen zu einzelnen Übungen</li>
+</ul>
+<p>Literatur:</p>
+<ul>
+<li>A. Cutts, A. Graser: Learn QGIS, 4. Auflage, Packt&gt;</li>
+<li>A. Graser and G. N. Peterson: QGIS Map Design</li>
+</ul>
+<p>Einführung:
+- <a href="https://mltconsecol.github.io/QGIS-Tutorial">Treglia_QGIS_Tutorial_3_0</a></p>
+<h2 id="qgis-benutzeroberflache">QGIS-Benutzeroberfläche</h2>
+<figure><img alt="Die Benutzeroberfäche von QGIS3" src="img/Qgisgui.png" /><figcaption>
+<p>Die Benutzeroberfäche von QGIS3</p>
+</figcaption>
+</figure>
+<p>Um die Processing Toolbox Toolbox anzuzeigen, klicken wir Menü: View | Panels | Processing Toolbox</p>
+<h2 id="bedienfelder-und-werkzeugkasten">Bedienfelder und Werkzeugkästen</h2>
+<p>können über das Menu:Ansicht ein- oder ausgeschaltet werden</p>
+<figure><img alt="Projektfunktionen" src="img/Qgisprojekt.png" /><figcaption>
+<p>Projekt: Funktionen, um ein QGIS-Projekt zu laden, zu speichern, oder zu erzeugen.</p>
+</figcaption>
+</figure>
+<figure><img alt="Kartennavigation" src="img/Qgisnavi.png" /><figcaption>
+<p>Kartennavigation: beinhaltet Werkzeuge zum Verschieben, Zoomen als auch die Verwaltung von Lesezeichen und die Kartenaktualisierung.</p>
+</figcaption>
+</figure>
+<figure><img alt="Attributwerkzeuge" src="img/Qgisattribute.png" /><figcaption>
+<p>Attributwerkzeuge: umfasst Tools, um Objekte in der Karte zu identifizieren, zu seleltieren, eine Tabellenansicht zu öffnen oder in der Karte zu messen.</p>
+</figcaption>
+</figure>
+<figure><img alt="Datenquellen" src="img/Qgisdatenquellen.png" /><figcaption>
+<p>Datenquellen: Funktionen, um Daten in ein QGIS-Projekt zu laden, oder neue Datensätze zu erzeugen.</p>
+</figcaption>
+</figure>
+<h1 id="ubung-ikea-filialen">Übung: Ikea-Filialen</h1>
+<p>Daten:</p>
+<ul>
+<li>Wikipedia-Artikel https://de.wikipedia.org/wiki/IKEA_Deutschland  mit Tabelle und Karte</li>
+<li><code>ikea_wiki_table_org.csv</code>: Angaben zum Jahr der Eröffnung und Größe der Verkaufsfläche <a href="data/ikea_wiki_table_org.csv">herunterladen</a></li>
+<li><code>ikea_wikipedia Standorte.kml</code>: Punkte/Koordinaten <a href="data/ikea_wikipedia Standorte.kml">herunterladen</a></li>
+</ul>
+<h2 id="vorgehensweise">Vorgehensweise:</h2>
+<ul>
+<li>Daten ansehen</li>
+<li>csv-Feldtypen anpassen</li>
+<li>Daten in QGIS laden</li>
+<li>Join über den Namen der Filialen</li>
+<li>Speichern im GeoPackage-Format, mit Auswahl relevanter Felder (Attribute)</li>
+</ul>
+<p>Laden der Datei <code>ikea_wikipedia Standorte.kml</code> in QGIS über die Datenquellverwaltung:</p>
+<figure><img alt="Datenquellverwaltung öffnen" src="img/Ikeadatenquelle.png" /><figcaption>
+<p>Datenquellverwaltung öffnen</p>
+</figcaption>
+</figure>
+<p>Inspektion der Ikea-Standorte</p>
+<figure><img alt="Ansicht und Abfrage geladener Informationen" src="img/Ikealaden.png" /><figcaption>
+<p>Ansicht und Abfrage geladener Informationen</p>
+</figcaption>
+</figure>
+<p>Vorbereitung zur Datei ikea_wiki_table_org.csv</p>
+<ul>
+<li>kopieren nach ikea_wiki_table.csv</li>
+<li>Mit Notepad++ öffnen und editieren:</li>
+<li>Erste Zeile mit Namen, Tabulator getrennt: <code>Filiale   Jahr    VerkFl</code></li>
+<li>Suchen/ersetzen: Punkte in Verkaufsflächen eliminieren</li>
+</ul>
+<pre><code class="text">Filiale Jahr    VerkFl
+Augsburg (Gersthofen)   2006    31000
+Berlin-Lichtenberg  2010    43000
+Berlin-Spandau  1979    36300
+Berlin-Tempelhof (Berlin-Schöneberg)    2003    37000
+</code></pre>
+
+<p>Datentypen der Spalten deklarieren:</p>
+<ul>
+<li>Neue Datei anlegen ikea_wiki_table.csvt</li>
+<li>Mit Notepad++ öffnen und editieren:</li>
+</ul>
+<pre><code class="text">&quot;String&quot;,&quot;Integer&quot;,&quot;Integer&quot;
+</code></pre>
+
+<p>Datei ikea_wiki_table.csv in QGIS laden</p>
+<figure><img alt="Optionen beim Importieren der Tabelle " src="img/Ikeaimportcsv.png" /><figcaption>
+<p>Optionen beim Importieren der Tabelle </p>
+</figcaption>
+</figure>
+<p>Join der beiden Datensätze</p>
+<ul>
+<li>Layereigenschaften der kml-Datei öffnen</li>
+<li>auf Verknüpfungen klicken</li>
+<li>mit Plus [+] neuen Join hinzufügen </li>
+</ul>
+<figure><img alt="Aufruf Layereigenschaften-&gt;Verknüpfungen" src="img/Ikeajoin01.png" /><figcaption>
+<p>Aufruf Layereigenschaften-&gt;Verknüpfungen</p>
+</figcaption>
+</figure>
+<p>Die Spalten für den Join müssen exakt dieselben Werte enthalten! Namen müssen evtl. korrigiert werden!</p>
+<figure><img alt="Optionen der Verknüpfung" src="img/Ikeajoin02.png" /><figcaption>
+<p>Optionen der Verknüpfung</p>
+</figcaption>
+</figure>
+<p>Ergebnis: Spalten aus ikea_wiki_table wurden angehangen.</p>
+<p>Daten in QGIS untersuchen</p>
+<p>Tabelle anzeigen: Menü-&gt;Layer-&gt;Attributtabelle öffnen</p>
+<figure><img alt="geöffnete Attributtabelle" src="img/Ikeatable.png" /><figcaption>
+<p>geöffnete Attributtabelle</p>
+</figcaption>
+</figure>
+<p>Klick auf Spaltennamen sortiert die Anzeige</p>
+<p>Datenexport:</p>
+<p>Wir exportieren das Ergebnis in ein anderes Datenformat</p>
+<ul>
+<li>Unter Layer-&gt; ikea_wikipedia Standorte rufen wir das Kontextmenü mit der rechten Maustaste auf und wählen:
+Exportieren-&gt;Objekt speichern als</li>
+<li>Wir wählen alle überflüssigen Spalten ab und behalten nur diese Spalten: Name, description, ikea_wiki_table_Jahr, ikea_wiki_table_VerkFl</li>
+</ul>
+<figure><img alt="Optionen für den Export als Geopackage" src="img/Ikeaexport.png" /><figcaption>
+<p>Optionen für den Export als Geopackage</p>
+</figcaption>
+</figure>
+<p>GeoPackage ist ein relativ neues aber standardisiertes Datenformat für Geodaten!</p>
+<h2 id="basiskarte-fur-die-ikea-filialen">Basiskarte für die Ikea-Filialen</h2>
+<p>Plugin <em>QuickMapServices</em> benutzen</p>
+<ul>
+<li>Plugin installieren: Suche: QuickMapServices</li>
+<li>Menü:Web-&gt;Quick Map Services-&gt;Settings: More Services-&gt;Get contributed pack</li>
+<li>auswählen der Basiskarte: OSM-Standard</li>
+</ul>
+<figure><img alt="Installation des Plugins" src="img/Ikeaplugin.png" /><figcaption>
+<p>Installation des Plugins</p>
+</figcaption>
+</figure>
+<p>Anpassen der Projektion</p>
+<ul>
+<li>Projektion der Basiskarte: Web-Mercator</li>
+<li>Einstellen für Projekt, Projekteigenschaften-&gt;KBS</li>
+<li>Suche: Web</li>
+</ul>
+<figure><img alt="Einstellung für das Koordinatensystem des Projekts" src="img/Ikeakoordinaten.png" /><figcaption>
+<p>Einstellung für das Koordinatensystem des Projekts</p>
+</figcaption>
+</figure>
+<p>Da die Basiskarte als Raster dargestellt wird, erhalten wir mit der passenden Projektion eine bessere Qualität!</p>
+<h2 id="grafikeinstellungen-fur-vektorlayer">Grafikeinstellungen für Vektorlayer</h2>
+<p>Unter Layer öffnen wir das Layergestaltungsfenster</p>
+<figure><img alt="Layergestalungsfenster öffnen" src="img/Ikeagestaltung.png" /><figcaption>
+<p>Layergestalungsfenster öffnen</p>
+</figcaption>
+</figure>
+<p>Im geöffneten Bedienfeld find wir die Einstellungen zur Grafik des Layers</p>
+<figure><img alt="Bedienfeld Layergestaltung" src="img/Ikeagestaltungsdock.png" /><figcaption>
+<p>Bedienfeld Layergestaltung</p>
+</figcaption>
+</figure>
+<ul>
+<li>Alternativ kann man diese Einstellungen auch über die Layereigenschaften erreichen, </li>
+<li>Das bereits geöffnete sogenannte Dockingfenster ist praktischer (live-Aktualisierung)</li>
+</ul>
+<figure><img alt="Aufruf der Symbology über die Layereigenschaften" src="img/Ikeagestaltungssymbol.png" /><figcaption>
+<p>Aufruf der Symbology über die Layereigenschaften</p>
+</figcaption>
+</figure>
+<p>Die Einstellungen können im Bedienfeld sehr detailliert vorgenommen werden.</p>
+<p>Grobe Einteilung:</p>
+<ul>
+<li>Ansicht zur Einstellung "Einfache Markierung"</li>
+<li>Einzelsymbol: Alle Daten erhalten die gleiche Darstellung</li>
+<li>Klicken Sie auf Einzelsymbol, um weitere Darstellungsmethoden zu sehen</li>
+</ul>
+<p>Neben Einzelsymbol gibt es: Kategorisiert, Abgestuft und so weiter, ähnlich wie in ESRI's ArcMap</p>
+<p>Eigenschaften für <em>Einfache Markierung</em></p>
+<p>Hier sehen wir die einzelnen Graphikparameter</p>
+<ul>
+<li>Größe</li>
+<li>Füllfarbe</li>
+<li>Strichfarbe</li>
+<li>usw.</li>
+</ul>
+<p>dienen der Auswahl von Farben und Größen etc. </p>
+<figure><img alt="Einstellungen zu Einfache Markierung" src="img/Ikeaeinfachsym.png" /><figcaption>
+<p>Einstellungen zu Einfache Markierung</p>
+</figcaption>
+</figure>
+<p>Neben der "Einfachen Markierung" gibt es aber auch andere Zeichenverfahren: </p>
+<figure><img alt="Symbollayertypen als Zeichenverfahren" src="img/Ikeaanderesym.png" /><figcaption>
+<p>Symbollayertypen als Zeichenverfahren</p>
+</figcaption>
+</figure>
+<figure><img alt="Datengesteuerte Parameter" src="img/Ikeasymdaten.png" /><figcaption>
+<p>Datengesteuerte Parameter</p>
+</figcaption>
+</figure>
+<p>Zusätzlich können alle Parameter auch durch Datenwerte gesteuert werden!</p>
+<!-- Ergänzung: Hier schon auf qml eingehen -->
+
+<h2 id="ikea-filialen-darstellen-einzelsymbol">Ikea-Filialen darstellen: Einzelsymbol</h2>
+<p>Zeichengröße: </p>
+<ul>
+<li>Angegeben in Millimeter, </li>
+<li>Veränderungen können direkt eingegeben und im Kartenfenster beurteilt werden</li>
+</ul>
+<figure><img alt="Größenangabe" src="img/Ikeasymsize.png" /><figcaption>
+<p>Größenangabe</p>
+</figcaption>
+</figure>
+<figure>Die Füllfarbe kann auf zweierleiweise eingestellt werden:
+<img alt="Farbe" src="img/Ikeasymcolor01.png" /><figcaption>
+<p>Farbe</p>
+</figcaption>
+</figure>
+<p>Ein Klick auf den Schalter (rechts) öffnet eine Farbauswahl, direkt im Fenster</p>
+<figure><img alt="direkte Farbauswahl" src="img/Ikeasymcolor02.png" /><figcaption>
+<p>direkte Farbauswahl</p>
+</figcaption>
+</figure>
+<p>Ein Klick auf die Farbe selbst öffnet eine neue Ansicht, in der mehr Optionen zur Verfüg stehen
+von dort zurück geht es über den blauen Pfeil:</p>
+<figure><img alt="Farbauswahl im Folgefenster" src="img/Ikeasymcolor03.png" /><figcaption>
+<p>Farbauswahl im Folgefenster</p>
+</figcaption>
+</figure>
+<h2 id="ikea-filialen-darstellen-abgestuft">Ikea-Filialen darstellen: Abgestuft</h2>
+<p>Eine abgestufte Darstellung wird durch die Datenwerte eines Attributs gesteuert</p>
+<ul>
+<li>Wir wählen das Attribut für die Verkaufsfläche</li>
+<li>Als Methode wählen wir Size, um die Größe der Zeichen zu variieren</li>
+<li>Anschließend wählen wir Klassifizieren, um 5 unterschiedliche Größenabstufungen zu erzielen</li>
+</ul>
+<figure><img alt="Darstellungsverfahren Abgestuft" src="img/Ikeasymabgestuft01.png" /><figcaption>
+<p>Darstellungsverfahren "Abgestuft"</p>
+</figcaption>
+</figure>
+<p>Ergebnis (Ausschnitt)</p>
+<figure><img alt="Ergebnisdarstellung" src="img/Ikeasymabgestuft02.png" /><figcaption>
+<p>Ergebnisdarstellung</p>
+</figcaption>
+</figure>
+<h2 id="ikea-filialen-darstellen-kreisdiagramm">Ikea-Filialen darstellen: Kreisdiagramm</h2>
+<p>Diagrammdarstellungen finden wir unter Layereigenschaften-&gt;Diagramme</p>
+<figure><img alt="Einstellungen für Kreisdiagramme" src="img/Ikeadiagramme.png" /><figcaption>
+<p>Einstellungen für Kreisdiagramme</p>
+</figcaption>
+</figure>
+<p>Einstellungen:
+Die Darstellung aus den vorangegangenen Schritten schalten wir aus: "Keine Symbole"
+Attribute: Wir benutzen ein beliebiges Attribut, um dem Diagramm eine Farbe zuzuordnen (theoretisch können mehrere Sektoren dargestellt werden)
+Größe: Wir variieren die Größe der Kreise entsprechend der Verkaufsflächen.</p>
+<h2 id="alternative-zum-diagramm">Alternative zum Diagramm</h2>
+<p>Größe von Einzelzeichen nach Datenwerten variieren</p>
+<ul>
+<li>Einstellung für Einzelsymbol:<ul>
+<li>Bei Größe "Datendefinierte Steuerung" anklicken</li>
+<li>Dort über "Bearbeiten" einen Ausdruck eingeben:</li>
+</ul>
+</li>
+</ul>
+<figure><img alt="Datendefinierte Steuerung für Größe" src="img/Ikeadiagrammalternativ.png" /><figcaption>
+<p>Datendefinierte Steuerung für Größe</p>
+</figcaption>
+</figure>
+<figure><img alt="Ausdruckseditor" src="img/Ikeaausdruck.png" /><figcaption>
+<p>Ausdruckseditor</p>
+</figcaption>
+</figure>
+<p><em>Der eingegebene Ausdruck muss eine Größenangabe ergeben, die einem Wert im Eingabefeld Größe entspricht. Wir erreichen dies durch die Division des Attributwertes!</em></p>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

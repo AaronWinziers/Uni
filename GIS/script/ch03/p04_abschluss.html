@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Abschluss - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Abschlussaufgabe", url: "#_top", children: [
+          ]},
+          {title: "Kritierien zur Beurteilung des Codes", url: "#kritierien-zur-beurteilung-des-codes", children: [
+              {title: "Allgemeine Kriterien", url: "#allgemeine-kriterien" },
+              {title: "Spezifische Anforderungen", url: "#spezifische-anforderungen" },
+          ]},
+          {title: "Abschlie\u00dfende Rezepte", url: "#abschlieende-rezepte", children: [
+              {title: "Einsatz von interaktiven QGIS-Funktionen", url: "#einsatz-von-interaktiven-qgis-funktionen" },
+              {title: "Kartenschrift (Labeling) ein- und ausschalten", url: "#kartenschrift-labeling-ein-und-ausschalten" },
+              {title: "GUI-Elemente aktivieren und deaktivieren", url: "#gui-elemente-aktivieren-und-deaktivieren" },
+              {title: "HTML-Kartenhinweise", url: "#html-kartenhinweise" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="abschlussaufgabe">Abschlussaufgabe</h1>
+<p>Abgabe eines QGIS-Plugins zum Zugriff und Darstellung der Daten von Pegelonline.</p>
+<figure><img alt="Ansicht des Plugins Pegelonline" src="../img/chap03_plugin_abschluss.png" /><figcaption>
+<p>Ansicht des Plugins Pegelonline</p>
+</figcaption>
+</figure>
+<h1 id="kritierien-zur-beurteilung-des-codes">Kritierien zur Beurteilung des Codes</h1>
+<h2 id="allgemeine-kriterien">Allgemeine Kriterien</h2>
+<ol>
+<li>Bennenung von Klassen, Methoden und Variablen<ul>
+<li>Bedeutung durch Namen erkennbar</li>
+<li>Syntaktisch eindeutig: Z.B. in Python (Pep8) geregelt, wichtig: konsistente Verwendung und Unterscheidung von Klassen, Methoden etc.</li>
+<li>Konsistenz in der Namensgebung</li>
+</ul>
+</li>
+<li>Aufbau von Funktionen, Methoden<ul>
+<li>Vermeidung von doppelt vorkommendem Code</li>
+<li>Code von Funktionen erfüllen eine definierte Aufgabe, sie rufen einander auf, um komplexere Aufgaben zu erfüllen</li>
+<li>Code-Blöcke (Funktionen) sind allgemein nicht länger als 20 Zeilen, in einigen Fällen unter 50 Zeilen, selten länger als 100 Zeilen</li>
+</ul>
+</li>
+<li>Layout von Programmen (Lesbarkeit) -&gt; Pep8!<ul>
+<li>Konsistenter Aufbau eines Modules, einer Klasse durch sinnvolle Gruppierung von Elementen</li>
+<li>Importe stehen am Beginn, allgemeine Funktionen, Klassen-Definitionen folgen</li>
+<li>Vermeidung von langen Zeilen, Einrückungen bestehen immer aus Gruppen von 4 Leerzeichen</li>
+</ul>
+</li>
+<li>Kommantare<ul>
+<li>der Code ist ausreichend kommentiert aber nicht mit Kommentaren überladen</li>
+<li>Funktionen verwenden einen <em>doc string</em></li>
+<li>Code-Blöcke werden mit einer Kommentarzeile eingeleitet</li>
+<li>komplexe if-Konstrukte werden erläutert</li>
+<li>wichtige Variablen werden bei der Deklaration erläutert</li>
+<li>TODO-Kommentare oder Auskommentierungen von nicht benutztem Code sollen entfernt werden, Ausnahmen sind denkbar für Dokumentation/Reflektion</li>
+</ul>
+</li>
+<li>Fehlerbehandlung<ul>
+<li>externe Module/Funktionen sollten geprüft werden, ob und welche Fehler sie abfangen. Diese Fehlerbehadlung sollte übernommen werden.</li>
+<li>IO-Operationen oder der Zugriff auf fremde Daten erfordern grundsätzlich Fehlerbehandlungen</li>
+<li>Reaktionen auf Fehler müssen geplant ablaufen, im schlimmsten Fall mit dem Abbruch einer Operation/des Programms (in Plugins kann natürlich nicht das umgebende Programm beendet werden...)</li>
+</ul>
+</li>
+<li>Tests<ul>
+<li>Das Plugin soll auf denkbare Fehler hin getestet werden</li>
+<li>Insbesondere die Logik der Benutzeroberfläche ist anspruchsvoll und bietet häufig unvorhergesehene Bedienschritte, die zu Inkonsistenzen führen können</li>
+<li>Wir verzichten auf explizite Test-Routinen, etwa dem Unit-Testing, diese wären aber sinnvoll. Bei der Erstellung eines Plugins mit dem Plugin-Builder existiert eine Option zur Einrichtung solcher Tests.</li>
+</ul>
+</li>
+</ol>
+<h2 id="spezifische-anforderungen">Spezifische Anforderungen</h2>
+<ol>
+<li>Dokumentation<ul>
+<li>umfasst eine kurze Beschreibung des Plugins, inkl. aller aus Nutzersicht relevanter Funktionen (GUI, Anleitung)</li>
+<li>enthält eine technische Beschreibung zum Aufbau des Codes und der verwendeten Komponenten, kann als Begründung der Implementierung verfasst sein</li>
+<li>reflektieren sie ihre Arbeit, weisen sie auf Besondernheiten hin (positive wie negative)</li>
+</ul>
+</li>
+<li>Lauffähigkeit<ul>
+<li>als QGIS-Plugin eingebunden, startet und läuft der Code fehlerfrei</li>
+<li>auch <em>ungeplante</em> Bedienung ist möglich</li>
+</ul>
+</li>
+<li>Vollständigkeit<ul>
+<li>die in der Veranstaltung besprochenen und in der GUI vorgesehenen Funktionen sind implementiert<ul>
+<li>Zugriff auf Pegelonline und Datenaufbereitung für QGIS</li>
+<li>Darstellung der Daten durch unterschiedliche Attribute</li>
+<li>Umsetzung interaktiver Funktionen in der GUI</li>
+</ul>
+</li>
+<li>der abgegebene Code enthält alle notwendigen Komponenten, die nicht durch Python oder QGIS (wie auf dem Stick) gegeben sind</li>
+</ul>
+</li>
+<li>Niveau und Kompetenz<ul>
+<li>Aufbau des Plugins ist objektorientiert, eigene Module besitzen eine nachvollziehbare und sinnvolle Klassenstruktur</li>
+<li>Funktionen für den Internetzugriff, für GIS und Kartographie werden souverän eingesetzt, kommentiert und dokumentiert</li>
+<li>Es ist gewünscht (Bonus), dass die Entwicklung des Plugins zumindest in einzelnen Bereichen über die in der Lehrveranstaltung gezeigten Grundlagen hinausgeht.<ul>
+<li>Verbesserte objektorientierte Struktur</li>
+<li>Änderungen im Zugriff auf Pegelonline (z.B. weitere Attribute)</li>
+<li>Erweiterung der einstellbaren Darstellungen </li>
+<li>Neue interaktive Funktionen in der GUI</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h1 id="abschlieende-rezepte">Abschließende Rezepte</h1>
+<h2 id="einsatz-von-interaktiven-qgis-funktionen">Einsatz von interaktiven QGIS-Funktionen</h2>
+<p>Viele interaktive Funktionen sind in QGIS als Qt-Actions implementiert. Dazu gehören sämliche Funktionen aus Menüs und den Funktionsleisten (Werkzeugkästen). QAction heißt die übergeordnete Klasse dieser Elemente, sie über Python erstellt (siehe Plugin) und aufgerufen werden.</p>
+<p>Einige dieser Funktionen wurden dem iface-Objekt direkt mitgegeben, andere sind, ebenfalls über iface, in den zugeordneten Werkzeugkästen zu finden:</p>
+<pre><code class="python"># iface direkt zugeordnet
+self.iface.actionZoomFullExtent()
+self.iface.actionZoomToSelected()
+self.iface.actionSelectRectangle()
+# iface über Werkzeugkasten, hier &quot;Attributwerkzeugleiste&quot;
+# self.iface.attributesToolBar().actions()
+for a in self.iface.attributesToolBar().actions():
+    if a.objectName() == 'mActionDeselectAll':
+        break        
+</code></pre>
+
+<p>Zum Einbau in das Plugin bietet es sich an, diese Funktionen in einem Fensterbereich des Dockwidgets zu platzieren. Im QtDesigner legen wir diesen Bereich an und füllen ihn im Plugin mit den entsprechenden QActions.</p>
+<figure><img alt="Aufbau in Qt-Designer" src="../img/chap03_plugin_action_designer.png" /><figcaption>
+<p>Aufbau in Qt-Designer und Darstellung in QGIS</p>
+</figcaption>
+</figure>
+<p>Hier wurde im Dockwidget ein horizontales Layout mit einem Spacer erstellt, der dafür sorgen soll, dass die Icons linksbündig eingesetzt werden. In QGIS wurden die Werkzuge actionSelectRectangle, mActionDeselectAll, actionZoomToSelected, actionZoomFullExtent eingebaut:</p>
+<pre><code class="python">self.tBzoomAll = QToolButton()
+self.tBzoomAll.setDefaultAction(self.iface.actionZoomFullExtent())
+self.ui.hlTools.insertWidget(0, self.tBzoomAll)
+</code></pre>
+
+<p>Actions sind selber keine Widgets, sondern sie finden ihren Platz in Menü oder Buttons. Daher wurde hier zunächst ein QToolButton erstellt und diesem die Action zugewiesen. Anschließend wurde der Button in das hlTools-Layout eingesetzt.</p>
+<p>Eine Linie zur optischen Trenung von Funktionen lässt sich auch einsetzen:</p>
+<pre><code class="python">self.vLine = QFrame()
+self.vLine.setFrameShape(QFrame.VLine)
+self.vLine.setFrameShadow(QFrame.Sunken)
+self.ui.hlTools.insertWidget(0, self.vLine)
+</code></pre>
+
+<h2 id="kartenschrift-labeling-ein-und-ausschalten">Kartenschrift (Labeling) ein- und ausschalten</h2>
+<p>Für die Darstellung der Wasserstände kann z.B. zusätzlich eine Beschriftung über das Attribut <code>value</code> erfolgen, die sich über das Plugin ein- und ausschalten lässt.</p>
+<p>Zunächst wurden in den QGIS-Layerstildateien zu den Attributen (qml-Dateien) jeweils eine einheitliche Beschriftung hinzugefügt. Die Einstellungen finden wir in dem Layergestaltungsfenster unter "Beschriftungen":</p>
+<ul>
+<li>Attribut: value</li>
+<li>Text: Wahl einer gut lesbaren Schriftart, hier Calibri Light in Blau</li>
+<li>Puffer: eingeschaltet, 1mm in Weiß</li>
+<li>Platzierung: Abstand vom Punkt, im Qudrant Mitte-Oben, mit einem Versatz in Y-Richtung von 1mm</li>
+</ul>
+<figure><img alt="Parameter für die Beschriftung" src="../img/chap03_plugin_maplabel.png" /><figcaption>
+<p>Parameter für die Beschriftung</p>
+</figcaption>
+</figure>
+<p>Zur Umschaltung wurde in Qt-Designer eine QCheckBox eingefügt (chBshowLabels) und im Code mit der Methode des Layers <code>self.currentw.setLabelsEnabled()</code></p>
+<pre><code class="python">if self.ui.chBshowLabels.isChecked():
+    self.currentw.setLabelsEnabled(True)
+else:
+    self.currentw.setLabelsEnabled(False)
+</code></pre>
+
+<p>Über das if-Statement wird in der Methode doCurrentWChangeStyle geprüft, ob die Labels angezeigt werden sollen. Allerdings soll die Checkbox nicht nur beim Wechsel des Attributs berücksichtigung find, sondern auch für einen bereits angezeiten Stil ein- und ausschaltbar sein. </p>
+<p>Das ist fast schon ein eigenes Rezept:</p>
+<p>Für diese Funktionalität bietet es sich an, die Methode doCurrentWChangeStyle auch auszuführen, wenn der Benutzer die Schrift ein- oder ausschaltet. Dazu ist ein kleiner Trick notwendig, denn diese Funktion bekommt ja den eingeschalteten Button aus der ButtonGroup <code>bGStyleCurrentW</code> übergeben:</p>
+<pre><code class="python"># connect für chBshowLabels
+self.ui.chBshowLabels.toggled.connect(self.doShowLabels)
+
+def doShowLabels(self):
+    self.ui.bGStyleCurrentW.buttonClicked.emit(
+            self.ui.bGStyleCurrentW.checkedButton()
+        )
+</code></pre>
+
+<p>Mit emit() wird der Slot buttonClicked der ButtonGroup ausgeführt, dabei wird genauso verfahren, als hätte der Benutzer das Siganl mit einem Klick ausgelöst. Mit checkedButton() können wir zusätzlich den für den Slot benötigten Button übergeben.</p>
+<h2 id="gui-elemente-aktivieren-und-deaktivieren">GUI-Elemente aktivieren und deaktivieren</h2>
+<p>In manchen Situationen ist es erforderlich, einzelne Funktionen im GUI abzuschalten, weil sie nur in einem bestimmten Kontext benutzt werden sollen. So ist es z.B. nicht vorgesehen, den Stil für die Wasserstände zu wählen, wenn diese noch nicht geladen sind.</p>
+<p>Alle Widgets in Qt besitzen daher die Eigenschaft <code>enabled</code>, die auf True oder False gesetzt werden kann. Ist <code>enabled == False</code>, kann das Element vom Benutzer nicht verwendet werden.</p>
+<p>Hier ein Beispiel für die Buttons zur Stil-Auswahl:</p>
+<pre><code class="python"># in init_connects
+for b in self.ui.bGStyleCurrentW.buttons():
+    b.setEnabled(False)
+# für Labelling:
+self.ui.chBshowLabels.setEnabled(False)
+</code></pre>
+
+<p>Wird der Layer geladen, schalten wir diese wieder frei: <code>setEnabled(True)</code></p>
+<h2 id="html-kartenhinweise">HTML-Kartenhinweise</h2>
+<p>Wird der Mauszeiger im Kartenfenster über Objekte bewegt, so kann QGIS in einem Fenster Objektinformationen über HTML einblenden.</p>
+<p>Unter den Layereigenschaften finden wir den Punkt <code>Anzeigen</code>. So lässt sich bspw. für die Stationen folgende Information zusammenstellen:</p>
+<pre><code class="HTML">&lt;p&gt;[% &quot;shortname&quot; %]&lt;/p&gt;
+&lt;ul&gt;
+   &lt;li&gt;Behörde: [% &quot;agency&quot; %]&lt;/li&gt;
+   &lt;li&gt;Gewässer: [% &quot;water&quot; %]&lt;/li&gt;
+&lt;/ul&gt;
+</code></pre>
+
+<p>Mit dem Tool "Kartenhinweise anzeigen" lässt sich die Funktion ein- und ausschalten.</p>
+<p>Um dies im Plugin zu nutzen, können wir für die Anzeige der Stationen eine Layerstildatei verwenden, bei der in den QGIS-Layereinstellunen unter <em>Anzeigen</em> der HTML-Kartenhinweis eingetragen ist. Wird der Layer geladen, weisen wir die qml-Datei zu und aktivieren die QGIS-Action iface.actionMapTips(). Speichern sollten wir die Layerdatei im im Unterverzeichnis des Plugins <code>styles</code> z.B. als <code>stations.qml</code>.</p>
+<pre><code class="python"># we have a style
+self.stations.loadNamedStyle(os.path.join(self.local_dir, &quot;styles/stations.qml&quot;))
+
+self.layerRefresh(self.stations)
+
+# turn map tips on
+self.iface.actionMapTips().setChecked(True)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

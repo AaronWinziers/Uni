@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>QGIS und Python - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "QGIS und Python", url: "#_top", children: [
+              {title: "Ressourcen", url: "#ressourcen" },
+              {title: "Das pyqgis-Modul (qgis)", url: "#das-pyqgis-modul-qgis" },
+              {title: "Feature-Objekte", url: "#feature-objekte" },
+              {title: "Koordinatensysteme und Transformation", url: "#koordinatensysteme-und-transformation" },
+              {title: "Aufgabe 1: Z-Wert einer Station aus dem DGM ermitteln", url: "#aufgabe-1-z-wert-einer-station-aus-dem-dgm-ermitteln" },
+              {title: "Aufgabe 2: Z-Werte eines Flusses", url: "#aufgabe-2-z-werte-eines-flusses" },
+              {title: "Spatialite Layer", url: "#spatialite-layer" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="qgis-und-python">QGIS und Python</h1>
+<p>Innerhalb von QGIS existiert eine umfangreiche Python-Schnitstelle. Ausgangspunkt ist das Modul "qgis".
+Um die Funktionen nutzen zu können, kann zwar auch eine reine Python-Anwendung geschrieben werden. Üblicherweise wird aber mit der Python-Shell innerhalb von QGIS gearbeitet.
+QGIS unterstützt darüber hinaus Erweiterungen in Form von PlugIns oder als Verarbeitungswerkzeug (Processing-Scrpte).</p>
+<h2 id="ressourcen">Ressourcen</h2>
+<ul>
+<li>Umfangreiches <a href="http://docs.qgis.org/2.18/en/docs/pyqgis_developer_cookbook/">Cookbook</a>.</li>
+<li>Beschreibung der <a href="http://qgis.org/api/2.18/">API - C++</a></li>
+<li>Speziell aufbereitet für [Python] (http://geoapis.sourcepole.com/qgispyapi/)</li>
+<li>Code-Beispiele für <a href="https://webgeodatavore.github.io/pyqgis-samples/">Python-Classes der API</a></li>
+</ul>
+<h2 id="das-pyqgis-modul-qgis">Das pyqgis-Modul (qgis)</h2>
+<p>Ein Modul mit Untermodulen für den den Zugang der QGIS-Funktionen und Benutzeroberfäche, aufgeteilt in die Untermodule</p>
+<ul>
+<li>core</li>
+<li>gui</li>
+<li>utils</li>
+<li>analysis</li>
+<li>weitere ...</li>
+</ul>
+<p>qgis.utils.iface entspricht dabei einer Schnittstelle zu den aktiven Elementen von QGIS, etwa zum Kartenfenster und den dort angezeigten Layern.</p>
+<h3 id="beispiele-fur-das-qgis-python-fenster">Beispiele für das QGIS-Python-Fenster</h3>
+<pre><code class="python">&gt;&gt;&gt; qgis.utils.iface
+&gt;&gt;&gt; iface
+&gt;&gt;&gt; aLayer = qgis.utils.iface.activeLayer()
+&gt;&gt;&gt; aLayer.name
+&gt;&gt;&gt; aLayer.name()
+&gt;&gt;&gt; help(aLayer)
+</code></pre>
+
+<h3 id="zugriff-auf-das-kartenfenster-canvasleinwand">Zugriff auf das Kartenfenster (canvas:<em>Leinwand</em>)</h3>
+<pre><code class="python">&gt;&gt;&gt; canvas = qgis.utils.iface.mapCanvas()
+&gt;&gt;&gt; cLayer = canvas.currentLayer()
+&gt;&gt;&gt; print cLayer.name()
+&gt;&gt;&gt; canvas.layer(0)
+</code></pre>
+
+<h3 id="kartendaten-laden">Kartendaten laden</h3>
+<!--G:\am\Lehre\ss gap2\ss2016\w7\neu-->
+
+<pre><code class="python">&gt;&gt;&gt; iface.addVectorLayer(r&quot;fluss_gwk4_utm32.shp&quot;, &quot;Fluss&quot;, &quot;ogr&quot;)
+&gt;&gt;&gt; iface.addRasterLayer(r&quot;brd_dgm_utm.tif&quot;, &quot;DGM&quot;, &quot;gdal&quot;)
+</code></pre>
+
+<p>Die Add-Funktionen geben das Layer-Objekt zurück!</p>
+<p>Cookbook-Kapitel zu <a href="http://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/vector.html">Vektorlayern</a> und <a href="http://docs.qgis.org/testing/en/docs/pyqgis_developer_cookbook/raster.html">Rasterlayern</a>!</p>
+<h3 id="layer-informationen-und-datenzugriff">Layer-Informationen und Datenzugriff</h3>
+<p>Die for-Schleife durchläuft alle geladenen Layer und gibt Informationen zu jedem einzelnen aus:</p>
+<pre><code class="python">for layer in qgis.utils.iface.mapCanvas().layers():
+    if type(layer) == qgis.core.QgsVectorLayer:
+        print &quot;--- vector&quot;, layer.name()
+        print &quot;--- geometry type:&quot;, layer.wkbType()
+    elif type(layer) == qgis.core.QgsRasterLayer:
+        print &quot;--- raster&quot;, layer.name()
+        print &quot;--- raster type&quot;, layer.rasterType()
+</code></pre>
+
+<p>Der WKB-Typ entspricht der Definition der Simple-Features für Vektordaten, dabei wird jeder Typ durch eine Zahl angegeben. Eine vergleichbare Angane bei Rasterdaten ist der Raster-Typ, auch dieser ist durch Zahlen angegeben. Diese Tabelle zeigt die möglichen Werte:</p>
+<table>
+<thead>
+<tr>
+<th>wkbType() -&gt; Zahl:</th>
+<th>rasterType() -&gt; Zahl:</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>QGis.WKBPoint -&gt;(1)</td>
+<td>Single band -&gt;(0),</td>
+</tr>
+<tr>
+<td>QGis.WKBLineString -&gt;(2)</td>
+<td>Single band (Palette) -&gt;(1)</td>
+</tr>
+<tr>
+<td>QGis.WKBPolygon -&gt;(3)</td>
+<td>Multiband -&gt;(2)</td>
+</tr>
+<tr>
+<td>QGis.WKBMultiPoint -&gt;(4)</td>
+<td></td>
+</tr>
+<tr>
+<td>QGis.WKBMultiLineString -&gt;(5)</td>
+<td></td>
+</tr>
+<tr>
+<td>QGis.WKBMultiPolygon -&gt;(6)</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>Der Data-Provider bietet Zugriff auf den Layer und dessen Daten. Der Zugriff ist davon abhängig, welcher Provider benutzt wurde. (Im Beispiel 'ogr' für Shapefiles, anders sieht das z.B. für Tabellen in einer Datenbank aus...)</p>
+<pre><code class="python">provider = iface.mapCanvas().layer(0).dataProvider()
+print provider.name()
+
+for feat in provider.getFeatures():
+    # wir tun irgendwas mit dem Feature
+    pass
+
+# oder kurz und über iface
+aLayer = qgis.utils.iface.activeLayer()
+for feat in aLayer.getFeatures():
+    # wir tun irgendwas mit dem Feature
+    pass
+</code></pre>
+
+<p>Die for-Schleifen durchlaufen jeweils alle Features eines Layers. Das funktioniert, wie im zweiten Fall gezeigt, auch ohne <em>data provider</em>.</p>
+<p>Ein Beispiel für Raster-Layer: Über den Provider fragen wir den Pixel-Wert (z-Wert im DGM) an einer Punkt-Koordinate ab:</p>
+<pre><code class="python"># Rasterlayer in Legende markiert:
+canvas = iface.mapCanvas()
+rlayer = canvas.currentLayer()
+# Lage und Ausdehnung des Rasters
+print rlayer.extent().toString()
+# Koordinate innerhalb des Rasters
+x = 571000
+y = 5697000
+res = rlayer.dataProvider().identify(QgsPoint(x, y),
+                                     QgsRaster.IdentifyFormatValue)
+print res.results()
+</code></pre>
+
+<p>Wir benutzen die Funktion identify(), um auf Rasterwerte an einer Koordinate zuzugreifen…</p>
+<h2 id="feature-objekte">Feature-Objekte</h2>
+<p>Vektordaten benutzen Features als Objekte. Features eines Datensatzes verfügen daher</p>
+<ul>
+<li>über eine Geometrie: feature.geometry() -&gt; gibt ein Geometrieobjekt zurück</li>
+<li>über Attribute: feature.attributes() -&gt; gibt eine Liste mit Werten zurück</li>
+</ul>
+<p>Geometrien unterstützen die Grundtypen Point, Line und Polygon, die letzten beiden können aber intern als MultiLine oder MultiPolygon gespeichert sein!</p>
+<ul>
+<li>geom.type(): Typ einer Geometrie, wird als Zahl ausgedrückt. Die Konstanten QGis.Point, QGis.Line und QGis.Polygon können zum Vergleich benutzt werden.</li>
+<li>geom.wkbType(): Typ nach WKB-Norm, besser differenziert, mit MultiPart-Typen </li>
+<li>geom.asXXX(): Methode zur Umwandlung in Listen, z.B. asPolyline() -&gt; Liste mit Punkten (<strong>Hinweis:</strong>Punkte erscheinen wie Tuple, sind aber Punkt-Objekte: z.B.: type(geom.asPolyline()[0]) -&gt; <class 'qgis._core.QgsPoint'></li>
+</ul>
+<p>Attribute können auch im Stil eines Dictionary zugegriffen werden:</p>
+<p>z.B.: <code>feature['NAME']</code>, wenn <em>NAME</em> ein Feld des Layers ist.</p>
+<h3 id="beispiel">Beispiel</h3>
+<pre><code class="python"># vector layer is selected
+layer = iface.activeLayer()
+iter = layer.getFeatures()
+# wir geben nur die ersten 10 Features aus
+stop = 10
+i = 0
+for feature in iter:
+    if i &gt;= stop:
+        break
+    else:
+        i+=1
+    # retrieve every feature with its geometry and attributes
+    # fetch geometry
+    geom = feature.geometry()
+    print &quot;Feature ID %d: &quot; % feature.id(), &quot;Geometry: %d-%d&quot;% (geom.type(), geom.wkbType())
+
+</code></pre>
+
+<p>das Script greift im weiteren Verlauf auf die Geometrie zu:</p>
+<pre><code class="python">    # inside the for loop
+    # show some information about the feature
+    if geom.type() == QGis.Point:
+        x = geom.asPoint()
+        print &quot;Point: &quot; + str(x)
+    elif geom.type() == QGis.Line:
+        # check according to wkbType
+        x = geom.asPolyline() # asMultiPolyline()
+        # we count number of points
+        numPts = len(x)
+        ##numPts = 0 # if wkb says MultiPolyline
+        ##for lstring in x:
+        ##    numPts += len(lstring)
+        print &quot;Line: %d points&quot; % numPts
+    elif geom.type() == QGis.Polygon:
+        x = geom.asPolygon() # could also be a MultiPolygon: see MultiPolyline
+        numPts = 0
+        for ring in x:
+            numPts += len(ring)
+        print &quot;Polygon: %d rings with %d points&quot; % (len(x), numPts)
+    else:
+        print &quot;Unknown&quot;
+
+    # fetch attributes
+    attrs = feature.attributes()
+
+    # attrs is a list. It contains all the attribute values of this feature
+    print attrs
+
+</code></pre>
+
+<h2 id="koordinatensysteme-und-transformation">Koordinatensysteme und Transformation</h2>
+<p>Beispiel für eine Transformation zwischen Koordinatensystemen:</p>
+<pre><code class="python">crsSrc = QgsCoordinateReferenceSystem(4326)    # WGS 84
+crsDest = QgsCoordinateReferenceSystem(32633)  # WGS 84 / UTM zone 33N
+xform = QgsCoordinateTransform(crsSrc, crsDest)
+
+# forward transformation: src -&gt; dest
+pt1 = xform.transform(QgsPoint(18,5))
+print &quot;Transformed point:&quot;, pt1
+
+# inverse transformation: dest -&gt; src
+pt2 = xform.transform(pt1, QgsCoordinateTransform.ReverseTransform)
+print &quot;Transformed back:&quot;, pt2
+
+</code></pre>
+
+<h2 id="aufgabe-1-z-wert-einer-station-aus-dem-dgm-ermitteln">Aufgabe 1: Z-Wert einer Station aus dem DGM ermitteln</h2>
+<p>Abfrage des z-Werts aus dem Raster zur Koordinate einer Station (Stationshöhe), dazu transformieren wir die Punktangabe (WGS84) zunächst in das System des DGM (EPSG-Code 25832 für die UTM-Zone 32(ETRS))</p>
+<h2 id="aufgabe-2-z-werte-eines-flusses">Aufgabe 2: Z-Werte eines Flusses</h2>
+<p>Wir wollen für einen Fluss feststellen, welche Z-Werte er hat. Dazu vergleichen wir die Koordinaten seiner Stützpunkte mit den Rasterwerten des DGM an den entsprechenden Positionen. Beide Layer öffnen wir zuvor in QGIS, mit dem Vektoren als ersten und dem DGM als zweiten Layer.</p>
+<h3 id="zugriff-auf-einen-fluss">Zugriff auf einen Fluss</h3>
+<p>Beispielsweise testen wir den Fluss <em>Nette</em>. </p>
+<p>Dieses Script selektiert die einzelnen Features mit dem Namen Nette. Der Ausdruck zur Suche setzt die Spaltennamen in doppelte Hochkommata, Strings in einfache Hochkommata. Daher verwenden wir die Python-Notation für ganzen Suchausdruck als Python-String in dreifache Hochkommata...</p>
+<pre><code class="python">sLayer = iface.mapCanvas().layers()[0]
+expr = QgsExpression( &quot;&quot;&quot;&quot;NAM\&quot;='Nette'&quot;&quot;&quot;)
+sel = sLayer.getFeatures( QgsFeatureRequest( expr ) )
+ids = [i.id() for i in sel]
+sLayer.setSelectedFeatures(ids)
+</code></pre>
+
+<p>das zurückgegebene Objekt sel beinhaltet eine Aufzählung (QgsFeatureIterator), welche wir in einer for-Schleife abarbeiten können!
+Wie wir sehen, ist der Name nicht eindeutig, hier benutzen wir stattdessen die offizielle Gewässerkennziffer:</p>
+<pre><code class="python">sLayer = iface.mapCanvas().layers()[0]
+expr = QgsExpression( &quot;&quot;&quot;&quot;GWK&quot;=2714000000000000000&quot;&quot;&quot; )
+sel = sLayer.getFeatures( QgsFeatureRequest( expr ) )
+sLayer.setSelectedFeatures(ids)
+# Zoom auf die Bounding-Box des Flusses
+box = sLayer.boundingBoxOfSelected()
+iface.mapCanvas().setExtent(box)
+iface.mapCanvas().refresh()
+</code></pre>
+
+<p>Wir durchlaufen die Selektion</p>
+<pre><code class="python">for feat in sel:
+    g = feat.geometry()
+    l = g.Polyline()
+    print l
+</code></pre>
+
+<p>Anstelle von <code>print l</code> realisieren Sie den Zugriff auf alle Punkte, ermitteln deren z-Werte durch Zugriff auf das Raster und geben x,y,z auf der Konsole aus.</p>
+<h2 id="spatialite-layer">Spatialite Layer</h2>
+<p>Wir greifen auf unseres Spatialite Datenbank zu:</p>
+<pre><code class="python">dbname = r&quot;C:/temp/station.sqlite&quot;
+uri = QgsDataSourceURI()
+uri.setDatabase(dbname)
+schema = ''
+table = 'poStation'
+geom_column = 'geom'
+uri.setDataSource(schema, table, geom_column)
+# eine 'uri' für den Zugriff
+display_name = 'Stationen'
+self.vlayer = QgsVectorLayer(uri.uri(), display_name, 'spatialite')
+QgsMapLayerRegistry.instance().addMapLayer(self.vlayer)
+</code></pre>
+
+<h3 id="ein-zugriff-uber-eine-sql-abfrage">Ein Zugriff über eine SQL-Abfrage</h3>
+<p>Diese Abfrage setzt die beiden Tabellen für Stationen und aktuelle Werte voraus, die über ihre uuid <em>"gejoint"</em> werden. Anstelle des Tabellennamens setzen wir eine SQL-Abfrage ein. Siehe auch den Post auf <a href="https://gis.stackexchange.com/questions/213246/add-postgis-temporary-table-using-pyqgis-into-canvas-failed/213248#213248">stackexchange</a>.</p>
+<pre><code class="python">dbname = r&quot;C:\temp\station.sqlite&quot;
+sConnect = &quot;dbname='&quot; + dbname +&quot;'&quot;
+
+table = &quot;SELECT poStation.number, pgolCurrentW.uuid, poStation.geom, &quot; + \
+&quot;pgolCurrentW.timestamp, pgolCurrentW.value, pgolCurrentW.trend &quot; + \
+&quot;FROM pgolCurrentW, poStation &quot; + &quot;WHERE pgolCurrentW.uuid == poStation.uuid&quot;
+
+uri = sConnect + &quot; key='number'&quot; + &quot;table=\&quot;(%s)\&quot; (geom) sql=&quot; % table
+
+display_name = 'Stationen'
+print &quot;loading:%s as %s&quot; % (sConnect, display_name)
+print uri
+
+vlayer = QgsVectorLayer(uri, display_name, 'spatialite')
+if vlayer.isValid():
+    QgsMapLayerRegistry.instance().addMapLayer(vlayer)
+else:
+    print &quot;can't add layer!&quot;
+</code></pre>
+
+<h3 id="darstellung-eines-layers-verandern">Darstellung eines Layers verändern</h3>
+<p>Ein Beispiel zur Änderung der Graphik eines Layers. Wir orientieren uns an den Daten von Pegelonline und richten ein Render-Objekt vom Typ QgsCategorizedSymbolRendererV2 ein, um die Pegelstände nach dem Attribute <em>Trend</em> zu unterscheiden. Der Wert "-1" steht für <em>fallend</em> und bekommt die Füllfarbe "green", der Wert "0", <em>konstant</em>, bekommt die Farbe "blue" und der Wert "1", <em>steigend</em>, die Farbe "red" zugeordnet.</p>
+<p>Der QgsCategorizedSymbolRendererV2 benutzt dazu eine Liste von QgsRendererCategoryV2-Objekten, die aus der Angabe eines Werts und einem QgsSymbolV2 mit der entsprechenden Füllfarbe (in unserem Fall) bestehen. Diese Werte der Kategorien werden mit den Werten eines Layers verglichen und die Grafik zugeordnet. Mit einem <em>refresh</em> des Kartenfensters werden die neuen Einstellungen dann angezeigt.</p>
+<pre><code class="python">from PyQt4.QtGui import QColor
+# Layer zugreifen
+lay = iface.mapCanvas().layers()[0]
+# Kategorien festlegen
+pegel = { -1:(&quot;green&quot;, &quot;fallend&quot;),
+           0:(&quot;blue&quot;, &quot;konstant&quot;), 1:(&quot;red&quot;, &quot;steigend&quot;)}
+# Grafikeigenschaften festlegen
+cat = []
+for value, (color, label) in pegel.items():
+    sym = QgsSymbolV2.defaultSymbol(lay.geometryType())
+    sym.setColor(QColor(color))
+    category = QgsRendererCategoryV2(value, sym, label)
+    cat.append(category)
+# Auf Layer anwenden
+field = &quot;trend&quot;
+renderer = QgsCategorizedSymbolRendererV2(field, cat)
+lay.setRendererV2(renderer)
+# QgsMapLayerRegistry.instance().addMapLayer(lay)
+iface.mapCanvas().refresh() 
+iface.legendInterface().refreshLayerSymbology(lay)
+</code></pre>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

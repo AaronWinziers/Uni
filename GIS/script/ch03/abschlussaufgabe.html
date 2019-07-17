@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="expires" content="0">
+    
+    
+    
+    <link rel="shortcut icon" href="../img/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <title>Abschlussaufgabe - GIS-Anwendungsprogrammierung</title>
+    <link href="../css/bootstrap-3.3.7.min.css" rel="stylesheet">
+    <link href="../css/font-awesome-4.7.0.css" rel="stylesheet">
+    <link href="../css/base.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/highlight.css">
+    <link href="../css/docstyle.css" rel="stylesheet">
+    <link href="../css/myskulpt.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+
+    <script src="../js/jquery-3.2.1.min.js"></script>
+    <script src="../js/bootstrap-3.3.7.min.js"></script>
+    <script src="../js/highlight.pack.js"></script>
+    
+    <base target="_top">
+    <script>
+      var base_url = '..';
+      var is_top_frame = false;
+        
+        var pageToc = [
+          {title: "Abschlussaufgabe", url: "#_top", children: [
+          ]},
+          {title: "Kritierien zur Beurteilung des Codes", url: "#kritierien-zur-beurteilung-des-codes", children: [
+              {title: "Allgemeine Kriterien", url: "#allgemeine-kriterien" },
+              {title: "Spezifische Anforderungen", url: "#spezifische-anforderungen" },
+          ]},
+        ];
+
+    </script>
+    <script src="../js/base.js"></script>
+      <script src="../js/skulpt.js"></script>
+      <script src="../js/skulpt.min.js"></script>
+      <script src="../js/skulpt-stdlib.js"></script>
+      <script src="../js/debugger.js"></script>
+      <script src="../js/myskulpt.js"></script> 
+</head>
+
+<body>
+<script>
+if (is_top_frame) { $('body').addClass('wm-top-page'); }
+</script>
+
+
+
+<div class="container-fluid wm-page-content">
+  <a name="_top"></a>
+    
+
+    <h1 id="abschlussaufgabe">Abschlussaufgabe</h1>
+<p>Abgabe eines QGIS-Plugins zum Zugriff und Darstellung der Daten von Pegelonline.</p>
+<h1 id="kritierien-zur-beurteilung-des-codes">Kritierien zur Beurteilung des Codes</h1>
+<h2 id="allgemeine-kriterien">Allgemeine Kriterien</h2>
+<ol>
+<li>
+<p>Bennenung von Klassen, Methoden und Variablen</p>
+<ul>
+<li>
+<p>Bedeutung durch Namen erkennbar</p>
+</li>
+<li>
+<p>Syntaktisch eindeutig: Z.B. in Python (Pep8) geregelt, wichtig: konsistente Verwendung und Unterscheidung von Klassen, Methoden etc.</p>
+</li>
+<li>
+<p>Konsistenz in der Namensgebung</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Aufbau von Funktionen, Methoden</p>
+<ul>
+<li>
+<p>Vermeidung von doppelt vorkommendem Code</p>
+</li>
+<li>
+<p>Code von Funktionen erfüllen eine definierte Aufgabe, sie rufen einander auf, um komplexere Aufgaben zu erfüller</p>
+</li>
+<li>
+<p>Code-Blöcke (Funktionen) sind allgemein nicht länger als 20 Zeilen, in einigen Fällen unter 50 Zeilen, selten länger als 100 Zeilen</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Layout von Programmen (Lesbarkeit) -&gt; Pep8!</p>
+<ul>
+<li>
+<p>Konsistenter Aufbau eines Modules, einer Klasse durch sinnvolle Gruppierung von Elementen</p>
+</li>
+<li>
+<p>Importe stehen am Beginn, allgemeine Funktionen, Klassen-Definitionen folgen, <em>main</em> steht am Ende</p>
+</li>
+<li>
+<p>Vermeidung zu langer Zeilen, Einrückungen bestehen immer aus Gruppen von 4 Leerzeichen</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Kommantare</p>
+<ul>
+<li>
+<p>der Code ist ausreichend kommentiert aber nicht mit Kommentaren überladen</p>
+</li>
+<li>
+<p>Funktionen verwenden einen <em>doc string</em></p>
+</li>
+<li>
+<p>Code-Blöcke werden mit einer Kommentarzeile eingeleitet</p>
+</li>
+<li>
+<p>komplexe if-Konstrukte werden erläutert</p>
+</li>
+<li>
+<p>wichtige Variablen werden bei der Deklaration erläutert</p>
+</li>
+<li>
+<p>TODO-Kommentare oder Auskommentierungen von nicht benutztem Code sollen entfernt werden, Ausnahmen sind denkbar für Dokumentation/Reflektion</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Fehlerbehandlung</p>
+<ul>
+<li>
+<p>externe Module/Funktionen sollten geprüft werden, ob und welche Fehler sie abfangen. Diese Fehlerbehadlung sollte übernommen werden.</p>
+</li>
+<li>
+<p>IO-Operationen oder der Zugriff auf fremde Daten erfordern Fehlerbehandlungen</p>
+</li>
+<li>
+<p>Reaktionen auf Fehler müssen geplant ablaufen, im schlimmsten Fall mit dem Abbruch einer Operation/des Programms (in Plugins kann natürlich nicht das umgebende Programm beendet werden...)</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Tests</p>
+<ul>
+<li>
+<p>wo möglich, enthält der Code Testroutinen, </p>
+</li>
+<li>
+<p>bei Modulen z.B. unter <code>__main__</code> oder in Form von eigenen Testskripten</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="spezifische-anforderungen">Spezifische Anforderungen</h2>
+<ol>
+<li>
+<p>Dokumentation</p>
+<ul>
+<li>
+<p>umfasst eine kurze Beschreibung des Plugins, inkl. aller aus Nutzersicht relevanter Funktionen (GUI, Anleitung)</p>
+</li>
+<li>
+<p>enthält eine technische Beschreibung zum Aufbau des Codes und der verwendeten Komponenten, kann als Begründung der Implementierung verfasst sein</p>
+</li>
+<li>
+<p>reflektieren sie ihre Arbeit, weisen sie auf Besondernheiten hin (positive wie negative)</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Lauffähigkeit</p>
+<ul>
+<li>
+<p>als QGIS-Plugin eingebunden, startet und läuft der Code fehlerfrei</p>
+</li>
+<li>
+<p>auch <em>ungeplante</em> Bedienung ist möglich</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Vollständigkeit</p>
+<ul>
+<li>
+<p>die in der Veranstaltung besprochenen und in der GUI vorgesehenen Funktionen sind implementiert</p>
+</li>
+<li>
+<p>der abgegebene Code enthält alle notwendigen Komponenten, die nicht durch Python oder QGIS (wie auf dem Stick) gegeben sind</p>
+</li>
+</ul>
+</li>
+<li>
+<p>Niveau und Kompetenz</p>
+<ul>
+<li>
+<p>Aufbau des Plugins ist objektorientiert, eigene Module besitzen eine nachvollziehbare und sinnvolle Klassenstruktur</p>
+</li>
+<li>
+<p>Funktionen für den Internetzugriff, zur Datenbank, für GIS und Kartographie werden souverän eingesetzt, korrekt kommentiert und dokumentiert</p>
+</li>
+<li>
+<p>Python-Klassen für Datenstrukturen werden kompetent und nachvollziehbar eingesetzt</p>
+</li>
+</ul>
+</li>
+</ol>
+
+  <br>
+</div>
+
+<footer class="col-md-12 wm-page-content"><p><p><img src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png"><br> Copyright &copy; 2019 <a href="../beyond/impressum">Andreas Müller</a>, <a href="http://www.uni-trier.de/">Universität Trier</a>.</p></p>
+  <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a> using <a href="https://github.com/gristlabs/mkdocs-windmill">Windmill</a> theme by Grist Labs.</p>
+</footer>
+
+</body>
+</html>

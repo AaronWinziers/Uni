@@ -1,0 +1,22 @@
+.wm-page-content img {
+	margin: 20px auto 5px auto;
+}
+
+figure img {margin-bottom: 0px;}
+figure figcaption {font-style:italic;}
+
+/*figure {margin-bottom: 24px;}*/
+
+/* windmill */
+.navbar {
+	background-color: #178ACC;
+}
+.wm-toc-li.wm-current, .wm-toc-li.wm-current:hover {
+	background-color: #178ACC;
+	color: white;
+}
+/*
+figure img {margin-bottom: 0px !important;}
+figure figcaption {font-style:italic;}
+figure {margin-bottom: 24px;}
+*/
