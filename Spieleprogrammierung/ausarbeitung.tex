@@ -1,0 +1,169 @@
+\documentclass[11pt,parskip=full]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{setspace}
+
+\newcommand{\HRule}[1]{\rule{\linewidth}{#1}}
+\usepackage{float}
+
+
+%%%%%%%%%%%%%%%% Code listings %%%%%%%%%%%%%%%%
+\usepackage{listings}
+\usepackage[dvipsnames]{xcolor}
+
+\definecolor{javared}{rgb}{0.6,0,0} % for strings
+\definecolor{javagreen}{rgb}{0.25,0.5,0.35} % comments
+\definecolor{javapurple}{rgb}{0.5,0,0.35} % keywords
+\definecolor{javadocblue}{rgb}{0.25,0.35,0.75} % javadoc
+\definecolor{editorbg}{HTML}{F3F3F3}
+
+\lstset{language=Java,
+	backgroundcolor=\color{editorbg},
+	basicstyle=\footnotesize,
+	keywordstyle=\color{javapurple}\bfseries,
+	stringstyle=\color{javared},
+	commentstyle=\color{javagreen},
+	morecomment=[s][\color{javadocblue}]{/**}{*/},
+	numbers=left,
+	numberstyle=\small\color{black},
+	stepnumber=1,
+	numbersep=10pt,
+	tabsize=4,
+	showspaces=false,
+	showstringspaces=false,
+	frame=single,
+	captionpos=b,
+	xleftmargin=.05\textwidth,
+	xrightmargin=.05\textwidth,
+	aboveskip=20pt,
+	breaklines=true,
+	postbreak=\mbox{\textcolor{red}{$\hookrightarrow$}\space},
+	escapechar=!
+	}
+
+\begin{document}
+
+\begin{titlepage}
+  \begin{center}
+    \vspace*{2cm}
+    \HRule{1pt} \\
+    \vspace{.5 cm}
+    \textbf{\Huge Server-Side Renderer}
+    \HRule{2pt} \\ [1cm]
+
+    \vspace{1.5cm}
+
+    \Large{
+      Ausarbeitung zur Lösung des Blocks Spiels mittels Server-seitigem Rendering
+    }
+    \vspace{1.5cm}
+
+    \textbf{\Large Benedikt Lüken-Winkels} - \large Matrikelnumber \\
+    [3pt]
+    \textbf{\Large Aaron Winziers} - \large 1176638
+
+    \vfill
+
+    \includegraphics[width=0.7\textwidth]{Logo-Uni-Trier}\\
+    [1cm]
+    Lehrstuhl für Systemsoftware und Verteilte Systeme\\
+    Universität Trier\\
+    01.04.2019
+
+  \end{center}
+\end{titlepage}
+\newpage
+
+\section{Einleitung}
+
+Im Rahmen der Vorlesung ``Spieleprogrammierung'' im Sommersemester 2019 sollte das Spiel \textit{Blocks} mittels eines Rendering-Servers implementiert werden. \textit{Blocks} war in diesem Fall ein simples ``world building'' Spiel in dem man sich durch eine Welt mit einem Avatar bewegen kann und in dieser Welt Blöcke setzen und löschen kann.
+
+eine verteilte Lösung für \textit{simple} Sudoku-Rätsel entwickelt werden. \textit{Simple} soll in diesem Fall bedeuten, dass eine eindeutige Lösung für das Sudoku vorhanden ist. Hierfür wurden verschiedene Gruppen gebildet, welche den Lösungs-Algorithmus in einer frei gewählten Programmiersprache implementieren und sich lediglich an vorher definierten Standards orientieren. Zur Kommunikation der verschiedenen Programme untereinander, kam \href{http://camel.apache.org/}{Apache Camel} zum Einsatz. Diese Ausarbeitung behandelt die Lösung des Problems in der Programmiersprache \href{https://golang.org/}{Go} und beschreibt insbesondere die Entwicklung der Camel-Komponente, welche den durch unsere Gruppe implementierten Kommunikationsweg über den \href{https://telegram.org/}{Telegram-Messenger} beschreibt.
+
+\section{Sudoku Algorithmus}
+Da die Boxen des Spielfeldes als eigenständige Einheiten handeln sollten, wurde ein trivialer Algorithmus für die Lösung des Problems eingesetzt.
+
+Jede Box erhält zu Beginn eine initiale Konfiguration und die Position an welcher sie sich im Gesamtspielfeld befindet. Diese Konfiguration wird nun an die benachbarten Boxen übertragen und die Lücken des Feldes können mittels Ausschlussverfahren gefüllt werden. Sobald ein Feld mit neuen Informationen gefüllt wurde, wird die Konfiguration erneut an die benachbarten Boxen übertragen
+
+Die genaue Implementierung des Algorithmus ist auf GitHub verfügbar $[1]$.
+
+
+\section{Kommunikationsweg}
+
+Zur Kommunikation der Boxen untereinander wurde der Telegram-Messenger verwendet. Die Grundidee war dabei, dass jede Box einen eigenen Telegram-Bot erhält und die jeweiligen Bots ihre Informationen über Chats miteinander teilen.
+
+Telegram-Bots werden mit Befehlen angesprochen. Diese beginnen mit einem ``/'' und müssen entsprechend in der Konfiguration des Bots definiert werden. Bei den für die Problemstellung entwickelten Bots sind zwei mögliche Befehle vorgesehen: \texttt{/start} und \texttt{/fieldconfig $fieldconfig$}, wobei \texttt{$fieldconfig$} die Konfiguration des jeweiligen Feldes in der durch die Vorlesung definierten Notation enthält.
+
+\texttt{/start} gibt jedem Bot ein Start-Signal zur Lösung des Feldes und implementiert damit die Vorgabe aus der Vorlesung.
+
+\subsection{Groups und Channel}
+
+Während der Entwicklung fiel auf, dass Telegram-Bots keine Nachrichten von anderen Bots empfangen können, um unnötigen Spam zu vermeiden (\url{https://core.telegram.org/bots/api}). Dies gilt sowohl für direkte Nachrichten von Bot-zu-Bot, als auch für Nachrichten innerhalb eines Gruppenchats, wie er für die Lösung des Sudokus verwendet werden sollte. Telegram bietet die Möglichkeit anstelle eines Gruppenchats sogenannte \textit{Channels} zu verwenden. Diese dienen normalerweise als eine Art Broadcast-Service, welcher von Telegram-Nutzern abonniert werden kann. Der Vorteil liegt hier darin, dass auch Bots diese Channels abonnieren können und den Nachrichteninhalt von anderen Bots lesen können.
+
+\section{Apache Camel}
+
+Die Camel-Komponente bildet die Basis für die Kommunikation der Telegram-Boxen zu Boxen, welche eine andere Form der Kommunikation implementiert haben. Des Weiteren wird sie verwendet, um den den Go-Prozess zu starten, indem zunächst die initiale Konfiguration der Box beim gegebenen Boxmanager über eine REST-API angefordert wird.
+
+Die Camel-Instanz startet einen Bot und abonniert mittels MQTT die relevanten Topics der Nachbarboxen.
+Nach dem starten des Bots mit der Initialkonfiguration, sendet die Camel-Komponente das \texttt{ready} Signal an den Boxmanager. Die genannte Funktionalität wurde über drei verschiedene Routen definiert. Die Einfachste Route definiert dabei lediglich das Warten auf das Start-Signal vom Boxmanager und gibt dem Bot anschließend mittels des \texttt{/start}-Befehls das Kommando die Lösung des Sudokus zu beginnen. Die Definition der Route ist in Listing \ref{ref1} zu sehen.
+
+\begin{lstlisting}[caption = Route für Start Nachricht,label=ref1]
+from("mqtt:sudoku?subscribeTopicNames=sudoku/start")
+    .log("Received start signal via MQTT from")
+    .process(new Processor() {
+        public void process(Exchange exchange) throws Exception {
+            exchange.getIn().setBody("/start");
+        }
+    })
+        .to("telegram:bots/681997552:AAG-Ht8fMY?chatId=-1005485");
+\end{lstlisting}
+
+Nachrichten, welche der Bot in den Telegram-Channel schreibt, werden mithilfe der Route in Listing \ref{ref2} verarbeitet. Die Camel-Komponente stellt dabei einen eigenständigen Bot dar, welcher Nachrichten aus dem Channel liest, diese in das entsprechende, einheitliche Format umformatiert und anschließend über das zugehörige MQTT-Topic publiziert.
+
+Dabei treten zwei verschiedene Arten von Nachrichten auf. Die Erste enthält das Endresultat der Box und die Zweite die Nachrichten über Änderungen innerhalb der einzelnen Felder.
+
+\begin{lstlisting}[caption = Nachrichten von Telegram zu MQTT, label=ref2]
+// Publish with own id
+    from("telegram:bots/681997552:AAG-Ht8fMY?chatId=-1005485")
+        .log("Received Telegram message. Forwarding it to MQTT-Topic.")
+        .choice()
+            .when(body().startsWith("/ready"))
+                .bean(TelegramBot.class)
+                .to("mqtt:sudoku?host=" + this.mqttHost
+                    + "&publishTopicName=sudoku/" + boxID + "/result")
+            .otherwise()
+                .bean(TelegramBot.class)
+                .to("mqtt:sudoku?host=" + this.mqttHost
+                    + "&publishTopicName=sudoku/" + boxID);
+\end{lstlisting}
+
+Die letzte Route abonniert die relevanten Topics für die Box und ist in Listing \ref{ref3} zu sehen. Welche Topics dabei relevant sind wird nicht berechnet, sondern ist durch eine Hashmap für jede Box statisch definiert.
+
+\begin{lstlisting}[caption = Nachrichten von MQTT zu Telegram, label=ref3]
+System.out.println("Subscribing to topics: " + subscribeTopics.toString());
+    from("mqtt:sudoku?host=" + this.mqttHost
+        + "&subscribeTopicNames=" + subscribeTopics.toString())
+        .transform(body().convertToString())
+        .bean(MQTTConverter.class)
+        .log("Received fieldConfiguration via MQTT-Topic.")
+        .to("telegram:bots/681997552:AAG-Ht8fMY?chatId=-1005485");
+\end{lstlisting}
+
+\subsection{Umformatierung}
+
+Die Umformatierung der Nachrichten in das entsprechend definierte Format fand mittels \textit{Beans} statt. Hier wurde eine einfache Regular-Expression der Form: \texttt{/fieldconfig (box\_a[147]),([0-2]),([0-2]):([1-9])} dazu verwendet die Nachrichten des Telegram-Bots auszuwerten und in JSON umzuwandeln. Die Rückrichtung folgt analog. 
+
+\subsection{Probleme}
+
+Zunächst kam es bei der Implementierung der Camel-Komponente zu Fehlern, da die Telegram Komponente nicht mit der Java Version 11 zurecht kommt. Da es keine entsprechende Fehlermeldung gab, war es relativ aufwendig diesen Fehler ausfindig zu machen und zu lösen. 
+
+
+\section{Anhang}
+
+Der gesamte Programmcode ist auf GitHub verfügbar.
+
+$[1]$ GoSudoku (Sudoku-Logik): \url{https://github.com/michaelwolz/gosudoku}\\
+$[2]$ Camel-Komponente: \url{https://github.com/michaelwolz/gosudoku-camel}
+
+\end{document}
