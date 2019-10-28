@@ -1,0 +1,29 @@
+Raft Algorithm
+- Was ist ein Consensus Algorithm? Wofür sind sie?
+	+ Algorithmus der versichert, dass Daten in verteilten Datenbanksystemen konsistent bleiben
+	+ Man will immer dafür sorgen, dass jeder Zugriff die gleichen Daten liefert
+	+
+
+- Welche Probleme gab es mit den bestehenden Algorithmen vor Raft?
+	+ Paxos war zu kompliziert
+	+ Implementierungen waren immer buggy wegen der Komplexität
+
+- Zu welchem Zweck wurde Raft entwickelt?
+
+
+- Der Algorithmus
+	+ Statuses
+	+ Elections
+	+ Heartbeat
+	+ Logs
+	+ Network Partitions
+	+ Getting back to consistent state
+
+- Nachteile/Limitations
+
+
+https://raft.github.io/
+https://raft.github.io/raft.pdf
+https://www.geeksforgeeks.org/raft-consensus-algorithm/
+
+
