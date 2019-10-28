@@ -1,0 +1,69 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[latin1]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\author{Mitschrift von Aaron Winziers\\
+		Wintersemester 2019/20}
+\title{Dateisysteme \& Implementierung von Datenbanksystemen}
+\begin{document}
+	
+	
+\maketitle
+\section{Organisation}
+\href{http://dblps.uni-trier.de/~ley/dbimpl19}{User: student, Passwort: Jaeckel}	\\
+Prüfungstermine:
+\begin{itemize}
+	\item 12.02.2020
+	\item 06.04.2020
+\end{itemize}
+Zwei Vorträge:
+\begin{itemize}
+	\item Eigener Vortrag
+	\item Mit Folien von \href{https://www.youtube.com/user/jensdit}{Prof. J. Dittrich}
+\end{itemize}
+	\subsection{Motivation}
+		 \begin{itemize}
+		 	\item Änderungen in Arten/Verfügbarkeit von Speicher (SSD, In-Memory DB) führen zu Änderungen in Technologien
+		 \end{itemize}
+	
+\section{Einleitung}
+	\begin{itemize}
+		\item Was ist eine Datei?
+		\begin{itemize}
+			\item Eine Reihe von Bytes
+			\item ggf. mit Eigenshaften ((Zugriffs-)Rechte, Timestamp, etc.)
+			\item Inhalt ist dem System egal
+			\item Kennt keine Semantik
+		\end{itemize}
+		\item VS. DB-System
+		\begin{itemize}
+			\item Bietet Struktur
+			\item Weiß über sein Inhalt
+			\item Physische Ebene wird als Programmierer abstrahiert
+		\end{itemize}
+		\item Objekt-Orientierte DBS haben sich nicht durchgesetzt
+		\begin{itemize}
+			\item OO konnte man nicht mit Mengen-Orientierte Weise vereinbaren
+			\item Führte aber zu variiertere Datentypen geführt
+		\end{itemize}
+		\item Deduktive Systeme
+		\begin{itemize}
+			\item Von Japaner kreiert
+			\item Auf Logik basiert
+			\item Führte zu Iteration in Query-Builder
+		\end{itemize}
+	\end{itemize}
+
+\section{Dateisysteme}
+\section{NTFS, XFS, Journaling FS, ...}
+\section{Pufferverwaltung}
+\section{Satzverwaltung/Zugriffspfade}
+\section{Transaktionen}
+\section{Architektur}
+\section{Query Processor}
+
+
+\end{document}
