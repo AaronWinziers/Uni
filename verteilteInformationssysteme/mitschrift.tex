@@ -1,0 +1,157 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\author{Mitschrift von Aaron Winziers\\
+	Wintersemester 2019/20}
+\title{Verteilte Informationssysteme}
+\date{}
+\begin{document}
+	\maketitle
+	\section{Organisation}
+	Prüfungstermine:
+	\begin{itemize}
+		\item 19.02.2020
+		\item 01.04.2020
+	\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\section{Introduction}
+\subsection{Lifecycle of an information system}
+	\begin{itemize}
+		\item Small company(startup) - Bookkeeping etc still possible on paper
+		\item Growth - Information and data becomes too big for paper - database is
+		needed
+		\item Continued growth - Need for more databases or even specialized systems,
+		more locations need more databases
+	\end{itemize}
+\subsection{What to do?}
+	\begin{itemize}
+		\item Data warehouse
+		\item Distributed architecture
+		\item Replication - Which locations need which data?
+		\item Cloud computing
+	\end{itemize}
+	
+	There are 2 important use cases that should be considered:
+	transactional load(OLTP)(write heavy) and analytical load(OLAP)(read heavy)
+	
+\subsection{SQL vs NoSQL}
+\subsubsection{SQL:}
+	\begin{itemize}
+		\item (+) declarative queries
+		\item (+) consistency
+		\item (+) guarantees
+		\item (+) data independence
+		\item (+) normalization
+		\item (-) do not scale well with increasing load
+		\item (-) features not always needed/are not used
+		\item (-) rigid data structures
+	\end{itemize}
+\subsubsection{NoSQL:}
+	\begin{itemize}
+		\item ( ) not relational
+		\item (+) scale well, are distributes in nature (more nodes = more
+		performance)
+		\item ( ) often w/o query language but with simple API
+		\item (-) weak consistency models - distributed copies may not be identical
+		\item (+) offer high performance
+	\end{itemize}
+	
+	Both systems are typically combined into hybrid systems
+	
+\subsection{Reasons for distributing data}
+	\begin{itemize}
+		\item Cost and scalability - mainframes are difficult to extend
+		\item Replications leads to higher availability
+		\item Integration of different software modiles - prevent collisions
+		\item Integration of legacy systems - old system can continue to exists parallel to new system
+		\item New kinds of applications - esp. e-commerce
+		\item Market forces
+	\end{itemize}
+	
+\subsection{Why distribution?} Distributed data better corresponds to modern enterprise structures
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Distributed query processing}
+\subsection{Important aspects}
+	\paragraph{More replications} faster queries but slower updates
+	\paragraph{Fragmentation} storing local data locally
+	\paragraph{Parallelism} multiple queries can be performed at once, or a single query can be split into parts and executed at the same time
+	\paragraph{Transparency} fragmentation, replication etc should not be need to be taken into account by the user
+	
+\subsection{Systems differ in terms of:}
+	\begin{itemize}
+		\item Degree of coupling
+		\item Interconnection structure
+		\item Interdependence of components
+		\item Synchronization of components
+	\end{itemize}
+
+\subsection{Forms of distributed systems}
+	\begin{itemize}
+		\item Peer-to-Peer and file sharing
+		\item Cloud computing
+		\item Web services and the deep Web
+		\item Semantic Web
+		\item Big Data Analytics
+	\end{itemize}
+
+\subsection{Fallacies of distributed computing:}
+	\begin{itemize}
+		\item The network is reliable
+		\item Latency is zero
+		\item Bandwidth is infinite
+		\item The network is secure
+		\item Topology doesn't change
+		\item There is one administrator
+		\item Transport cost is zero
+		\item The network is homogenous
+		\item Location is irrelevant
+	\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Fragmentation and allocation in distributed database management systems}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Replication and synchronization}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Grid and cloud computing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Distributed transactions}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Information integration}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Distributed information retrieval}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Parallel database systems}
+	
+\end{document}
