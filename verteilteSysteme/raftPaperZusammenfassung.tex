@@ -1,0 +1,136 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\author{Aaron Winziers}
+\title{Raft Paper}
+\begin{document}
+\section{Intro}
+	\subsection{Paxos vs Raft}
+	\begin{itemize}
+		\item Raft separates leader election, log replication and safety
+		\item Raft reduces the ways in which the servers can be different from one another
+		\item 33 of 43 students could answer questions about Raft better than about Paxos
+	\end{itemize}
+	\subsection{Novel features}
+	\begin{itemize}
+		\item Strong leader - Raft's leader node is stronger than that of other algorithms
+		\item Leader election - Raft uses randomized timers for elections
+		\item Membership changes - Raft’s mechanism for	changing the set of servers in the cluster uses a new joint consensus approach where the majorities of two different configurations overlap during transitions. This allows the cluster to continue operating normally during configuration changes
+	\end{itemize}
+\section{Replicated state machines}
+	Consensus algorithms typically have these properties:
+	\begin{itemize}
+		\item They ensure safety (Not returning to an incorrect result) for network delays, partitions, packet loss, duplication, and reordering
+		\item They are fully functional (available) if any majority of servers is online
+		\item They do not rely on timing (unsynchronized clocks and delays will can only affect availability)
+		\item In most cases a command can be completed once a majority has responded
+	\end{itemize}
+
+\section{What's wrong with Paxos?}
+	\begin{itemize}
+		\item Difficult to understand
+		\item Poorly explained and documented
+		\item Does not provide a foundation for a practical implementation
+		\item Implementations begin with Paxos, discover its difficulty and develop a different architecture
+	\end{itemize}
+
+\section{Designing for understandability}
+	Goals for the development  of Raft:
+	\begin{itemize}
+		\item provide a complete and practical foundation for systems for reduced necessary design work
+		\item Must be safe under all conditions
+		\item Available during typical operating conditions
+		\item most important: \textbf{understandability}
+		\begin{itemize}
+			\item Problems broken down into easier questions
+			\item Reduce the number of possible states
+		\end{itemize}
+	\end{itemize}
+
+\section{The Raft consensus algorithm}
+	Raft decomposes the consensus problem into 3 independent subproblems:
+	\begin{itemize}
+		\item Leader Election - a new leader must be chosen when an existing leader fails
+		\item Log Replication - the leader accepts log entries and replicates them across the cluster
+		\item Safety - If any node has committed an entry to the log, no other node may commit an entry to the same index
+	\end{itemize}
+	\subsection{Raft basics}
+	\begin{itemize}
+		\item All servers are always in one of three states:
+		\begin{itemize}
+			\item Leader - Handles all client requests, falsely addressed requests are forwarded
+			\item Follower - Passive, create no requests, just respond to requests from leaders and candidates
+			\item Candidate - Used to elect new leaders
+		\end{itemize}
+		\item Terms:
+		\begin{itemize}
+			\item Time is divided into \textit{terms} (last until leader is replaced)
+			\item Split votes end term with new elections called and no leader
+			\item Servers store a current term value
+			\item Current terms are exchanged every time servers communicate
+			\item Smaller current terms are updated to the larger value
+			\item Leaders and candidates revert to followers if they encounter a larger current term value
+			\item Requests are rejected if they have a stale term value
+		\end{itemize}
+		\item Communication:
+		\begin{itemize}
+			\item Servers communicate with Remote Procedure Calls (RPCs)
+			\item Two RPCs needed for consensus
+			\begin{itemize}
+				\item RequestVote RPC - initiated by candidates
+				\item AppendEntries RPC - initiated by leaders to replicate log entries
+				\item See Log compaction for 3rd type (InstallSnapshot RPC)
+			\end{itemize}
+			\item RPCs are repeated if no response comes in too long a time
+		\end{itemize}
+	\end{itemize}
+
+	\subsection{Leader election}
+	\begin{itemize}
+		\item Raft uses heartbeats to trigger elections
+		\item At startup servers are followers
+		\item Followers remain followers as long as they receive valid RPCs
+		\item Leaders send heartbeats(empty AppendEntry RPCs) to maintain their authority
+		\item If a server's election timeout runs out before a heartbeat comes it initiates an election
+		\item Elections occur as follows:
+		\begin{enumerate}
+			\item A follower increments its term and transitions to the candidate state
+			\item It votes for itself and sends RequestVote RPCs to all other servers in a cluster
+			\item The candidate continues in this state until one of three conditions are met:
+			\begin{enumerate}
+				\item it wins the election
+				\item another server wins the election
+				\item a period of time elapses without a winner
+			\end{enumerate}
+			\item Once a candidate wins it sends a heartbeat to other servers to establish itself and prevent further elections
+		\end{enumerate}
+		\item Rules for elections:
+		\begin{itemize}
+			\item Elections are won if a candidate receives votes from a majority of servers in the cluster for a given term
+			\item Servers will vote for at most one candidate per term
+			\item Servers vote on a first come first serve basis
+			\item If a candidate receives an AppendEntries RPC from another server claiming to be leader, it accepts the authority of the leader if the leader's term is equal or greater than its own term and returns to being a follower
+		\end{itemize}
+		\item Split votes:
+		\begin{itemize}
+			\item Split votes can occur if multiple followers become candidates at the same time
+			\item The term is ended and new electins with the next term are performed
+			\item To prevent further split votes election timeouts are randomized (doesn't just happen after a split vote)
+		\end{itemize}
+	\end{itemize}
+
+	\subsection{Log replication}
+
+
+	\subsection{Safety}
+
+
+\end{document}
+
+
+
+
+
