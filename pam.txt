@@ -1,10 +1,3 @@
-Zuppa
-	Call
-
-Arduino Umgebung cip pool
-	Keyboard
-	Monitors
-	Mice
-
-E-Werkstatt
-	Check emails
+LAN Kram - Switches
+10x Bildschirm, Maus, Tastatur
+E-Werkstatt abholen - Jemand finden

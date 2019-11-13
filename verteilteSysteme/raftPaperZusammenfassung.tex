@@ -59,6 +59,7 @@
 	\end{itemize}
 	\subsection{Raft basics}
 	\begin{itemize}
+		\item Raft guarantees : figure 3
 		\item All servers are always in one of three states:
 		\begin{itemize}
 			\item Leader - Handles all client requests, falsely addressed requests are forwarded
@@ -123,6 +124,45 @@
 	\end{itemize}
 
 	\subsection{Log replication}
+	\begin{itemize}
+		\item The server services client requests
+		\item The request contains a command to be executed by the replicated state machines
+		\item The leader appends the command to the log and sends AppendEntries RPCs to the other servers to replicate the entry
+		\item When the entry is safely replicated, the server applies teh change to its state machine and returns the result
+		\item AppendEntries RPCs are sent continuously to followers until they are added to the log
+		\item Logs store a state machine command and term number
+		\item Term numbers in logs detect inconsistencies
+		\item Each entry also has a log index
+		\item The leader decides when it is safe to apply (or commit) a log entry
+		\item Raft guarantees that committed entries are durable and will eventually be executed by all of the available state machines
+		\item A log entry is committed once the leader that created the entry has replicated it on a majority of the servers
+		\item The leader tracks the highest known index and send it with every AppendEntry RPC so other servers can commit entries and apply commands
+	\end{itemize}
+	\subsubsection{Log Matching Property from Figure 3:}
+	\begin{itemize}
+		\item If two entries in different logs have the same index and term then they store the same command.
+		\item If two entries in different logs have the same index and term, then the logs are identical in all preceding entries.
+		\begin{itemize}
+			\item When sending an AppendEntries RPC, the leader includes the index and term of the entry in its log that immediately precedes the new entries. 
+			\item If the follower does not find an entry in its log with the same index and term, then it refuses the new entries. 
+			\item Therefore, whenever AppendEntries returns successfully, the leader knows that the follower’s log is identical to its own log up through the new entries.
+		\end{itemize}
+	\end{itemize}
+	\subsubsection{Log inconsistency}
+	\begin{itemize}
+		\item Inconsistencies occur when the leader fails or becomes unavailable
+		\item Followers may be missing entries, have entries the leader doesn't or both
+		\item The leader forces followers to duplicate (and overwrite) their logs to match the leaders'
+		\item Process:
+		\begin{enumerate}
+			\item The first common log is found
+			\item All entries after that in the follower are deleted
+			\item Starting after the first common index teh entries are sent to the follower to catch it up
+		\end{enumerate}
+		\item the leader maintains a \textit{nextindex} to remember which entry need to be sent to the followers next
+		\item \textit{nextindex} is determined through AppendEntry RPCs and their consistency checks (decrementing until the check passes)
+		
+	\end{itemize}
 
 
 	\subsection{Safety}
