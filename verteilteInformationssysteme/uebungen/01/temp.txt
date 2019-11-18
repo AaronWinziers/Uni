@@ -1,0 +1,32 @@
+1a)
+- Kosten und Skalierbarkeit
+- Replikation zur Verbesserung der Verfügbarkeit
+- Integration verschiedener softwaremodule
+- Integration von Legacy Systemen
+- Neue Anwendungen
+- Zwänge des Marktes
+
+1b)
+Homogene - 
+	Verwenden gleiches DBMS
+	Strukturen sind gleich
+	Simpler
+
+Heterogene -
+	Besteht aus verknüpfte (aber nicht zusammengefügte) DBMS
+	Macht es einfacher 2 DBMS zu integrieren ohne aufwändige Struktur Änderungen
+	Erlaubt späteres separieren von DBMS
+	Erlaubt für angepasste DBMS für Teilgebiete einer Anwendung
+
+1c)
+- Keine spezialisierte Server
+- Alle Peers speichern Daten und erlauben Zugriff darauf
+- Es gibt begrenzte Informationen über das Netz selber
+	* Peers kenne nur ihre direkte Nachbarn
+	* es gibt kein globales Wissen
+	* keine Zentrale Koordination
+
+1d) Die Begriffe erläutern welche Resourcen von verteilten Datenbanksystemen geteilt werden
+	Shared Everything - 
+	Shared Disk - 
+	Shared Nothing - 
