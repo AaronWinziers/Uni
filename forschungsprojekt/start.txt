@@ -1,0 +1,19 @@
+Automatische Vervollständigung von Datenanfragen
+
+- Lücken erkennen
+- Informationen werden durch Web-APIs bereit gestellt
+- DBLP ist RDF, APIs liefern JSON/XML
+
+2 Probleme:
+Wie komme ich an die Daten ran?
+	Was muss in die Query?
+	Wie kommt die Query zurück?
+	Wie kann das Ergebnis auf RDF gemappt werden?
+	Welche Attribute mappen aufeinander?
+
+Precondition : DOI
+Postcondition : Result
+
+https://jena.apache.org/ - Query processor
+SPARQL
+RDF
