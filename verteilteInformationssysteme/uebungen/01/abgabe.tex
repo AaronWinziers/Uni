@@ -6,6 +6,16 @@
 \usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{xcolor}
+
+\usepackage{listings}
+\lstset{
+	numbers=left,
+	showspaces=false,
+	breaklines=true,
+	tabsize=3,
+	basicstyle=\ttfamily,
+}
+
 \author{Aaron Winziers - 1176638}
 \title{Verteilte Informationssysteme WS 2019/20\\\LARGE{Übungsblatt 1}}
 
@@ -13,9 +23,158 @@
 	\maketitle
 	
 	\section*{Aufgabe 1}
+	\paragraph{a)}
+	\begin{enumerate}
+		\item Kosten und Skalierbarkeit
+		\item Replikation zur Verbesserung der Verfügbarkeit
+		\item Integration verschiedener Softwaremodule
+		\item Integration von Legacy Systemen
+		\item Neue Anwendungen
+		\item Zwänge des Marktes
+	\end{enumerate}
+	
+	
+	\paragraph{b)}
+	Homogene - 
+	\begin{itemize}
+		\item Verwenden die gleiche Hardware
+		\item Verwenden gleiches DBMS
+		\item Datenstrukturen sind gleich
+		\item Leicht erweiterbar durch weitere Instanzen
+		\item Inflexibel
+	\end{itemize}
+	
+	Heterogene -
+	\begin{itemize}
+		\item Kann aus verschiedene DBMS bestehen
+		\item Erlaubt das integreieren von verschiedene bereits existierende DBMS
+		\item Erlaubt späteres separieren von integrierte DBMS
+		\item Kann auf verschiedener Hardware laufen
+	\end{itemize}
+	
+	
+	\paragraph{c)}
+	\begin{itemize}
+		\item Keine spezialisierte Server
+		\item Alle Peers speichern Daten und erlauben Zugriff darauf
+		\item Es gibt begrenzte Informationen über das Netz selber
+		\begin{itemize}
+			\item  Peers kenne nur ihre direkte Nachbarn
+			\item  Es gibt kein globales Wissen
+			\item  keine Zentrale Koordination
+		\end{itemize}
+	\end{itemize}
+	
+	
+	\paragraph{d)} Die Begriffe erläutern welche Resourcen von verteilten Datenbanksystemen geteilt werden
+	Shared Everything - Mehrere Rechner teilen sich Hauptspeicher und Sekundärspeicher
+	\begin{itemize}
+		\item Pro - Niedriger Komplexitätsgrad
+		\item Kontra - Skalierbarkeit schwieriger zu realisieren
+	\end{itemize}
+	Shared Disk - Mehrere Rechner - jeder mit eigenem Speicher - teilen sich gemeinsamen Sekundärspeicher
+	\begin{itemize}
+		\item Pro - Einheitliche Daten
+		\item Kontra - Zugriffe auf die Disk müssen koordiniert werden
+	\end{itemize}
+	Shared Nothing - Weder Hauptspeicher noch Sekundärspeicher werden zwischen den Rechnern geteilt
+	\begin{itemize}
+		\item Pro - Es gibt kein Single Point of Failure
+		\item Kontra - Daten müssen aktiv geprüft und korrigiert werden um einheitlich zu bleiben
+	\end{itemize}
 	
 	\section*{Aufgabe 2}
 	
+	\paragraph*{a)} $\pi_{name, fachgebiet}(\sigma_{vorname = \text{'Philosoph'}}(assistenten))$
+	
+	\paragraph{b)} $\pi_{vorname, name}(\sigma_{(s.semester \geq 3) \wedge (p.note = 1.0)}(studenten\bowtie pruefen))$ (Natürlicher Join, wegen s.matrnr und p.matrnr)
+	
+	\paragraph{c)}Ausgegeben werden die Vornamen und Namen aller Studenten die die Prüfung zur Vorlesung "Ethik" geschrieben haben
+	
+	\paragraph{d)}~
+	\begin{lstlisting}[language=SQL]
+SELECT professoren.vorname, 
+		professoren.name, 
+		vorlesungen.titel
+FROM professoren
+	JOIN vorlesungen 
+		ON professoren.persnr = vorlesungen.gelesenvon
+	JOIN voraussetzen 
+		ON vorlesungen.vorlnr = voraussetzen.fortgeschrittennr
+WHERE professoren.schwerpunkt = 'Philosophie' 
+	AND vorlesungen.sws = 4
+	\end{lstlisting}
+	
+	\paragraph{e)}$\pi_{titel}(\sigma_{vorlesungen.vorlnr = (\pi_{vorlnr}(vorlesungen) - (\pi_{vorlnr}(hoeren) \cup \pi_{vorlnr}(pruefen)))}(vorlesungen))$
+	
+	\paragraph{f)}
+	\begin{lstlisting}[language=SQL]
+SELECT pruefungen.matrnr,
+		pruefungen.titel,
+		leser.lesername.name, 
+		pruefungen.pruefername
+FROM 
+	(SELECT persnr AS leserpersnr, 
+			name AS lesername
+	 FROM professoren) AS leser
+	JOIN leser 
+		ON 
+		(SELECT professoren.persnr AS prueferpersnr, 
+				professoren.name AS pruefername,
+				pruefen.matrnr,
+				vorlesungen.titel
+		 FROM professoren
+			JOIN pruefen 
+				ON professoren.persnr = pruefen.persnr
+			JOIN vorlesungen 
+				ON vorlesungen.gelesenvon = professoren.persnr
+				) AS pruefungen
+WHERE leserpersnr <> prueferpersnr
+	\end{lstlisting}
+	
+	\begin{lstlisting}[language=SQL]
+	
+	\end{lstlisting}
+	
+	
+	
+	
+	
+	
 	\section*{Aufgabe 3}
+	\paragraph{a)} Fragmentierung ist die Aufteilung einer Relation in kleinere Teile. Dies kann entweder Horizontal(Tupel werden aufgeteilt), Vertikal(Attribute werden aufgeteilt), oder Hybrid(eine Kombination aus Vertikal und Horizontal) erfolgen.
+	
+	\paragraph{b)} Allokation ist das Vertielen von Datenfragmenten auf verschiedene Knoten in einem DBS.
+	
+	\paragraph{c)} Wenn die Vollständigkeitsregel verletzt ist, gibt es ein oder mehrere Tupel die in keinem Fragment sind. Damit sind die Daten nicht mehr \textit{Vollständig}
+	
+	\paragraph{d)} Die Disjunktheitsregel ist deswegen wichtig weil mit steigender Anzahl an Tupel die auf mehrere Knoten verteilt sind, steigt auch die Komplexität der Updates auf diese Einträge.
+	
+	\paragraph{e)}
+	\begin{enumerate}
+		\item Redundanz eliminieren
+		\item Anzahl der Zugriffe auf einzelne Knoten
+		\item Menge der Daten pro Knoten
+		\item Geografische Nähe zum Ort an dem Daten benötigt werden
+		\item Reduktion der Daten die zurückgegeben werden bei Anfragen
+	\end{enumerate}
+	
+	
 	
 \end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
