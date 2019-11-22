@@ -1,0 +1,72 @@
+\documentclass[11pt,a4paper,parskip=half ]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{blkarray}
+\usepackage{graphicx}
+\usepackage{xcolor}
+
+\usepackage{listings}
+\lstset{
+	numbers=left,
+	showspaces=false,
+	breaklines=true,
+	tabsize=3,
+	basicstyle=\ttfamily,
+}
+
+\author{Aaron Winziers - 1176638}
+\title{Verteilte Informationssysteme WS 2019/20\\\LARGE{Übungsblatt 2}}
+
+\begin{document}
+	\maketitle
+\section*{Aufgabe 1}
+	\begin{gather*}
+		p_{1} = matrnr > 9000	\\
+		p_{2} = 7\leq semester	\\
+		p_{3} = matrnr > 9000 \wedge 5\leq semester	\\
+		p_{3} = matrnr > 9000 \wedge semester\leq 4	\\
+	\end{gather*}
+
+\section*{Aufgabe 2}
+	\paragraph{a)} Die Vollständig- und Disjunktheitsregeln werden in diesem Fall beide offensichtlich erfüllt. Da die 
+	
+	\paragraph{b)} Zwei Fragmente werden hier benötigt: 
+	\begin{gather*}
+		vorlesungen_{\leq5037} := \sigma_{gelesenvon\leq5037}(vorlesungen)	\\
+		vorlesungen_{>5037} := \sigma_{gelesenvon>5037}(vorlesungen)
+	\end{gather*}
+	
+	\paragraph{c)}
+
+\section*{Aufgabe 3}
+	\paragraph{a)}
+	$ use =
+	\begin{blockarray}{cccccc}
+		 & vorname & name & fachgebiet & boss &  \\
+		\begin{block}{c(ccccc)}
+			q_{1} & 1 & 1 & 0 & 0 \\
+			q_{2} & 1 & 1 & 0 & 1 \\
+			q_{3} & 0 & 0 & 1 & 0 \\
+			q_{4} & 1 & 0 & 1 & 1 \\
+			q_{5} & 0 & 1 & 0 & 1 \\
+		\end{block}
+	\end{blockarray}
+	$
+	\paragraph{b)}$ qstat = (1,3,2,1,3)$
+	
+	\paragraph{c)}$ aff = 
+	\begin{blockarray}{cccccc}
+	& vorname & name & fachgebiet & boss &  \\
+	\begin{block}{c(ccccc)}
+	vorname 	& 5 & 4 & 1 & 4 \\
+	name 		& 4 & 7 & 0 & 6 \\
+	fachgebiet 	& 1 & 0 & 3 & 1 \\
+	boss 		& 4 & 6 & 1 & 7 \\
+	\end{block}
+	\end{blockarray}
+	$
+	
+\end{document}
