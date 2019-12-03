@@ -4,8 +4,10 @@
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
+\usepackage{blkarray}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{soul}
 
 \usepackage{listings}
 \lstset{
@@ -17,13 +19,122 @@
 }
 
 \author{Aaron Winziers - 1176638}
-\title{Verteilte Informationssysteme WS 2019/20\\\LARGE{Übungsblatt 1}}
+\title{Verteilte Informationssysteme WS 2019/20\\\LARGE{Übungsblatt 3}}
 
 \begin{document}
 	\maketitle
 	
 	\section*{Aufgabe 1}
+	$ use =
+	\begin{blockarray}{cccccc}
+	& V & N & F & B &  \\
+	\begin{block}{c(ccccc)}
+	q_{1} & 1 & 1 & 0 & 0 \\
+	q_{2} & 1 & 1 & 0 & 1 \\
+	q_{3} & 0 & 0 & 1 & 0 \\
+	q_{4} & 1 & 0 & 1 & 1 \\
+	q_{5} & 0 & 1 & 0 & 1 \\
+	\end{block}
+	\end{blockarray}
+	$
+	
+	$ qstat = (1,3,2,1,3)$
+	
+	$ aff = 
+	\begin{blockarray}{cccccc}
+	& V & N & F & B &  \\
+	\begin{block}{c(ccccc)}
+	V & 5 & 4 & 1 & 4 \\
+	N & 4 & 7 & 0 & 6 \\
+	F & 1 & 0 & 3 & 1 \\
+	B & 4 & 6 & 1 & 7 \\
+	\end{block}
+	\end{blockarray}
+	$
+	
+	\paragraph{(a)}~\\
+	\textbf{(1)} $bond(V, N) = (5*4)+(4*7)+(1*0)+(4*6) = 72$
+
+	\textbf{(2)} $bond(V, F) = 12$
+	
+	\textbf{(3)} $bond(V, B) = 73$
+	
+	\textbf{(4)} $bond(N, F) = 10$
+	
+	\textbf{(5)} $bond(N, B) = 100$
+	
+	\textbf{(6)} $bond(F, B) = 14$
+	
+	
+	\paragraph{(b)}
+	$ clustered~ aff = 
+	\begin{blockarray}{cccccc}
+	& F & V & B & N &  \\
+	\begin{block}{c(ccccc)}
+	F & 3 & 1 & 1 & 0 \\
+	V & 1 & 5 & 4 & 4 \\
+	B & 1 & 4 & 7 & 6 \\
+	N & 0 & 4 & 6 & 7 \\
+	\end{block}
+	\end{blockarray}
+	$
+	
+	\paragraph{(c)}
+	
+	
 	\section*{Aufgabe 2}
+	\paragraph{(a)} 
+	$R_{1}\Rightarrow S_{1},\\
+	 R_{2}\Rightarrow S_{2},\\
+	 R_{3}\Rightarrow S_{3}$
+	
+	Letzteres ergibt sich aus der Summe der Les- \textbf{und} Schreibzugriffe
+	
+	\paragraph{(b)}~ 
+	\begin{table}[h]
+		\begin{tabular}{l|l|l|l|l}
+			$R_{i}$	& $S_{j}$ & Gewinn & Kosten & Gesamt \\ \hline \hline
+			$R_{1}$ & $S_{1}$ & 4400   & 4050   & 350          \\
+					& $S_{2}$ & 1600   & 3150   & -1550        \\
+					& $S_{3}$ & 2400   & 4950   & -2550	       \\
+					& $S_{4}$ & 400    & 5400   & -5000        \\ \hline
+			$R_{2}$ & $S_{1}$ & 2000   & 4900   & -2900        \\
+					& $S_{2}$ & 8000   & 7400   & 600          \\
+					& $S_{3}$ & 4000   & 8400   & -4400        \\
+					& $S_{4}$ & 5600   & 6900   & -1300        \\ \hline
+			$R_{3}$ & $S_{1}$ & 4000   & 6600   & -2600        \\
+					& $S_{2}$ & 12800  & 5750   & 7050          \\
+					& $S_{3}$ & 12000  & 2350   & 9650          \\
+					& $S_{4}$ & 9600   & 6600   & 3000         
+		\end{tabular}
+	\end{table}
+
+	$R_{1}\Rightarrow S_{1},\\
+	 R_{2}\Rightarrow S_{2},\\
+	 R_{3}\Rightarrow S_{2},S_{3},S_{4}$
+	 \newpage
+	\paragraph{(c)}~
+	\begin{table}[h]
+		\begin{tabular}{l|l|l|l|l}
+			$R_{i}$	& $S_{j}$ & Gewinn & Kosten & Gesamt 		\\ \hline \hline
+			$R_{1}$ & $S_{1}$ & 4400   & 4050   & 350          	\\
+					& $S_{2}$ & 1600   & 3150   & -1550        	\\
+					& $S_{3}$ & 2400   & 4950   & -2550	       	\\
+					& $S_{4}$ & 400    & 5400   & -5000        	\\ \hline
+			$R_{2}$ & $S_{1}$ & 2000   & 4900   & -2900        	\\
+					& $S_{2}$ & 8000   & 7400   & 600          	\\
+					& $S_{3}$ & 4000   & 8400   & -4400        	\\
+					& $S_{4}$ & 5600   & 6900   & -1300        	\\ \hline
+			$R_{3}$ & $S_{1}$ & 4000   & 6600   & -2600        	\\
+					& $S_{2}$ & \st{12800} $\rightarrow$ 10400  & 5750   & \st{7050} $\rightarrow$ 4650         \\
+					& $S_{3}$ & 12000  & 2350   & 9650          \\
+					& $S_{4}$ & \st{9600} $\rightarrow$ \st{7800} $\rightarrow$ 6000   & 6600   & \st{3000} $\rightarrow$ \st{1200} $\rightarrow$ -600        
+		\end{tabular}
+	\end{table}
+	
+	$R_{1}\Rightarrow S_{1},\\
+	R_{2}\Rightarrow S_{2},\\
+	R_{3}\Rightarrow S_{3},S_{2}$
 	
 \end{document}
 
