@@ -58,7 +58,8 @@ func (b *box) getFieldValue(x, y int) int {
 
 //Helper function to return coordinates from index
 func getCoordinatesForIndex(index int) (int, int) {
-	return index % 3, index / 3
+	return index % 3, index / 3o hello world
+
 }
 
 // Set row value
