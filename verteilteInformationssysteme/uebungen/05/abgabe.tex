@@ -25,12 +25,24 @@
 	\maketitle
 	
 	\section*{Aufgabe 1}
+	\paragraph{(a)} Die Matrikelnummer und Semester aller Studenten die eine Vorlesung hören die 2 SWS hat	\\
+	$ (\Pi_{matrnr, semester}(Studenten)) \ltimes_{s.matrnr=h.matrnr} (hoeren \ltimes_{h.vorlnr=v.vorlnr} (\sigma_{sws=2}(vorlesungen))) $
+	
+	\paragraph{(b)}Der Name, Vorname, und Matrikelnummer aller Studenten im 6. oder Höheren Semester die eine Vorlesung Hören die von dem Professor gelesen wird mit der Personennummer 421337 und 3 SWS hat	\\
+	$(\Pi_{matrnr, name, vorname}(\sigma_{semester>=6}(studenten)))\ltimes_{s.matrnr=h.matrnr}(\\
+	\hspace*{12pt}\Pi_{matrnr}(hoeren\ltimes_{h.vorlnr=v.vorlnr}(\Pi_{vorlnr}\sigma_{sws = 3 \land gelesenvon=421337}(vorlesungen))))) $
+	
+	
 	\section*{Aufgabe 2}
-	\paragraph{(a)} Die Gesamte Optimierung zur Compile-Zeit berechnet zur Compile Zeit den vollständigen Ausführungsplan und nimmt an dass, Anwendungen immer die Gleichen Anfragemuster verwenden. Hierbei ist ein Vorteil dass, Anfragen sofort ausgeführt werden können. Ein NAchteil ist dass, die Modellierung sehr komplex ist.
+	\paragraph{(a)} Die Gesamte Optimierung zur Compile-Zeit berechnet zur Compile Zeit den vollständigen Ausführungsplan und nimmt an dass, Anwendungen immer die Gleichen Anfragemuster verwenden. Hierbei ist ein Vorteil dass, Anfragen sofort ausgeführt werden können. Ein Nachteil ist dass, die Modellierung sehr komplex ist.
+	
 	\paragraph{(b)} Die Vollständig dynamische Optimierung optimiert jede Anfrage individuell zur Laufzeit. Ein Vorteil davon ist dass, der aktuelle Zustand des Netzes berücksichtigt wird. Ein Nachteil dass, die Qualität der resultierende Pläne unvorhersagbar ist.
-	\paragraph{(c)} Semi-dynamische Optimierung
-	\paragraph{(d)} Hierarchische Optimierung mit globalem und lokalem Plan
-	\paragraph{(e)} Zweischrittige hierarchische Optimierung
+	
+	\paragraph{(c)} Die Semi-dynamische Optimierung führt eine Optimierung zur Compilezeit durch und überprüft, ob die Ausführung einer Abfrage so abläuft wie geschätzt wurde und Falls diese stark abweicht wird ein neuer Ausführungsplan erstellt. Ein Nachteil ist dass, Semi-Dynamische Optimierung nur für Anfragen sinnvoll ist die länger laufen, dafür entfällt im vergleich zu der Gesamten Optimierung zur Compile-Zeit der Nachteil, dass Informationen nicht verfügbar sind und im Vergleich zu der Vollständig dynamischen Optimierung dass die Qualität der Abfragepläne unvorhersagbar sind.
+	
+	\paragraph{(d)} Die Hierarchische Optimierung mit globalem und lokalem Plan führt zuerst eine Optimierung durch auf globaler Ebene um zu entscheiden auf welchen Rechnern welche Zwischenergebnisse ausgeführt werden müssen und im zweiten Schritt werden die Anfragen für die Zwischenergebnisse lokal auf den Rechnern optimiert. Ein Nachteil ist das viele Informationen über die Fragmentierung, Verteilung und Kosten der Operationen vorausgesetzt werden. Ein Vorteil ist dass viele Kommunikationskosten gespart werden.
+	
+	\paragraph{(e)} Die Zweischrittige hierarchische Optimierung führt erst zur Compilezeit eine Optimierung auf die stabilen Teile des Plans aus, und zur Anfrageausführung die fehlende Teile. Ein Vorteil ist hier dass, die Optimierung bei Änderungen der Verteilung der Fragmente auf Rechner nicht erneut durchgeführt werden muss. Ein Nachteil ist dass, die Statistiken zu dem Kostenmodell immer aktualisiert werden muss.
 	
 \end{document}
 
