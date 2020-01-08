@@ -1,0 +1,82 @@
+\documentclass[11pt,a4paper,parskip=half ]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{blkarray}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{multirow}
+\usepackage{lscape}
+
+\usepackage{listings}
+\lstset{
+	numbers=left,
+	showspaces=false,
+	breaklines=true,
+	tabsize=3,
+	basicstyle=\ttfamily,
+}
+
+\author{Aaron Winziers - 1176638}
+\title{Verteilte Informationssysteme WS 2019/20\\\LARGE{Übungsblatt 6}}
+
+\begin{document}
+	\maketitle
+\section*{Aufgabe 1}
+	Um die Kommunikationskosten minimal zu halten sollte folgende Reihenfolge verwendet werden: $((B\bowtie D)\bowtie A)\bowtie C$. Die Rechnungen um auf das Ergebnis zu kommen befinden sich in den folgenden Tabellen:
+	\begin{landscape}
+		\begin{center}
+			\input{table.tex}
+		\end{center}
+	\end{landscape}
+
+
+\section*{Aufgabe 2}
+\paragraph{Ship Whole}~
+
+	Auf beiden Rechnern werden 2 Nachrichten benötigt (eine um Daten zu verlangen, eine um Daten zu schicken).
+
+	Um auf Rechner $N_{S}$ den Join zu durchführen müssen $card(R)*5(Attribute)=5.000$ Attributwerte versandt werden.
+
+	Um auf Rechner $N_{R}$ den Join zu durchführen müssen $card(S)*5(Attribute)=50.000$ Attributwerte versandt werden.
+
+\paragraph{Fetch as Needed}~
+	
+	Um auf Rechner $N_{S}$ den Join zu durchführen müssen $card(S)*2 (\text{jeweils Anfrage und Antwort})=2.000$ Nachrichten versendet werden und $card(S)\text{ein Wert pro Anfrage}+card(R\bowtie S)*5 = 6.000$ Attributwerte versandt werden.
+	
+	Um auf Rechner $N_{R}$ den Join zu durchführen müssen $card(R)*2 (\text{jeweils Anfrage und Antwort})=2.000$ Nachrichten versendet werden und $card(R)\text{ein Wert pro Anfrage}+card(R\bowtie S)*5 = 15.000$ Attributwerte versandt werden.
+		
+\section*{Aufgabe 3}
+
+	Die Attribute werden wie Folgt zugeordnet:
+	\begin{itemize}
+		\item Projects (5 Attribute) : PNo, PName, Location, Duration, Budget
+		\item Assignments (2 Attribute) : PNo, ENo
+	\end{itemize}
+
+\paragraph{(a)}2 Nachrichten, 1.500 Tupel * 2 Attribute = 3.000 Attributwerte
+\paragraph{(b)}2 Nachrichten, 500 Tupel * 5 Attribute = 2.500 Attributwerte
+\paragraph{(c)}2 Nachrichten, $card(Projects)*40\%*1\text{ Attribut} + (card(Projects)*40\%)*90\%*2\text{ Attribute} = 200 + 360 = 560$ Attributwerte
+\paragraph{(d)}2 Nachrichten, $card(Assignments)*1\text{ Attribut} + card(Assignments)*40\%*5\text{ Attribute} = 1.500 + 3.000 = 4.500$ Attributwerte
+\paragraph{(e)}
+	
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
