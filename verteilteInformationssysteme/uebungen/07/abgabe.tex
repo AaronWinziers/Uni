@@ -1,0 +1,64 @@
+\documentclass[11pt,a4paper,parskip=half ]{scrartcl}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{blkarray}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{soul}
+\usepackage{multirow}
+\usepackage{lscape}
+
+\usepackage{listings}
+\lstset{
+	numbers=left,
+	showspaces=false,
+	breaklines=true,
+	tabsize=3,
+	basicstyle=\ttfamily,
+}
+
+\author{Aaron Winziers - 1176638}
+\title{Verteilte Informationssysteme WS 2019/20\\\LARGE{Übungsblatt 7}}
+
+\begin{document}
+	\maketitle
+\section*{Aufgabe 1}
+
+
+\section*{Aufgabe 2}
+\paragraph{(a)} 
+\begin{enumerate}
+	\item Rechner $N_{1}$ beginnt Transaktion $T_{1}$ und schickt Update von $X$ an $N_{2}$
+	\item $N_{2}$ führt Update auf $X$ aus
+	\item $N_{2}$ führt Transaktion $T_{2}$ aus
+	\item $N_{1}$ schickt Update von $Y$ an $N_{2}$
+	\item $N_{2}$ führt Update auf $Y$ aus
+\end{enumerate}
+
+\paragraph{(b)} Diese Lösung ist genau deswegen kein Guter Ansatz weil die Vorteile von mehreren verteilten Kopien dann verloren gehen. Der Sinn der Replikation ist in dem Fall eine höhere Verfügbarkeit der Daten (zum Lesen) für den Nutzer.
+
+
+\section*{Aufgabe 3}
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
