@@ -35,7 +35,7 @@ void cputest(int number){
 	clock_gettime(CLOCK_REALTIME, &stop);
 	int milliseconds = millisecs(start, stop);
 
-	printf("Calculating the primes took %dms\n", milliseconds);
+	printf("Calculating the primes took %d ms\n", milliseconds);
 }
 
 void iotest(int number){
@@ -57,13 +57,14 @@ void iotest(int number){
 		for (int j = 0; j < 50; ++j) {
 			fputs(data, file);
 		}
+		fclose(file);
 		remove(filename);
 	}
 
 	clock_gettime(CLOCK_REALTIME, &stop);
 	int milliseconds = millisecs(start, stop);
 
-	printf("Creating, writing in and deleting the files took %dms\n", milliseconds);
+	printf("Creating, writing in and deleting the files took %d ms\n", milliseconds);
 }
 
 int main() {

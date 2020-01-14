@@ -26,7 +26,7 @@ public class Main {
 
 		long end = System.currentTimeMillis();
 
-		System.out.println("Calculating the primes took "+(end-start)+"ms");
+		System.out.println("Calculating the primes took "+(end-start)+" ms");
 	}
 
 	public static void iotest(int number) throws IOException {
@@ -41,13 +41,15 @@ public class Main {
 				for (int j = 0; j < 50; j++) {
 					writer.write("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam eget.");
 				}
-				file.delete();
+				if (file.delete()){
+					
+				}
 			}
 		}
 
 		long end = System.currentTimeMillis();
 
-		System.out.println("Creating, writing in and deleting the files took "+(end-start)+"ms");
+		System.out.println("Creating, writing in and deleting the files took "+(end-start)+" ms");
 	}
 
 	public static void main(String[] args) {
