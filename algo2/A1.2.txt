@@ -1,0 +1,31 @@
+\begin{program}
+	\mbox{\textbf{Initialisierung:}}
+	\BEGIN
+		\FOR i := 1 \TO n \DO
+			|vater|[i] = 0
+			|name|[i] = i
+			|wurzel|[i] = i
+		\OD
+	\END
+	\end{program}
+	
+	\begin{program}
+	\mbox{\textbf{FIND(x):}}
+	\BEGIN
+		\WHILE |vater|[x] != 0 \DO
+		x = |vater|[x]
+		\OD
+		|return name|[x]
+	\END
+	\end{program}
+	
+	\begin{program}
+	\mbox{\textbf{UNION(A,B,C):}}
+	\BEGIN
+		r_{1} = |wurzel|[A]
+		r_{2} = |wurzel|[B]
+		|vater|[r_{1}] = r_{2}
+		|name|[r_{2}] = C
+		|wurzel|[C] = r_{2}
+	\END
+\end{program}

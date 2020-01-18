@@ -1,0 +1,139 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{amsthm}
+\usepackage{algorithm2e}
+
+\usepackage{setspace}
+
+
+\title{Altklausuren Antworten}
+\date{}
+
+
+\begin{document}
+\maketitle
+\href{https://github.com/ofenstichloch/Uni/blob/master/Kapitel\%20ADS/VL.pdf}{Landmesser Zusammenfassung}
+\section*{Aufgabe 1}
+\subsection*{O(log $n$) (amortisiert) für UNION und O(1) für FIND}
+\subsection*{O(1) für UNION und O(log$n$) für FIND}
+\begin{algorithm}
+	\textbf{Initialisierung:}	\\
+	\Begin{
+		\For{i := 1 to n}{
+			vater[i]=0 \\
+			name[i]=i \\
+			wurzel[i]=i \\
+		}
+	}
+	~\\
+	\textbf{FIND(x):} \\
+	\Begin{
+		\While{vater[x] != 0}{
+			x = vater[x]
+		}
+		\textbf{return} name[x] \\
+	}
+	~\\
+	
+	\textbf{UNION(A,B,C):} \\
+	\Begin{
+		$r_{1}$ = wurzel[A]	\\
+		$r_{2}$ = wurzel[B]	\\
+		vater[$r_{1}$] = $r_{2}$	\\
+		name[$r_{2}$] = C	\\
+		wurzel[C] = $r_{2}$	\\
+	}
+	
+\end{algorithm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Aufgabe 2		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 2}
+\subsection*{Zusatzaufgabe: Perfektes Hashing}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Aufgabe 3		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Aufgabe3}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Aufgabe 4		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 4}
+	Sei G ein planarer Graph mit $ n \geq 3 $ Knoten und m Kanten, dann gilt $ m = 3n-6 $. dh $ m=O(n) $, also linear viele Kanten.
+	\begin{proof}
+		Ein maximal planarer Graph ist ein planarer Graph, der durch Hinzufügen einer Kante $ (v,w) \notin E $ nicht-planar wird. Beobachtung: Alle Faces in jeder planaren Einbettung von G sind Dreiecke (Triangulierung). Jedes Face in einer Triangulierung hat 3 Rand-Kanten und jede Kante liegt am Rand von 3 Faces. 
+		$$\Rightarrow 3f = 2m $$
+		Einstetzen in Euler-Formel
+		$$ n - m + \frac{2}{3}m = 2$$
+		$$ m = 3n-6$$
+		$ m \leq 3n-6 $ für beliebige planare Graphen
+	\end{proof}
+
+\subsection*{Zusatzaufgabe}
+Sei $G$ ein \textbf{bipartiter} planarer Graph Dann gilt $ m \leq 2n-4 $. 
+
+\paragraph{Beweis:} Keine Kreise ungerader Länge in bipartiten Graphen. Kleinstmögliche Fläche in einem bipartiten Graphen ist ein Viereck.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Aufgabe 5		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Aufgabe 5}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Aufgabe 6		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 6}
+\paragraph{Algorithmus von Dijkstra:}~
+\begin{algorithm}
+	\ForEach{$v\in V$}{
+		DIST[v]$\leftarrow\infty$ \\
+		PRED[v]$\leftarrow$NULL
+	}
+	DIST[s]$\leftarrow$0 \\
+	PQ.insert(v,0) \\
+	\While{not PQ.empty()}{
+		u $\leftarrow$ PQ.delmin() //liefertInfo \\
+		\ForEach{$v\in V$ mit $(u,v)\in E$}{
+			d$\leftarrow$DIST[u]+c(u,v) \\
+			\If{d<DIST[v]}{
+				\If{DIST[v]==$\infty$}{PQ.insert(v,d)}
+				\Else{PQ.decrease(v,d)}
+				DIST[v]$\leftarrow$d \\
+				PRED[u]$\leftarrow$u \\
+			}
+		}		
+	}
+\end{algorithm}
+
+\paragraph{Laufzeitanalyse:}
+	$\mathcal{O}(\Sigma_{v\in V}(1+outdeg(v))+PQ_Operationen)n*(T_{insert}+T_{delmin}+T_{empty})+m*T_{decrease}$
+	\begin{itemize}
+		\item Bei Binärem Heap: $\mathcal{O}(n*log(n)+m*log(n)=\mathcal{O}((n+m)*log(n)$
+		\item Fibonacci-Heap:Amortisierte Analyse ist ok, da Gesamtlaufzeit betrachtet. $\mathcal{O}(n*log(n)+m)$, insert+empty = $\mathcal{O}(1)$, delmin=$\mathcal{O}(log(n))$, decrease = $\mathcal{O}(1)$
+	\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Aufgabe 7		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Aufgabe 7}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Aufgabe 8		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Aufgabe 8}
+
+\end{document}
