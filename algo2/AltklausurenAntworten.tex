@@ -7,8 +7,14 @@
 \usepackage{graphicx}
 \usepackage{hyperref}
 
+\usepackage{float}
+
 \usepackage{amsthm}
 \usepackage{algorithm2e}
+
+\usepackage{tikz}
+\usepackage{cancel}
+\usepackage{soul}
 
 \usepackage{setspace}
 
@@ -23,7 +29,7 @@
 \section*{Aufgabe 1}
 \subsection*{O(log $n$) (amortisiert) für UNION und O(1) für FIND}
 \subsection*{O(1) für UNION und O(log$n$) für FIND}
-\begin{algorithm}
+\begin{algorithm}[H]
 	\textbf{Initialisierung:}	\\
 	\Begin{
 		\For{i := 1 to n}{
@@ -71,7 +77,7 @@
 
 \section*{Aufgabe 4}
 	Sei G ein planarer Graph mit $ n \geq 3 $ Knoten und m Kanten, dann gilt $ m = 3n-6 $. dh $ m=O(n) $, also linear viele Kanten.
-	\begin{proof}
+	\begin{proof}[H]
 		Ein maximal planarer Graph ist ein planarer Graph, der durch Hinzufügen einer Kante $ (v,w) \notin E $ nicht-planar wird. Beobachtung: Alle Faces in jeder planaren Einbettung von G sind Dreiecke (Triangulierung). Jedes Face in einer Triangulierung hat 3 Rand-Kanten und jede Kante liegt am Rand von 3 Faces. 
 		$$\Rightarrow 3f = 2m $$
 		Einstetzen in Euler-Formel
@@ -83,21 +89,56 @@
 \subsection*{Zusatzaufgabe}
 Sei $G$ ein \textbf{bipartiter} planarer Graph Dann gilt $ m \leq 2n-4 $. 
 
-\paragraph{Beweis:} Keine Kreise ungerader Länge in bipartiten Graphen. Kleinstmögliche Fläche in einem bipartiten Graphen ist ein Viereck.
+\paragraph{Beweis:} Keine Kreise ungerader Länge in bipartiten Graphen. Kleinstmögliche Fläche in einem bipartiten Graphen ist ein Viereck.$_{\qed}$
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %		Aufgabe 5		%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Aufgabe 5}
+\paragraph{Split-Find-Problem}
+
+Idee - Unkehrung von Union-Find
+Feld name[1,...,n]
+
+\begin{algorithm}[H]
+	\textbf{Initialisierung:} \\
+	\Begin{
+		\For{$\forall i, 1\leq i \leq n$}{
+			name[i] = 1
+		}
+	}
+	~\\
+	\textbf{Find(i)}
+	\Begin{
+		return name[i] \hspace{.5cm} $\rightarrow\mathcal{O}(1)$
+	}
+	\textbf{Split(i)}
+	\begin{itemize}
+		\item Neuer Name des neuen Intervalls das durch Split entsteht ++count
+		\item Relabel the smaller half
+		\item Laufe parallel d.h. abwechselnd nach links und rechts von $i$ aus, bis Intervallgrenze erreicht d.h. $name[i]\neq name[betrachtetes Element]$
+		\item Nenne den Teil um, der kleiner ist $[a,i]$ oder $[i+1,b]$ indem nochmals über diesen Teil gelaufen wird. name[betrachtetes Element] = count
+	\end{itemize}
+\end{algorithm}
+	\begin{center}
+		\resizebox{.5\columnwidth}{!}{
+			\input{split-find}
+		}
+	\end{center}
+	$\Rightarrow$ Kosten für 1 Split $\mathcal{O}(2*Laenge des kuerzeren Intervalls)$ \\
+	\textbf{Analyse} $\mathcal{O}(\#Namensaenderungen): max\frac{\text{Laenge des umzubennenendes Intervall}}{2}$ $\Rightarrow\mathcal{O}(\log n)$
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %		Aufgabe 6		%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Aufgabe 6}
-\paragraph{Algorithmus von Dijkstra:}~
-\begin{algorithm}
+\paragraph{Algorithmus von Dijkstra:}~\\
+\begin{algorithm}[H]
+\Begin{
 	\ForEach{$v\in V$}{
 		DIST[v]$\leftarrow\infty$ \\
 		PRED[v]$\leftarrow$NULL
@@ -116,6 +157,8 @@ Sei $G$ ein \textbf{bipartiter} planarer Graph Dann gilt $ m \leq 2n-4 $.
 			}
 		}		
 	}
+}
+	
 \end{algorithm}
 
 \paragraph{Laufzeitanalyse:}
@@ -129,6 +172,22 @@ Sei $G$ ein \textbf{bipartiter} planarer Graph Dann gilt $ m \leq 2n-4 $.
 %		Aufgabe 7		%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Aufgabe 7}
+
+Eine Planare Einbettung ist genau dann eindeutig wenn diese 3-fach zusammenhängend ist:
+
+\begin{center}
+	\resizebox{.2\columnwidth}{!}{
+		\input{a7-1}
+	}
+\end{center}
+
+Gleicher Graph verschiedene Einbettungen:
+
+\begin{center}
+	\resizebox{.5\columnwidth}{!}{
+		\input{a7-2}
+	}
+\end{center}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
