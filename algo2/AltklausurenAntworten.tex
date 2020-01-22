@@ -64,6 +64,27 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Aufgabe 2}
+\paragraph{Hashing mit Verkettung} löse Kollisionen nicht auf, speichere mehrere Schlüssel an der gleichen Position
+\\
+
+Speichere für jedes Ergebnis der Hashfunktion $h$ eine Liste
+
+\textbf{Lookup(x)}: lineare Suche in Liste $T[h(x)]$
+
+\textbf{Insert(x)}: $x\notin S.$ Füge x an erst freie Stelle in $T[h(x)]$ ein
+
+\textbf{Delete(x)}: Entferne x aus $T[h(x)]$
+
+\begin{center}
+	\resizebox{.6\columnwidth}{!}{
+		\input{a2-1}
+	}
+\end{center}
+meist wird als Hashfunktion einfaches Modulo verwendet.
+
+Verbesserung Verdopplungs-Strategie
+Immer wenn $B>2$, verdopple Tafelgröße $\rightarrow1$ sehr teures Insert (da alle Elemente mit neuer Hashfunktion umgespeichert werden), im Schnitt weiter $\mathcal{0}$(1)
+
 \subsection*{Zusatzaufgabe: Perfektes Hashing}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
