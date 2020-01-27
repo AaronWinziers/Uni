@@ -28,7 +28,63 @@
 \href{https://github.com/ofenstichloch/Uni/blob/master/Kapitel\%20ADS/VL.pdf}{Landmesser Zusammenfassung}
 \section*{Aufgabe 1}
 \subsection*{O(log $n$) (amortisiert) für UNION und O(1) für FIND}
-\subsection*{O(1) für UNION und O(log$n$) für FIND}
+
+\begin{tabular}{ll}
+     Feld name[1...n]:& name[x] = Name des Blocks der x enthält. 1 $\leq$ x $\leq$ n \\
+     size[1..n]:& size[A] = Anzahl Elemente im Block A, initialisiert mit 1 \\ 
+     L[1..n]: & L[A] = Liste aller Elemente in Block A, initialisiert L[i] = \{i\}
+\end{tabular}
+\begin{algorithm}[H]
+
+    \textbf{Initialisierung:}	\\
+	\Begin{
+		\For{i := 1 to n}{
+			name[i]=i \\
+			size[i]=1 \\ 
+			L[i]=\{i\}
+		}
+	}
+	~\\
+	\textbf{FIND(x):} \\
+	\Begin{
+		\textbf{return} name[x] \\
+	}
+	~\\
+	\textbf{UNION(A,B):} \\
+	\Begin{
+		\uIf{size[A] $\leq$ size[B]}
+		{
+		    \ForEach{i in L[A]}{
+		        name[i] = B \\ 
+		    }
+		    size[B] += size[A] \\ 
+		    L[B] = L[B].concat(L[A]) \\ 
+		}
+		\Else{
+    		\ForEach{i in L[B]}{
+    		        name[i] = A \\ 
+    		    }
+    		    size[A] += size[B] \\ 
+    		    L[A] = L[A].concat(L[B]) \\ 
+    		}
+	}
+    
+	
+\end{algorithm}
+\subsubsection*{Laufzeit:}
+FIND(x): O(1) $\rightarrow$ Einfacher Zugriff auf ein Feld\\ 
+UNION: O(log $n$) $\rightarrow$ x kann maximal log(n) mal seinen Namen ändern, da es sich nach jeder Namensänderung in einer doppelt so großen Menge befindet. 
+
+
+\subsection*{O(1) für UNION und O(log $n$) für FIND}
+\begin{tabular}{ll}
+     Feld name[1...n]:& name[x] = Name des Blocks mit Wurzel x (hat nur Bedeutung, falls x Wurzel) \\
+     Feld vater[1...n]:& vater[x] = $\begin{cases}
+    Vater\ von\ x\ in\ seinem\ Baum\\
+    0,\ falls\ x\ Wurzel
+  \end{cases}$ \\
+     Feld wurzel[1...n]:& wurzel[x] = Wurzel des Blocks mit Namen x \\
+\end{tabular}
 \begin{algorithm}[H]
 	\textbf{Initialisierung:}	\\
 	\Begin{
@@ -52,12 +108,26 @@
 	\Begin{
 		$r_{1}$ = wurzel[A]	\\
 		$r_{2}$ = wurzel[B]	\\
-		vater[$r_{1}$] = $r_{2}$	\\
-		name[$r_{2}$] = C	\\
-		wurzel[C] = $r_{2}$	\\
+		\uIf{size[$r_{1}$] $\leq$ $r_{2}$}{
+		    vater[$r_{1}$] = $r_{2}$	\\
+    		name[$r_{2}$] = C	\\
+    		wurzel[C] = $r_{2}$	\\ 
+    		size[$r_{2}$] += size[$r_{1}$] \\ 
+		}
+		\Else{
+		    vater[$r_{2}$] = $r_{1}$	\\
+    		name[$r_{1}$] = C	\\
+    		wurzel[C] = $r_{1}$	\\ 
+    		size[$r_{1}$] += size[$r_{2}$] \\ 
+		}
 	}
 	
 \end{algorithm}
+
+\subsubsection*{Laufzeit:}
+FIND(x): O(log $n$) $\rightarrow$ Tiefe von x (max Höhe des entstehende Baums, n-1 möglich)\\ 
+UNION: O(1) $\rightarrow$ Nur Pointer ändern
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %		Aufgabe 2		%
@@ -69,7 +139,14 @@
 
 Speichere für jedes Ergebnis der Hashfunktion $h$ eine Liste
 
-\textbf{Lookup(x)}: lineare Suche in Liste $T[h(x)]$
+\textbf{Lookup(x)}: lineare Suche in Liste $T[h(x)]$ \\ 
+\begin{itemize}
+    \item Worst Case: alle Keys in derselben List $\rightarrow$ O(n)
+    \item erwartete Zeit: O($\frac{n}{m}$)
+    \item Belegungsfactor $\beta = \frac{n}{m}$ $\leftarrow$ erw. Länge einer Liste T[x]
+    \item wenn $m \geq n$, d.h. $\beta \leq 1$ dann $\rightarrow$ erw. Laufzeit O(1)
+\end{itemize}
+        
 
 \textbf{Insert(x)}: $x\notin S.$ Füge x an erst freie Stelle in $T[h(x)]$ ein
 
@@ -82,8 +159,11 @@ Speichere für jedes Ergebnis der Hashfunktion $h$ eine Liste
 \end{center}
 meist wird als Hashfunktion einfaches Modulo verwendet.
 
-Verbesserung Verdopplungs-Strategie
-Immer wenn $B>2$, verdopple Tafelgröße $\rightarrow1$ sehr teures Insert (da alle Elemente mit neuer Hashfunktion umgespeichert werden), im Schnitt weiter $\mathcal{0}$(1)
+\subsubsection*{Verbesserung Verdopplungs-Strategie:}
+\begin{itemize}
+    \item Immer wenn $\beta>2$, verdopple Tafelgröße $\rightarrow1$ sehr teures Insert (da alle Elemente mit neuer Hashfunktion umgespeichert werden), im Schnitt aber weiter O(1)\\ 
+    \item Bei Delete und kleinem $\beta$: Tabelle kann kalbiert werden $\rightarrow$ Ein sehr teures Delte, im Schnitt aber weiter O(1)
+\end{itemize}
 
 \subsection*{Zusatzaufgabe: Perfektes Hashing}
 
