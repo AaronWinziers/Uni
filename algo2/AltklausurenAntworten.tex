@@ -18,6 +18,7 @@
 
 \usepackage{setspace}
 
+\usepackage{stmaryrd}
 
 \title{Altklausuren Antworten}
 \date{}
@@ -160,6 +161,7 @@ Speichere für jedes Ergebnis der Hashfunktion $h$ eine Liste
 meist wird als Hashfunktion einfaches Modulo verwendet.
 
 \subsubsection*{Verbesserung Verdopplungs-Strategie:}
+
 \begin{itemize}
     \item Immer wenn $\beta>2$, verdopple Tafelgröße $\rightarrow1$ sehr teures Insert (da alle Elemente mit neuer Hashfunktion umgespeichert werden), im Schnitt aber weiter O(1)\\ 
     \item Bei Delete und kleinem $\beta$: Tabelle kann kalbiert werden $\rightarrow$ Ein sehr teures Delte, im Schnitt aber weiter O(1)
@@ -167,25 +169,130 @@ meist wird als Hashfunktion einfaches Modulo verwendet.
 
 \subsection*{Zusatzaufgabe: Perfektes Hashing}
 
+Um perfektes hashung zu erhalten, verwendet man 2 Stufen von universellem Hashing. Kollisionsvermeidung durch injektive Hashfunktion auf der 2. Stufe: für Menge $S \subset \{0 ... N - 1\}, n = |S| $ verwende Tafel der Größe $m \geq n$ und $m = O(n)$
+
+\subsubsection*{Idee:}
+\begin{itemize}
+    \item Verwende randomisiertes Verfahren: Wähle Hashfuntion zufällig aus Menge von Kandidaten (beliebige Funktion aus menge ist mit hoher Wahrscheinlichkeit injektiv)
+    \item 2 Stufiges Hashing-Schema
+    \begin{itemize}
+        \item s = Tafelgröße auf 1. Stufe
+        \item w = Bucket (enhtält Teilmenge von S)
+        \item $w_i = \{x \in S | h(x) = i\}$
+    \end{itemize}
+\end{itemize}
+
+\subsubsection*{Umsetzung}
+\textbf{1. Stufe:} Tafelgröße $s=n$ und wähle $k$ so, dass $\sum \limits_{i=0}^{n-1} |w_i^k|^2 < 3n$\\
+Genauer:\\
+Sei $p \in Prim$. Die Hashfunktion $h_k(x): x \leftarrow (k*x \mod p) \mod s$ verteilt S auf Tafel der Größe $s$ so, dass Summe der Quadtrate der Bucketgrößen $< 3n$ (linear)\\
+\textbf{2. Stufe:} $\forall$ nicht leere Buckets 1. Stufe: Wähle Tafel der Größe $s_i = 2|w_i^k|^2$ und wähle $k_i$ so, dass $h_{k_i}$ injektiv auf S ist. (Gilt für mindestens die Hälfte aller $k_i$
+
+\subsubsection*{Analyse:}
+Wir wissen $\exists k$ für 2. Stufe $\rightarrow$ lange Aufbauzeit ($C(N*n)$) wenn man Platz um konstanten Faktor erhöht (bei uns 2) sind 50\% der k's geeignet $\Rightarrow$ effiziente Aufbauzeit ($C(n)$) 
+\begin{itemize}
+    \item 1. Stufe: $3n+1$
+    \item 2. Stufe: $\sum \limits_{i=0}^{n-1} 2*|w_i^k|^2 = 2* \sum \limits_{i=0}^{n-1} |w_i^k|^2 < 10n$
+\end{itemize}
+$\Rightarrow 13n+1$
+
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %		Aufgabe 3		%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Aufgabe3}
+
+\textbf{Amortisierte Analyse:}\\ 
+Abschätzung der Kosten einer beliebigen Folge von Operationen auf der Datenstruktur D.\\
+$D_0 \rightarrow^{op_1} D_1 \rightarrow^{op_2} ... \rightarrow^{op_n} D_n$\\ 
+ \newline 
+\textbf{Amortisierte Kosten:}\\ 
+durchnittliche Kosten pro Operation
+
+\subsection*{Definition:}
+\begin{itemize}
+    \item $T_{tats}(op_i)$:= Ausführungszeit von $op_i$, tatsächliche Kosten
+    \item Potenzial $pot: D \rightarrow \mathbb{R}$ ordnet jedem Zustand von $D$ eine reelle Zahl zu.
+    \item $T_{amort}(op_i)$ ammortisierte Kosten von $op_i$ := $T_tats(op_i)+\underbrace{pot(D_i)-pot(D_{i-1})}_{\Delta_{pot} Potenzialdifferenz}$
+\end{itemize}
+
+\begin{equation*}
+\begin{split}
+\Rightarrow \sum \limits_{t=1}^n T_{amort}(op_i) &= \sum \limits_{i=1}^n ( T_{tats}(op_i) + pot(D_i) - pot(D_{i-1}) )  \\
+                                                &= \sum \limits_{i=1}^n  T_{tats}(op_i) + pot(D_n) - pot(D_0)\\ 
+                                                & \\
+\Rightarrow \underbrace{\sum \limits_{t=1}^n T_{tats}(op_i)}_{\text{Wollen wir abschätzen}}  &=\underbrace{ \sum \limits_{t=1}^n T_{amort}(op_i)}_{\text{Können wir oft leicht abschätzen}}  + pot(D_0) - pot(D_n)                           
+\end{split}
+\end{equation*}
+ \newline
+Meist verwendet man ein Potential mit:
+\begin{itemize}
+    \item $pot(D_0) = 0$
+    \item $pot(D_i) \geq 0$
+\end{itemize}
+$\Rightarrow \sum \limits_{t=1}^n T_{tats}(op_i) \leq \sum \limits_{t=1}^n T_{amort}(op_i)$ 
+ \newline
+Bei Wahl einer geeigneten Potentialfunktion gilt für $\sum \limits_{t=1}^n T_{amort}(op_i)$ somit:
+\begin{itemize}
+    \item oft leicht abschätzbar
+    \item liefert gute Schranke
+\end{itemize}
+
+\subsection*{Beispiel: Binärzähler}
+\subsubsection*{Sei:}
+\begin{itemize}
+    \item $x \in \mathbb{N}_0$ in Binärdarstellung $ \rightarrow x=...a_2,a_1,a_0$ mit $a_i \in \{0,1\}$
+    \item $pot(x)$ Anzahl der Einsen in Binärdarsellung von x.\\
+    Erfüllt: $pot(D_0) = 0 \wedge pot(D_i) \geq 0$
+\end{itemize}
+\subsubsection*{Init:}
+Setze alle $a_i$'s auf 0
+\subsubsection*{Increment um 1:}
+\begin{algorithm}[H]
+$a_0 = a_0+1$\;
+$i = 1$\;
+\While{$a_i = 2$}{
+$a_i = 0$\;
+$a_{i+1} = a_{i+1} +1$\;
+$i = i+1$\;
+}
+\end{algorithm}
+
+\subsubsection*{Analyse:}
+\begin{itemize}
+    \item $T_{tats}(Inc) = 1+k$, wenn x die Form $...0\underbrace{1...1}_{k\text{ Einsen}}$hat, mit $k \geq 0$
+    \item Potenzialdifferentz: $\Delta pot = 1-k$ \ \ \ \ \ \ \ \ \  ($0\underbrace{1...1}_{k} \rightarrow^{Inc} 1\underbrace{0...0}_{k}$)
+\end{itemize}
+$\Rightarrow T_{amort}(Inc) = \underbrace{(1+k)}_{tats} + \underbrace{(1-k)}_{\Delta pot} = 2 = O(1)$\\
+$\Rightarrow$ Potenzialmethode: Gesamtkosten: $2n=O(n)$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %		Aufgabe 4		%
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Aufgabe 4}
-	Sei G ein planarer Graph mit $ n \geq 3 $ Knoten und m Kanten, dann gilt $ m = 3n-6 $. dh $ m=O(n) $, also linear viele Kanten.
-	\begin{proof}[H]
-		Ein maximal planarer Graph ist ein planarer Graph, der durch Hinzufügen einer Kante $ (v,w) \notin E $ nicht-planar wird. Beobachtung: Alle Faces in jeder planaren Einbettung von G sind Dreiecke (Triangulierung). Jedes Face in einer Triangulierung hat 3 Rand-Kanten und jede Kante liegt am Rand von 3 Faces. 
-		$$\Rightarrow 3f = 2m $$
-		Einstetzen in Euler-Formel
-		$$ n - m + \frac{2}{3}m = 2$$
-		$$ m = 3n-6$$
-		$ m \leq 3n-6 $ für beliebige planare Graphen
-	\end{proof}
+Sei G ein planarer Graph mit $ n \geq 3 $ Knoten und m Kanten, dann gilt $ m = 3n-6 $. dh $ m=O(n) $, also linear viele Kanten.
+\begin{proof}[H]
+	Ein maximal planarer Graph ist ein planarer Graph, der durch Hinzufügen einer Kante $ (v,w) \notin E $ nicht-planar wird. Beobachtung: Alle Faces in jeder planaren Einbettung von G sind Dreiecke (Triangulierung). Jedes Face in einer Triangulierung hat 3 Rand-Kanten und jede Kante liegt am Rand von 2 Faces. 
+	$$\Rightarrow 3f = 2m $$
+	$$\Rightarrow f = \frac{2}{3}m $$\\
+	Einstetzen in Euler-Formel
+	$$ n - m + \frac{2}{3}m = 2$$
+	$$ m = 3n-6$$
+	$\Rightarrow m \leq 3n-6 $ für beliebige planare Graphen
+\end{proof}
+
+\subsection*{}
+Jeder planare Graph besitzt einen Knoten $v$ mit $dev(v) \leq 5$
+\subsubsection*{Annahme:}
+$\forall_{v \in V}: deg(v) \geq 6$\\
+\begin{equation*}
+\begin{split}
+\Rightarrow m &= \sum \limits_{v \in V} * \frac{deg(v)}{2}\\ 
+              &= \frac{6n}{2}\\
+              &= 3
+\end{split}
+\end{equation*}
+$\lightning$ zur Annahme $\Rightarrow \exists_{v \in V}: deg(v) \leq 5$ 
 
 \subsection*{Zusatzaufgabe}
 Sei $G$ ein \textbf{bipartiter} planarer Graph Dann gilt $ m \leq 2n-4 $. 
@@ -218,7 +325,7 @@ Feld name[1,...,n]
 	\begin{itemize}
 		\item Neuer Name des neuen Intervalls das durch Split entsteht ++count
 		\item Relabel the smaller half
-		\item Laufe parallel d.h. abwechselnd nach links und rechts von $i$ aus, bis Intervallgrenze erreicht d.h. $name[i]\neq name[betrachtetes Element]$
+		\item Laufe parallel d.h. abwechselnd nach links und rechts von $i$ aus, bis Intervallgrenze erreicht d.h. $name[i]\neq name[\text{betrachtetes Element}]$
 		\item Nenne den Teil um, der kleiner ist $[a,i]$ oder $[i+1,b]$ indem nochmals über diesen Teil gelaufen wird. name[betrachtetes Element] = count
 	\end{itemize}
 \end{algorithm}
@@ -227,8 +334,8 @@ Feld name[1,...,n]
 			\input{split-find}
 		}
 	\end{center}
-	$\Rightarrow$ Kosten für 1 Split $\mathcal{O}(2*Laenge des kuerzeren Intervalls)$ \\
-	\textbf{Analyse} $\mathcal{O}(\#Namensaenderungen): max\frac{\text{Laenge des umzubennenendes Intervall}}{2}$ $\Rightarrow\mathcal{O}(\log n)$
+	$\Rightarrow$ Kosten für 1 Split $\mathcal{O}(2*\text{Länge des kürzeren Intervalls})$ \\
+	\textbf{Analyse:} $\mathcal{O}(\#\text{Namensänderungen}): max(\frac{\text{Länge des umzubennenendes Intervall}}{2})$ $\Rightarrow\mathcal{O}(\log n)$
 
 
 
@@ -250,11 +357,11 @@ Feld name[1,...,n]
 		u $\leftarrow$ PQ.delmin() //liefertInfo \\
 		\ForEach{$v\in V$ mit $(u,v)\in E$}{
 			d$\leftarrow$DIST[u]+c(u,v) \\
-			\If{d<DIST[v]}{
+			\If{d $<$ DIST[v]}{
 				\If{DIST[v]==$\infty$}{PQ.insert(v,d)}
 				\Else{PQ.decrease(v,d)}
 				DIST[v]$\leftarrow$d \\
-				PRED[u]$\leftarrow$u \\
+				PRED[v]$\leftarrow$u \\
 			}
 		}		
 	}
@@ -262,12 +369,17 @@ Feld name[1,...,n]
 	
 \end{algorithm}
 
-\paragraph{Laufzeitanalyse:}
-	$\mathcal{O}(\Sigma_{v\in V}(1+outdeg(v))+PQ_Operationen)n*(T_{insert}+T_{delmin}+T_{empty})+m*T_{decrease}$
-	\begin{itemize}
-		\item Bei Binärem Heap: $\mathcal{O}(n*log(n)+m*log(n)=\mathcal{O}((n+m)*log(n)$
-		\item Fibonacci-Heap:Amortisierte Analyse ist ok, da Gesamtlaufzeit betrachtet. $\mathcal{O}(n*log(n)+m)$, insert+empty = $\mathcal{O}(1)$, delmin=$\mathcal{O}(log(n))$, decrease = $\mathcal{O}(1)$
-	\end{itemize}
+\subsection*{Laufzeitanalyse:}
+\subsubsection*{Normal:}
+$\mathcal{O}(\Sigma_{v\in V}(1+outdeg(v))+PQ_{Ops})$\\ 
+$PQ_{Ops}: n*(T_{insert}+T_{delmin}+T_{empty})+m*T_{decrease}$\\ 
+$T_{insert} + T_{delmin}$: Jeder Knoten max 1x Innere Schleife
+	
+\subsubsection*{Fibonacci-Heap:}
+Amortisierte Analyse ist ok, da Gesamtlaufzeit betrachtet.\\ $\mathcal{O}(n*log(n)+m)$, insert+empty = $\mathcal{O}(1)$, delmin=$\mathcal{O}(log(n))$, decrease = $\mathcal{O}(1)$
+
+\subsubsection*{Binärer Heap}
+Bei Binärem Heap: $\mathcal{O}(n*log(n)+m*log(n)=\mathcal{O}((n+m)*log(n)$
 
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %		Aufgabe 7		%
