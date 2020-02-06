@@ -1,0 +1,198 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+
+\usepackage{float}
+
+\usepackage{amsthm}
+\usepackage{algorithm2e}
+
+\usepackage{tikz}
+\usepackage{cancel}
+\usepackage{soul}
+
+\usepackage{setspace}
+\begin{document}
+\begin{center}
+	{\huge \textbf{Aufgaben und Lösungen}}
+\end{center}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%		Frage		%
+%%%%%%%%%%%%%%%%%%%%%
+\section*{Aufgabe 1}
+8x vorgekommen \\
+Beschreiben Sie jeweils eine Lösung für das Union-Find-Problem mit Laufzeit
+\begin{enumerate}
+	\item $O$(log $n$) (amortisiert) für UNION und O(1) für FIND
+	\item O(1) für UNION und O(log$n$) für FIND
+\end{enumerate}	
+wobei $n$ die Anzahl der Elemente ist. Begründen Sie in beiden Fällen die entsprechenden Laufzeiten.
+
+\subsection*{Lösung}
+\subsubsection*{O(log $n$) (amortisiert) für UNION und O(1) für FIND}
+
+\begin{tabular}{ll}
+	Feld name[1...n]:& name[x] = Name des Blocks der x enthält. 1 $\leq$ x $\leq$ n \\
+	size[1..n]:& size[A] = Anzahl Elemente im Block A, initialisiert mit 1 \\ 
+	L[1..n]: & L[A] = Liste aller Elemente in Block A, initialisiert L[i] = \{i\}
+\end{tabular}
+\begin{algorithm}[H]
+	
+	\textbf{Initialisierung:}	\\
+	\Begin{
+		\For{i := 1 to n}{
+			name[i]=i \\
+			size[i]=1 \\ 
+			L[i]=\{i\}
+		}
+	}
+	~\\
+	\textbf{FIND(x):} \\
+	\Begin{
+		\textbf{return} name[x] \\
+	}
+	~\\
+	\textbf{UNION(A,B):} \\
+	\Begin{
+		\uIf{size[A] $\leq$ size[B]}
+		{
+			\ForEach{i in L[A]}{
+				name[i] = B \\ 
+			}
+			size[B] += size[A] \\ 
+			L[B] = L[B].concat(L[A]) \\ 
+		}
+		\Else{
+			\ForEach{i in L[B]}{
+				name[i] = A \\ 
+			}
+			size[A] += size[B] \\ 
+			L[A] = L[A].concat(L[B]) \\ 
+		}
+	}
+	
+	
+\end{algorithm}
+\paragraph*{Laufzeit:}
+FIND(x): O(1) $\rightarrow$ Einfacher Zugriff auf ein Feld\\ 
+UNION: O(log $n$) $\rightarrow$ x kann maximal log(n) mal seinen Namen ändern, da es sich nach jeder Namensänderung in einer doppelt so großen Menge befindet. (Die kleinere Menge wird umbenannt)
+
+
+\subsubsection*{O(1) für UNION und O(log $n$) für FIND}
+\begin{tabular}{ll}
+	Feld name[1...n]:& name[x] = Name des Blocks mit Wurzel x (hat nur Bedeutung, falls x Wurzel) \\
+	Feld vater[1...n]:& vater[x] = $\begin{cases}
+	Vater\ von\ x\ in\ seinem\ Baum\\
+	0,\ falls\ x\ Wurzel
+	\end{cases}$ \\
+	Feld wurzel[1...n]:& wurzel[x] = Wurzel des Blocks mit Namen x \\
+	Feld size[1..n]:& size[x] = Anzahl Knoten im Unterbaum mit Wurzel x \\
+\end{tabular}
+\begin{algorithm}[H]
+	\textbf{Initialisierung:}	\\
+	\Begin{
+		\For{i := 1 to n}{
+			vater[i]=0 \\
+			name[i]=i \\
+			wurzel[i]=i \\
+		}
+	}
+	~\\
+	\textbf{FIND(x):} \\
+	\Begin{
+		\While{vater[x] != 0}{
+			x = vater[x]
+		}
+		\textbf{return} name[x] \\
+	}
+	~\\
+	
+	\textbf{UNION(A,B,C):} \\
+	\Begin{
+		$r_{1}$ = wurzel[A]	\\
+		$r_{2}$ = wurzel[B]	\\
+		\uIf{size[$r_{1}$] $\leq$ size[$r_{2}$]}{
+			vater[$r_{1}$] = $r_{2}$	\\
+			name[$r_{2}$] = C	\\
+			wurzel[C] = $r_{2}$	\\ 
+			size[$r_{2}$] += size[$r_{1}$] \\ 
+		}
+		\Else{
+			vater[$r_{2}$] = $r_{1}$	\\
+			name[$r_{1}$] = C	\\
+			wurzel[C] = $r_{1}$	\\ 
+			size[$r_{1}$] += size[$r_{2}$] \\ 
+		}
+	}
+	
+\end{algorithm}
+
+\paragraph*{Laufzeit:}~\\
+FIND(x): O(log $n$) $\rightarrow$ Weighted UNION Rule \\ 
+UNION: O(1) $\rightarrow$ Nur Pointer ändern
+
+\paragraph{Warum hat der Baum logarithmische Höhe/Tiefe?}
+Im Worst-Case wird ein UNION auf zwei gleich große und gleich tiefe Bäume ausgeführt. Dabei ist die Größe von C doppelt so groß wie die ursprünglichen Bäume, jedoch ist die Tiefe nur um 1 gewachsen ($\log(size(x))\geq Hoehe(x)$)
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%
+%		Frage		%
+%%%%%%%%%%%%%%%%%%%%%
+
+\section*{Aufgabe 2}\label{q:1} 
+8x vorgekommen \\
+Entwickeln Sie eine Datenstruktur zur Speicherung von $n$ Schlüsseln aus dem Universum $\{1,...,N\}$(wobei $n<<N$), die eine Zugriffszeit von O(1) garantiert. Sie dürfen dabei $O(n^2)$ Speicherplatz verwenden.
+
+~\\
+5x vorgekommen \\
+(Perfektes Hashing) Verbessern Sie die Datenstruktur aus Aufgabe \ref{q:1}, so dass nur noch Speicherplatz $O(n)$ benutzt wird.
+
+Hashig durch Verkettung und mit offener Adressierung (Linear Probing:Wie funktioniert Delete())
+
+\subsection*{Lösung}
+\subsubsection*{Hashing mit Verkettung} löse Kollisionen nicht auf, speichere mehrere Schlüssel an der gleichen Position
+\\
+
+Speichere für jedes Ergebnis der Hashfunktion $h$ eine Liste
+
+\textbf{Lookup(x)}: lineare Suche in Liste $T[h(x)]$ \\ 
+\begin{itemize}
+	\item Worst Case: alle Keys in derselben List $\rightarrow$ O(n)
+	\item erwartete Zeit: O($\frac{n}{m}$)
+	\item Belegungsfactor $\beta = \frac{n}{m}$ $\leftarrow$ erw. Länge einer Liste T[x]
+	\item wenn $m \geq n$, d.h. $\beta \leq 1$ dann $\rightarrow$ erw. Laufzeit O(1)
+\end{itemize}
+
+
+\textbf{Insert(x)}: $x\notin S.$ Füge x an erst freie Stelle in $T[h(x)]$ ein
+
+\textbf{Delete(x)}: Entferne x aus $T[h(x)]$
+
+\begin{center}
+	\resizebox{.6\columnwidth}{!}{
+		\input{a2-1}
+	}
+\end{center}
+meist wird als Hashfunktion einfaches Modulo verwendet.
+
+\paragraph*{Verbesserung Verdopplungs-Strategie:}
+\begin{itemize}
+	\item Immer wenn $\beta>2$, verdopple Tafelgröße $\rightarrow1$ sehr teures Insert (da alle Elemente mit neuer Hashfunktion umgespeichert werden), im Schnitt aber weiter O(1)\\ 
+	\item Bei Delete und kleinem $\beta$: Tabelle kann halbiert werden $\rightarrow$ Ein sehr teures Delte, im Schnitt aber weiter O(1)
+\end{itemize}
+
+\subsubsection*{Zusatzaufgabe: Perfektes Hashing}
+
+
+\end{document}

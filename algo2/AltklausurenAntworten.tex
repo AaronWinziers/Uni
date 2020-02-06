@@ -177,11 +177,11 @@ meist wird als Hashfunktion einfaches Modulo verwendet.
 %%%%%%%%%%%%%%%%%%%%%%%%%
 
 \section*{Aufgabe 4}
-	Sei G ein planarer Graph mit $ n \geq 3 $ Knoten und m Kanten, dann gilt $ m = 3n-6 $. dh $ m=O(n) $, also linear viele Kanten.
+	Sei G ein planarer Graph mit $ n \geq 3 $ Knoten und $m$ Kanten, dann gilt $ m = 3n-6 $. dh $ m=O(n) $, also linear viele Kanten.
 	\begin{proof}[H]
-		Ein maximal planarer Graph ist ein planarer Graph, der durch Hinzufügen einer Kante $ (v,w) \notin E $ nicht-planar wird. Beobachtung: Alle Faces in jeder planaren Einbettung von G sind Dreiecke (Triangulierung). Jedes Face in einer Triangulierung hat 3 Rand-Kanten und jede Kante liegt am Rand von 3 Faces. 
+		Ein maximal planarer Graph ist ein planarer Graph, der durch Hinzufügen einer Kante $ (v,w) \notin E $ nicht-planar wird. Beobachtung: Alle Faces in jeder planaren Einbettung von G sind Dreiecke (Triangulierung). Jedes Face in einer Triangulierung hat 3 Rand-Kanten und jeder Kante liegt am Rand von 2 Faces. 
 		$$\Rightarrow 3f = 2m $$
-		Einstetzen in Euler-Formel
+		Einsetzen in Euler-Formel
 		$$ n - m + \frac{2}{3}m = 2$$
 		$$ m = 3n-6$$
 		$ m \leq 3n-6 $ für beliebige planare Graphen
