@@ -27,7 +27,7 @@
 %%%%%%%%%%%%%%%%%%%%%
 %		Frage		%
 %%%%%%%%%%%%%%%%%%%%%
-\section*{Aufgabe 1}
+\section*{Aufgabe 1 - UNION-FIND}
 8x vorgekommen \\
 Beschreiben Sie jeweils eine Lösung für das Union-Find-Problem mit Laufzeit
 \begin{enumerate}
@@ -150,7 +150,7 @@ Im Worst-Case wird ein UNION auf zwei gleich große und gleich tiefe Bäume ausg
 %		Frage		%
 %%%%%%%%%%%%%%%%%%%%%
 
-\section*{Aufgabe 2}\label{q:1} 
+\section*{Aufgabe 2 - Hashing}\label{q:1} 
 8x vorgekommen \\
 Entwickeln Sie eine Datenstruktur zur Speicherung von $n$ Schlüsseln aus dem Universum $\{1,...,N\}$(wobei $n<<N$), die eine Zugriffszeit von O(1) garantiert. Sie dürfen dabei $O(n^2)$ Speicherplatz verwenden.
 
@@ -193,6 +193,57 @@ meist wird als Hashfunktion einfaches Modulo verwendet.
 \end{itemize}
 
 \subsubsection*{Zusatzaufgabe: Perfektes Hashing}
+
+
+
+\section*{Aaaaalte Aufgabe 5 - Maximales Matching}
+Erklären Sie die Grundidee des in der Vorlesung behandelten Algorithmus ur Berechnung eines maximalen Matchings eines bipartiten Graphen
+
+
+\section*{Randomisierter Suchbaum}
+\subsection*{Definition: Randomized Search Tree (RST)}
+Sei $ S=\{x_1,...,x_n\} $ eine Menge von n Schlüsseln. Jedem $ x_i $ wird eine zusätzlich eine Zufallszahl (auch Priorität genannt) $ prio(x_i) $ zugeordnet. $ prio(x_i) $ sind gleichverteilte reelle Zufallszahlen $ \in [0,1] $ (Implementierung wären int-Zahlen, zB 32-bit). \\
+Ein RST für S ist eine binärer Suchbaum für die Paare $ (x_i, prio(x_i), 1 \leq i \leq n $, sodass
+\begin{enumerate}
+	\item normaler Knoten-orientierter Suchbaum für die Schlüssel $ x_i,...,x_n $
+	\item Maximumsheap bzgl der Prioritäten. dh $ prio(v) \geq prio(u) $, falls v Parent. ((u,v) sind Knoten in einem Baum). $ \Rightarrow $ Wurzel enthält maximale Priorität.
+\end{enumerate}
+\textbf{Existenz} durch Algorithmus zum Aufbau (rekursiv).
+\begin{itemize}
+	\item Wurzel einthält $ (x_i, p_i) $ mit $ p_i = prio(x_i) $ maximal
+	\item Linker Unterbaum: RST für $ \{(x_i, p_i)| x_j < x_i \} $
+	\item Rechter Unterbaum: RST für $ \{(x_k, p_k)| x_k > x_i \} $
+\end{itemize}
+Beispiel: $ S=\{1,...,10\} $
+\begin{itemize}
+	\item Schreibe Tabelle mit Prioriäten und Werten.
+	\item Teile die Tabelle beim Maximum und schreibe es in die Wurzel. Wiederhole, bis alle Elemente geschrieben.
+\end{itemize}
+$ \Rightarrow $ Wenn sich die Prioritäten genauso oder umgekehrt, wie die Schlüssel verhalten, erhält man einen degenrierten Baum. (bzgl $ \leq $). zB $ prio(x_i) = x_i $. Dieser Fall ist sehr unwahrscheinlich, wenn sich bei der Priorität um gleichverteilte Zufallszahlen handelt. 
+
+\subsection*{Operationen}
+
+\begin{itemize}
+	\item Lookup(x): normale suche in binärem Baum. Kosten $ \mathcal{O}(H"ohe(T)) $
+	\item Insert(x): Füge einen neuen Knoten v als Blatt $ (x, prio(x)) $ gemäß des Schlüssels in den binären Baum ein, wobei $ prio(x) $ neue Zufallszahl (kann die Prio-Ordnung zerstören). Dann: Rotiere v nach oben, bis die Heap-Eigenschaft gilt, also $ prio(v) \leq prio(parent(v)) $. 
+	\subitem Kosten: $\mathcal{O}(\#Rotationen) = \mathcal{O}(H"ohe(T))$. Alternativ: normales einfügen in binären Baum in absteigender Reihenfolge der Prioritäten.
+	\item DELETE(x): Sei v der knoten mit Schlüssel x $(v = Lookup(x))$. 
+	\begin{enumerate}
+		\item Rotiere v nach unten, bis v ein Blatt ist. R = linkes Rückgrat des rechten Unterbaums von v. L = rechtes Rückgrat des linken Unterbaums. 
+		\item Entferne das Blatt.
+	\end{enumerate}
+	\subitem Kosten: $\mathcal{O}(\#Rotationen) = \mathcal{O}(1 + |L| + |R|)$
+	\item Split(y) $ \rightarrow $ $ S_1=\{x\in S | x \leq y\}, S_2=\{x\in S | x \geq y\} $ (Teile den Baum, indem y mit maximaler Priorität zur Wurzel rotiert wird)
+	\begin{enumerate}
+		\item Insert($ y + \epsilon $) mit Priorität $ \infty $
+		\item Entferne die Wurzel 
+	\end{enumerate}
+	\item Join$ (T_1, T_2 )$: $ S\leftarrow S_1 \cup S_2 $. $T_1$ RST für $S_1$ und $T_2$ RST für $S_2$
+	\begin{enumerate}
+		\item Konstruiere T (Füge y zwischen Max($S_1$) und Min($S_2$) ein. Voraussetzung: Max($S_1$) < Min($S_2$)
+		\item Lösche die Wurzel (Durch runterrotieren des eingefügten Knotens y)
+	\end{enumerate}
+\end{itemize}
 
 
 \end{document}
