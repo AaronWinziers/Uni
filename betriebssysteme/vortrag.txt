@@ -1,0 +1,7 @@
+usb -> usb
+sd -> usb
+usb -> ssd
+
+fat 
+f2fs
+ext2,3,4
