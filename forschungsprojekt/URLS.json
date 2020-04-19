@@ -1,0 +1,93 @@
+[
+  {
+    "label": "scigraphDOI",
+    "name": "Springer SciGraph",
+    "url": "http://api.springernature.com/metadata/json?q=doi:{q}&api_key={key}",
+    "parameters": [
+      {
+        "name": "q",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "scigraphISSN",
+    "name": "Springer SciGraph",
+    "url": "http://api.springernature.com/metadata/json?q=issn:{issn}&api_key={key}",
+    "parameters": [
+      {
+        "name": "issn",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "scigraphISBN",
+    "name": "Springer SciGraph",
+    "url": "http://api.springernature.com/metadata/json?q=isbn:{isbn}&api_key={key}",
+    "parameters": [
+      {
+        "name": "isbn",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "crossrefDOI",
+    "name": "CrossRef DOI API",
+    "url": "https://api.crossref.org/works/{doi}",
+    "parameters": [
+      {
+        "name": "doi",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "crossrefISSN",
+    "name": "CrossRef ISSN API",
+    "url": "https://api.crossref.org/journals/{issn}",
+    "parameters": [
+      {
+        "name": "issn",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "orcidPerson",
+    "name": "ORCID Person Information",
+    "url": "https://pub.orcid.org/v2.0/{id}/person",
+    "parameters": [
+      {
+        "name": "id",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Person"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "orcidWorks",
+    "name": "ORCID Publication Information",
+    "url": "https://pub.orcid.org/v2.0/{id}/works",
+    "parameters": [
+      {
+        "name": "id",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Person"
+      }
+    ],
+    "format": "json"
+  }
+  ]

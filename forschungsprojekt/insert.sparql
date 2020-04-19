@@ -1,0 +1,5 @@
+PREFIX fs:<http://localhost/functionsstore#>
+INSERT {
+
+}
+WHERE {}

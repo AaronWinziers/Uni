@@ -1,0 +1,550 @@
+@prefix fs:    <http://localhost/functionsstore#> .
+
+<http://localhost/f/crossref_dblp_otherElectronicEdition_authoredBy_primaryFullPersonName>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "427" ;
+        fs:jsonPath             "message.author[*].given" , "message.author[*].family" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> .
+
+<http://localhost/f/crossref_dblp_doi_publishedInJournal>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.short-container-title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_doi_publishedAsPartOf_publishedBy>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.publisher" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_doi>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.DOI" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Classifier" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedInJournalVolumeIssue>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.issue" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_sameAs_authoredBy_primaryFullPersonName>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.author[*].given" , "message.author[*].family" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> .
+
+<http://localhost/f/crossref_dblp_sameAs_publishedAsPartOf_publishedBy>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.publisher" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_sameAs_pageNumbers>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.page" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/scigraph_dblp_doi_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  "110" ;
+        fs:jsonPath             "facets[3].values[0].value" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_doi_pageNumbers>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.page" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_sameAs_publishedInJournal>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.container-title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_otherElectronicEdition_publishedAsPartOf_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "427" ;
+        fs:jsonPath             "message.event.name" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_otherElectronicEdition_publishedAsPartOf_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "427" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_doi_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Levenshtein Normalized" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_doi_authoredBy_primaryFullPersonName>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.author[*].given" , "message.author[*].family" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> .
+
+<http://localhost/f/crossref_dblp_doi_publishedInJournalVolumeIssue>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.issue" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/scigraph_dblp_doi_authoredBy_primaryFullPersonName>
+        a                       fs:WebApiFunction ;
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  "110" ;
+        fs:jsonPath             "records[0].creators[*].creator" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> .
+
+<http://localhost/f/crossref_dblp_doi_publishedInJournalVolume>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.volume" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedInJournalVolume>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.volume" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_otherElectronicEdition_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "427" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_otherElectronicEdition_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "427" ;
+        fs:jsonPath             "message.title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Levenshtein Normalized" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Levenshtein Normalized" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_sameAs_publishedInJournalVolume>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.volume" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_authoredBy_primaryFullPersonName>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.author[*].given" , "message.author[*].family" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedAsPartOf_publishedInSeries>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.container-title[*]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedInJournal>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.container-title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/scigraph_dblp_doi_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  "110" ;
+        fs:jsonPath             "records[0].title" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Levenshtein Normalized" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedAsPartOf_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedAsPartOf_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.container-title[*]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_sameAs_publishedInJournalVolumeIssue>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.issue" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_sameAs_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Levenshtein Normalized" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_doi_publishedAsPartOf_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_sameAs_publishedAsPartOf_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.container-title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_sameAs_publishedAsPartOf_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_otherElectronicEdition_doi>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "427" ;
+        fs:jsonPath             "message.DOI" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Classifier" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_doi_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_doi_publishedAsPartOf_title>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "402" ;
+        fs:jsonPath             "message.container-title[0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Sorensen-Dice 2-grams" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" ;
+        fs:traversePath         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> .
+
+<http://localhost/f/crossref_dblp_sameAs_doi>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.DOI" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Classifier" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_sameAs_yearOfPublication>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "460" ;
+        fs:jsonPath             "message.issued.date-parts[0][0]" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .
+
+<http://localhost/f/crossref_dblp_primaryElectronicEdition_pageNumbers>
+        a                       fs:WebApiFunction ;
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  "478" ;
+        fs:jsonPath             "message.page" ;
+        fs:knowledgeBase        "dblp" ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:recordSimilarity     "0.3" ;
+        fs:similarityMetric     "Equals" ;
+        fs:similarityRequests   "100" ;
+        fs:stringSimilarity     "0.7" .

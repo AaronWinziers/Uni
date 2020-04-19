@@ -1,0 +1,10 @@
+PREFIX fs:<http://localhost/functionsstore#>
+SELECT *
+WHERE {
+	?source fs:preCondition ?preCondition .
+	?source fs:api ?api .
+	?source fs:jsonPath ?jsonPath .
+	?source fs:postCondition ?postCondition .
+	?source fs:averageResponseTime ?averageResponseTime .
+	OPTIONAL { ?source fs:dataAvailability ?dataAvailability . }
+}

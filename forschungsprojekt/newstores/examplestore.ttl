@@ -1,0 +1,11 @@
+@prefix fs:    <http://localhost/functionsstore#> .
+
+<http://localhost/f/crossref_doi>
+        fs:api                  "crossref" ;
+        fs:averageResponseTime  -1 ;
+        fs:dataAvailability     -1.0 ;
+        fs:jsonPath             "message.container-title[*]" , "message.title[*]" , "message.page" , "message.URL" , "message.published-print.date-parts[*][*]" , "message.DOI" ;
+        fs:numberOfCalls        -1 ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> , <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> , <https://dblp.org/rdf/schema-2017-04-18#isbn13> , <https://dblp.org/rdf/schema-2017-04-18#title> , <http://www.w3.org/2002/07/owl#sameAs> , <https://dblp.org/rdf/schema-2017-04-18#publishedInBook> , <https://dblp.org/rdf/schema-2017-04-18#doi> , <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> , <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:requiresKey          false .
