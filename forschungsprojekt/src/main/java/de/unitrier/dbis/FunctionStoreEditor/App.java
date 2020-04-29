@@ -17,9 +17,12 @@ import java.util.HashMap;
 
 public class App {
 
+	static String destination = "/home/aaron/Forschungsprojekt/Projekt/Datasets/";
+
 	public static void main(String[] args) throws IOException {
 		File folder = new File("stores");
 		File[] files = folder.listFiles();
+
 
 		System.out.println("=======================");
 		for (File file : files) {
@@ -33,14 +36,13 @@ public class App {
 			String updateQuery = "PREFIX fs:<http://localhost/functionsstore#>\n" +
 					"INSERT {\n";
 
-			HashMap<String,APIURL> urlMap = getURLHash("URLS.json");
+			HashMap<String, APIURL> urlMap = getURLHash("URLS.json");
 
 			for (FunctionDefinition funcDef : functionDefinitions) {
 				String[] parts = funcDef.source.split("_");
-				funcDef.source = (parts[0] + "_" + parts[2]);
 
 				if (!urlMap.containsKey((parts[0].replace("http://localhost/f/", "") + parts[2]).toLowerCase())) {
-					System.out.println("Problematic type: " + parts[0] + "_" + parts[2]);
+					System.out.println("Problematic type: " + parts[0] + "_" + parts[2] + "_" + parts[3]);
 				}
 
 				updateQuery += funcDef.toInsert();
@@ -52,7 +54,7 @@ public class App {
 			File newFile = initFile(file.getName());
 
 			Model model = ModelFactory.createDefaultModel();
-			model.read("newstores/" + file.getName());
+			model.read(destination + file.getName());
 			UpdateAction.parseExecute(updateQuery, model);
 
 
@@ -79,11 +81,13 @@ public class App {
 			System.out.println(apiurl.getLabel());
 		}
 
+		System.out.println(gson.toJson(urlMap));
+
 		return urlMap;
 	}
 
 	public static File initFile(String fileName) throws IOException {
-		File newFile = new File("newstores/" + fileName);
+		File newFile = new File(destination + fileName);
 		if (newFile.exists()) {
 			newFile.delete();
 		}

@@ -1,0 +1,138 @@
+\documentclass[10pt,a4paper]{scrreprt}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\author{Mitschrift von Aaron Winziers}
+\title{Big Data Analytics}
+\date{SS 2020 - Coronasemester}
+\begin{document}
+	\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Section						 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	
+\chapter{Introduction}
+\section{3 Big Vs}
+\begin{itemize}
+	\item Volume
+	\item Velocity - Data should be updated much more quickly - no longer work in batches
+	\item Variety - Videos, text, from web etc
+\end{itemize}
+
+
+\paragraph{Veracity} joins the other 3 Vs nowadays
+
+\section{Volume}
+\begin{itemize}
+	\item Average company has 100 TB of data
+	\item 2.5 quintillion bytes created every day
+	\item the amount of data created will be 300x greater in 2020 than 2005 (aggregate, estimate)
+\end{itemize}
+
+\subsection{Challenges created by data volume}
+\begin{itemize}
+	\item Efficient storage
+	\item Efficiant process queries
+	\item Efficient learning with models
+	\item What hardware and software architecture is needed for this?
+\end{itemize}
+
+
+\section{Variety}
+\begin{itemize}
+	\item Data consists of different forms of data
+\end{itemize}
+
+\subsection{Challenges created by data variety}
+\begin{itemize}
+	\item Syntactic heterogeneity - understadning different data types and formats
+	\item Semantic heterogeneity - Differnt representations forthe same information
+		\subitem Name abreviations - John Smith, J Smith, (Smith, John), Jon Smithe
+	\item The prev 2 issues need to be understood because we need to combine:
+		\subitem information from many different sources
+		\subitem different types of information
+\end{itemize}
+
+
+\section{Velocity}
+\begin{itemize}
+	\item The speed at which data is created and processed
+	\item Data needs to be processed quickly or otherwise (sometimes) forgotten
+\end{itemize}
+
+\subsection{Challenges created by data velocity}
+\begin{itemize}
+	\item Extremely fast flow of information
+	\item Assessing the value of incoming information and drop "unimportant" information
+	\item Quick integration of new information
+\end{itemize}
+
+
+\section{Veracity}
+\begin{itemize}
+	\item Deals with the uncertainty of data
+	\item Can you trust the data?
+\end{itemize}
+
+\subsection{Challenges created by data velocity}
+\begin{itemize}
+	\item Differnet kinds of data defects:
+		\subitem Data may be invalid (broken sensors, bad software)
+		\subitem Data may be biased and not reflect the true population
+		\subitem Data may be manipulated
+	\item Methods are needed to identify and "repair" data defects
+\end{itemize}
+
+\subsection{User-Generated Data}
+\begin{itemize}
+	\item Users may answer dishonestly or not take surveys seriously
+	\item Users may try to purposely influence the results of surveys
+	\item Must check the plausibility of the data before using	
+\end{itemize}
+
+
+	
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
