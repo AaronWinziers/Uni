@@ -12,7 +12,7 @@
 	\maketitle
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%					Section						 %
+%					Vorlesung					 %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	
 \chapter{Introduction}
@@ -94,13 +94,269 @@
 	\item Must check the plausibility of the data before using	
 \end{itemize}
 
+\section{Real Life Scenarios}
+Twitter and facebook have hella data to process
+\subsection{Search engines}
+\begin{itemize}
+	\item Analysis of User behavior - related queries, useful books, etc.
+	\item Result rankings need to be processed
+	\item Voice query processing
+	\item Question answering - not just returning web results
+	\item Understanding images - Showing quick summarizing graphics
+	\item Velocity - i.e. news needs to be current
+\end{itemize}
+\subsection{Online shops}
+\begin{itemize}
+	\item Further shopping suggestions
+	\item Bundles that are often bought together
+	\item Adjusting pricing
+	\item Fraud detection - esp. in reviews
+\end{itemize}
 
+
+\section{Data Warehouse s Data Lake}
+\subsection{Data warehouse}
+\begin{itemize}
+	\item Data is processed into schema before being pput into warehouse
+	\item Data is structured
+	\item Analytics are then performed on clean data
+	\item Many decisions need to made in advance esp when deciding which data to keep
+	\item Poor approach with dynamic data or with multiple sources (No guaranteed schema)
+\end{itemize}
+
+\subsection{Data Lake}
+\begin{itemize}
+	\item Unstructured data is gathered and stored
+	\item To analyze, data is selected from data pool
+	\item No decisions are made about what to keep
+	\item ALL data interesting for analysis is kept - both self created and gathered
+	\item All data stored in single system dedicated only to storing data
+\end{itemize}
+
+\subsection{Modern Big Data environment}
+\begin{itemize}
+	\item All data fed into data lake
+	\item Regular analysis is sent to data warehouse
+	\subitem Used for established mining processes
+	\subitem Extract, transform, load
+	\item Analytic sandbox
+	\subitem more exploratory analysis
+	\subitem Used for more flexibility
+\end{itemize}
+
+\section{Web scale computation}
+\subsection{Why is volume an issue?}
+\begin{itemize}
+	\item Reading data from disks is slow - esp when only from one disk
+	\item Reading must be performed in parallel
+	\item Larger amounts of data are more difficult to process
+	\item Web - scale computation
+	\begin{itemize}
+		\item Web crawlers gather large amounts of data (commoncrawl.org ~220TB)
+		\item Required analyses:
+		\subitem Document inversion - creating a search index
+		\subitem PageRank
+		\subitem Web log mining (identifying user behavior)
+		\subitem Trend Mining - predicting upcoming topics 
+	\end{itemize}
+\end{itemize}
+\subsection{Scaling computing power (Data centers)}
+\begin{itemize}
+	\item Buying many cheap computers often cheaper than  buying more powerful computers
+	\item Buying more = scaling out
+	\item Buying more powerful = scaling up
+	\item Issues with scaling out
+	\subitem Large number of machines -> many hardware failures, esp hard drive failures
+	\subitem Distributed solutions and algorithms are required
+\end{itemize} 
+
+\section{Fallacies}
+\subsection{Hardware failures}
+\begin{itemize}
+	\item Failures are common, not the exception
+	\item With larger amounts of machines the probability that something will fail approaches 1
+\end{itemize}
+
+\subsection{Fallacies of Distributed Computing}
+\begin{itemize}
+	\item The network is reliable
+	\item Latency is zero
+	\item Bandwidth is infinite
+	\item The network is secure
+	\item Topology doesn't change
+	\item There is one administrator
+	\item Transport cost is zero
+	\item The network is homogeneous
+\end{itemize}
+
+\subsection{Failure handling}
+\begin{itemize}
+	\item Failures happen at any time - needs to be compensated by algorithms
+	\item Data can be replicated - in Hadoop in 3 locations
+	\item The state of the information can be logged
+	\item Tasks can be performed redundantly
+\end{itemize}
+
+
+
+\section{Hadoop}
+\begin{itemize}
+	\item De facto standard for web scale analytics
+	\item Open source software for reliable and scalable distributed computing
+	\item Uses simple programming models - code does not change between one and many machines
 	
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Vorlesung					 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Data Quality}
+\section{Intro}
+\begin{itemize}
+	\item Garbage produces garbage
+	\item A model trained with bad data will produce bad results even with good data
+\end{itemize}
+	
+\subsection{Dimensions of data quality}
+\subsubsection{Completeness}
+\begin{itemize}
+	\item All expected data is available
+	\item A sufficient amount of data is available
+	\item Completeness is dependent on application
+	\subitem Data insufficient for one question may still be used to answer another
+	\item No objective measure
+\end{itemize}
+
+\subsubsection{Accuracy}
+Clear
+
+\subsubsection{Currency}
+\begin{itemize}
+	\item Is the data new enough for my application?
+	\item Is new data added fast enough (goes to completeness)
+\end{itemize}
+
+\subsubsection{Consistency}
+\begin{itemize}
+	\item Conforms to an authority(isbn) \textbf{(or)}
+	\item Does ot contradict itself
+	\item Hard inconsistency:
+	\subitem Binary decision(consistent or not)
+	\subitem Relatively simple
+	\item Soft inconsistency:
+	\subitem Value looks suspicious
+	\subitem May or may  not be correct
+	\subitem Often related to other quality dimensions
+\end{itemize}
+
+\subsection{Differences to Classic data}
+\begin{itemize}
+	\item More heterogeneous (More variety \& from different sources)
+	\item Changes faster (Velocity)
+	\item Cannot reject bad data (goal is to gather as much as possible)
+	\subitem Goal is to gather as much as possible
+	\subitem Different projects/applications need access to the data and have different ideas to the quality of the data
+\end{itemize}
+
+
+\section{"Good old days"}
+\begin{itemize}
+	\item Define data constraints
+	\item Check if data meets constraints
+	\item Reject otherwise
+\end{itemize}
+
+
+\subsection{How to check consistency}
+\paragraph{Data definitions:}
+\begin{itemize}
+	\item SQL constraints
+	\item DTD/XML-Schema
+\end{itemize}
+\paragraph{Authorities:}
+\begin{itemize}
+	\item Standards (ISO 639, ISO 3166-2)
+	\item Authority files (e.g. Placenames)
+\end{itemize}
+
+
+\subsection{Constraints}
+\begin{itemize}
+	\item Rules may become very generic (* is NOT a good constraint)
+	\item Can become very specific (impossible to maintain)
+	\item They were bad for classical data, horrible for big data
+	\subitem Big data is even more heterogeneous and much more volatile
+\end{itemize}
+\paragraph{In big data}
+\begin{itemize}
+	\item Constant need for updating
+	\item What happens with unexpected data?
+\end{itemize}
+\paragraph{Combining data pools}
+\begin{itemize}
+	\item Old approach meant migrating and rewriting old data
+	\subitem Not feasible because of cost of changing and the speed at which rules change
+	\subitem Each data provider has different rules and standards
+\end{itemize}
+
+
+\subsection{Rejecting data}
+\begin{itemize}
+	\item Data can no longer be rejected
+	\item We don't know what is wrong
+	\item We don't have time to fix it
+	\item We may need the "bad" data later
+\end{itemize}
+
+\subsection{What to do}
+\begin{itemize}
+	\item Have a clear understanding of what good data is
+	\item Filter bad data based on your current application
+	\item Critically check your results
+	\item Data lake => Filter => Processing => Results (can jump back in every step)
+	\item New pipeline for every application
+\end{itemize}
+
+\section{Steps to answering a question}
+\begin{enumerate}
+	\item What are the data sets?
+	\item Filtering
+	\begin{itemize}
+		\item What is the expected value range?
+		\subitem Most often times must be answered by a domain expert
+		\item Why is information missing? 
+		\subitem Answer also depends on domain knowledge. There may be no answer.
+		\item Is it okay that information is missing?
+		\subitem Domain expert
+		\item How much data is missing?
+		\subitem Dunno
+	\end{itemize}
+\end{enumerate}
+
+\subsection{Know your data}
+\begin{itemize}
+	\item Outlier detection / analysis
+	\item Descriptive statistics
+	\item Result visualization
+\end{itemize}
+
+\paragraph{Outliers}
+\begin{itemize}
+	\item Not all outliers are bad
+	\item Decision can be made to accept the loss of good data through cutoff (like in dates)
+	\item Statistical analysis can show problematic outliers and systematic problems
+	\item It \textbf{cannot} find individual errors
+	\item Processing affects answerable questions
+\end{itemize}
+\large{Do not filter the wrong data}
+\large{Keep your bias out of the pipeline}
 \end{document}
 
 
 
-
+ 
 
 
 
