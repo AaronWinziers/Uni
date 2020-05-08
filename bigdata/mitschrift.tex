@@ -352,6 +352,204 @@ Clear
 \end{itemize}
 \large{Do not filter the wrong data}
 \large{Keep your bias out of the pipeline}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Vorlesung					 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Data Quality Part II - Author Name Disambiguation}
+\section{Problem}
+\begin{itemize}
+	\item Direct references - multiple entities with same name
+	\item Indirect references - Generally difficult - sensitive to context(time of quote i.e. Obama or Trump), sensitive to language (Monaco, Munich, München)
+\end{itemize}
+
+\section{Author name Disambiguation vs Named Entity Disambiguation}
+\begin{itemize}
+	\item AND is a simplification
+	\item Always deals with persons (sometimes groups)
+	\item Mentions are already extracted from text
+	\item Information is already \textit{relatively} structured
+	\item Goal is to have minimal homonyms and synonyms 
+\end{itemize}
+
+\section{Problems with using names}
+\begin{itemize}
+	\item Names change
+	\subitem Change in cultural context - change in translation o.Ä.
+	\subitem Marriage
+	\subitem Visit Mecca - add Haj
+\end{itemize}
+
+\section{How to identify a person}
+\begin{itemize}
+	\item Use other properties:
+	\begin{itemize}
+		\item Coauthors
+		\item Affiliations (Uni, research group etc)
+		\item Topic (Research specialization)
+	\end{itemize}
+\end{itemize}
+
+\subsection{However:}
+\begin{itemize}
+	\item Coauthors may also be synonyms/homonyms
+	\item Data may be difficult to interpret - Universität vs Univerisity of
+	\item Data may just be wrong
+\end{itemize}
+
+\subsection{Also possible:}
+Use external IDs:
+\begin{itemize}
+	\item Authority IDs (National Libraries)
+	\item Specialized IDs (Orchid)
+	\item Third Party (email, twitter handle etc)
+\end{itemize}
+
+\section{Algorithmic solutions}
+Two principal solutions:
+\begin{itemize}
+	\item Batch computations: compute a matching for all mentions at once
+	\item Iterative approach: Add new mentions to the existing profiles
+\end{itemize}
+
+\subsection{Batch Computation}
+\begin{enumerate}
+	\item Extract features for each mention (Coauthors, affiliations, etc.)
+	\item Calculate similarity value for all pairs of mentions $n^2/2$ values (very expensive)
+	\begin{itemize}
+		\item Cosine similarity
+		\item Trained similarity
+	\end{itemize}
+	\item Clustering to create individual profiles
+	\begin{itemize}
+		\item Very low values can be ignored (don't need to evaluate the whole graph)
+		\item Provides a bit of an issue
+		\item Requires a lot of data
+	\end{itemize}
+\end{enumerate}
+
+\paragraph{Pros and Cons}
+Pro:
+\begin{itemize}
+	\item Ignores previous errors
+	\item Treats new data and old data equally
+\end{itemize}
+Cons:
+\begin{itemize}
+	\item Slow
+	\item Cannot run with every update
+	\item Mentions can oscillate between entities
+\end{itemize}
+
+\paragraph{Blocking}
+\begin{itemize}
+	\item Makes matching faster
+	\item Divides mentions by a simple rule (last name)
+	\item Matching is run per block
+\end{itemize}
+Pro:
+\begin{itemize}
+	\item Simple to implement
+	\item Improves speed (reduces required similarity values)
+\end{itemize}
+Cons:
+\begin{itemize}
+	\item Entities may land in different blocks -> never matched
+	\item Introduces structural problems -> changed names will not match
+\end{itemize}
+
+\subsection{Iterative Approach}
+\begin{itemize}
+	\item Keep known profiles
+	\item Search for best matching profile (or create new ones)
+	\item May update existing profiles (combine previously separate profiles)
+\end{itemize}
+Pro:
+\begin{itemize}
+	\item Can reuse known data (That was expensive to compute)
+	\item More reactive for new data
+	\item Compares similarities to entire profile (not individual publications)
+\end{itemize}
+Cons:
+\begin{itemize}
+	\item Might still require blocking
+	\item Propagates old errors
+	\item Need to store profiles
+	\item Needs to be able to correct profiles
+\end{itemize}
+
+\section{Evaluation}
+\paragraph{2 Goals:}
+\begin{itemize}
+	\item Determine if matching is acceptable
+	\item Find optimal configuration for algorithm (secondary but important)
+\end{itemize}
+
+\paragraph{Typical approach}
+\begin{enumerate}
+	\item Get a test collection
+	\item Run Algorithm
+	\item Analyze results
+\end{enumerate}
+
+\paragraph{Test collections}
+consist of:
+\begin{itemize}
+	\item A list of mentions
+	\item A predefined mapping between mentions and entities
+\end{itemize}
+Algorithm is good if it approaches the gold standard (defined in test collection)
+
+\paragraph{Creating test collections is difficult:}
+\begin{itemize}
+	\item Use a predefined one
+	\item Make your own
+	\item Try to reuse data you already have
+\end{itemize}
+
+\paragraph{Predefined}
+\begin{itemize}
+	\item Make sure it matches your collections
+	\item The features should be the same
+	\item The features should carry the same weight
+	\item Datasets may be unreliable 
+\end{itemize}
+
+\paragraph{Self made}
+\begin{itemize}
+	\item All the same issues as with predefined
+	\item Need to be created (expensive)
+	\item Need to prevent bias in creation (May forget an edge case)
+	\item May not be transferable (Need to create multiple)
+\end{itemize}
+
+\paragraph{Reuse own data}
+Pros:
+\begin{itemize}
+	\item Very cheap
+	\item Covers wide array of cases
+\end{itemize}
+Cons:
+\begin{itemize}
+	\item Only works if data is correct
+	\item Limited in scope (Wei Wang -> homonym)
+\end{itemize}
+
+\subsection{Evaluation}
+\paragraph{Quality of results}
+\begin{itemize}
+	\item Standard methods (precision, recall, cluster alignment)
+	\item Method must match application
+\end{itemize}
+B$^3$ is an example algorithm
+\paragraph{Performance of algorithms}
+\begin{itemize}
+	\item How long does it take?
+	\item What resources are needed?
+	\item Is your collection large enough?
+\end{itemize}
 \end{document}
 
 
