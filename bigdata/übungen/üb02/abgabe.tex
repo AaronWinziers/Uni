@@ -7,15 +7,6 @@
 \usepackage{graphicx}
 \usepackage{xcolor}
 
-\usepackage{listings}
-\lstset{
-	numbers=left,
-	showspaces=false,
-	breaklines=true,
-	tabsize=3,
-	basicstyle=\ttfamily,
-}
-
 \author{Aaron Winziers - 1176638}
 \title{Big Data Analytics SS 2020\\\LARGE{Übungsblatt 2}}
 
@@ -23,26 +14,28 @@
 	\maketitle
 	
 \section*{Task 01}
-The statistical features were as follows: \\
-Min: -5574.0 \\
-Max: 55747.0 \\
-Lower Quartile: 5.0 \\
-Upper Quartile: 12.0 \\
-Median: 8.0 \\
-Mean: 16.605561436006 \\ ~\\
-The box and whisker plot below is drawn with the whiskers at the 5th and 95th percentile. The red dots show the values that lie beyond the whiskers. As can be seen, there is a large number of extreme outliers in the dataset that hinder the ability to learn very much from the plot. However, the visualization allows for a 
+20 lines in the file contained improperly formatted data. These were ignored and not used in the calculations. Below is a table of the calculated values.
+\begin{table}[h]
+	\centering
+	\begin{tabular}{l||l|l}
+		& First Name & Last Name \\ \hline \hline
+		Rec              & 0.3848     & 0.7632    \\ \hline
+		Save             & 0.9970     & 0.9996    \\ \hline
+		C                & 12,083,443 & 1,561,279 \\ \hline
+		Number of Blocks & 18,168     & 29,830    \\
+	\end{tabular}
+\end{table}
 
-\newpage
-\section*{Task 02}
-\paragraph{(a)}Below is a histogram with 50 bins distributed evenly across the range of the data. In this from the histogram is almost useless because of the extreme
+\paragraph{Rec}
+The two blocking strategies differ greatly in their recall values. With a recall of ~0.7632, blocking by last name was almost twice as successful as blocking by first name in placing the name pairs into the same block. This is likely because first names are abbreviated much more often than last names. 
 
-\paragraph{(b)} The first class of data removed were articles with a page length of more than 50. This class consists of 797 entries, and roughly 1.7\% of the data. While this is not an insignificant amount, a page length of 50 places an article well into the 99th percentile of the data, and, as such, the data represents extreme outliers, but even more likely is incorrect. As can be seen in the histogram below, the histogram becomes much more compact, however, it is not yet to the point at which it can effectively show the patterns in the data. This is due to the fact that there are a number of data points that lie far into the negative pages numbers.
+Another aspect that affected both groups considerably was the swapping of names, meaning that the order of first and last name was incorrect. 
 
-In terms of the statistical properties of the data, t
+\paragraph{Save}
+Both strategies allowed for a large percentage of calculations to be saved; through first name blocking ~99.7\% and through last name blocking 99.96\%. This still means that roughly 10.5 million more calculations must be performed when blocking by first name.
 
-The second class of data that was removed were the lines with page lengths less than 1. The reason for removing this class is relatively obvious; an article cannot consist of zero or less than zero pages. This class consists of 848 members and represents roughly 1.9\% of the data. The histogram below clearly shows that in this form, the data can be visualized much more effectively.
+This difference can be explained through the previously mentioned abbreviation of first names. Each time a name is abbreviated, it is placed into a block that contains all other instances of a name starting with a particular letter that are also abbreviated. As a result, 26 blocks (assuming characters are limited to just the English alphabet) are created that can quickly become quite large. The number of calculations that need to be performed grow quadratically with the size of the block, meaning that these blocks have a strong negative impact on the performance gain brought by the blocking.
 
-The changes in the statistical properties are simila
 	
 	
 \end{document}
