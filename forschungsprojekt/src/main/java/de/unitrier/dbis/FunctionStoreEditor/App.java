@@ -13,60 +13,117 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.update.UpdateAction;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class App {
-
-	static String destination = "/home/aaron/Forschungsprojekt/Projekt/Datasets/";
-
 	public static void main(String[] args) throws IOException {
 		File folder = new File("stores");
 		File[] files = folder.listFiles();
+		HashMap<String, APIURL> urlMap = getURLHash("URLS.json");
+		String destination = "/home/aaron/uni/forschungsprojekt/stores/new/";
 
-
-		System.out.println("=======================");
+		assert files != null;
 		for (File file : files) {
+			if (file.isDirectory()) {
+				continue;
+			}
+			System.out.println("======= " + file.getName() + " =======");
 			int count = 0;
-			System.out.println("Altering: " + file.getName());
 
 			FunctionGetter functionGetter = new FunctionGetter(file.getAbsolutePath());
 			FunctionDefinition[] functionDefinitions = functionGetter.getFunctions();
 			functionGetter.close();
 
-			String updateQuery = "PREFIX fs:<http://localhost/functionsstore#>\n" +
-					"INSERT {\n";
+			System.out.println("Creating store with individual functions");
+			String updateQuery = individualQuery(functionDefinitions, urlMap);
+			insertStore(file, destination + "single/", updateQuery);
+			System.out.println("Finished");
 
-			HashMap<String, APIURL> urlMap = getURLHash("URLS.json");
-
-			for (FunctionDefinition funcDef : functionDefinitions) {
-				String[] parts = funcDef.source.split("_");
-
-				if (!urlMap.containsKey((parts[0].replace("http://localhost/f/", "") + parts[2]).toLowerCase())) {
-					System.out.println("Problematic type: " + parts[0] + "_" + parts[2] + "_" + parts[3]);
-				}
-
-				updateQuery += funcDef.toInsert();
-			}
-
-			updateQuery += "}\n" +
-					"WHERE {}";
-
-			File newFile = initFile(file.getName());
-
-			Model model = ModelFactory.createDefaultModel();
-			model.read(destination + file.getName());
-			UpdateAction.parseExecute(updateQuery, model);
-
-
-			FileOutputStream outputStream = new FileOutputStream(newFile);
-			RDFDataMgr.write(outputStream, model, Lang.TTL);
-			outputStream.close();
-			model.close();
-			System.out.println("Finished creating new function store");
-			System.out.println("=======================");
+			System.out.println("Creating store with grouped functions");
+			updateQuery = groupedQuery(functionDefinitions, urlMap);
+			insertStore(file, destination + "grouped/", updateQuery);
+			System.out.println("Finished");
 		}
 
+
 	}
+
+	public static String individualQuery(FunctionDefinition[] functionDefinitions, HashMap<String, APIURL> urlMap) {
+		String query = "PREFIX fs:<http://localhost/functionsstore#>\n" +
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+				"INSERT {\n";
+
+		for (FunctionDefinition funcDef : functionDefinitions) {
+			String[] parts = funcDef.source.split("_");
+
+			APIURL url = urlMap.get((parts[0].replace("http://localhost/f/", "") + parts[2]).toLowerCase());
+
+			if (Objects.isNull(url)) {
+				query += funcDef.insertIndividual("http://url.wasnt.resolved");
+				//System.out.println("Problematic type: " + parts[0] + "_" + parts[2] + "_" + parts[3]);
+			} else if (!query.contains(url.getUrl())) {
+				query += funcDef.insertIndividual(url.getCleanUrl());
+				query += url.toInsert();
+			}
+		}
+
+		query += "}\n" +
+				"WHERE {}";
+
+		return query;
+	}
+
+	public static String groupedQuery(FunctionDefinition[] functionDefinitions, HashMap<String, APIURL> urlMap) {
+		String query = "PREFIX fs:<http://localhost/functionsstore#>\n" +
+				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
+				"INSERT {\n";
+
+		HashMap<String, ArrayList<FunctionDefinition>> funcMap = new HashMap<>();
+
+		for (FunctionDefinition funcDef : functionDefinitions) {
+			if (funcMap.containsKey(funcDef.getPreCondition())) {
+				funcMap.get(funcDef.getPreCondition()).add(funcDef);
+			} else {
+				ArrayList<FunctionDefinition> newlist = new ArrayList<>();
+				newlist.add(funcDef);
+				funcMap.put(funcDef.getPreCondition(), newlist);
+			}
+		}
+
+		for (String key : funcMap.keySet()) {
+
+			ArrayList<FunctionDefinition> list = funcMap.get(key);
+
+			String[] parts = list.get(0).source.split("_");
+			String urlKey = (parts[0].replace("http://localhost/f/", "") + parts[2]).toLowerCase();
+			APIURL url = urlMap.get(urlKey);
+
+			if (Objects.isNull(url)) {
+				query += list.get(0).insertGrouped("http://url.wasnt.resolved");
+				for (FunctionDefinition funcDef : funcMap.get(key)) {
+				query += funcDef.insertPost("http://url.wasnt.resolved");
+			}
+				//System.out.println("Problematic type: " + parts[0] + "_" + parts[2] + "_" + parts[3]);
+			} else if (!query.contains(url.getUrl())) {
+				query += list.get(0).insertGrouped(url.getCleanUrl());
+				query += url.toInsert();
+				for (FunctionDefinition funcDef : funcMap.get(key)) {
+				query += funcDef.insertPost(urlMap.get(urlKey).getCleanUrl());
+			}
+			}
+
+
+		}
+
+		query += "}\n" +
+				"WHERE {}";
+
+		return query;
+	}
+
 
 	public static HashMap<String, APIURL> getURLHash(String fileName) throws FileNotFoundException {
 		Gson gson = new Gson();
@@ -81,12 +138,26 @@ public class App {
 			System.out.println(apiurl.getLabel());
 		}
 
-		System.out.println(gson.toJson(urlMap));
-
 		return urlMap;
 	}
 
-	public static File initFile(String fileName) throws IOException {
+	// Creates file and inserts function store with the query
+	public static void insertStore(File file, String destination, String updateQuery) throws IOException {
+		File newFile = initFile(destination, file.getName());
+
+		Model model = ModelFactory.createDefaultModel();
+		model.read(destination + file.getName());
+		UpdateAction.parseExecute(updateQuery, model);
+
+
+		FileOutputStream outputStream = new FileOutputStream(newFile);
+		RDFDataMgr.write(outputStream, model, Lang.TTL);
+		outputStream.close();
+		model.close();
+	}
+
+	// Creates new files to fill with the new function stores
+	public static File initFile(String destination, String fileName) throws IOException {
 		File newFile = new File(destination + fileName);
 		if (newFile.exists()) {
 			newFile.delete();
@@ -97,6 +168,7 @@ public class App {
 		System.out.println("Adding prefix to file");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(newFile));
 		writer.write("@prefix fs:    <http://localhost/functionsstore#> .");
+		writer.write("@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .");
 		writer.close();
 
 		return newFile;

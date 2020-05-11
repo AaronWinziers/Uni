@@ -1,51 +1,62 @@
 package de.unitrier.dbis.FunctionStoreEditor;
 
+import java.util.UUID;
+
 public class FunctionDefinition {
 	String source;
 	Integer averageResponseTime;
 	String api;
-	Double dataAvailability;
 	String jsonPath;
 	String postCondition;
 	String preCondition;
-	Integer numberOfCalls;
-	Boolean requiresKey;
 
-	public FunctionDefinition(String source, String preCondition, String postCondition, double dataAvailability, int averageResponseTime, Integer numberOfCalls) {
+	public FunctionDefinition(String source, String preCondition, String postCondition, int averageResponseTime) {
 		this.source = source;
 		this.preCondition = preCondition;
 		this.postCondition = postCondition;
-		this.dataAvailability = dataAvailability;
 		this.averageResponseTime = averageResponseTime;
-		this.numberOfCalls = numberOfCalls;
 	}
 
-	public void replaceNulls() {
-		if (this.requiresKey == null) {
-			this.requiresKey = this.source.contains("{key}");
-		}
-		if (this.numberOfCalls == null || this.dataAvailability == null || this.averageResponseTime == null
-				|| this.numberOfCalls == -1 || this.dataAvailability == -1 || this.averageResponseTime == -1) {
+	public String insertIndividual(String url) {
 
-			this.numberOfCalls = -1;
-			this.averageResponseTime = -1;
-			this.dataAvailability = -1.0;
-		}
+		UUID postConditionId = UUID.nameUUIDFromBytes((url + postCondition).getBytes());
+
+		return "<" + source + "> fs:api \"" + api + "\" ;\n" +
+				"\tfs:averageResponseTime -1 ;\n" +
+				"\tfs:dataAvailability -1.0 ;\n" +
+				"\tfs:numberOfCalls -1 ;\n" +
+				"\tfs:postCondition <http://localhost/f/" + postConditionId.toString() + "> ;\n" +
+				"\tfs:preCondition <" + preCondition + "> ;\n" +
+				"\tfs:url <" + url + "> .\n" +
+				"<http://localhost/f/" + postConditionId.toString() + "> rdf:type <" + postCondition + "> ;\n" +
+				"\tfs:jsonPath \"" + jsonPath + "\" ;\n" +
+				"\tfs:averageResponses -1 .\n";
 	}
 
-	public String toInsert() {
-		this.replaceNulls();
-		String result = // If you change this DO NOT forget period at end of String (End of block in query pertaining to the ?s)
-				"\t<" + source + "> fs:api \"" + api + "\" ;\n" +
-						"\t\tfs:averageResponseTime " + averageResponseTime + " ;\n" +
-						"\t\tfs:dataAvailability " + dataAvailability + " ;\n" +
-						"\t\tfs:jsonPath \"" + jsonPath + "\" ;\n" +
-						"\t\tfs:numberOfCalls " + numberOfCalls + " ;\n" +
-						"\t\tfs:postCondition <" + postCondition + "> ;\n" +
-						"\t\tfs:preCondition <" + preCondition + "> ;\n" +
-						"\t\tfs:requiresKey " + requiresKey + " .\n";
+	// Creates part of a query that represents the function as an entity with a name that can be grouped with other functions
+	public String insertGrouped(String url) {
+		return "<" + groupedName() + "> fs:api \"" + api + "\" ;\n" +
+				"\tfs:averageResponseTime -1 ;\n" +
+				"\tfs:dataAvailability -1.0 ;\n" +
+				"\tfs:numberOfCalls -1 ;\n" +
+				"\tfs:preCondition <" + preCondition + "> ;\n" +
+				"\tfs:url <" + url + "> .\n";
+	}
 
-		return result;
+	// Creates paart of a query that serves to insert a post condition for a grouped function
+	public String insertPost(String url){
+		UUID postConditionId = UUID.nameUUIDFromBytes((url + postCondition).getBytes());
+
+		return "<" + groupedName() + "> fs:postCondition <http://localhost/f/" + postConditionId.toString() + "> .\n" +
+				"<http://localhost/f/" + postConditionId.toString() + "> rdf:type <" + postCondition + "> ;\n" +
+				"\tfs:jsonPath \"" + jsonPath + "\" ;\n" +
+				"\tfs:averageResponses -1 .\n";
+	}
+
+	// Consists of source_destination_precondition
+	public String groupedName(){
+		String[] parts = source.split("_");
+		return parts[0] + "_" + parts[1] + "_" + parts[2];
 	}
 
 	@Override
@@ -56,9 +67,11 @@ public class FunctionDefinition {
 				", postCondition='" + postCondition + '\'' +
 				", api='" + api + '\'' +
 				", jsonPath='" + jsonPath + '\'' +
-				", dataAvailability=" + dataAvailability +
 				", averageResponseTime=" + averageResponseTime +
-				", numberOfCalls=" + numberOfCalls +
 				'}';
+	}
+
+	public String getPreCondition() {
+		return preCondition;
 	}
 }

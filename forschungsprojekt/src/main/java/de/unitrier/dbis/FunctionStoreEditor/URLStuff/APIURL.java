@@ -7,6 +7,10 @@ public class APIURL {
 	Parameter[] parameters;
 	String format;
 
+	public String toInsert(){
+		return "\t<" + getCleanUrl() + "> fs:requiresKey \"" + url.contains("{key}") + "\" .\n";
+	}
+
 	public String getLabel() {
 		return label;
 	}
@@ -25,6 +29,10 @@ public class APIURL {
 
 	public String getUrl() {
 		return url;
+	}
+
+	public String getCleanUrl() {
+		return url.replace("{","[").replace("}","]");
 	}
 
 	public void setUrl(String url) {

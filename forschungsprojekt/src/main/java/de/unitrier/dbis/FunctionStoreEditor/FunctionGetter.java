@@ -44,6 +44,7 @@ public class FunctionGetter {
 		return gson.fromJson(functions.toString(), FunctionDefinition[].class);
 	}
 
+	// Changes Json structure from "element":{"type":"type","value":"value"} to "element":"value"
 	private JsonArray sanitizeResults(JsonArray results) {
 		for (JsonElement element : results) {
 			JsonObject obj = (JsonObject) element;
