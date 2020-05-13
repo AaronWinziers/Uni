@@ -63,6 +63,7 @@ public class App {
 
 			if (Objects.isNull(url)) {
 				query += funcDef.insertIndividual("http://url.wasnt.resolved");
+				query += "\t<http://url.wasnt.resolved> fs:requiresKey \"false\" .\n";
 				//System.out.println("Problematic type: " + parts[0] + "_" + parts[2] + "_" + parts[3]);
 			} else if (!query.contains(url.getUrl())) {
 				query += funcDef.insertIndividual(url.getCleanUrl());

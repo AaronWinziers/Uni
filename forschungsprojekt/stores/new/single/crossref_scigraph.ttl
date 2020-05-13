@@ -405,6 +405,9 @@
         fs:averageResponses  -1 ;
         fs:jsonPath          "message.volume" .
 
+<http://url.wasnt.resolved>
+        fs:requiresKey  "false" .
+
 <https://api.crossref.org/works/[doi]>
         fs:requiresKey  "false" .
 
