@@ -550,6 +550,99 @@ B$^3$ is an example algorithm
 	\item What resources are needed?
 	\item Is your collection large enough?
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Vorlesung					 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{Hadoop Framework}
+\section{Introduction}
+\begin{itemize}
+	\item Open source big data processing framework
+	\item Focused on processing large data sets on clusters of computers
+\end{itemize}
+
+\section{Related Apache projects}
+Get from VL Folien 3-6
+
+\section{Distributed file system}
+\begin{itemize}
+	\item Idea is to move the computation to the data
+	\subitem Aboids need for copying over network (slow)
+	\item Files stored in large chunks in cluster
+	\item \textbf{Namenode} tracks block location
+	\item Computations should be performed on the node where the data is
+\end{itemize}
+
+\section{File storage and replication}
+HDFS
+\begin{itemize}
+	\item Files are separated into blocks
+	\item Blocks are units for computations (blocks are always processed as a whole)
+	\item Default replicas = 3
+	\item Replication occurs when blocks are filled -> goes in to replication pipeline
+	\subitem Block is full -> contact NameNode -> send data to other DataNode -> DataNode forwards to third node
+\end{itemize}
+
+\section{MapReduce}
+\subsection{Key idea}
+\begin{itemize}
+	\item Spread task of processing data
+	\item According to map and reduce rules/functions
+	\item Framework deals with node failures, load balancing etc
+\end{itemize}
+
+\subsection{Map phase}
+\begin{itemize}
+	\item Machines process the block that they contain
+	\item Produce key-value pairs which are used to partition the data
+	\item 1 map task per data block
+	\item Applying function f not influenced by other computations
+	\subitem Allows for parallel computing
+	\item Order in which computations are performed also unimportant
+\end{itemize}
+
+\subsection{Reduce phase}
+\begin{itemize}
+	\item Data is aggregated for each key-group
+	\item Should apply another function f and then an accumulator
+\end{itemize}
+
+\subsection{Distributed MapReduce}
+\begin{itemize}
+	\item Input data is already chunked -> easy to process with single map task
+	\item Some data blocks to not fit uniformly into blocks -> some data will need to be read across boundaries
+\end{itemize}
+
+\paragraph{Key principle}
+\begin{itemize}
+	\item Apply map function on each of input splits in dedicated process (run in YARN Container)
+	\item One function call / line in input split (at least for text data)
+	\item Produces data with keys -> partitions are based on keys
+\end{itemize}
+
+\paragraph{Computation}
+\begin{itemize}
+	\item Master node coordinates computation
+	\subitem Accepts job(task)
+	\subitem Computes map and reduce tasks
+	\subitem Selects and activates worker nodes
+	\item Worker node
+	\subitem For map: selected if close to data
+	\subitem Consumes intermediate results and creates final output
+\end{itemize}
+
+\paragraph{Parallelization}
+\begin{itemize}
+	\item Map functions can run in parallel
+	\item Reduce functions can run in parallel
+	\item Bottleneck: Reduce cannot start before map is finished
+\end{itemize}
+
+
+
+
+
 \end{document}
 
 

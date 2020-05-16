@@ -13,10 +13,7 @@ import org.apache.jena.riot.RDFDataMgr;
 import org.apache.jena.update.UpdateAction;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class App {
 	public static void main(String[] args) throws IOException {
@@ -40,15 +37,12 @@ public class App {
 			System.out.println("Creating store with individual functions");
 			String updateQuery = individualQuery(functionDefinitions, urlMap);
 			insertStore(file, destination + "single/", updateQuery);
-			System.out.println("Finished");
 
 			System.out.println("Creating store with grouped functions");
 			updateQuery = groupedQuery(functionDefinitions, urlMap);
 			insertStore(file, destination + "grouped/", updateQuery);
 			System.out.println("Finished");
 		}
-
-
 	}
 
 	public static String individualQuery(FunctionDefinition[] functionDefinitions, HashMap<String, APIURL> urlMap) {
@@ -56,19 +50,36 @@ public class App {
 				"PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>\n" +
 				"INSERT {\n";
 
+		ArrayList<String> four = new ArrayList<>();
+		ArrayList<String> five = new ArrayList<>();
+
 		for (FunctionDefinition funcDef : functionDefinitions) {
 			String[] parts = funcDef.source.split("_");
+
+			if (parts.length == 4) {
+				four.add(funcDef.source);
+			} else {
+				five.add(funcDef.source);
+			}
 
 			APIURL url = urlMap.get((parts[0].replace("http://localhost/f/", "") + parts[2]).toLowerCase());
 
 			if (Objects.isNull(url)) {
 				query += funcDef.insertIndividual("http://url.wasnt.resolved");
 				query += "\t<http://url.wasnt.resolved> fs:requiresKey \"false\" .\n";
-				//System.out.println("Problematic type: " + parts[0] + "_" + parts[2] + "_" + parts[3]);
 			} else if (!query.contains(url.getUrl())) {
 				query += funcDef.insertIndividual(url.getCleanUrl());
 				query += url.toInsert();
 			}
+		}
+
+		System.out.println("=====Four=====");
+		for (String string : four) {
+			System.out.println(string);
+		}
+		System.out.println("=====Five=====");
+		for (String string : five) {
+			System.out.println(string);
 		}
 
 		query += "}\n" +
@@ -105,15 +116,14 @@ public class App {
 			if (Objects.isNull(url)) {
 				query += list.get(0).insertGrouped("http://url.wasnt.resolved");
 				for (FunctionDefinition funcDef : funcMap.get(key)) {
-				query += funcDef.insertPost("http://url.wasnt.resolved");
-			}
-				//System.out.println("Problematic type: " + parts[0] + "_" + parts[2] + "_" + parts[3]);
+					query += funcDef.insertPost("http://url.wasnt.resolved");
+				}
 			} else if (!query.contains(url.getUrl())) {
 				query += list.get(0).insertGrouped(url.getCleanUrl());
 				query += url.toInsert();
 				for (FunctionDefinition funcDef : funcMap.get(key)) {
-				query += funcDef.insertPost(urlMap.get(urlKey).getCleanUrl());
-			}
+					query += funcDef.insertPost(urlMap.get(urlKey).getCleanUrl());
+				}
 			}
 
 
@@ -136,7 +146,6 @@ public class App {
 
 		for (APIURL apiurl : apiurls) {
 			urlMap.put(apiurl.getLabel().toLowerCase(), apiurl);
-			System.out.println(apiurl.getLabel());
 		}
 
 		return urlMap;
@@ -164,9 +173,6 @@ public class App {
 			newFile.delete();
 		}
 		newFile.createNewFile();
-		System.out.println("New file created");
-
-		System.out.println("Adding prefix to file");
 		BufferedWriter writer = new BufferedWriter(new FileWriter(newFile));
 		writer.write("@prefix fs:    <http://localhost/functionsstore#> .");
 		writer.write("@prefix rdf:    <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .");

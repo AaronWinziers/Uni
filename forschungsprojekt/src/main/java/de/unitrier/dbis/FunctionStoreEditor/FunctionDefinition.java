@@ -19,7 +19,7 @@ public class FunctionDefinition {
 
 	public String insertIndividual(String url) {
 
-		UUID postConditionId = UUID.nameUUIDFromBytes((url + postCondition).getBytes());
+		UUID postConditionId = UUID.nameUUIDFromBytes((url + preCondition + postCondition).getBytes());
 
 		return "<" + source + "> fs:api \"" + api + "\" ;\n" +
 				"\tfs:averageResponseTime -1 ;\n" +
@@ -45,12 +45,12 @@ public class FunctionDefinition {
 
 	// Creates paart of a query that serves to insert a post condition for a grouped function
 	public String insertPost(String url){
-		UUID postConditionId = UUID.nameUUIDFromBytes((url + postCondition).getBytes());
+		UUID postConditionId = UUID.nameUUIDFromBytes((url + preCondition + postCondition).getBytes());
 
 		return "<" + groupedName() + "> fs:postCondition <http://localhost/f/" + postConditionId.toString() + "> .\n" +
 				"<http://localhost/f/" + postConditionId.toString() + "> rdf:type <" + postCondition + "> ;\n" +
 				"\tfs:jsonPath \"" + jsonPath + "\" ;\n" +
-				"\tfs:averageResponses -1 .\n";
+				"\tfs:averageResponses -1.0 .\n";
 	}
 
 	// Consists of source_destination_precondition
