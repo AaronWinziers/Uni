@@ -1,0 +1,25 @@
+Comparing Crowd-Based, Game-Based, and Machine-Based Approaches in Initial Query and Query Refinement Tasks
+Diversifying Search Results Using Time - An Information Retrieval Method for Historians
+Exploiting Flickr Tags and Groups for Finding Landmark Photos
+Exploiting Information Needs and Bibliographics for Polyrepresentative Document Clustering
+Polyrepresentative Clustering: A Study of Simulated User Strategies and Representations
+Using a Task-Based Approach in Evaluating the Usability of BoBIs in an E-book Environment
+Applying the Divergence from Randomness Approach for Content-Only Search in XML Documents
+A Comparative Experimental Assessment of a Threshold Selection Algorithm in Hierarchical Text Categorization
+Compressing Semistructured Text Databases
+Maximum Margin Ranking Algorithms for Information Retrieval
+Lo mejor de dos idiomas - Cross-Lingual Linkage of Geotagged Wikipedia Articles
+Corpus-Based Thesaurus Construction for Image Retrieval in Specialist Domains
+A Simple Linear Ranking Algorithm Using Query Dependent Intercept Variables
+Investigating Summarization Techniques for Geo-Tagged Image Indexing
+Passage Reranking for Question Answering Using Syntactic Structures and Answer Types
+Exploring Adaptive Window Sizes for Entity Retrieval
+Analysis of Query Reformulations in a Search Engine of a Local Web Site
+AutoEval: An Evaluation Methodology for Evaluating Query Suggestions Using Query Logs
+Information Access in Smart Cities
+Morphological Variation of Arabic Queries
+ORMA: A Semi-automatic Tool for Online Reputation Monitoring in Twitter
+Labeling Topics with Images Using a Neural Network
+Generating Extracts with Genetic Algorithms
+LiveTweet: Monitoring and Predicting Interesting Microblog Posts
+A Pilot Study on Using Profile-Based Summarisation for Interactive Search Assistance
