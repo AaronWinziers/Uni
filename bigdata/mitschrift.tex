@@ -639,7 +639,49 @@ HDFS
 	\item Bottleneck: Reduce cannot start before map is finished
 \end{itemize}
 
+\section{MapReduce Data Flow}
+\begin{itemize}
+	\item Data is split into Input splits (usually one HDFS block)
+	\item One map task per input split (ideally at block location)
+	\item Configurable number of reduce tasks
+\end{itemize}
 
+\paragraph{Each map task:}
+\begin{itemize}
+	\item Stores its output locally
+	\item Creates as many partitions as there are reduce tasks, where all output data for an output key is  guaranteed to be in the same partition
+	\item Sorts each output partition by key (values are stored next to each other)
+\end{itemize}
+
+\paragraph{Each reduce task:}
+\begin{itemize}
+	\item Is responsible for one key partition
+	\item Copies the output for its partition from \textbf{all} map tasks
+	\item Merges outpus, keeping sorted order intact
+	\item Feeds values from same key to reduce function
+	\item Writes output to HDFS (first local block, then replicated)
+\end{itemize}
+
+\subsection{Influencing data flow}
+\begin{itemize}
+	\item Tuples are sorted by key
+	\item For a single key, teh tuples are not sorted
+\end{itemize}
+\paragraph{Composite keys}
+Possible solutions (year,temp) example:
+\begin{itemize}
+	\item Custom partitioner w/ year as partition -> data is sent to same reducer, not to same reduce call
+	\item Sort Comparator for sorting by temperature
+\end{itemize}
+
+\paragraph{Combiner} Pre processes data in the map phase to reduce need for copying data
+
+\subsection{Compression in Hadoop}
+\begin{itemize}
+	\item Compression can be used to reduce input file size and increase the amount of data that can be stored
+	\item Requires splittable compression
+	\item Output files can also be compressed to save traffic
+\end{itemize}
 
 
 

@@ -28,7 +28,6 @@ public class App {
 				continue;
 			}
 			System.out.println("======= " + file.getName() + " =======");
-			int count = 0;
 
 			FunctionGetter functionGetter = new FunctionGetter(file.getAbsolutePath());
 			FunctionDefinition[] functionDefinitions = functionGetter.getFunctions();
@@ -65,21 +64,15 @@ public class App {
 			APIURL url = urlMap.get((parts[0].replace("http://localhost/f/", "") + parts[2]).toLowerCase());
 
 			if (Objects.isNull(url)) {
+				System.out.println(funcDef.source);
 				query += funcDef.insertIndividual("http://url.wasnt.resolved");
 				query += "\t<http://url.wasnt.resolved> fs:requiresKey \"false\" .\n";
+				query += funcDef.insertPost("http://url.wasnt.resolved",funcDef.source);
 			} else if (!query.contains(url.getUrl())) {
 				query += funcDef.insertIndividual(url.getCleanUrl());
 				query += url.toInsert();
+				query += funcDef.insertPost(url.getCleanUrl(),funcDef.source);
 			}
-		}
-
-		System.out.println("=====Four=====");
-		for (String string : four) {
-			System.out.println(string);
-		}
-		System.out.println("=====Five=====");
-		for (String string : five) {
-			System.out.println(string);
 		}
 
 		query += "}\n" +
@@ -95,6 +88,7 @@ public class App {
 
 		HashMap<String, ArrayList<FunctionDefinition>> funcMap = new HashMap<>();
 
+		// Grouping functions together by precondition
 		for (FunctionDefinition funcDef : functionDefinitions) {
 			if (funcMap.containsKey(funcDef.getPreCondition())) {
 				funcMap.get(funcDef.getPreCondition()).add(funcDef);
@@ -105,6 +99,7 @@ public class App {
 			}
 		}
 
+		// Adding each group to query
 		for (String key : funcMap.keySet()) {
 
 			ArrayList<FunctionDefinition> list = funcMap.get(key);
@@ -115,14 +110,15 @@ public class App {
 
 			if (Objects.isNull(url)) {
 				query += list.get(0).insertGrouped("http://url.wasnt.resolved");
+
 				for (FunctionDefinition funcDef : funcMap.get(key)) {
-					query += funcDef.insertPost("http://url.wasnt.resolved");
+					query += funcDef.insertPost("http://url.wasnt.resolved", funcDef.groupedName());
 				}
 			} else if (!query.contains(url.getUrl())) {
 				query += list.get(0).insertGrouped(url.getCleanUrl());
 				query += url.toInsert();
 				for (FunctionDefinition funcDef : funcMap.get(key)) {
-					query += funcDef.insertPost(urlMap.get(urlKey).getCleanUrl());
+					query += funcDef.insertPost(urlMap.get(urlKey).getCleanUrl(), funcDef.groupedName());
 				}
 			}
 

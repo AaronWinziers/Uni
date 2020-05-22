@@ -1,59 +1,94 @@
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix fs:    <http://localhost/functionsstore#> .
 
-<http://localhost/f/9a6102c3-52d1-3d52-ac46-1f9f6ce02e22>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
-        fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.DOI" .
-
-<http://localhost/f/1c89e5c9-b54e-3c34-9252-09c2099c625c>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.URL" .
-
-<http://localhost/f/43b204e0-1d1a-39f8-9fae-81c3ba18202a>
+<http://localhost/f/58cb3b0c-4ca1-3621-9947-0d9f93d7a670>
         a                    <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
         fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.page" .
+        fs:jsonPath          "message.page" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
-<http://localhost/f/f35c4125-0c28-3c29-bf98-bf5b6352178e>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
+<http://localhost/f/434a77c2-cee0-353b-b899-dc3850983ef7>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
         fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.container-title[*]" .
+        fs:jsonPath          "message.container-title[*]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/b7b3a8ec-faff-3e99-8932-9025ae48d0ad>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInBook> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[*]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInBook> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInBook> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
 <http://localhost/f/crossref_dblp_doi>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/82258db9-dc46-3c92-9f63-816421217b69> , <http://localhost/f/a27ba2b5-9266-3770-ac31-c7fbf7f45b5f> , <http://localhost/f/9a6102c3-52d1-3d52-ac46-1f9f6ce02e22> , <http://localhost/f/c6cc40a0-e8e2-3132-a785-cc6d5625cb87> , <http://localhost/f/f0e5ac4c-821d-3ea6-9657-3b624681a2f8> , <http://localhost/f/f35c4125-0c28-3c29-bf98-bf5b6352178e> , <http://localhost/f/1c89e5c9-b54e-3c34-9252-09c2099c625c> , <http://localhost/f/a97c5c5c-bf0b-3b41-bc32-3e41290b3704> , <http://localhost/f/43b204e0-1d1a-39f8-9fae-81c3ba18202a> ;
+        fs:postCondition        <http://localhost/f/58cb3b0c-4ca1-3621-9947-0d9f93d7a670> , <http://localhost/f/b7b3a8ec-faff-3e99-8932-9025ae48d0ad> , <http://localhost/f/c2c2e07e-f0c4-330e-b93d-edc67b0c60dd> , <http://localhost/f/49e4c1c1-47ce-3d6b-9dab-6e24e0a1d4f8> , <http://localhost/f/434a77c2-cee0-353b-b899-dc3850983ef7> , <http://localhost/f/9721153b-56f8-3c61-9309-8d8af8d4624c> , <http://localhost/f/f8e950d0-a1ef-3504-aeaf-35c06162c940> , <http://localhost/f/296f498c-3ced-326d-bcc4-70b607bf32c9> , <http://localhost/f/55012989-83ac-3b52-952f-b3b020eab12d> , <http://localhost/f/335a7bed-4d30-39db-99c6-2fb247aee084> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/a27ba2b5-9266-3770-ac31-c7fbf7f45b5f>
-        a                    <http://www.w3.org/2002/07/owl#sameAs> ;
+<http://localhost/f/f8e950d0-a1ef-3504-aeaf-35c06162c940>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
         fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.URL" .
+        fs:jsonPath          "message.published-print.date-parts[*][*]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
-<http://localhost/f/c6cc40a0-e8e2-3132-a785-cc6d5625cb87>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInBook> ;
+<http://localhost/f/49e4c1c1-47ce-3d6b-9dab-6e24e0a1d4f8>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.container-title[*]" .
+        fs:jsonPath          "message.DOI" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
-<http://localhost/f/a97c5c5c-bf0b-3b41-bc32-3e41290b3704>
+<http://localhost/f/335a7bed-4d30-39db-99c6-2fb247aee084>
         a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
         fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.container-title[*]" , "message.title[*]" .
+        fs:jsonPath          "message.title[*]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
-<http://localhost/f/f0e5ac4c-821d-3ea6-9657-3b624681a2f8>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#isbn13> ;
+<http://localhost/f/9721153b-56f8-3c61-9309-8d8af8d4624c>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
         fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.DOI" .
+        fs:jsonPath          "message.URL" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
 <https://api.crossref.org/works/[doi]>
         fs:requiresKey  "false" .
 
-<http://localhost/f/82258db9-dc46-3c92-9f63-816421217b69>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+<http://localhost/f/296f498c-3ced-326d-bcc4-70b607bf32c9>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#isbn13> ;
         fs:averageResponses  -1.0 ;
-        fs:jsonPath          "message.published-print.date-parts[*][*]" .
+        fs:jsonPath          "message.DOI" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#isbn13> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#isbn13> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/55012989-83ac-3b52-952f-b3b020eab12d>
+        a                    <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.URL" ;
+        fs:object            <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:predicate         <http://www.w3.org/2002/07/owl#sameAs> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/c2c2e07e-f0c4-330e-b93d-edc67b0c60dd>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[*]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .

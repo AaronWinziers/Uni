@@ -6,164 +6,228 @@
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/81f6734c-9e96-3f30-9800-e5eee9d02648> ;
+        fs:postCondition        <http://localhost/f/ba5095b6-4102-39dc-ae90-7defe6cccfb4> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
-
-<http://localhost/f/61861f51-78e1-3afc-97c4-5b8cfc3d7d0b>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.container-title[0]" .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_sameAs_yearOfPublication>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/646d3d21-b91d-3ff8-a032-f33adc9334ba> ;
+        fs:postCondition        <http://localhost/f/2bd25716-8ba7-37b1-8b92-d42ff02393fb> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
-
-<http://localhost/f/3233f54b-9d6f-3058-bfd1-6530dfe1a1c4>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.issued.date-parts[0][0]" .
-
-<http://localhost/f/69f52eae-2816-3dc7-95ef-1c5adf98edc4>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.page" .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_authoredBy_primaryFullPersonName>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/ee5a0572-48ed-304b-a76f-ccebffe46af4> ;
+        fs:postCondition        <http://localhost/f/83e921a8-0393-3592-9407-35c4c04451b3> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/9e3e8a87-b8a0-3b0d-b1a5-f9b40f7b6795>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.container-title[*]" .
-
-<http://localhost/f/c0534e7e-48c1-37af-8c6e-d1f439bd5823>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.volume" .
+<http://localhost/f/6afe8c11-4b10-368d-a9fc-e006d60eb47b>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.page" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_sameAs_publishedAsPartOf_yearOfPublication>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/646d3d21-b91d-3ff8-a032-f33adc9334ba> ;
+        fs:postCondition        <http://localhost/f/65ec9e09-3d4c-3430-a693-456d38e7f78e> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedInJournal>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/3ed47d22-6f0e-3c67-bd9c-a2c17b7781c9> ;
+        fs:postCondition        <http://localhost/f/025ba68f-b050-3fa0-83bd-fb0cc5193122> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/58cb3b0c-4ca1-3621-9947-0d9f93d7a670>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.page" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/434a77c2-cee0-353b-b899-dc3850983ef7>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/d4460c36-d1fa-30b0-9c74-66948b56c786> ;
+        fs:postCondition        <http://localhost/f/097ca5d9-1792-324b-bcb4-ed50091693cc> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedAsPartOf_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/d4460c36-d1fa-30b0-9c74-66948b56c786> ;
+        fs:postCondition        <http://localhost/f/b40d058a-0441-352d-9d21-7b7365008331> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/82258db9-dc46-3c92-9f63-816421217b69>
+<http://localhost/f/2bd25716-8ba7-37b1-8b92-d42ff02393fb>
         a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.issued.date-parts[0][0]" .
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
 
-<http://localhost/f/43b204e0-1d1a-39f8-9fae-81c3ba18202a>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.page" .
+<http://localhost/f/6b5f2210-3f56-31a0-946e-d5d708c104af>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issue" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/025ba68f-b050-3fa0-83bd-fb0cc5193122>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_sameAs_publishedInJournal>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/61861f51-78e1-3afc-97c4-5b8cfc3d7d0b> ;
+        fs:postCondition        <http://localhost/f/acf8f9af-533a-3e57-a908-2a739f9e0763> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/bcedfe70-3962-395e-b6a2-b12064510978>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[*]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInSeries> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
+
+<http://localhost/f/097ca5d9-1792-324b-bcb4-ed50091693cc>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_otherElectronicEdition_publishedAsPartOf_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/519d005f-036a-34ed-99d2-c3d517b938e7> ;
+        fs:postCondition        <http://localhost/f/bc3bcb22-ff0f-34d6-81d6-cd21299e8d7c> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/5ea823b2-2216-3587-8568-96fdff57b50d>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.publisher" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedInJournalVolumeIssue>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/1d602072-3ca4-3672-a89d-919c3432e731> ;
+        fs:postCondition        <http://localhost/f/be062598-606b-3f78-bf75-e9c99a7663e8> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/81f6734c-9e96-3f30-9800-e5eee9d02648>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.publisher" .
+<http://localhost/f/335a7bed-4d30-39db-99c6-2fb247aee084>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/e31c581a-9c98-330c-9e35-55f87a497d5d>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.volume" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
 
 <http://localhost/f/crossref_dblp_otherElectronicEdition_publishedAsPartOf_yearOfPublication>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/24eecc8c-4f10-3bfb-a100-ed222eb7ca99> ;
+        fs:postCondition        <http://localhost/f/2678b891-1e95-3f02-8350-6c510fe8766e> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_sameAs_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/e8ea7570-3ef6-3391-bdd1-de929d74245b> ;
+        fs:postCondition        <http://localhost/f/15c3fda9-08f2-3700-a70c-9759cf080be4> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/ba5095b6-4102-39dc-ae90-7defe6cccfb4>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.publisher" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedInJournalVolume>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/c0534e7e-48c1-37af-8c6e-d1f439bd5823> ;
+        fs:postCondition        <http://localhost/f/868f6475-30ab-358e-95ed-3de44b543c72> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/3f4b52ab-44fa-3605-a0aa-545f7de96076>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.DOI" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_doi_pageNumbers>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/43b204e0-1d1a-39f8-9fae-81c3ba18202a> ;
+        fs:postCondition        <http://localhost/f/58cb3b0c-4ca1-3621-9947-0d9f93d7a670> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
@@ -172,149 +236,167 @@
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/40867a4c-b4e6-3f74-8e9b-5ff7eb3322c0> ;
+        fs:postCondition        <http://localhost/f/a0612384-f81a-33ca-a6d3-d8ce1dd07b96> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/519d005f-036a-34ed-99d2-c3d517b938e7>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.title[0]" , "message.event.name" .
+<http://localhost/f/acf8f9af-533a-3e57-a908-2a739f9e0763>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
 
-<http://localhost/f/d4460c36-d1fa-30b0-9c74-66948b56c786>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.title[0]" , "message.container-title[*]" .
-
-<http://localhost/f/541e750f-666c-375d-8f1a-c9825e1bcc24>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.issue" .
-
-<http://localhost/f/78236e8b-6e80-3bbb-a491-23a1cf4f22e3>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.DOI" .
+<http://localhost/f/f8e950d0-a1ef-3504-aeaf-35c06162c940>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
 <http://localhost/f/crossref_dblp_doi_publishedAsPartOf_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/a97c5c5c-bf0b-3b41-bc32-3e41290b3704> ;
+        fs:postCondition        <http://localhost/f/434a77c2-cee0-353b-b899-dc3850983ef7> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/4a72330c-31be-3c4d-99ed-1698eec7df46>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.volume" .
+<http://localhost/f/c759efd8-0746-39c4-bca4-cf409f706991>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.DOI" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
+
+<http://localhost/f/623e8a01-8b05-3b5d-87ff-f5420efe761c>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.DOI" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
+
+<http://localhost/f/83e921a8-0393-3592-9407-35c4c04451b3>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.author[*].given" , "message.author[*].family" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
+
+<http://localhost/f/72325c16-1b14-36d1-89e2-3fc313e6fea3>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.author[*].family" , "message.author[*].given" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
+
+<http://localhost/f/da1a86b1-8472-3688-9ec9-6db5e5b578ae>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.short-container-title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/705e03b1-6b37-3422-ad94-2bca5f3bde6c>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedAsPartOf_publishedInSeries>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/9e3e8a87-b8a0-3b0d-b1a5-f9b40f7b6795> ;
+        fs:postCondition        <http://localhost/f/bcedfe70-3962-395e-b6a2-b12064510978> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_publishedAsPartOf_yearOfPublication>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/3233f54b-9d6f-3058-bfd1-6530dfe1a1c4> ;
+        fs:postCondition        <http://localhost/f/a90bfcac-6190-3ee3-bd9a-53ae1c712d73> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_doi_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/a97c5c5c-bf0b-3b41-bc32-3e41290b3704> ;
+        fs:postCondition        <http://localhost/f/335a7bed-4d30-39db-99c6-2fb247aee084> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/1d602072-3ca4-3672-a89d-919c3432e731>
+<http://localhost/f/be062598-606b-3f78-bf75-e9c99a7663e8>
         a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.issue" .
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issue" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_sameAs_publishedAsPartOf_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/e8ea7570-3ef6-3391-bdd1-de929d74245b> ;
+        fs:postCondition        <http://localhost/f/61826539-3396-3baa-816e-87c161be7f14> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_pageNumbers>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/e15eb4cc-006f-3d6f-b655-0996c56283cf> ;
+        fs:postCondition        <http://localhost/f/6afe8c11-4b10-368d-a9fc-e006d60eb47b> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/a97c5c5c-bf0b-3b41-bc32-3e41290b3704>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.container-title[0]" , "message.title[0]" .
-
-<http://localhost/f/542228fa-93ea-3a82-bfc9-980f46dd0818>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.DOI" .
+<http://localhost/f/2678b891-1e95-3f02-8350-6c510fe8766e>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_doi_yearOfPublication>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/82258db9-dc46-3c92-9f63-816421217b69> ;
+        fs:postCondition        <http://localhost/f/f8e950d0-a1ef-3504-aeaf-35c06162c940> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/e15eb4cc-006f-3d6f-b655-0996c56283cf>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.page" .
-
-<http://localhost/f/ee5a0572-48ed-304b-a76f-ccebffe46af4>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.author[*].given" , "message.author[*].family" .
-
-<http://localhost/f/238cbc6a-0270-3d08-90d4-9c79326952db>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedBy> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.publisher" .
-
-<http://localhost/f/3ed47d22-6f0e-3c67-bd9c-a2c17b7781c9>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.container-title[0]" .
-
-<http://localhost/f/646d3d21-b91d-3ff8-a032-f33adc9334ba>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.issued.date-parts[0][0]" .
-
-<http://localhost/f/4d297713-168d-344a-9b3f-09ace80c1aee>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.author[*].family" , "message.author[*].given" .
+<http://localhost/f/151a8119-dd73-335c-98b3-94fd4c46afeb>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.volume" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
 <http://localhost/f/crossref_dblp_doi_authoredBy_primaryFullPersonName>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/4d297713-168d-344a-9b3f-09ace80c1aee> ;
+        fs:postCondition        <http://localhost/f/9d4920c6-8386-3bcf-9eb5-c59a26475214> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
@@ -323,25 +405,41 @@
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/24eecc8c-4f10-3bfb-a100-ed222eb7ca99> ;
+        fs:postCondition        <http://localhost/f/a10263f2-f71f-3d35-ac98-76f8ceccbf65> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/409210e7-936e-34b6-bcf5-74c6110f70a4>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> .
+
+<http://localhost/f/868f6475-30ab-358e-95ed-3de44b543c72>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.volume" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_yearOfPublication>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/3233f54b-9d6f-3058-bfd1-6530dfe1a1c4> ;
+        fs:postCondition        <http://localhost/f/516678c5-9a60-3afd-b3ca-1f5f6d5805f9> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_doi_publishedAsPartOf_publishedBy>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/238cbc6a-0270-3d08-90d4-9c79326952db> ;
+        fs:postCondition        <http://localhost/f/5ea823b2-2216-3587-8568-96fdff57b50d> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
@@ -350,151 +448,204 @@
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/7eae3618-4071-3d17-b9ec-eaff179a1e1d> ;
+        fs:postCondition        <http://localhost/f/fd1a05e9-b119-33fd-88aa-45b87841d52c> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_doi_publishedInJournal>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/6d7c11ab-c5a0-31a2-a266-9bdc60ee04b5> ;
+        fs:postCondition        <http://localhost/f/da1a86b1-8472-3688-9ec9-6db5e5b578ae> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/a10263f2-f71f-3d35-ac98-76f8ceccbf65>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_sameAs_doi>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/542228fa-93ea-3a82-bfc9-980f46dd0818> ;
+        fs:postCondition        <http://localhost/f/c759efd8-0746-39c4-bca4-cf409f706991> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/65ec9e09-3d4c-3430-a693-456d38e7f78e>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
+
+<http://localhost/f/7a1dd1a6-584c-3d43-801a-1f6297f725fb>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.page" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#pageNumbers> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
 
 <http://localhost/f/crossref_dblp_sameAs_authoredBy_primaryFullPersonName>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/4dc3d66f-4dc8-3ea9-b82e-4ed504a68b95> ;
+        fs:postCondition        <http://localhost/f/72325c16-1b14-36d1-89e2-3fc313e6fea3> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
-
-<http://localhost/f/6d7c11ab-c5a0-31a2-a266-9bdc60ee04b5>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournal> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.short-container-title[0]" .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_primaryElectronicEdition_doi>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/277d6e24-c451-3d0e-9a27-d4807388f9c9> ;
+        fs:postCondition        <http://localhost/f/623e8a01-8b05-3b5d-87ff-f5420efe761c> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/4dc3d66f-4dc8-3ea9-b82e-4ed504a68b95>
+<http://localhost/f/9d4920c6-8386-3bcf-9eb5-c59a26475214>
         a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.author[*].family" , "message.author[*].given" .
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.author[*].family" , "message.author[*].given" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
 
-<http://localhost/f/24eecc8c-4f10-3bfb-a100-ed222eb7ca99>
+<http://localhost/f/516678c5-9a60-3afd-b3ca-1f5f6d5805f9>
         a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.issued.date-parts[0][0]" .
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
-<http://url.wasnt.resolved>
-        fs:requiresKey  "false" .
-
-<http://localhost/f/40867a4c-b4e6-3f74-8e9b-5ff7eb3322c0>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.issue" .
+<http://localhost/f/15c3fda9-08f2-3700-a70c-9759cf080be4>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
 
 <https://api.crossref.org/works/[doi]>
         fs:requiresKey  "false" .
 
-<http://localhost/f/e8ea7570-3ef6-3391-bdd1-de929d74245b>
+<http://localhost/f/bc3bcb22-ff0f-34d6-81d6-cd21299e8d7c>
         a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.container-title[0]" , "message.title[0]" .
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.event.name" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_otherElectronicEdition_title>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/519d005f-036a-34ed-99d2-c3d517b938e7> ;
+        fs:postCondition        <http://localhost/f/409210e7-936e-34b6-bcf5-74c6110f70a4> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
-
-<http://localhost/f/5f040720-2525-324d-9f42-859ac65375fb>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolume> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.volume" .
-
-<http://localhost/f/277d6e24-c451-3d0e-9a27-d4807388f9c9>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#doi> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.DOI" .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_doi_publishedAsPartOf_yearOfPublication>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/82258db9-dc46-3c92-9f63-816421217b69> ;
+        fs:postCondition        <http://localhost/f/705e03b1-6b37-3422-ad94-2bca5f3bde6c> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/61826539-3396-3baa-816e-87c161be7f14>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .
 
 <http://localhost/f/crossref_dblp_sameAs_publishedInJournalVolume>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/4a72330c-31be-3c4d-99ed-1698eec7df46> ;
+        fs:postCondition        <http://localhost/f/e31c581a-9c98-330c-9e35-55f87a497d5d> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_doi_publishedInJournalVolume>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/5f040720-2525-324d-9f42-859ac65375fb> ;
+        fs:postCondition        <http://localhost/f/151a8119-dd73-335c-98b3-94fd4c46afeb> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/fd1a05e9-b119-33fd-88aa-45b87841d52c>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.author[*].given" , "message.author[*].family" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> .
+
+<http://localhost/f/b40d058a-0441-352d-9d21-7b7365008331>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.container-title[*]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_sameAs_pageNumbers>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/69f52eae-2816-3dc7-95ef-1c5adf98edc4> ;
+        fs:postCondition        <http://localhost/f/7a1dd1a6-584c-3d43-801a-1f6297f725fb> ;
         fs:preCondition         <http://www.w3.org/2002/07/owl#sameAs> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
+
+<http://localhost/f/a90bfcac-6190-3ee3-bd9a-53ae1c712d73>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issued.date-parts[0][0]" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedAsPartOf> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#primaryElectronicEdition> .
 
 <http://localhost/f/crossref_dblp_otherElectronicEdition_doi>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/78236e8b-6e80-3bbb-a491-23a1cf4f22e3> ;
+        fs:postCondition        <http://localhost/f/3f4b52ab-44fa-3605-a0aa-545f7de96076> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#otherElectronicEdition> ;
-        fs:url                  <http://url.wasnt.resolved> .
+        fs:url                  <https://api.crossref.org/works/[doi]> .
 
 <http://localhost/f/crossref_dblp_doi_publishedInJournalVolumeIssue>
         fs:api                  "crossref" ;
         fs:averageResponseTime  -1 ;
         fs:dataAvailability     -1.0 ;
         fs:numberOfCalls        -1 ;
-        fs:postCondition        <http://localhost/f/541e750f-666c-375d-8f1a-c9825e1bcc24> ;
+        fs:postCondition        <http://localhost/f/6b5f2210-3f56-31a0-946e-d5d708c104af> ;
         fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
         fs:url                  <https://api.crossref.org/works/[doi]> .
 
-<http://localhost/f/7eae3618-4071-3d17-b9ec-eaff179a1e1d>
-        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
-        fs:averageResponses  -1 ;
-        fs:jsonPath          "message.author[*].given" , "message.author[*].family" .
+<http://localhost/f/a0612384-f81a-33ca-a6d3-d8ce1dd07b96>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "message.issue" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#publishedInJournalVolumeIssue> ;
+        fs:subject           <http://www.w3.org/2002/07/owl#sameAs> .

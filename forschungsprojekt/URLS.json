@@ -52,6 +52,45 @@
     "format": "json"
   },
   {
+    "label": "crossrefprimaryElectronicEdition",
+    "name": "CrossRef DOI API",
+    "url": "https://api.crossref.org/works/{doi}",
+    "parameters": [
+      {
+        "name": "doi",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "crossrefotherElectronicEdition",
+    "name": "CrossRef DOI API",
+    "url": "https://api.crossref.org/works/{doi}",
+    "parameters": [
+      {
+        "name": "doi",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
+    "label": "crossrefsameas",
+    "name": "CrossRef DOI API",
+    "url": "https://api.crossref.org/works/{doi}",
+    "parameters": [
+      {
+        "name": "doi",
+        "status": "required",
+        "type": "https://dblp.org/rdf/schema-2017-04-18#Publication"
+      }
+    ],
+    "format": "json"
+  },
+  {
     "label": "crossrefISSN",
     "name": "CrossRef ISSN API",
     "url": "https://api.crossref.org/journals/{issn}",
