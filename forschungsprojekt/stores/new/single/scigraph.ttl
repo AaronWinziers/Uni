@@ -1,0 +1,56 @@
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix fs:    <http://localhost/functionsstore#> .
+
+<http://localhost/f/e5530301-681a-3f83-8fca-89d4ba004818>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "facets[3].values[0].value" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://api.springernature.com/metadata/json?q=doi:[q]&api_key=[key]>
+        fs:requiresKey  "true" .
+
+<http://localhost/f/364beab8-1a64-3305-ba1a-da8b04a62a95>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "records[0].creators[*].creator" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#authoredBy> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/51042a6f-9aa6-3797-8c64-5a367a611689>
+        a                    <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:averageResponses  -1.0 ;
+        fs:jsonPath          "records[0].title" ;
+        fs:object            <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:predicate         <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:subject           <https://dblp.org/rdf/schema-2017-04-18#doi> .
+
+<http://localhost/f/scigraph_dblp_doi_title>
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  -1 ;
+        fs:dataAvailability     -1.0 ;
+        fs:numberOfCalls        -1 ;
+        fs:postCondition        <http://localhost/f/51042a6f-9aa6-3797-8c64-5a367a611689> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:url                  <http://api.springernature.com/metadata/json?q=doi:[q]&api_key=[key]> .
+
+<http://localhost/f/scigraph_dblp_doi_yearOfPublication>
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  -1 ;
+        fs:dataAvailability     -1.0 ;
+        fs:numberOfCalls        -1 ;
+        fs:postCondition        <http://localhost/f/e5530301-681a-3f83-8fca-89d4ba004818> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:url                  <http://api.springernature.com/metadata/json?q=doi:[q]&api_key=[key]> .
+
+<http://localhost/f/scigraph_dblp_doi_authoredBy_primaryFullPersonName>
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  -1 ;
+        fs:dataAvailability     -1.0 ;
+        fs:numberOfCalls        -1 ;
+        fs:postCondition        <http://localhost/f/364beab8-1a64-3305-ba1a-da8b04a62a95> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:url                  <http://api.springernature.com/metadata/json?q=doi:[q]&api_key=[key]> .

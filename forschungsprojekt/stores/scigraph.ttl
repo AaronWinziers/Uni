@@ -1,0 +1,31 @@
+@prefix fs:    <http://localhost/functionsstore#> .
+
+<http://localhost/f/scigraph_dblp_doi_yearOfPublication>
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  -1 ;
+        fs:dataAvailability     -1.0 ;
+        fs:jsonPath             "facets[3].values[0].value" ;
+        fs:numberOfCalls        -1 ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#yearOfPublication> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:requiresKey          false .
+
+<http://localhost/f/scigraph_dblp_doi_title>
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  -1 ;
+        fs:dataAvailability     -1.0 ;
+        fs:jsonPath             "records[0].title" ;
+        fs:numberOfCalls        -1 ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#title> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:requiresKey          false .
+
+<http://localhost/f/scigraph_dblp_doi_authoredBy_primaryFullPersonName>
+        fs:api                  "scigraph" ;
+        fs:averageResponseTime  -1 ;
+        fs:dataAvailability     -1.0 ;
+        fs:jsonPath             "records[0].creators[*].creator" ;
+        fs:numberOfCalls        -1 ;
+        fs:postCondition        <https://dblp.org/rdf/schema-2017-04-18#primaryFullPersonName> ;
+        fs:preCondition         <https://dblp.org/rdf/schema-2017-04-18#doi> ;
+        fs:requiresKey          false .

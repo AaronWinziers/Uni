@@ -683,21 +683,115 @@ Possible solutions (year,temp) example:
 	\item Output files can also be compressed to save traffic
 \end{itemize}
 
+\section{Useful components}
+\subsection{Input Formats}
+\begin{itemize}
+	\item Gathers input from documents
+	\item Default is TextInputFormat (1 record/ line)
+	\item Can be customized for structured data (xml, json, etc)
+\end{itemize}
 
+\subsection{Multiple Input Directories}
+\begin{itemize}
+	\item Each input can be handled differently
+	\item Can have separate formats and Map classes
+	\item Can write to different output directories as well
+\end{itemize}
+
+\subsection{Custom Data Types}
+\begin{itemize}
+	\item Output Objects can be written (pairs of integers, etc)
+	\item Theoretically possible to encode everything as text -> difficult to parse -> not efficient
+	\item Must implement WritableComparable
+\end{itemize}
+
+\section{YARN}
+\begin{itemize}
+	\item Offers two daemons:
+	\subitem Resources manager - Manages usage of resources across cluster
+	\subitem Node managers - run on all nodes to launch and monitor containers
+	\item  Containers execute an application specific process with a set of resources (memory, CPU, etc)
+	\item \textbf{Workflow can be seen on 3-74}
+\end{itemize}
+\subsection{Advantages of YARN}
+\begin{itemize}
+	\item Scalability
+	\subitem ApplicationMaster manages containers for one application
+	\item ResourceManager only deals with overall allocation of the node
+	\item Can scale to 10,000 nodes and 100,000 Tasks
+	\item High availability - for resource manager and application master
+	\item Utilization
+	\begin{itemize}
+		\item Node manager manages a pool of resources, rather than a fixed number of slots (Hadoop v1)
+		\item No dedicated slots for mappers and reducers, but flexible resources
+		\item Fine grained resources - applications can specify needs per task
+	\end{itemize}
+	\item Multitenancy - can run other types of tasks
+\end{itemize}
+
+\subsection{Resources}
+\begin{itemize}
+	\item Resources can be configured locally
+	\item Can include GPUs and FPGAs
+\end{itemize}
+
+\subsection{Schedulers}
+\begin{itemize}
+	\item FIFO
+	\item Capacity scheduler
+	\item Fair scheduler
+\end{itemize}
+
+\subsubsection{Capacity Scheduler}
+\begin{itemize}
+	\item Multiple independent queues
+	\item Allows for sharing between organizations
+	\item Each queue is given a fraction of the resources
+	\item Individual queues are FIFO
+	\item A single job does not use more resources than its queue's capacity
+	\item Queues are elastic - Idle resources are distributed to other queues
+	\item No preemption - Running jobs will finish
+\end{itemize}
+
+\subsubsection{Fair Scheduler}
+\begin{itemize}
+	\item Dynamically balances resources between all running jobs
+	\item A single running job gets all resources
+	\item A second task will get half of the resources
+	\item By default only memory is considered for fairness, others can be configured
+	\item Also works for multiple queues (3 tasks from 2 queues -> 2 x 1/4, 1x 1/2 of resources)
+	\item Preemption can move tasks to idle queue, but will not kill tasks to restore fairness
+\end{itemize}
+
+\subsection{Failure Handling}
+\begin{itemize}
+	\item Automatic handling of failed tasks
+	\item Most useful for transient failures (Hardware or software failures)
+	\item Application Master manages task failures
+	\subitem Exchanges progress updates
+	\subitem Task is considered failed if no update for more than 10 min (even if still running)
+	\subitem Restarts task in different container
+	\subitem Repeated failures of the same task cause the job to fail
+	\item YARN will restart failed applications
+	\item ResourceManager restarts failed NodeManagers
+\end{itemize}
+
+\subsection{Speculative execution}
+\begin{itemize}
+	\item Some tasks may be slower than usual
+	\subitem Hardware Issues
+	\subitem Overloaded system
+	\subitem More complex subsection of data
+	\item YARN assumes transient problem and tries running slow tasks on other machines
+	\item First finished task wins, other attempts are killed, output ignores
+	\item Improves response time on single job at cost of load on cluster
+\end{itemize}
 
 \end{document}
 
 
 
  
-
-
-
-
-
-
-
-
 
 
 
