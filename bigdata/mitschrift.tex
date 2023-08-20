@@ -787,6 +787,122 @@ Possible solutions (year,temp) example:
 	\item Improves response time on single job at cost of load on cluster
 \end{itemize}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%					Vorlesung					 %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\chapter{MapReduce and SQL}
+
+y tho?
+\section{Processing SQL Queries in MapReduce}
+\begin{itemize}
+	\item Given is a Relation (Table) stored in a file (1 tuple/line)
+	\item Evaluating a query on this file using MR is a Map-Only job:
+	\subitem Mapper only emits tuples that match the search predicate (WHERE clause)
+	\item Queries become more interesting with GROUP BY, HAVING and AGGREGATE(ie avg) clauses
+\end{itemize}
+
+\section{Reduce side Join}
+\begin{itemize}
+	\item Send tuples with key of joining attribute
+	\item Combine in reducer
+	\item In large relations the copying can be very expensive, therefore map side reduce may be better
+\end{itemize}
+
+\section{Map-Side Join}
+\begin{itemize}
+	\item Assume one of the relations is small and can be loaded into main memory
+	\item Mapper can create joined tuples from subset of second relation
+\end{itemize}
+
+\section{Optimized reduce side Join}
+\begin{itemize}
+	\item Analog to semi-join
+	\item Assuming neither of the relations is small enough for main memory
+	\item Load the unique values of joining attributes into main memory (One may be small enough for this)
+	\item Map
+	\begin{itemize}
+		\item Knows unique values of joining attribute from one relation (R.B)
+		\item Sends tuples from Relation R by with key joining attribute
+		\item Tuples from other relation S only sent if joining attribute value can be found in relation R (4-11 if unclear)
+	\end{itemize}
+	\item Reduce then joins
+\end{itemize}
+
+\subsection{Global Sharing of Information}
+\begin{itemize}
+	\item Hadoop has a "Distributed Cache"
+	\item Should be used for small amounts of data
+	\item Is read at init of Mapper
+\end{itemize}
+
+\section{Bloom Filter}
+\begin{itemize}
+	\item Used if the unique values are still too many for main memory
+	\item Is used to create compact representation of join attributes
+	\item Bloom filters are very generic data structures with wide applications
+\end{itemize}
+
+\subsection{Structures}
+\begin{itemize}
+	\item Consists of a bit array of size m (all bits arre initially 0)
+	\item Hash each distinct attribute value to a bucket and set bucket to 1
+	\item This method may result in collisions
+	\item Solution to collisions:
+	\begin{itemize}
+		\item Use multiple hash functions to reduce collisions
+		\item Use all hash functions and set all buckets to 1
+	\end{itemize}
+	\item It is only possible to determine if the value \textit{may} be in the set(if all buckets = 1)
+	\item Probability of false positives can be calculated (4-17)
+	\item Trade off between compression and false positives must be considered
+\end{itemize}
+
+\subsection{Implications of false positives}
+\begin{itemize}
+	\item More network traffic than necessary
+	\item More work for result
+	\item No erroneous results - all needed tuples are created 
+\end{itemize}
+
+\section{Map-side Joing without distributed cache}
+\begin{itemize}
+	\item Only works if both relations are already sorted by key
+	\item Mappers consume chunks from both relations with matching join values (each chunk contains all join partners)
+	\item Use CompositeInputFormat in Hadoop
+\end{itemize}
+
+\section{MapReduce vs Traditional RDBMS}
+\begin{table}[]
+	\begin{tabular}{l|l|l}
+		& Traditional RDBMS         & MapReduce                   \\ \hline
+		Data Size & Gigabytes                 & Petabytes                   \\
+		Access    & Interactive and Batch     & Batch                       \\
+		Updates   & Read and write many times & Write once, read many times \\
+		Structure & Static Schema             & Dynamic schema              \\
+		Integrity & High                      & Low                         \\
+		Scaling   & Non linear                & Linear                     
+	\end{tabular}
+\end{table}
+
+\section{Benefits of MapReduce}
+\begin{itemize}
+	\item Simple model
+	\item High scalability
+	\item Aims at high throughput - speed for many jobs - not a single job
+	\item Tolerant against node failures
+\end{itemize}
+
+\section{Limitations}
+\begin{itemize}
+	\item Low level routines - very near the data
+	\item Can have slow response time for individual small tasks
+	\item Complex queries can be a hassle
+\end{itemize}
+
+
+
 \end{document}
 
 
